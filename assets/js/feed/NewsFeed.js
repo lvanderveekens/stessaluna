@@ -3,7 +3,7 @@ import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import axios from 'axios';
 
-class Home extends Component {
+class NewsFeed extends Component {
 
   constructor(props) {
     super(props);
@@ -45,13 +45,13 @@ class Home extends Component {
         Posts in database:
         <ul>
           {this.state.posts.map((post, index) =>
-            <li key={index}>{post.id}: {post.text}<Button onClick={() => this.handleDeletePostClick(post)}>Delete</Button></li>)
+            <li key={index}>{post.id}: {post.text} <Button onClick={() => this.handleDeletePostClick(post)}>Delete</Button></li>)
           }
         </ul>
-        <Button onClick={this.handleNewPostClick}>New post</Button>
+        <Button onClick={this.handleNewPostClick}>New post!</Button>
       </Fragment>
     )
   }
 }
 
-export default Home;
+export default NewsFeed;
