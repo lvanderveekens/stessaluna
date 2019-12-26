@@ -17,7 +17,7 @@ class PostController extends AbstractController
     /**
      * @Route("/", methods={"GET"})
      */
-    public function getPosts(SerializerInterface $serializer): JsonResponse
+    public function readPosts(SerializerInterface $serializer): JsonResponse
     {
         $posts = $this->getDoctrine()
             ->getRepository(Post::class)
@@ -41,5 +41,20 @@ class PostController extends AbstractController
         $entityManager->flush();
 
         return new Response('Saved new post with id ' . $post->getId());
+    }
+
+    /**
+     * @Route("/{id}", methods={"DELETE"})
+     */
+    public function deletePostById(int $id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $post = $entityManager->getRepository(Post::class)->find($id);
+
+        // TODO: what if $post with $id does not exist?
+        $entityManager->remove($post);
+        $entityManager->flush();
+
+        return new Response('Deleted post with id ' . $id);
     }
 }

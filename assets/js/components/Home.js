@@ -10,21 +10,33 @@ class Home extends Component {
     this.state = {
       posts: []
     };
+    this.handleNewPostClick = this.handleNewPostClick.bind(this);
+    this.handleDeletePostClick = this.handleDeletePostClick.bind(this);
   }
 
   componentDidMount() {
+    this.fetchPosts()
+  }
+
+  async handleNewPostClick() {
+    const response = await axios.post('/api/posts/');
+    console.log(response.data);
+    this.fetchPosts()
+  }
+  
+  async handleDeletePostClick(post) {
+    const response = await axios.delete('/api/posts/' + post.id);
+    console.log(response.data);
+    this.fetchPosts()
+  }
+
+  fetchPosts() {
     fetch('/api/posts')
       .then(res => res.json())
       .then((data) => {
         this.setState({ posts: data })
       })
-      .catch(console.log)
-  }
-
-  async handleClick() {
-    console.log('CLICKED');
-    const response = await axios.post('/api/posts/')
-    console.log(response.data)
+      .catch(console.log);
   }
 
   render() {
@@ -33,10 +45,10 @@ class Home extends Component {
         Posts in database:
         <ul>
           {this.state.posts.map((post, index) =>
-            <li key={index}>{post.text}</li>)
+            <li key={index}>{post.id}: {post.text}<Button onClick={() => this.handleDeletePostClick(post)}>Delete</Button></li>)
           }
         </ul>
-        <Button onClick={this.handleClick}>New post</Button>
+        <Button onClick={this.handleNewPostClick}>New post</Button>
       </Fragment>
     )
   }
