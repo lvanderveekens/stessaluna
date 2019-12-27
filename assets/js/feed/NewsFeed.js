@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Route, Switch, Link, withRouter } from 'react-router-dom';
-import { Button } from 'reactstrap';
+import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 class NewsFeed extends Component {
