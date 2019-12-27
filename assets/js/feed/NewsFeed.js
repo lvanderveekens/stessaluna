@@ -42,13 +42,13 @@ class NewsFeed extends Component {
   render() {
     return (
       <Fragment>
-        Posts in database:
+        Posts in db:
         <ul>
           {this.state.posts.map((post, index) =>
-            <li key={index}>{post.id}: {post.text} <Button onClick={() => this.handleDeletePostClick(post)}>Delete</Button></li>)
+            <li key={index}>id: {post.id}, text: {post.text} <Button onClick={() => this.handleDeletePostClick(post)}>Delete</Button></li>)
           }
         </ul>
-        <Button onClick={this.handleNewPostClick}>New post!</Button>
+        <Button onClick={this.handleNewPostClick}>New post !!!!</Button>
       </Fragment>
     )
   }
