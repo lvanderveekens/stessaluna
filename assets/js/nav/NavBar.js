@@ -6,7 +6,7 @@ class NavBar extends Component {
   render() {
     return (
       <Navbar bg="primary" variant="dark">
-        <Navbar.Brand href="#home">Navbar with text</Navbar.Brand>
+        <Navbar.Brand href="#home">Luna app</Navbar.Brand>
       </Navbar>
     )
   }

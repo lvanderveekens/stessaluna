@@ -6,6 +6,12 @@ import NavBar from "./nav/NavBar";
 import { Button, Container, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 
+const newPostStyle = {
+  paddingTop: '10px',
+  display: 'flex',
+  justifyContent: 'center',
+};
+
 class App extends Component {
 
   constructor(props) {
@@ -42,7 +48,9 @@ class App extends Component {
         <NavBar />
         <Row>
           <Col md={3}>
-            <Button onClick={this.handleNewPostClick}>New post</Button>
+            <div style={newPostStyle}>
+              <Button onClick={this.handleNewPostClick}>New post</Button>
+            </div>
           </Col>
           <Col md={6}>
             <NewsFeed posts={this.state.posts} fetchPosts={this.fetchPosts} />

@@ -3,6 +3,17 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
+const postStyle = {
+  padding: '10px',
+  margin: '10px 0 10px 0',
+  border: '1px solid black'
+};
+
+const headerStyle = {
+  display: 'flex',
+  justifyContent: 'space-between',
+};
+
 class NewsFeed extends Component {
 
   constructor(props) {
@@ -20,9 +31,12 @@ class NewsFeed extends Component {
     return (
       <Fragment>
         {this.props.posts.map((post, index) =>
-          <div key={index}>
-            id: {post.id}, text: {post.text}
-            <Button onClick={() => this.handleDeletePostClick(post)}>Delete</Button>
+          <div key={index} style={postStyle}>
+            <div style={headerStyle}>
+              <div>{post.id}</div>
+              <Button size='sm' onClick={() => this.handleDeletePostClick(post)}>x</Button>
+            </div>
+            <div>{post.text}</div>
           </div>
         )}
       </Fragment>
@@ -31,7 +45,7 @@ class NewsFeed extends Component {
 }
 
 NewsFeed.propTypes = {
-  posts: PropTypes.any,
+  posts: PropTypes.array,
   fetchPosts: PropTypes.func
 };
 
