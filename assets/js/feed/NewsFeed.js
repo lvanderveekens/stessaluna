@@ -1,57 +1,38 @@
 import React, { Component, Fragment } from 'react';
-import { Route, Switch, Link, withRouter } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 class NewsFeed extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      posts: []
-    };
-    this.handleNewPostClick = this.handleNewPostClick.bind(this);
     this.handleDeletePostClick = this.handleDeletePostClick.bind(this);
   }
 
-  componentDidMount() {
-    this.fetchPosts()
-  }
-
-  async handleNewPostClick() {
-    const response = await axios.post('/api/posts/');
-    console.log(response.data);
-    this.fetchPosts()
-  }
-  
   async handleDeletePostClick(post) {
     const response = await axios.delete('/api/posts/' + post.id);
     console.log(response.data);
-    this.fetchPosts()
-  }
-
-  fetchPosts() {
-    fetch('/api/posts')
-      .then(res => res.json())
-      .then((data) => {
-        this.setState({ posts: data })
-      })
-      .catch(console.log);
+    this.props.fetchPosts()
   }
 
   render() {
     return (
       <Fragment>
-        Posts in db:
-        <ul>
-          {this.state.posts.map((post, index) =>
-            <li key={index}>id: {post.id}, text: {post.text} <Button onClick={() => this.handleDeletePostClick(post)}>Delete</Button></li>)
-          }
-        </ul>
-        <Button onClick={this.handleNewPostClick}>New post !!!!</Button>
+        {this.props.posts.map((post, index) =>
+          <div key={index}>
+            id: {post.id}, text: {post.text}
+            <Button onClick={() => this.handleDeletePostClick(post)}>Delete</Button>
+          </div>
+        )}
       </Fragment>
     )
   }
 }
+
+NewsFeed.propTypes = {
+  posts: PropTypes.any,
+  fetchPosts: PropTypes.func
+};
 
 export default NewsFeed;

@@ -1,20 +1,53 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
 import NewsFeed from "./feed/NewsFeed";
-import { Container, Col, Row } from 'react-bootstrap';
+import NavBar from "./nav/NavBar";
+import { Button, Container, Col, Row } from 'react-bootstrap';
+import axios from 'axios';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: []
+    };
+    this.handleNewPostClick = this.handleNewPostClick.bind(this);
+    this.fetchPosts = this.fetchPosts.bind(this);
+  } 
+
+  componentDidMount() {
+    this.fetchPosts()
+  }
+
+  fetchPosts() {
+    fetch('/api/posts')
+      .then(res => res.json())
+      .then((data) => {
+        this.setState({ posts: data })
+      })
+      .catch(console.log);
+  }
+
+  async handleNewPostClick() {
+    const response = await axios.post('/api/posts/');
+    console.log(response.data);
+    this.fetchPosts()
+  }
+
   render() {
     return (
       <Container>
+        <NavBar />
         <Row>
-          <Col></Col>
-          <Col>
-            <NewsFeed />
+          <Col md={3}>
+            <Button onClick={this.handleNewPostClick}>New post</Button>
           </Col>
-          <Col></Col>
+          <Col md={6}>
+            <NewsFeed posts={this.state.posts} fetchPosts={this.fetchPosts} />
+          </Col>
+          <Col md={3}></Col>
         </Row>
       </Container>
     )
