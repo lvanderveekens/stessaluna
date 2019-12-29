@@ -24,7 +24,7 @@ class NewsFeed extends Component {
   async handleDeletePostClick(post) {
     const response = await axios.delete('/api/posts/' + post.id);
     console.log(response.data);
-    this.props.fetchPosts()
+    this.props.updatePosts()
   }
 
   render() {
@@ -46,7 +46,7 @@ class NewsFeed extends Component {
 
 NewsFeed.propTypes = {
   posts: PropTypes.array,
-  fetchPosts: PropTypes.func
+  updatePosts: PropTypes.func
 };
 
 export default NewsFeed;

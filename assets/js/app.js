@@ -3,14 +3,9 @@ import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import NewsFeed from "./feed/NewsFeed";
 import NavBar from "./nav/NavBar";
-import { Button, Container, Col, Row } from 'react-bootstrap';
+import { Container, Col, Row } from 'react-bootstrap';
+import NewPostForm from './newpost/NewPostForm';
 import axios from 'axios';
-
-const newPostStyle = {
-  paddingTop: '10px',
-  display: 'flex',
-  justifyContent: 'center',
-};
 
 class App extends Component {
 
@@ -19,27 +14,17 @@ class App extends Component {
     this.state = {
       posts: []
     };
-    this.handleNewPostClick = this.handleNewPostClick.bind(this);
-    this.fetchPosts = this.fetchPosts.bind(this);
+    this.updatePosts = this.updatePosts.bind(this);
   } 
 
   componentDidMount() {
-    this.fetchPosts()
+    this.updatePosts()
   }
 
-  fetchPosts() {
-    fetch('/api/posts')
-      .then(res => res.json())
-      .then((data) => {
-        this.setState({ posts: data })
-      })
+  updatePosts() {
+    axios.get('/api/posts')
+      .then(res => { this.setState({ posts: res.data }) })
       .catch(console.log);
-  }
-
-  async handleNewPostClick() {
-    const response = await axios.post('/api/posts/');
-    console.log(response.data);
-    this.fetchPosts()
   }
 
   render() {
@@ -48,12 +33,10 @@ class App extends Component {
         <NavBar />
         <Row>
           <Col md={3}>
-            <div style={newPostStyle}>
-              <Button onClick={this.handleNewPostClick}>New post</Button>
-            </div>
+            <NewPostForm updatePosts={this.updatePosts}/>
           </Col>
           <Col md={6}>
-            <NewsFeed posts={this.state.posts} fetchPosts={this.fetchPosts} />
+            <NewsFeed posts={this.state.posts} updatePosts={this.updatePosts} />
           </Col>
           <Col md={3}></Col>
         </Row>
