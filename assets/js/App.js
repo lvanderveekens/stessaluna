@@ -4,7 +4,7 @@ import ReactDom from 'react-dom';
 import NewsFeed from "./feed/NewsFeed";
 import NavBar from "./nav/NavBar";
 import { Container, Col, Row } from 'react-bootstrap';
-import NewPostForm from './newpost/NewPostForm';
+import NewPostForm from './post/NewPostForm';
 import axios from 'axios';
 
 class App extends Component {
@@ -14,14 +14,14 @@ class App extends Component {
     this.state = {
       posts: []
     };
-    this.updatePosts = this.updatePosts.bind(this);
+    this.fetchPosts = this.fetchPosts.bind(this);
   } 
 
   componentDidMount() {
-    this.updatePosts()
+    this.fetchPosts()
   }
 
-  updatePosts() {
+  fetchPosts() {
     axios.get('/api/posts')
       .then(res => { this.setState({ posts: res.data }) })
       .catch(console.log);
@@ -33,10 +33,10 @@ class App extends Component {
         <NavBar />
         <Row>
           <Col md={3}>
-            <NewPostForm updatePosts={this.updatePosts}/>
+            <NewPostForm fetchPosts={this.fetchPosts}/>
           </Col>
           <Col md={6}>
-            <NewsFeed posts={this.state.posts} updatePosts={this.updatePosts} />
+            <NewsFeed posts={this.state.posts} fetchPosts={this.fetchPosts} />
           </Col>
           <Col md={3}></Col>
         </Row>

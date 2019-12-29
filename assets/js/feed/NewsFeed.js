@@ -2,17 +2,7 @@ import React, { Component, Fragment } from 'react';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-
-const postStyle = {
-  padding: '10px',
-  margin: '10px 0 10px 0',
-  border: '1px solid black'
-};
-
-const headerStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-};
+import styles from './NewsFeed.css?module';
 
 class NewsFeed extends Component {
 
@@ -24,15 +14,15 @@ class NewsFeed extends Component {
   async handleDeletePostClick(post) {
     const response = await axios.delete('/api/posts/' + post.id);
     console.log(response.data);
-    this.props.updatePosts()
+    this.props.fetchPosts()
   }
 
   render() {
     return (
       <Fragment>
         {this.props.posts.map((post, index) =>
-          <div key={index} style={postStyle}>
-            <div style={headerStyle}>
+          <div className={styles.post} key={index}>
+            <div className={styles.postHeader}>
               <div>{post.id}</div>
               <Button size='sm' onClick={() => this.handleDeletePostClick(post)}>x</Button>
             </div>
@@ -46,7 +36,7 @@ class NewsFeed extends Component {
 
 NewsFeed.propTypes = {
   posts: PropTypes.array,
-  updatePosts: PropTypes.func
+  fetchPosts: PropTypes.func
 };
 
 export default NewsFeed;

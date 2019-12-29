@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-
-const newPostStyle = {
-  paddingTop: '10px',
-  display: 'flex',
-  justifyContent: 'center',
-};
+import styles from './NewPostForm.css?module'
 
 class NewPostForm extends Component {
 
@@ -19,12 +14,12 @@ class NewPostForm extends Component {
   async handleNewPostClick() {
     const response = await axios.post('/api/posts/');
     console.log(response.data);
-    this.props.updatePosts()
+    this.props.fetchPosts()
   }
 
   render() {
     return (
-      <div style={newPostStyle}>
+      <div className={styles.newPostForm}>
         <Button onClick={this.handleNewPostClick}>New post</Button>
       </div>
     )
@@ -32,7 +27,7 @@ class NewPostForm extends Component {
 }
 
 NewPostForm.propTypes = {
-  updatePosts: PropTypes.func
+  fetchPosts: PropTypes.func
 };
 
 export default NewPostForm

@@ -1,0 +1,6 @@
+.newPostForm {
+    padding-top: 10px;
+    display: flex;
+    padding-right: 50px;
+    justify-content: center;
+}
