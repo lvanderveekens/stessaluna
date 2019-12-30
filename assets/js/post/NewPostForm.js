@@ -1,27 +1,48 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import styles from './NewPostForm.css?module'
+import styles from './NewPostForm.scss?module'
 
 class NewPostForm extends Component {
 
   constructor(props) {
     super(props);
-    this.handleNewPostClick = this.handleNewPostClick.bind(this);
+    this.state = {
+      name: '' 
+    };
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  async handleNewPostClick() {
-    const response = await axios.post('/api/posts/');
+  handleNameChange(event) {
+    this.setState({name: event.target.value});
+  }
+
+  handleTextChange(event) {
+    this.setState({text: event.target.value});
+  }
+
+  handleSubmit(event) {
+    const response = axios.post('/api/posts/');
     console.log(response.data);
     this.props.fetchPosts()
+    event.preventDefault();
   }
 
   render() {
     return (
-      <div className={styles.newPostForm}>
-        <Button onClick={this.handleNewPostClick}>New post</Button>
-      </div>
+      <form className={styles.newPostForm} onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input type="text" value={this.state.name} onChange={this.handleNameChange} />
+        </label>
+        <label>
+          Text:
+          <textarea value={this.state.text} onChange={this.handleTextChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
     )
   }
 }

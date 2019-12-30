@@ -32,6 +32,7 @@ class PostController extends AbstractController
      */
     public function createPost(): Response
     {
+        // TODO: 'text' will be a request parameter
         $entityManager = $this->getDoctrine()->getManager();
 
         $post = new Post();
