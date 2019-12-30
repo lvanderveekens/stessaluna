@@ -1,19 +1,20 @@
 import React, { Component, Fragment } from 'react';
-import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import styles from './NewsFeed.css?module';
+import Post from '../post/Post';
 
 class NewsFeed extends Component {
 
   constructor(props) {
     super(props);
-    this.handleDeletePostClick = this.handleDeletePostClick.bind(this);
+    this.handleDeletePost = this.handleDeletePost.bind(this);
   }
 
-  async handleDeletePostClick(post) {
-    const response = await axios.delete('/api/posts/' + post.id);
-    console.log(response.data);
+  handleDeletePost(postId) {
+    axios.delete('/api/posts/' + postId)
+      .then(res => console.log(res.data))
+      .catch(error => console.log(error));
+
     this.props.fetchPosts()
   }
 
@@ -21,13 +22,12 @@ class NewsFeed extends Component {
     return (
       <Fragment>
         {this.props.posts.map((post, index) =>
-          <div className={styles.post} key={index}>
-            <div className={styles.postHeader}>
-              <div><b>{post.userName}</b></div>
-              <Button size='sm' onClick={() => this.handleDeletePostClick(post)}>x</Button>
-            </div>
-            <div>{post.text}</div>
-          </div>
+          <Post
+            key={index}
+            userName={post.userName}
+            text={post.text}
+            onDelete={() => this.handleDeletePost(post.id)}
+          />
         )}
       </Fragment>
     )
