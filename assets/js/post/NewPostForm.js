@@ -40,14 +40,14 @@ class NewPostForm extends Component {
   render() {
     return (
       <form className={styles.newPostForm} onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input type="text" value={this.state.name} onChange={this.handleNameChange} />
-        </label>
-        <label>
-          Text:
-          <textarea value={this.state.text} onChange={this.handleTextChange} />
-        </label>
+        <div className="form-group">
+          <label>Name:</label>
+          <input className="form-control" type="text" value={this.state.name} onChange={this.handleNameChange} />
+        </div>
+        <div className="form-group">
+          <label>Text:</label>
+          <textarea className="form-control" value={this.state.text} onChange={this.handleTextChange} />
+        </div>
         <input className="btn btn-primary" type="submit" value="Submit" />
       </form>
     )
