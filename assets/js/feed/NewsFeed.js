@@ -21,14 +21,16 @@ class NewsFeed extends Component {
   render() {
     return (
       <Fragment>
-        {this.props.posts.map((post, index) =>
-          <Post
-            key={index}
-            userName={post.userName}
-            text={post.text}
-            onDelete={() => this.handleDeletePost(post.id)}
-          />
-        )}
+        {this.props.posts
+          .sort((p1, p2) => p2.id - p1.id)
+          .map((post, index) =>
+            <Post
+              key={index}
+              userName={post.userName}
+              text={post.text}
+              onDelete={() => this.handleDeletePost(post.id)}
+            />
+          )}
       </Fragment>
     )
   }
