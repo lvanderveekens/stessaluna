@@ -15,6 +15,7 @@ plugins:
   - unused-imports
 rules: {
   "no-unused-vars": "off",
+  "no-undef": 2,
   "unused-imports/no-unused-imports": 2,
   "unused-imports/no-unused-vars": 1
 }

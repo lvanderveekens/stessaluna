@@ -21,6 +21,11 @@ class Post
      */
     private $text;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $userName;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +39,18 @@ class Post
     public function setText(string $text): self
     {
         $this->text = $text;
+        return $this;
+    }
+
+    public function getUserName(): ?string
+    {
+        return $this->userName;
+    }
+
+    public function setUserName(string $userName): self
+    {
+        $this->userName = $userName;
+
         return $this;
     }
 }

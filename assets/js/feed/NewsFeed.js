@@ -23,7 +23,7 @@ class NewsFeed extends Component {
         {this.props.posts.map((post, index) =>
           <div className={styles.post} key={index}>
             <div className={styles.postHeader}>
-              <div>{post.id}</div>
+              <div><b>{post.userName}</b></div>
               <Button size='sm' onClick={() => this.handleDeletePostClick(post)}>x</Button>
             </div>
             <div>{post.text}</div>

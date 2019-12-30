@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -30,13 +31,15 @@ class PostController extends AbstractController
     /**
      * @Route("/", methods={"POST"})
      */
-    public function createPost(): Response
+    public function createPost(Request $request): Response
     {
-        // TODO: 'text' will be a request parameter
+        $requestBody = json_decode($request->getContent(), true);
+
         $entityManager = $this->getDoctrine()->getManager();
 
         $post = new Post();
-        $post->setText("testje");
+        $post->setUserName($requestBody['userName']);
+        $post->setText($requestBody['text']);
 
         $entityManager->persist($post);
         $entityManager->flush();

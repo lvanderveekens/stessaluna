@@ -8,7 +8,7 @@ class NewPostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '' 
+      name: ''
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
@@ -24,8 +24,15 @@ class NewPostForm extends Component {
   }
 
   handleSubmit(event) {
-    const response = axios.post('/api/posts/');
-    console.log(response.data);
+    // TODO: form validation
+    const response = axios.post('/api/posts/', {
+      userName: this.state.name,
+      text: this.state.text
+    })
+
+    response.then(res => console.log(res.data))
+      .catch(error => console.log(error));
+
     this.props.fetchPosts()
     event.preventDefault();
   }
@@ -41,7 +48,7 @@ class NewPostForm extends Component {
           Text:
           <textarea value={this.state.text} onChange={this.handleTextChange} />
         </label>
-        <input type="submit" value="Submit" />
+        <input className="btn btn-primary" type="submit" value="Submit" />
       </form>
     )
   }
