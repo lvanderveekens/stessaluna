@@ -2,9 +2,19 @@
     padding: 10px;
     margin: 10px 0 10px 0;
     border: 1px solid black;
-}
 
-.postHeader {
-    display: flex;
-    justify-content: space-between;
+    .header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .timestamp {
+        font-size: 0.6rem;
+    }
+
+    .deleteButton:hover {
+        cursor: hand;
+        cursor: pointer;
+        opacity: .6;
+    }
 }

@@ -22,16 +22,21 @@ class NewsFeed extends Component {
     return (
       <Fragment>
         Posts
-        {this.props.posts
-          .sort((p1, p2) => p2.id - p1.id)
-          .map((post, index) =>
-            <Post
-              key={index}
-              userName={post.userName}
-              text={post.text}
-              createdAt={post.createdAt}
-              onDelete={() => this.handleDeletePost(post.id)}
-            />
+        {(this.props.posts.length > 0)
+          ? this.props.posts
+            .sort((p1, p2) => p2.id - p1.id)
+            .map((post, index) =>
+              <Post
+                key={index}
+                userName={post.userName}
+                text={post.text}
+                createdAt={post.createdAt}
+                onDelete={() => this.handleDeletePost(post.id)}
+              />)
+          : (
+            <div>
+              No posts found!
+            </div>
           )}
       </Fragment>
     )

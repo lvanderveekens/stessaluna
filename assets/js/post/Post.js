@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Post.scss?module';
-import { Button } from 'react-bootstrap';
 import moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 class Post extends Component {
 
   render() {
     return (
       <div className={styles.post}>
-        <div className={styles.postHeader}>
-          <div><b>{this.props.userName}</b></div>
-          <div>{moment(this.props.createdAt).format("MMM Do YYYY, h:mm A")}</div>
-          <Button size='sm' onClick={this.props.onDelete}>x</Button>
+        <div className={styles.header}>
+          <span><b>{this.props.userName}</b></span>
+          <div className={styles.deleteButton} onClick={this.props.onDelete}>
+            <FontAwesomeIcon icon={faTimes} color="red"/>
+          </div>
         </div>
         <div>{this.props.text}</div>
+        <div className={styles.timestamp}>{moment(this.props.createdAt).format("h:mm A")}</div>
       </div>
     )
   }
