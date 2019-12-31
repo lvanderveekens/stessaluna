@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import styles from './NewPostForm.scss?module'
@@ -30,45 +30,48 @@ class NewPostForm extends Component {
 
   render() {
     return (
-      <Formik
-        validationSchema={schema}
-        onSubmit={this.handleSubmit}
-        initialValues={{ name: '', text: '', }}
-      >
-        {({
-          handleSubmit,
-          handleChange,
-          values,
-          errors,
-        }) => (
-            <Form className={styles.newPostForm} noValidate onSubmit={handleSubmit}>
-              <Form.Group>
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  value={values.name}
-                  onChange={handleChange}
-                  isInvalid={!!errors.name}
-                />
-                <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>Text</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  type="text"
-                  name="text"
-                  value={values.text}
-                  onChange={handleChange}
-                  isInvalid={!!errors.text}
-                />
-                <Form.Control.Feedback type="invalid">{errors.text}</Form.Control.Feedback>
-              </Form.Group>
-              <Button type="submit">Submit</Button>
-            </Form>
-          )}
-      </Formik>
+      <Fragment>
+        <h3>New</h3>
+        <Formik
+          validationSchema={schema}
+          onSubmit={this.handleSubmit}
+          initialValues={{ name: '', text: '', }}
+        >
+          {({
+            handleSubmit,
+            handleChange,
+            values,
+            errors,
+          }) => (
+              <Form className={styles.newPostForm} noValidate onSubmit={handleSubmit}>
+                <Form.Group>
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="name"
+                    value={values.name}
+                    onChange={handleChange}
+                    isInvalid={!!errors.name}
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Text</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    type="text"
+                    name="text"
+                    value={values.text}
+                    onChange={handleChange}
+                    isInvalid={!!errors.text}
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.text}</Form.Control.Feedback>
+                </Form.Group>
+                <Button type="submit">Submit</Button>
+              </Form>
+            )}
+        </Formik>
+      </Fragment>
     )
   }
 }
