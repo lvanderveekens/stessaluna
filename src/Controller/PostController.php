@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,6 +41,7 @@ class PostController extends AbstractController
         $post = new Post();
         $post->setUserName($requestBody['userName']);
         $post->setText($requestBody['text']);
+        $post->setCreatedAt(new DateTime('now'));
 
         $entityManager->persist($post);
         $entityManager->flush();

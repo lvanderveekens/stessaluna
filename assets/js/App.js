@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ReactDom from 'react-dom';
 import NewsFeed from "./feed/NewsFeed";
 import NavBar from "./nav/NavBar";
@@ -30,18 +30,20 @@ class App extends Component {
 
   render() {
     return (
-      <Container>
+      <Fragment>
         <NavBar />
-        <Row>
-          <Col md={3}>
-            <NewPostForm fetchPosts={this.fetchPosts}/>
-          </Col>
-          <Col md={6}>
-            <NewsFeed posts={this.state.posts} fetchPosts={this.fetchPosts} />
-          </Col>
-          <Col md={3}></Col>
-        </Row>
-      </Container>
+        <Container>
+          <Row>
+            <Col md={3}>
+              <NewPostForm fetchPosts={this.fetchPosts} />
+            </Col>
+            <Col md={6}>
+              <NewsFeed posts={this.state.posts} fetchPosts={this.fetchPosts} />
+            </Col>
+            <Col md={3}></Col>
+          </Row>
+        </Container>
+      </Fragment>
     )
   }
 }
