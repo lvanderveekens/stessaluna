@@ -21,7 +21,7 @@ class NewsFeed extends Component {
   render() {
     return (
       <Fragment>
-        <h3>Posts</h3>
+        <h3>News Feed</h3>
         {(this.props.posts.length > 0)
           ? this.props.posts
             .sort((p1, p2) => p2.id - p1.id)
