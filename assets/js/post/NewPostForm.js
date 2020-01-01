@@ -24,7 +24,7 @@ class NewPostForm extends Component {
     const formData = new FormData();
     formData.append('userName', values.name);
     formData.append('text', values.text);
-    formData.append('file', values.file);
+    formData.append('image', values.image);
 
     axios.post('/api/posts/', formData)
       .then(res => {
@@ -49,7 +49,7 @@ class NewPostForm extends Component {
         <Formik
           validationSchema={schema}
           onSubmit={this.handleSubmit}
-          initialValues={{ name: '', text: '', file: null}}
+          initialValues={{ name: '', text: '', image: null}}
         >
           {({ handleSubmit, handleChange, setFieldValue, values, errors, }) => (
             <Form className={styles.newPostForm} noValidate onSubmit={handleSubmit}>
@@ -80,9 +80,9 @@ class NewPostForm extends Component {
                 <Form.Label>Image</Form.Label>
                 <Form.Control
                   type="file"
-                  name="file"
+                  name="image"
                   onChange={(event) => {
-                    setFieldValue("file", event.currentTarget.files[0]);
+                    setFieldValue("image", event.currentTarget.files[0]);
                   }}
                   isInvalid={!!errors.file}
                   ref={this.fileInput}

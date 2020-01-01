@@ -30,6 +30,7 @@ class NewsFeed extends Component {
                 key={index}
                 userName={post.userName}
                 text={post.text}
+                imagePath={post.imagePath}
                 createdAt={post.createdAt}
                 onDelete={() => this.handleDeletePost(post.id)}
               />)

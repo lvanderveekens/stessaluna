@@ -17,6 +17,11 @@ class Post extends Component {
           </div>
         </div>
         <div>{this.props.text}</div>
+
+        {this.props.imagePath && (
+          <img src={this.props.imagePath} />
+        )}
+
         <div className={styles.timestamp}>{moment(this.props.createdAt).format("h:mm A")}</div>
       </div>
     )
@@ -27,7 +32,8 @@ Post.propTypes = {
   text: PropTypes.string,
   userName: PropTypes.string,
   createdAt: PropTypes.string,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  imagePath: PropTypes.string,
 };
 
 export default Post;
