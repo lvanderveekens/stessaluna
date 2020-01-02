@@ -85,9 +85,14 @@ class PostController extends AbstractController
     public function deletePostById(int $id)
     {
         $entityManager = $this->getDoctrine()->getManager();
+        // TODO: what if $id does not exist? return 404
         $post = $entityManager->getRepository(Post::class)->find($id);
 
-        // TODO: what if $post with $id does not exist?
+        if ($post->getImageFilename()) {
+            $imagesDir = $this->getParameter('images_directory');
+            unlink($imagesDir . '/' . $post->getImageFilename());
+        }
+
         $entityManager->remove($post);
         $entityManager->flush();
 
