@@ -27,22 +27,9 @@ class PostController extends AbstractController
             ->getRepository(Post::class)
             ->findAll();
 
-        $convertToDto = function ($post) {
-            // TODO: use dto setters to keep things consistent?
-            $dto = new PostDto();
-            $dto->id = $post->getId();
-            $dto->text = $post->getText();
-            $dto->userName = $post->getUserName();
-            $dto->createdAt = $post->getCreatedAt();
-
-            if ($post->getImageFilename()) {
-                // TODO: move base upload path to a common place
-                $dto->imagePath = '/uploads/images/' .  $post->getImageFilename();
-            }
-            return $dto;
-        };
-
-        return $this->json(array_map($convertToDto, $posts));
+        return $this->json(array_map(function ($post) {
+            return $this->convertToDto($post);
+        }, $posts));
     }
 
     /**
@@ -97,5 +84,20 @@ class PostController extends AbstractController
         $entityManager->flush();
 
         return new Response('Deleted post with id ' . $id);
+    }
+
+    private function convertToDto($post)
+    {
+        $dto = new PostDto();
+        $dto->setId($post->getId());
+        $dto->setText($post->getText());
+        $dto->setUserName($post->getUserName());
+        $dto->setCreatedAt($post->getCreatedAt());
+
+        if ($post->getImageFilename()) {
+            // TODO: move base upload path to a common place
+            $dto->setImagePath('/uploads/images/' .  $post->getImageFilename());
+        }
+        return $dto;
     }
 }

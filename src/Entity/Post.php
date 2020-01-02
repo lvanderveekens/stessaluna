@@ -24,6 +24,7 @@ class Post
     /**
      * @ORM\Column(type="string", length=255)
      */
+    // TODO: rename to 'author' later
     private $userName;
 
     /**
