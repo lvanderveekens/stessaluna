@@ -45,7 +45,7 @@ class NewPostForm extends Component {
   render() {
     return (
       <Fragment>
-        <h3>New post</h3>
+        <h4>New post</h4>
         <Formik
           validationSchema={schema}
           onSubmit={this.handleSubmit}
