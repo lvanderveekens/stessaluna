@@ -15,7 +15,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/api/posts")
- * @Security("is_granted('ROLE_USER')")
  */
 class PostController extends AbstractController
 {
