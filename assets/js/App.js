@@ -4,7 +4,8 @@ import ReactDom from 'react-dom';
 import NavBar from "./nav/NavBar";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './home/Home';
-import Login from './login/Login';
+import LoginForm from './login/LoginForm';
+import { Container } from 'react-bootstrap';
 
 class App extends Component {
 
@@ -12,14 +13,16 @@ class App extends Component {
     return (
       <Router>
         <NavBar />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route>
-            <Route path="/login" component={Login} />
-          </Route>
-        </Switch>
+        <Container>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route>
+              <Route path="/login" component={LoginForm} />
+            </Route>
+          </Switch>
+        </Container>
       </Router>
     )
   }
