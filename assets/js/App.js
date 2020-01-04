@@ -1,49 +1,26 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import ReactDom from 'react-dom';
-import NewsFeed from "./feed/NewsFeed";
 import NavBar from "./nav/NavBar";
-import { Container, Col, Row } from 'react-bootstrap';
-import NewPostForm from './post/NewPostForm';
-import axios from 'axios';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Home from './home/Home';
+import Login from './login/Login';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      posts: []
-    };
-    this.fetchPosts = this.fetchPosts.bind(this);
-  } 
-
-  componentDidMount() {
-    this.fetchPosts()
-  }
-
-  fetchPosts() {
-    axios.get('/api/posts')
-      .then(res => { this.setState({ posts: res.data }) })
-      .catch(console.log);
-  }
-
-
   render() {
     return (
-      <Fragment>
+      <Router>
         <NavBar />
-        <Container>
-          <Row>
-            <Col md={3}>
-              <NewPostForm fetchPosts={this.fetchPosts} />
-            </Col>
-            <Col md={6}>
-              <NewsFeed posts={this.state.posts} fetchPosts={this.fetchPosts} />
-            </Col>
-            <Col md={3}></Col>
-          </Row>
-        </Container>
-      </Fragment>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route>
+            <Route path="/login" component={Login} />
+          </Route>
+        </Switch>
+      </Router>
     )
   }
 }
