@@ -23,6 +23,7 @@ const LoginForm = (props) => {
         console.log(res.data);
         localStorage.setItem('luna-app:jwt-token', res.data.token);
         resetForm();
+        props.setAuthenticated(true);
         props.history.push("/");
       })
       .catch(error => {
@@ -68,7 +69,8 @@ const LoginForm = (props) => {
 }
 
 LoginForm.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object.isRequired,
+  setAuthenticated: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

@@ -10,7 +10,7 @@ const Login = (props) => {
       <Col />
       <Col md={6}>
         <h4>Login</h4>
-        <LoginForm history={props.history} />
+        <LoginForm history={props.history} setAuthenticated={props.setAuthenticated} />
       </Col>
       <Col />
     </Row>
@@ -18,7 +18,8 @@ const Login = (props) => {
 }
 
 Login.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object.isRequired,
+  setAuthenticated: PropTypes.func.isRequired,
 };
 
 export default Login;

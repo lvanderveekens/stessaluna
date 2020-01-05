@@ -2,20 +2,23 @@ import React from 'react';
 import { Navbar, Container } from "react-bootstrap"
 import styles from './NavBar.scss?module'
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const NavBar = (props) => {
 
- return (
+  return (
     <Navbar className={styles.nav} bg="primary" variant="dark">
       <Container>
         <Navbar.Brand href="/">Aap</Navbar.Brand>
-        {/* https://symfony.com/doc/current/security.html#installation */}
-        {/* https://symfonycasts.com/screencast/symfony-rest4/token-test#play */}
-        {/* {this.state.authenticated === true && <Menu.Item id="logout-button" as="a" onClick={this.logout}>Logout</Menu.Item>} */}
+        {props.authenticated === true && <p>Logged in!</p>}
         <Link to="/login">Login</Link>
       </Container>
     </Navbar>
   )
 }
+
+NavBar.propTypes = {
+  authenticated: PropTypes.bool.isRequired
+};
 
 export default NavBar;

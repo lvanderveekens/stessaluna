@@ -3,20 +3,21 @@ import { Col, Row } from 'react-bootstrap';
 import NewsFeed from '../feed/NewsFeed';
 import NewPostForm from '../post/NewPostForm';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
-const Home = () => {
+const Home = (props) => {
 
   const [posts, setPosts] = useState([]);
 
   const fetchPosts = () => {
-    let token
-    if (localStorage.getItem('luna-app:jwt-token') !== null) {
-      token = localStorage.getItem('luna-app:jwt-token');
+    let config = {}
+
+    if (props.authenticated) {
+      const token = localStorage.getItem('luna-app:jwt-token');
+      config.headers = { Authorization: "Bearer " + token }
     }
 
-    axios.get('/api/posts/', {
-      headers: { Authorization: "Bearer " + token }
-    })
+    axios.get('/api/posts/', config)
       .then(res => { setPosts(res.data) })
       .catch(console.log);
   }
@@ -37,5 +38,9 @@ const Home = () => {
     </Row>
   );
 }
+
+Home.propTypes = {
+  authenticated: PropTypes.bool.isRequired,
+};
 
 export default Home;
