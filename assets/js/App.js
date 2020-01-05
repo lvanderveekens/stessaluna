@@ -4,7 +4,7 @@ import ReactDom from 'react-dom';
 import NavBar from "./nav/NavBar";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './home/Home';
-import LoginForm from './login/LoginForm';
+import Login from './login/Login';
 import { Container } from 'react-bootstrap';
 
 class App extends Component {
@@ -15,12 +15,8 @@ class App extends Component {
         <NavBar />
         <Container>
           <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route>
-              <Route path="/login" component={LoginForm} />
-            </Route>
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
           </Switch>
         </Container>
       </Router>

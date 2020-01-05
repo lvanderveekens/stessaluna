@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
+import PropTypes from 'prop-types';
 
-// TODO: create a loginform class? or simply rename
-const LoginForm = () => {
+const LoginForm = (props) => {
 
   const schema = yup.object({
     username: yup.string().required("Username is a required field!"),
@@ -23,6 +23,7 @@ const LoginForm = () => {
         console.log(res.data);
         localStorage.setItem('luna-app:jwt-token', res.data.token);
         resetForm();
+        props.history.push("/");
       })
       .catch(error => {
         console.log(error)
@@ -30,43 +31,45 @@ const LoginForm = () => {
   }
 
   return (
-    <Fragment>
-      <h4>Login</h4>
-      <Formik
-        validationSchema={schema}
-        onSubmit={handleSubmit}
-        initialValues={{ username: '', password: '' }}
-      >
-        {({ handleSubmit, handleChange, values, errors, }) => (
-          <Form noValidate onSubmit={handleSubmit}>
-            <Form.Group>
-              <Form.Label>username</Form.Label>
-              <Form.Control
-                type="text"
-                name="username"
-                value={values.username}
-                onChange={handleChange}
-                isInvalid={!!errors.username}
-              />
-              <Form.Control.Feedback type="invalid">{errors.username}</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>password</Form.Label>
-              <Form.Control
-                type="password"
-                name="password"
-                value={values.password}
-                onChange={handleChange}
-                isInvalid={!!errors.password}
-              />
-              <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
-            </Form.Group>
-            <Button type="submit">Submit</Button>
-          </Form>
-        )}
-      </Formik>
-    </Fragment>
+    <Formik
+      validationSchema={schema}
+      onSubmit={handleSubmit}
+      initialValues={{ username: '', password: '' }}
+    >
+      {({ handleSubmit, handleChange, values, errors, }) => (
+        <Form noValidate onSubmit={handleSubmit}>
+          <Form.Group>
+            <Form.Label>username</Form.Label>
+            <Form.Control
+              type="text"
+              name="username"
+              value={values.username}
+              onChange={handleChange}
+              isInvalid={!!errors.username}
+            />
+            <Form.Control.Feedback type="invalid">{errors.username}</Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>password</Form.Label>
+            <Form.Control
+              type="password"
+              name="password"
+              value={values.password}
+              onChange={handleChange}
+              isInvalid={!!errors.password}
+            />
+            <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+          </Form.Group>
+          <Button type="submit">Submit</Button>
+        </Form>
+      )}
+    </Formik>
   );
 }
 
+LoginForm.propTypes = {
+  history: PropTypes.object
+};
+
 export default LoginForm;
+
