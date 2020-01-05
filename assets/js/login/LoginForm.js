@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 
 const LoginForm = (props) => {
 
+  const { history, setToken, setAuthenticated } = props;
+
   const schema = yup.object({
     username: yup.string().required("Username is a required field!"),
     password: yup.string().required("Password is a required field!"),
@@ -20,11 +22,10 @@ const LoginForm = (props) => {
 
     axios.post('/api/login', req)
       .then(res => {
-        console.log(res.data);
-        localStorage.setItem('luna-app:jwt-token', res.data.token);
+        setAuthenticated(true);
+        setToken(res.data.token);
         resetForm();
-        props.setAuthenticated(true);
-        props.history.push("/");
+        history.push("/");
       })
       .catch(error => {
         console.log(error)
@@ -71,6 +72,7 @@ const LoginForm = (props) => {
 LoginForm.propTypes = {
   history: PropTypes.object.isRequired,
   setAuthenticated: PropTypes.func.isRequired,
+  setToken: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

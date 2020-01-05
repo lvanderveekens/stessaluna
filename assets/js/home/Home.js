@@ -6,14 +6,14 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 
 const Home = (props) => {
+  const { authenticated, token } = props;
 
   const [posts, setPosts] = useState([]);
 
   const fetchPosts = () => {
     let config = {}
 
-    if (props.authenticated) {
-      const token = localStorage.getItem('luna-app:jwt-token');
+    if (authenticated) {
       config.headers = { Authorization: "Bearer " + token }
     }
 
@@ -41,6 +41,7 @@ const Home = (props) => {
 
 Home.propTypes = {
   authenticated: PropTypes.bool.isRequired,
+  token: PropTypes.string,
 };
 
 export default Home;
