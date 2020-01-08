@@ -6,6 +6,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './home/Home';
 import Login from './login/Login';
 import { Container } from 'react-bootstrap';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+import authReducer from './auth/reducer';
 
 const App = (props) => {
 
@@ -46,4 +49,11 @@ const App = (props) => {
   )
 }
 
-ReactDom.render(<App />, document.getElementById('root'));
+const store = createStore(combineReducers({ authReducer }));
+
+ReactDom.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);

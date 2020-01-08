@@ -4,10 +4,10 @@ import { Formik } from 'formik';
 import axios from 'axios';
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { signedIn } from '../auth/actions';
 
-const LoginForm = (props) => {
-
-  const { history, setToken, setAuthenticated } = props;
+const LoginForm = ({ history, setToken, setAuthenticated, signedIn }) => {
 
   const schema = yup.object({
     username: yup.string().required("Username is a required field!"),
@@ -24,6 +24,7 @@ const LoginForm = (props) => {
       .then(res => {
         setAuthenticated(true);
         setToken(res.data.token);
+        signedIn("aap");
         resetForm();
         history.push("/");
       })
@@ -73,7 +74,12 @@ LoginForm.propTypes = {
   history: PropTypes.object.isRequired,
   setAuthenticated: PropTypes.func.isRequired,
   setToken: PropTypes.func.isRequired,
+  signedIn: PropTypes.func.isRequired,
 };
 
-export default LoginForm;
+// TODO: move to wrapper component?
+const mapDispatchToProps = dispatch => ({
+  signedIn: text => dispatch(signedIn(text)),
+})
 
+export default connect(null, mapDispatchToProps)(LoginForm);
