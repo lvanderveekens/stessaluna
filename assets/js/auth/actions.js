@@ -1,8 +1,9 @@
 import ActionTypes from "./actionTypes";
 
-export const signedIn = (text) => {
+export const storeToken = (token) => {
+  localStorage.setItem('luna-app:jwt-token', token);
   return {
-    type: ActionTypes.SIGNED_IN,
-    text
+    type: ActionTypes.STORE_TOKEN,
+    token
   }
 };

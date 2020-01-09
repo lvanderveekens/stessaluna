@@ -4,12 +4,14 @@ import NewsFeed from '../feed/NewsFeed';
 import NewPostForm from '../post/NewPostForm';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const Home = (props) => {
+const HomePage = (props) => {
   const { authenticated, token } = props;
 
   const [posts, setPosts] = useState([]);
 
+  // TODO: should this be a redux action? because it updates state 
   const fetchPosts = () => {
     let config = {}
 
@@ -39,9 +41,14 @@ const Home = (props) => {
   );
 }
 
-Home.propTypes = {
+HomePage.propTypes = {
   authenticated: PropTypes.bool.isRequired,
-  token: PropTypes.string,
+  token: PropTypes.string.isRequired,
 };
 
-export default Home;
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  authenticated: state.auth.authenticated,
+})
+
+export default connect(mapStateToProps)(HomePage);

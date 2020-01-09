@@ -1,13 +1,19 @@
 import ActionTypes from './actionTypes';
 
-const authReducer = (state = [], action) => {
+const initialState = {
+  authenticated: localStorage.getItem('luna-app:jwt-token') !== null,
+  token: localStorage.getItem('luna-app:jwt-token'),
+}
+
+export default (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.SIGNED_IN:
-      console.log("IN AUTH REDUCER!");
-      return state;
+    case ActionTypes.STORE_TOKEN:
+      return {
+        ...state,
+        token: action.token,
+        authenticated: true,
+      };
     default:
       return state;
   }
 }
-
-export default authReducer; 

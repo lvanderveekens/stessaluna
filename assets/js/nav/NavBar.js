@@ -3,9 +3,9 @@ import { Navbar, Container } from "react-bootstrap"
 import styles from './NavBar.scss?module'
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const NavBar = (props) => {
-  const { authenticated, token } = props;
+const NavBar = ({ authenticated, token }) => {
 
   // TODO: if authenticated, do an API call to request user info.
   // TODO: add user controller to symfony
@@ -30,4 +30,9 @@ NavBar.propTypes = {
   token: PropTypes.string,
 };
 
-export default NavBar;
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  authenticated: state.auth.authenticated,
+})
+
+export default connect(mapStateToProps)(NavBar);

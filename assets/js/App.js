@@ -3,53 +3,29 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import NavBar from "./nav/NavBar";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './home/Home';
-import Login from './login/Login';
+import HomePage from './home/HomePage';
+import LoginPage from './login/LoginPage';
 import { Container } from 'react-bootstrap';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import authReducer from './auth/reducer';
 
-const App = (props) => {
-
-  const initialState = {
-    authenticated: localStorage.getItem('luna-app:jwt-token') !== null,
-    token: localStorage.getItem('luna-app:jwt-token'),
-  }
-
-  const [state, setState] = React.useState(initialState);
-
-  const setAuthenticated = (authenticated) => {
-    console.log("setAuthenticated(): " + authenticated);
-    setState(prevState => ({
-      ...prevState,
-      authenticated
-    }))
-  };
-
-  const setToken = (token) => {
-    console.log("setToken(): " + token);
-    localStorage.setItem('luna-app:jwt-token', token);
-    setState(prevState => ({
-      ...prevState,
-      token
-    }))
-  };
+const App = () => {
 
   return (
     <Router>
-      <NavBar authenticated={state.authenticated} token={state.token} />
+      <NavBar />
       <Container>
         <Switch>
-          <Route exact path="/" render={(props) => <Home {...props} authenticated={state.authenticated} token={state.token} />} />
-          <Route path="/login" render={(props) => <Login {...props} setAuthenticated={setAuthenticated} setToken={setToken} />} />
+          <Route exact path="/" component={HomePage} />
+          <Route path="/login" component={LoginPage} />
         </Switch>
       </Container>
     </Router>
   )
 }
 
-const store = createStore(combineReducers({ authReducer }));
+const store = createStore(combineReducers({ auth: authReducer }));
 
 ReactDom.render(
   <Provider store={store}>

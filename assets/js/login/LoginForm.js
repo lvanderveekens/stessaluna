@@ -1,42 +1,20 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
-import axios from 'axios';
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { signedIn } from '../auth/actions';
 
-const LoginForm = ({ history, setToken, setAuthenticated, signedIn }) => {
+const LoginForm = ({ onSubmit }) => {
 
   const schema = yup.object({
     username: yup.string().required("Username is a required field!"),
     password: yup.string().required("Password is a required field!"),
   });
 
-  const handleSubmit = (values, { resetForm }) => {
-    const req = {
-      username: values.username,
-      password: values.password,
-    }
-
-    axios.post('/api/login', req)
-      .then(res => {
-        setAuthenticated(true);
-        setToken(res.data.token);
-        signedIn("aap");
-        resetForm();
-        history.push("/");
-      })
-      .catch(error => {
-        console.log(error)
-      });
-  }
-
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       initialValues={{ username: '', password: '' }}
     >
       {({ handleSubmit, handleChange, values, errors, }) => (
@@ -71,15 +49,7 @@ const LoginForm = ({ history, setToken, setAuthenticated, signedIn }) => {
 }
 
 LoginForm.propTypes = {
-  history: PropTypes.object.isRequired,
-  setAuthenticated: PropTypes.func.isRequired,
-  setToken: PropTypes.func.isRequired,
-  signedIn: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
-// TODO: move to wrapper component?
-const mapDispatchToProps = dispatch => ({
-  signedIn: text => dispatch(signedIn(text)),
-})
-
-export default connect(null, mapDispatchToProps)(LoginForm);
+export default LoginForm;
