@@ -14,7 +14,7 @@ const LoginPage = ({ history, storeToken }) => {
       password: values.password,
     }
 
-    axios.post('/api/login', req)
+    axios.post('/api/token', req)
       .then(res => {
         storeToken(res.data.token);
         history.push("/");

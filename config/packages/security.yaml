@@ -11,12 +11,12 @@ security:
                 class: App\Entity\User
                 property: username
     firewalls:
-        login:
-            pattern: ^/api/login
+        token:
+            pattern: ^/api/token
             anonymous: true
             stateless: true
             json_login:
-                check_path:      /api/login
+                check_path:      /api/token
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
         api:
@@ -30,6 +30,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

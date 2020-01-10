@@ -105,6 +105,9 @@
     "egulias/email-validator": {
         "version": "2.1.12"
     },
+    "gesdinet/jwt-refresh-token-bundle": {
+        "version": "v0.9.0"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },

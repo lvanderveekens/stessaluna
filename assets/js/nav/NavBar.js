@@ -11,7 +11,7 @@ const NavBar = ({ authenticated, token }) => {
   const [firstName, setFirstName] = useState("");
 
   useEffect(() => {
-    // TODO: move to redux user?
+    // TODO: move to redux state currentUser?
     let config = {}
     if (authenticated) {
       config.headers = { Authorization: "Bearer " + token }
