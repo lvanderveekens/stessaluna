@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import NewsFeed from '../feed/NewsFeed';
+import Feed from '../feed/Feed';
 import NewPostForm from '../post/NewPostForm';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -34,7 +34,7 @@ const HomePage = (props) => {
         <NewPostForm fetchPosts={fetchPosts} />
       </Col>
       <Col md={6}>
-        <NewsFeed posts={posts} fetchPosts={fetchPosts} />
+        <Feed posts={posts} fetchPosts={fetchPosts} />
       </Col>
       <Col md={3}></Col>
     </Row>

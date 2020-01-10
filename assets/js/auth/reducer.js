@@ -8,7 +8,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.STORE_TOKEN:
+    case ActionTypes.AUTHENTICATE:
       return {
         ...state,
         token: action.payload.token,

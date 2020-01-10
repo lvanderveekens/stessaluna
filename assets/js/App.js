@@ -9,6 +9,7 @@ import { Container } from 'react-bootstrap';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import authReducer from './auth/reducer';
+import PrivateRoute from './route/PrivateRoute';
 
 const App = () => {
 
@@ -17,7 +18,7 @@ const App = () => {
       <NavBar />
       <Container>
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          <PrivateRoute exact path="/" component={HomePage} />
           <Route path="/login" component={LoginPage} />
         </Switch>
       </Container>

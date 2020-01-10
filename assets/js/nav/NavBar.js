@@ -14,6 +14,7 @@ const NavBar = ({ authenticated, token }) => {
     // TODO: move to redux state currentUser?
     let config = {}
     if (authenticated) {
+      // TODO: check expiration date and use refresh token to get a new jwt token 
       config.headers = { Authorization: "Bearer " + token }
     }
 

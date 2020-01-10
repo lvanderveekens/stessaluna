@@ -3,7 +3,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import Post from '../post/Post';
 
-class NewsFeed extends Component {
+class Feed extends Component {
 
   constructor(props) {
     super(props);
@@ -21,7 +21,7 @@ class NewsFeed extends Component {
   render() {
     return (
       <Fragment>
-        <h4>News Feed</h4>
+        <h4>Feed</h4>
         {(this.props.posts.length > 0)
           ? this.props.posts
             .sort((p1, p2) => p2.id - p1.id)
@@ -44,9 +44,9 @@ class NewsFeed extends Component {
   }
 }
 
-NewsFeed.propTypes = {
+Feed.propTypes = {
   posts: PropTypes.array,
   fetchPosts: PropTypes.func
 };
 
-export default NewsFeed;
+export default Feed;

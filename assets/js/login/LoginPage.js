@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import LoginForm from './LoginForm';
 import { Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { storeToken } from '../auth/actions';
+import { authenticate } from '../auth/actions';
 import axios from 'axios';
 
-const LoginPage = ({ history, storeToken }) => {
+const LoginPage = ({ history, authenticate }) => {
 
   const handleSubmit = (values, { resetForm }) => {
     const req = {
@@ -14,11 +14,12 @@ const LoginPage = ({ history, storeToken }) => {
       password: values.password,
     }
 
+    // TODO: move to logIn redux action?
     axios.post('/api/token', req)
       .then(res => {
-        storeToken(res.data.token, res.data.refreshToken);
-        history.push("/");
+        authenticate(res.data.token, res.data.refreshToken);
         resetForm();
+        history.push("/");
       })
       .catch(error => {
         console.log(error)
@@ -39,11 +40,11 @@ const LoginPage = ({ history, storeToken }) => {
 
 LoginPage.propTypes = {
   history: PropTypes.object.isRequired,
-  storeToken: PropTypes.func.isRequired,
+  authenticate: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
-  storeToken: (token, refreshToken) => dispatch(storeToken(token, refreshToken)),
+  authenticate: (token, refreshToken) => dispatch(authenticate(token, refreshToken)),
 })
 
 export default connect(null, mapDispatchToProps)(LoginPage);
