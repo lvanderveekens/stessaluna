@@ -3,6 +3,7 @@ import ActionTypes from './actionTypes';
 const initialState = {
   authenticated: localStorage.getItem('luna-app:jwt-token') !== null,
   token: localStorage.getItem('luna-app:jwt-token'),
+  refreshToken: localStorage.getItem('luna-app:refresh-token')
 }
 
 export default (state = initialState, action) => {
@@ -10,7 +11,8 @@ export default (state = initialState, action) => {
     case ActionTypes.STORE_TOKEN:
       return {
         ...state,
-        token: action.token,
+        token: action.payload.token,
+        refreshToken: action.payload.refreshToken,
         authenticated: true,
       };
     default:

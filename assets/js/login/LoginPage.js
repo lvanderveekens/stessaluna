@@ -16,7 +16,7 @@ const LoginPage = ({ history, storeToken }) => {
 
     axios.post('/api/token', req)
       .then(res => {
-        storeToken(res.data.token);
+        storeToken(res.data.token, res.data.refreshToken);
         history.push("/");
         resetForm();
       })
@@ -43,7 +43,7 @@ LoginPage.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  storeToken: token => dispatch(storeToken(token)),
+  storeToken: (token, refreshToken) => dispatch(storeToken(token, refreshToken)),
 })
 
 export default connect(null, mapDispatchToProps)(LoginPage);
