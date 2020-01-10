@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import LoginForm from './LoginForm';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { authenticate } from '../auth/actions';
 import axios from 'axios';
+import NavBar from '../nav/NavBar';
 
 const LoginPage = ({ history, authenticate }) => {
 
@@ -27,14 +28,19 @@ const LoginPage = ({ history, authenticate }) => {
   }
 
   return (
-    <Row>
-      <Col />
-      <Col md={6}>
-        <h4>Login</h4>
-        <LoginForm onSubmit={handleSubmit} />
-      </Col>
-      <Col />
-    </Row>
+    <Fragment>
+      <NavBar />
+      <Container>
+        <Row>
+          <Col />
+          <Col md={6}>
+            <h4>Login</h4>
+            <LoginForm onSubmit={handleSubmit} />
+          </Col>
+          <Col />
+        </Row>
+      </Container>
+    </Fragment>
   );
 }
 

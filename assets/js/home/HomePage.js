@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import React, { useState, useEffect, Fragment } from 'react';
+import { Col, Row, Container } from 'react-bootstrap';
 import Feed from '../feed/Feed';
 import NewPostForm from '../post/NewPostForm';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import NavBar from '../nav/NavBar';
 
 const HomePage = (props) => {
   const { authenticated, token } = props;
@@ -29,15 +30,20 @@ const HomePage = (props) => {
   }, []);
 
   return (
-    <Row>
-      <Col md={3}>
-        <NewPostForm fetchPosts={fetchPosts} />
-      </Col>
-      <Col md={6}>
-        <Feed posts={posts} fetchPosts={fetchPosts} />
-      </Col>
-      <Col md={3}></Col>
-    </Row>
+    <Fragment>
+      <NavBar />
+      <Container>
+        <Row>
+          <Col md={3}>
+            <NewPostForm fetchPosts={fetchPosts} />
+          </Col>
+          <Col md={6}>
+            <Feed posts={posts} fetchPosts={fetchPosts} />
+          </Col>
+          <Col md={3}></Col>
+        </Row>
+      </Container>
+    </Fragment>
   );
 }
 

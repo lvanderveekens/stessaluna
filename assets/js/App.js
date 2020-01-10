@@ -1,30 +1,30 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDom from 'react-dom';
-import NavBar from "./nav/NavBar";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import HomePage from './home/HomePage';
 import LoginPage from './login/LoginPage';
-import { Container } from 'react-bootstrap';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 import authReducer from './auth/reducer';
 import PrivateRoute from './route/PrivateRoute';
+import NotFoundPage from './404/NotFoundPage';
 
 const App = () => {
 
   return (
     <Router>
-      <NavBar />
-      <Container>
-        <Switch>
-          <PrivateRoute exact path="/" component={HomePage} />
-          <Route path="/login" component={LoginPage} />
-        </Switch>
-      </Container>
+      <Switch>
+        <PrivateRoute path="/" exact component={HomePage} />
+        <Route path="/login" component={LoginPage} />
+
+        <Route path="/404" component={NotFoundPage} />
+        <Redirect to="/404" />
+      </Switch>
     </Router>
   )
 }
+
 
 const store = createStore(
   combineReducers({ auth: authReducer }),
