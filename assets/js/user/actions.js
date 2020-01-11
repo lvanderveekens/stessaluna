@@ -7,29 +7,22 @@ export const logIn = (username, password, onSuccess) => {
       .then(res => {
         localStorage.setItem('luna-app:jwt-token', res.data.token);
         localStorage.setItem('luna-app:refresh-token', res.data.refreshToken);
-        localStorage.setItem('luna-app:authenticated', true);
-        dispatch(loginSuccess(res.data));
+        dispatch(storeToken(res.data));
+        dispatch(authenticate());
         onSuccess();
       })
-      .catch(error => {
-        console.log(error);
-        dispatch(loginFailure(error));
-      });
-  }
+      .catch(console.log);
+  };
 };
 
-const loginSuccess = ({ token, refreshToken }) => ({
-  type: ActionTypes.LOGIN_SUCCESS,
-  payload: {
-    token: token,
-    refreshToken: refreshToken,
-  }
-});
-
-const loginFailure = (error) => ({
-  type: ActionTypes.LOGIN_FAILURE,
+export const storeToken = ({ token, refreshToken }) => ({
+  type: ActionTypes.STORE_TOKEN,
   payload: { 
-    error 
+    token, 
+    refreshToken,
   }
 });
 
+const authenticate = () => ({
+  type: ActionTypes.AUTHENTICATE,
+});

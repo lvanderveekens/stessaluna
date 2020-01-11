@@ -11,8 +11,8 @@ const LoginPage = ({ history, logIn }) => {
   const handleSubmit = (values) => {
     logIn(values.username, values.password, () => {
       history.push('/');
-    })
-  }
+    });
+  };
 
   return (
     <Fragment>
@@ -29,7 +29,7 @@ const LoginPage = ({ history, logIn }) => {
       </Container>
     </Fragment>
   );
-}
+};
 
 LoginPage.propTypes = {
   history: PropTypes.object.isRequired,
