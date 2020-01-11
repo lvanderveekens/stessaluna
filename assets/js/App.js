@@ -5,13 +5,9 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import HomePage from './home/HomePage';
 import LoginPage from './login/LoginPage';
 import { Provider } from 'react-redux';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import authReducer from './login/reducer';
 import PrivateRoute from './route/PrivateRoute';
 import NotFoundPage from './404/NotFoundPage';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
-
+import store from './redux/store';
 
 const App = () => {
 
@@ -27,14 +23,6 @@ const App = () => {
     </Router>
   )
 }
-
-const store = createStore(
-  combineReducers({ auth: authReducer }), 
-  composeWithDevTools(
-    applyMiddleware(thunk)
-  )
-); 
-
 
 ReactDom.render(
   <Provider store={store}>

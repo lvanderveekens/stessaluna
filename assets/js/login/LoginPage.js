@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LoginForm from './LoginForm';
 import { Row, Col, Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { logIn } from './actions';
+import { logIn } from '../user/actions';
 import NavBar from '../nav/NavBar';
 
 const LoginPage = ({ history, logIn }) => {

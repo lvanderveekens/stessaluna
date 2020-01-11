@@ -6,7 +6,7 @@ const initialState = {
   refreshToken: localStorage.getItem('luna-app:refresh-token')
 }
 
-const authReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.LOGIN_SUCCESS:
       return {
@@ -20,4 +20,4 @@ const authReducer = (state = initialState, action) => {
   }
 }
 
-export default authReducer;
+export default userReducer;
