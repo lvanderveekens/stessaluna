@@ -36,8 +36,11 @@ class PostController extends AbstractController
      */
     public function createPost(Request $request, LoggerInterface $logger): Response
     {
+        // TODO: post should have a foreign key on username
+        $user = $this->getUser();
+
         $post = new Post();
-        $post->setUserName($request->request->get('userName'));
+        $post->setUserName($user->getFirstName());
         $post->setText($request->request->get('text'));
         $post->setCreatedAt(new DateTime('now'));
 

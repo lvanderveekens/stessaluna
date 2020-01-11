@@ -7,7 +7,6 @@ import { Button, Form } from 'react-bootstrap';
 import * as yup from 'yup';
 
 const schema = yup.object({
-  name: yup.string().required("Name is a required field!"),
   text: yup.string().required("Text is a required field!"),
   file: yup.mixed(),
 });
@@ -22,7 +21,6 @@ class NewPostForm extends Component {
 
   handleSubmit(values, { resetForm }) {
     const formData = new FormData();
-    formData.append('userName', values.name);
     formData.append('text', values.text);
     formData.append('image', values.image);
 
@@ -32,9 +30,7 @@ class NewPostForm extends Component {
         this.reset(resetForm);
         this.props.fetchPosts();
       })
-      .catch(error => {
-        console.log(error)
-      });
+      .catch(console.log);
   }
 
   reset(resetForm) {
@@ -49,21 +45,10 @@ class NewPostForm extends Component {
         <Formik
           validationSchema={schema}
           onSubmit={this.handleSubmit}
-          initialValues={{ name: '', text: '', image: null}}
+          initialValues={{ text: '', image: null }}
         >
           {({ handleSubmit, handleChange, setFieldValue, values, errors, }) => (
             <Form className={styles.newPostForm} noValidate onSubmit={handleSubmit}>
-              <Form.Group>
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  value={values.name}
-                  onChange={handleChange}
-                  isInvalid={!!errors.name}
-                />
-                <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
-              </Form.Group>
               <Form.Group>
                 <Form.Label>Text</Form.Label>
                 <Form.Control
@@ -94,12 +79,13 @@ class NewPostForm extends Component {
           )}
         </Formik>
       </Fragment>
-    )
+    );
   }
 }
 
 NewPostForm.propTypes = {
+  // TODO: Get from redux
   fetchPosts: PropTypes.func
 };
 
-export default NewPostForm
+export default NewPostForm;
