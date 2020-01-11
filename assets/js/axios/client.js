@@ -1,8 +1,10 @@
 import axios from 'axios';
+import store from '../redux/store';
+import { storeToken } from '../user/actions';
 
 axios.interceptors.request.use(
   config => {
-    const token = localStorage.getItem('luna-app:jwt-token');
+    const token = store.getState().user.token;
     if (token) {
       config.headers.Authorization = 'Bearer ' + token;
     }
@@ -14,18 +16,18 @@ axios.interceptors.request.use(
 );
 
 axios.interceptors.response.use(
-  (response) => { return response; }, 
+  (response) => { return response; },
   (error) => {
     const originalRequest = error.config;
 
     if (error.response.status === 401 && !originalRequest._processed) {
+      // to avoid an infinite loop
       originalRequest._processed = true;
-      const refreshToken = localStorage.getItem('luna-app:refresh-token');
 
+      const refreshToken = store.getState().user.refreshToken;
       return axios.post('/api/token/refresh', { refreshToken })
         .then(res => {
-          localStorage.setItem('luna-app:jwt-token', res.data.token);
-          localStorage.setItem('luna-app:refresh-token', res.data.refreshToken);
+          store.dispatch(storeToken(res.data));
           return axios(originalRequest);
         });
     }
