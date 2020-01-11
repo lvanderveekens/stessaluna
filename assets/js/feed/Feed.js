@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import axios from 'axios';
+import axios from '../axios/client';
 import PropTypes from 'prop-types';
 import Post from '../post/Post';
 

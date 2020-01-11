@@ -4,7 +4,7 @@ import styles from './NavBar.scss?module'
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import axios from '../axios/client'
 
 const NavBar = ({ authenticated, token }) => {
 
@@ -12,13 +12,7 @@ const NavBar = ({ authenticated, token }) => {
 
   useEffect(() => {
     // TODO: move to redux state currentUser?
-    let config = {}
-    if (authenticated) {
-      // TODO: check expiration date and use refresh token to get a new jwt token 
-      config.headers = { Authorization: "Bearer " + token }
-    }
-
-    axios.get('/api/users/me', config)
+    axios.get('/api/users/me')
       .then(res => { setFirstName(res.data.firstName) })
       .catch(console.log);
 

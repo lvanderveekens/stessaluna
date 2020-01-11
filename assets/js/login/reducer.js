@@ -1,14 +1,14 @@
 import ActionTypes from './actionTypes';
 
 const initialState = {
-  authenticated: localStorage.getItem('luna-app:jwt-token') !== null,
+  authenticated: localStorage.getItem('luna-app:authenticated') === 'true',
   token: localStorage.getItem('luna-app:jwt-token'),
   refreshToken: localStorage.getItem('luna-app:refresh-token')
 }
 
-export default (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.AUTHENTICATE:
+    case ActionTypes.LOGIN_SUCCESS:
       return {
         ...state,
         token: action.payload.token,
@@ -19,3 +19,5 @@ export default (state = initialState, action) => {
       return state;
   }
 }
+
+export default authReducer;

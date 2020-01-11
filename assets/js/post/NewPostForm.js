@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import axios from 'axios';
+import axios from '../axios/client';
 import PropTypes from 'prop-types';
 import styles from './NewPostForm.scss?module'
 import { Formik } from 'formik';

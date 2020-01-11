@@ -3,28 +3,15 @@ import PropTypes from 'prop-types';
 import LoginForm from './LoginForm';
 import { Row, Col, Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { authenticate } from '../auth/actions';
-import axios from 'axios';
+import { logIn } from './actions';
 import NavBar from '../nav/NavBar';
 
-const LoginPage = ({ history, authenticate }) => {
+const LoginPage = ({ history, logIn }) => {
 
-  const handleSubmit = (values, { resetForm }) => {
-    const req = {
-      username: values.username,
-      password: values.password,
-    }
-
-    // TODO: move to logIn redux action?
-    axios.post('/api/token', req)
-      .then(res => {
-        authenticate(res.data.token, res.data.refreshToken);
-        resetForm();
-        history.push("/");
-      })
-      .catch(error => {
-        console.log(error)
-      });
+  const handleSubmit = (values) => {
+    logIn(values.username, values.password, () => {
+      history.push('/');
+    })
   }
 
   return (
@@ -46,11 +33,11 @@ const LoginPage = ({ history, authenticate }) => {
 
 LoginPage.propTypes = {
   history: PropTypes.object.isRequired,
-  authenticate: PropTypes.func.isRequired,
+  logIn: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-  authenticate: (token, refreshToken) => dispatch(authenticate(token, refreshToken)),
-})
+const actionCreators = {
+  logIn,
+};
 
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default connect(null, actionCreators)(LoginPage);
