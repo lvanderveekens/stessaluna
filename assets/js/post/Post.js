@@ -10,21 +10,23 @@ class Post extends Component {
   render() {
     return (
       <div className={styles.post}>
-        <div className={styles.header}>
-          <span><b>{this.props.userName}</b></span>
+        <div className={styles.postHeader}>
+          <div>
+            <span><b>{this.props.userName}</b></span>
+            <div className={styles.postTimestamp}>{moment(this.props.createdAt).format("h:mm A")}</div>
+          </div>
           <div className={styles.deleteButton} onClick={this.props.onDelete}>
             <FontAwesomeIcon icon={faTimes} color="red"/>
           </div>
         </div>
-        <div>{this.props.text}</div>
+        <div className={styles.postText}>{this.props.text}</div>
 
         {this.props.imagePath && (
           <img src={this.props.imagePath} />
         )}
 
-        <div className={styles.timestamp}>{moment(this.props.createdAt).format("h:mm A")}</div>
       </div>
-    )
+    );
   }
 }
 
