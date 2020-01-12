@@ -46,7 +46,7 @@ const LoginForm = ({ onSubmit }) => {
       )}
     </Formik>
   );
-}
+};
 
 LoginForm.propTypes = {
   onSubmit: PropTypes.func.isRequired

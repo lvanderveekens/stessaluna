@@ -3,4 +3,48 @@
     textarea {
         resize: none;
     }
+
+    .imageInput {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+
+    .imageUpload {
+        display: block;
+        width: 100%;
+        padding-top: 100%;
+        position: relative; 
+
+        .imageUploadBox {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background-color: #f1f1f1;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            cursor: pointer;
+
+            .imageUploadIcon {
+                padding-right: 0.4rem;
+            }
+
+            .selectedImage {
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-position: center;
+            }
+        }
+    }
 }
