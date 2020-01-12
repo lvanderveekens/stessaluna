@@ -40,7 +40,7 @@ class Feed extends Component {
             </div>
           )}
       </Fragment>
-    )
+    );
   }
 }
 

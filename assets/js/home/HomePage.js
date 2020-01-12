@@ -5,18 +5,18 @@ import NewPostForm from '../post/NewPostForm';
 import axios from '../axios/client';
 import NavBar from '../nav/NavBar';
 
-const HomePage = (props) => {
+const HomePage = () => {
   const [posts, setPosts] = useState([]);
 
   // TODO: should this be a redux action? because it updates state 
   const fetchPosts = () => {
     axios.get('/api/posts/')
-      .then(res => { setPosts(res.data) })
+      .then(res => { setPosts(res.data); })
       .catch(console.log);
-  }
+  };
 
   useEffect(() => {
-    fetchPosts()
+    fetchPosts();
   }, []);
 
   return (
@@ -35,6 +35,6 @@ const HomePage = (props) => {
       </Container>
     </Fragment>
   );
-}
+};
 
 export default HomePage;
