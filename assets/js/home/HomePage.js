@@ -6,18 +6,6 @@ import axios from '../axios/client';
 import NavBar from '../nav/NavBar';
 
 const HomePage = () => {
-  const [posts, setPosts] = useState([]);
-
-  // TODO: should this be a redux action? because it updates state 
-  const fetchPosts = () => {
-    axios.get('/api/posts/')
-      .then(res => { setPosts(res.data); })
-      .catch(console.log);
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
 
   return (
     <Fragment>
@@ -25,10 +13,10 @@ const HomePage = () => {
       <Container>
         <Row>
           <Col md={3}>
-            <NewPostForm fetchPosts={fetchPosts} />
+            <NewPostForm />
           </Col>
           <Col md={6}>
-            <Feed posts={posts} fetchPosts={fetchPosts} />
+            <Feed />
           </Col>
           <Col md={3}></Col>
         </Row>

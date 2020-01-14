@@ -15,6 +15,8 @@ const schema = yup.object({
 
 const NewPostForm = ({ fetchPosts }) => {
 
+  const fileInput = React.createRef();
+
   const [imageUrl, setImageUrl] = useState("");
   const [imageHover, setImageHover] = useState(false);
 
@@ -27,10 +29,17 @@ const NewPostForm = ({ fetchPosts }) => {
     axios.post('/api/posts/', formData)
       .then(res => {
         console.log(res.data);
-        resetForm();
+        reset(values, resetForm);
         fetchPosts();
       })
       .catch(console.log);
+  };
+
+  const reset = (values, resetForm) => {
+    if (values.image) {
+      fileInput.current.value = null;
+    }
+    resetForm();
   };
 
   return (
@@ -71,32 +80,36 @@ const NewPostForm = ({ fetchPosts }) => {
                 }}
                 isInvalid={!!errors.file}
                 accept=".jpg,.png"
+                ref={fileInput}
               />
 
               <div className={styles.imageUpload}>
                 <div
                   className={styles.imageUploadBox}
+                  style={values.image
+                    ? (imageHover
+                      ? { backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url(${imageUrl}` }
+                      : { backgroundImage: `url(${imageUrl})` })
+                    : {}}
                   onMouseEnter={() => setImageHover(true)}
                   onMouseLeave={() => setImageHover(false)}
                 >
                   {values.image
                     ? (
-                      <div
-                        className={styles.selectedImage}
-                        style={imageHover 
-                          ? { backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url(${imageUrl}` }
-                          : { backgroundImage: `url(${imageUrl})` }
-                        }
-                      >
-                        {imageHover && (
-                          <div className="btn" onClick={() => { setFieldValue("image", null); }}>
-                            <span className={styles.iconWrapper}>
-                              <FontAwesomeIcon icon={faTimesCircle} />
-                            </span>
-                            Remove
-                          </div>
-                        )}
+                      imageHover && (
+                        <div
+                          className="btn"
+                          onClick={() => {
+                            setFieldValue("image", null);
+                            fileInput.current.value = null;
+                          }}
+                        >
+                          <span className={styles.iconWrapper}>
+                            <FontAwesomeIcon icon={faTimesCircle} />
+                          </span>
+                          Remove
                       </div>
+                      )
                     ) : (
                       <Form.Label className="btn" htmlFor="image">
                         <span className={styles.iconWrapper}>

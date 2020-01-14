@@ -1,0 +1,3 @@
+export default {
+  FETCH_POSTS_SUCCESS: 'FETCH_POSTS_SUCCESS',
+};

@@ -1,9 +1,11 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import axios from '../axios/client';
 import PropTypes from 'prop-types';
 import Post from '../post/Post';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../post/actions';
 
-const Feed = ({posts, fetchPosts}) => {
+const Feed = ({ posts, fetchPosts }) => {
 
   const handleDeletePost = (postId) => {
     // TODO: move to redux to get rid of fetchPosts()?
@@ -13,6 +15,10 @@ const Feed = ({posts, fetchPosts}) => {
 
     fetchPosts();
   };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   return (
     <Fragment>
@@ -44,4 +50,12 @@ Feed.propTypes = {
   fetchPosts: PropTypes.func
 };
 
-export default Feed;
+const mapStateToProps = state => ({
+  posts: state.posts
+});
+
+const actionCreators = {
+  fetchPosts,
+};
+
+export default connect(mapStateToProps, actionCreators)(Feed);
