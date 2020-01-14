@@ -11,7 +11,23 @@ export const fetchPosts = () => {
   };
 };
 
+export const deletePost = (id) => {
+  return dispatch => {
+    axios.delete('/api/posts/' + id)
+      .then(res => {
+        console.log(res.data);
+        dispatch(deletePostSuccess(id));
+      })
+      .catch(console.log);
+  };
+};
+
 const fetchPostsSuccess = (posts) => ({
   type: ActionTypes.FETCH_POSTS_SUCCESS,
   payload: posts 
+});
+
+const deletePostSuccess = (id) => ({
+  type: ActionTypes.DELETE_POST_SUCCESS,
+  payload: id
 });
