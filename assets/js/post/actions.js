@@ -9,7 +9,10 @@ export const fetchPosts = () => {
       .then(res => {
         dispatch(fetchPostsSuccess(res.data));
       })
-      .catch(console.log);
+      .catch((error) => {
+        dispatch(fetchPostsFailure());
+        console.log(error);
+      });
   };
 };
 

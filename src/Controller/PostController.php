@@ -40,7 +40,7 @@ class PostController extends AbstractController
         $user = $this->getUser();
 
         $post = new Post();
-        $post->setUserName($user->getFirstName());
+        $post->setUser($user);
         $post->setText($request->request->get('text'));
         $post->setCreatedAt(new DateTime('now'));
 
@@ -93,7 +93,7 @@ class PostController extends AbstractController
         $dto = new PostDto();
         $dto->setId($post->getId());
         $dto->setText($post->getText());
-        $dto->setUserName($post->getUserName());
+        $dto->setUserName($post->getUser()->getFirstName() . ' ' . $post->getUser()->getLastName());
         $dto->setCreatedAt($post->getCreatedAt());
 
         if ($post->getImageFilename()) {

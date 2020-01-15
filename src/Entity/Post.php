@@ -22,12 +22,6 @@ class Post
     private $text;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    // TODO: rename to 'author' later
-    private $userName;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -36,6 +30,12 @@ class Post
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $imageFilename;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -50,18 +50,6 @@ class Post
     public function setText(string $text): self
     {
         $this->text = $text;
-        return $this;
-    }
-
-    public function getUserName(): ?string
-    {
-        return $this->userName;
-    }
-
-    public function setUserName(string $userName): self
-    {
-        $this->userName = $userName;
-
         return $this;
     }
 
@@ -85,6 +73,18 @@ class Post
     public function setImageFilename(?string $imageFilename): self
     {
         $this->imageFilename = $imageFilename;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
