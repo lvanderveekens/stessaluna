@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from 'react';
-import axios from '../axios/client';
 import PropTypes from 'prop-types';
 import styles from './NewPostForm.scss?module'
 import { Formik } from 'formik';
@@ -7,13 +6,15 @@ import { Button, Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
+import { createPost } from './actions';
 
 const schema = yup.object({
   text: yup.string().required("Text is a required field!"),
   file: yup.mixed(),
 });
 
-const NewPostForm = ({ fetchPosts }) => {
+const NewPostForm = ({ createPost }) => {
 
   const fileInput = React.createRef();
 
@@ -21,18 +22,7 @@ const NewPostForm = ({ fetchPosts }) => {
   const [imageHover, setImageHover] = useState(false);
 
   const handleSubmit = (values, { resetForm }) => {
-    const formData = new FormData();
-    formData.append('text', values.text);
-    formData.append('image', values.image);
-
-    // TODO: should dispatch addPost here
-    axios.post('/api/posts/', formData)
-      .then(res => {
-        console.log(res.data);
-        reset(values, resetForm);
-        fetchPosts();
-      })
-      .catch(console.log);
+    createPost(values.text, values.image, () => reset(values, resetForm));
   };
 
   const reset = (values, resetForm) => {
@@ -130,8 +120,11 @@ const NewPostForm = ({ fetchPosts }) => {
 };
 
 NewPostForm.propTypes = {
-  // TODO: connect to redux
-  fetchPosts: PropTypes.func
+  createPost: PropTypes.func
 };
 
-export default NewPostForm;
+const actionCreators = {
+  createPost,
+};
+
+export default connect(null, actionCreators)(NewPostForm);

@@ -11,6 +11,22 @@ export const fetchPosts = () => {
   };
 };
 
+export const createPost = (text, image, onSuccess) => {
+  return dispatch => {
+    const formData = new FormData();
+    formData.append('text', text);
+    formData.append('image', image);
+
+    axios.post('/api/posts/', formData)
+      .then(res => {
+        console.log(res.data);
+        dispatch(createPostSuccess(res.data));
+        onSuccess();
+      })
+      .catch(console.log);
+  };
+};
+
 export const deletePost = (id) => {
   return dispatch => {
     axios.delete('/api/posts/' + id)
@@ -25,6 +41,11 @@ export const deletePost = (id) => {
 const fetchPostsSuccess = (posts) => ({
   type: ActionTypes.FETCH_POSTS_SUCCESS,
   payload: posts 
+});
+
+const createPostSuccess = (post) => ({
+  type: ActionTypes.CREATE_POST_SUCCESS,
+  payload: post 
 });
 
 const deletePostSuccess = (id) => ({

@@ -65,8 +65,7 @@ class PostController extends AbstractController
         $entityManager->persist($post);
         $entityManager->flush();
 
-        // TODO: return DTO of created post
-        return new Response('Saved new post with id ' . $post->getId());
+        return $this->json($this->convertToDto($post));
     }
 
     /**
