@@ -1,8 +1,7 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
 import Feed from '../feed/Feed';
-import NewPostForm from '../post/NewPostForm';
-import axios from '../axios/client';
+import NewPostForm from '../post/new-post/NewPostForm';
 import NavBar from '../nav/NavBar';
 
 const HomePage = () => {

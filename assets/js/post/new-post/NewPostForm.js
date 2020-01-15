@@ -1,13 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
-import styles from './NewPostForm.scss?module'
+import styles from './NewPostForm.scss?module';
 import { Formik } from 'formik';
 import { Button, Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { createPost } from './actions';
+import { createPost } from '../actions';
 
 const schema = yup.object({
   text: yup.string().required("Text is a required field!"),
@@ -94,17 +94,13 @@ const NewPostForm = ({ createPost }) => {
                             fileInput.current.value = null;
                           }}
                         >
-                          <span className={styles.iconWrapper}>
-                            <FontAwesomeIcon icon={faTimesCircle} />
-                          </span>
+                          <span className="mr-2"><FontAwesomeIcon icon={faTimesCircle} /></span>
                           Remove
                       </div>
                       )
                     ) : (
                       <Form.Label className="btn" htmlFor="image">
-                        <span className={styles.iconWrapper}>
-                          <FontAwesomeIcon icon={faUpload} />
-                        </span>
+                        <span className="mr-2"><FontAwesomeIcon icon={faUpload} /></span>
                         Upload
                       </Form.Label>
                     )}

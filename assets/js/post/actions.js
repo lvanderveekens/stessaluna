@@ -3,6 +3,8 @@ import axios from '../axios/client';
 
 export const fetchPosts = () => {
   return dispatch => {
+    dispatch(fetchPostsBegin());
+
     axios.get('/api/posts/')
       .then(res => {
         dispatch(fetchPostsSuccess(res.data));
@@ -38,17 +40,25 @@ export const deletePost = (id) => {
   };
 };
 
+const fetchPostsBegin = () => ({
+  type: ActionTypes.FETCH_POSTS_BEGIN,
+});
+
 const fetchPostsSuccess = (posts) => ({
   type: ActionTypes.FETCH_POSTS_SUCCESS,
-  payload: posts 
+  payload: { posts }
+});
+
+const fetchPostsFailure = () => ({
+  type: ActionTypes.FETCH_POSTS_FAILURE,
 });
 
 const createPostSuccess = (post) => ({
   type: ActionTypes.CREATE_POST_SUCCESS,
-  payload: post 
+  payload: { post }
 });
 
 const deletePostSuccess = (id) => ({
   type: ActionTypes.DELETE_POST_SUCCESS,
-  payload: id
+  payload: { id }
 });

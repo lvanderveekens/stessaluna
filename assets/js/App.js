@@ -7,7 +7,7 @@ import LoginPage from './login/LoginPage';
 import { Provider } from 'react-redux';
 import PrivateRoute from './route/PrivateRoute';
 import NotFoundPage from './not-found/NotFoundPage';
-import store from './redux/store';
+import store from './store/store';
 import Helmet from 'react-helmet';
 
 const App = () => {

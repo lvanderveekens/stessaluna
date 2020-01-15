@@ -7,7 +7,7 @@ import postReducer from "../post/reducer";
 const store = createStore(
   combineReducers({
     user: userReducer,
-    posts: postReducer,
+    post: postReducer,
   }), 
   composeWithDevTools(
     applyMiddleware(thunk)
