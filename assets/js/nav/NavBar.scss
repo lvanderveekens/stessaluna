@@ -4,4 +4,12 @@
     a {
         color: white;
     }
+
+    .logoutText {
+
+        &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
 }

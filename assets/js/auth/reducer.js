@@ -12,12 +12,23 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload.token,
-        refreshToken: action.payload.refreshToken,
+        refreshToken: action.payload.refreshToken
       };
-    case ActionTypes.AUTHENTICATE:
+    case ActionTypes.DELETE_TOKEN:
       return {
         ...state,
-        authenticated: true,
+        token: null,
+        refreshToken: null
+      };
+    case ActionTypes.LOGIN_SUCCESS:
+      return {
+        ...state,
+        authenticated: true
+      };
+    case ActionTypes.LOGOUT_SUCCESS:
+      return {
+        ...state,
+        authenticated: false
       };
     default:
       return state;

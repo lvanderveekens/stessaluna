@@ -1,12 +1,12 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import userReducer from "../user/reducer";
+import authReducer from "../auth/reducer";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from "redux-thunk";
 import postReducer from "../post/reducer";
 
 const store = createStore(
   combineReducers({
-    user: userReducer,
+    auth: authReducer,
     post: postReducer,
   }), 
   composeWithDevTools(
@@ -15,8 +15,19 @@ const store = createStore(
 ); 
 
 store.subscribe(() => {
-  localStorage.setItem('luna-app:jwt-token', store.getState().user.token);
-  localStorage.setItem('luna-app:refresh-token', store.getState().user.refreshToken);
+  const token = store.getState().auth.token;
+  if (token != null) {
+    localStorage.setItem('luna-app:jwt-token', token);
+  } else {
+    localStorage.removeItem('luna-app:jwt-token');
+  }
+
+  const refreshToken = store.getState().auth.refreshToken;
+  if (refreshToken != null) {
+    localStorage.setItem('luna-app:refresh-token', refreshToken);
+  } else {
+    localStorage.removeItem('luna-app:refresh-token');
+  }
 });
 
 export default store;

@@ -1,11 +1,11 @@
 import axios from 'axios';
 import store from '../store/store';
-import { storeToken } from '../user/actions';
+import { storeToken } from '../auth/actions';
 import history from '../history/history';
 
 axios.interceptors.request.use(
   config => {
-    const token = store.getState().user.token;
+    const token = store.getState().auth.token;
     if (token) {
       config.headers.Authorization = 'Bearer ' + token;
     }
@@ -29,7 +29,7 @@ axios.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._processed) {
       originalRequest._processed = true;
 
-      const refreshToken = store.getState().user.refreshToken;
+      const refreshToken = store.getState().auth.refreshToken;
       return axios.post('/api/token/refresh', { refreshToken })
         .then(res => {
           store.dispatch(storeToken(res.data));

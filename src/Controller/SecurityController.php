@@ -26,6 +26,6 @@ class SecurityController extends AbstractController
         }
         $em->flush();
 
-        return new Response('Removed ' . count($refreshTokens) . ' refresh tokens.');
+        return new Response('Removed ' . count($refreshTokens) . ' refresh token(s).');
     }
 }

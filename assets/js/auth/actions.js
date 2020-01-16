@@ -6,8 +6,19 @@ export const logIn = (username, password, onSuccess) => {
     axios.post('/api/token', { username, password })
       .then(res => {
         dispatch(storeToken(res.data));
-        dispatch(authenticate());
+        dispatch(logInSuccess());
         onSuccess();
+      })
+      .catch(console.log);
+  };
+};
+
+export const logOut = () => {
+  return dispatch => {
+    axios.post('/api/logout')
+      .then(res => {
+        dispatch(logOutSuccess());
+        dispatch(deleteToken(res.data));
       })
       .catch(console.log);
   };
@@ -21,6 +32,14 @@ export const storeToken = ({ token, refreshToken }) => ({
   }
 });
 
-const authenticate = () => ({
-  type: ActionTypes.AUTHENTICATE,
+export const deleteToken = () => ({
+  type: ActionTypes.DELETE_TOKEN,
+});
+
+const logInSuccess = () => ({
+  type: ActionTypes.LOGIN_SUCCESS,
+});
+
+const logOutSuccess = () => ({
+  type: ActionTypes.LOGOUT_SUCCESS,
 });
