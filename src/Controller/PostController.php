@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Dto\PostDto;
 use App\Entity\Post;
+use App\Service\FileUploader;
 use DateTime;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,9 +35,8 @@ class PostController extends AbstractController
     /**
      * @Route("/", methods={"POST"})
      */
-    public function createPost(Request $request, LoggerInterface $logger): Response
+    public function createPost(Request $request, FileUploader $fileUploader): Response
     {
-        // TODO: post should have a foreign key on username
         $user = $this->getUser();
 
         $post = new Post();
@@ -44,21 +44,10 @@ class PostController extends AbstractController
         $post->setText($request->request->get('text'));
         $post->setCreatedAt(new DateTime('now'));
 
-        $uploadedImage = $request->files->get('image');
-
-        if ($uploadedImage) {
-            // TODO: move to file upload service -> https://symfony.com/doc/current/controller/upload_file.html
-            //https://symfonycasts.com/screencast/symfony-uploads/public-path#play
-            $originalFilename = pathinfo($uploadedImage->getClientOriginalName(), PATHINFO_FILENAME);
-            // this is needed to safely include the file name as part of the URL
-            $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-            $newFilename = $safeFilename . '-' . uniqid() . '.' . $uploadedImage->guessExtension();
-
-            $uploadedImage->move(
-                $this->getParameter('images_directory'),
-                $newFilename
-            );
-            $post->setImageFilename($newFilename);
+        $postImage = $request->files->get('image');
+        if ($postImage) {
+            $imageFilename = $fileUploader->upload($postImage, $this->getParameter('images_directory'));
+            $post->setImageFilename($imageFilename);
         }
 
         $entityManager = $this->getDoctrine()->getManager();
