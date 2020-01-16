@@ -1,5 +1,5 @@
 import ActionTypes from "./actionTypes";
-import axios from '../axios/client';
+import axios from '../http/client';
 
 export const logIn = (username, password, onSuccess) => {
   return dispatch => {

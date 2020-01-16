@@ -4,7 +4,7 @@ import styles from './NavBar.scss?module';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import axios from '../axios/client';
+import axios from '../http/client';
 
 const NavBar = ({ authenticated }) => {
 

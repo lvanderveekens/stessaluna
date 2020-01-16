@@ -1,6 +1,7 @@
 import axios from 'axios';
 import store from '../store/store';
 import { storeToken } from '../user/actions';
+import history from '../history/history';
 
 axios.interceptors.request.use(
   config => {
@@ -20,8 +21,12 @@ axios.interceptors.response.use(
   (error) => {
     const originalRequest = error.config;
 
+    if (error.response.status === 401 && originalRequest.url === '/api/token/refresh') {
+      history.push('/login');
+      return Promise.reject(error);
+    }
+
     if (error.response.status === 401 && !originalRequest._processed) {
-      // to avoid an infinite loop
       originalRequest._processed = true;
 
       const refreshToken = store.getState().user.refreshToken;
