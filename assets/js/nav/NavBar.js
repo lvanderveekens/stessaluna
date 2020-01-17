@@ -27,7 +27,7 @@ const NavBar = ({ authenticated, logOut }) => {
   };
 
   return (
-    <Navbar className={styles.nav} bg="primary" variant="dark">
+    <Navbar className={`${styles.nav} mb-4`} bg="primary" variant="dark">
       <Container>
         <Navbar.Brand href="/">Luna-app</Navbar.Brand>
         {authenticated && firstName != ""

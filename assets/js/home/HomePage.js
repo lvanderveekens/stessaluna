@@ -11,10 +11,10 @@ const HomePage = () => {
       <NavBar />
       <Container>
         <Row>
-          <Col md={4}>
+          <Col md={4} className="mb-4">
             <NewPostForm />
           </Col>
-          <Col md={8}>
+          <Col md={8} className="mb-4">
             <Feed />
           </Col>
         </Row>
