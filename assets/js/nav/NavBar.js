@@ -11,13 +11,21 @@ import history from '../history/history';
 const NavBar = ({ authenticated, logOut }) => {
 
   const [firstName, setFirstName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // TODO: move to redux state currentUser?
     if (authenticated) {
+      setLoading(true);
       axios.get('/api/users/me')
-        .then(res => { setFirstName(res.data.firstName); })
-        .catch(console.log);
+        .then(res => {
+          setFirstName(res.data.firstName);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.log(err);
+          setLoading(false);
+        });
     }
   }, [authenticated]);
 
@@ -30,17 +38,20 @@ const NavBar = ({ authenticated, logOut }) => {
     <Navbar className={`${styles.nav} mb-4`} bg="primary" variant="dark">
       <Container>
         <Navbar.Brand href="/">Luna-app</Navbar.Brand>
-        {authenticated && firstName != ""
-          ? (
-            <Fragment>
-              <Navbar.Text>
-                <span className="pr-3">Signed in as: <a href="#login">{firstName}</a></span>
-                <span className={styles.logoutText} onClick={handleLogoutClick}>Logout</span>
-              </Navbar.Text>
-            </Fragment>
-          ) : (
-            <Link to="/login">Login</Link>
-          )}
+
+        {!loading && (
+          authenticated && firstName != ""
+            ? (
+              <Fragment>
+                <Navbar.Text>
+                  <span className="pr-3">Signed in as: <a href="#login">{firstName}</a></span>
+                  <span className={styles.logoutText} onClick={handleLogoutClick}>Logout</span>
+                </Navbar.Text>
+              </Fragment>
+            ) : (
+              <Link to="/login">Login</Link>
+            )
+        )}
       </Container>
     </Navbar>
   );

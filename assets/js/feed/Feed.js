@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { fetchPosts, deletePost } from '../post/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import moment from 'moment';
 
 const Feed = ({ loading, posts, fetchPosts, deletePost }) => {
 
@@ -21,18 +22,17 @@ const Feed = ({ loading, posts, fetchPosts, deletePost }) => {
         : (posts.length == 0
           ? (<div>No posts found!</div>)
           : posts
-            .sort((p1, p2) => p2.id - p1.id)
+            .sort((post, other) => new Date(other.createdAt) - new Date(post.createdAt))
             .map((post, index) =>
               <Post
                 key={index}
                 userName={post.userName}
                 text={post.text}
                 imagePath={post.imagePath}
-                createdAt={post.createdAt}
+                timestamp={moment(post.createdAt).fromNow()}
                 onDelete={() => deletePost(post.id)}
               />)
         )}
-
     </Fragment>
   );
 };
