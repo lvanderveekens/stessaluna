@@ -31,6 +31,7 @@ const Feed = ({ loading, posts, fetchPosts, deletePost }) => {
                 imagePath={post.imagePath}
                 timestamp={moment(post.createdAt).fromNow()}
                 onDelete={() => deletePost(post.id)}
+                avatarPath={post.avatarPath}
               />)
         )}
     </Fragment>

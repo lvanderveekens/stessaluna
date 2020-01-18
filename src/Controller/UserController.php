@@ -29,10 +29,14 @@ class UserController extends AbstractController
     private static function convertToDto(User $user): UserDto
     {
         $dto = new UserDto();
-        $dto->setId($user->getId());
         $dto->setUserName($user->getUserName());
         $dto->setFirstName($user->getFirstName());
         $dto->setLastName($user->getLastName());
+
+        if ($user->getAvatarFilename()) {
+            // TODO: move base upload path to a common place
+            $dto->setAvatarPath('/uploads/avatars/' .  $user->getAvatarFilename());
+        }
         return $dto;
     }
 }

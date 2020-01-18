@@ -4,24 +4,13 @@ namespace App\Dto;
 
 class UserDto
 {
-    private $id;
-
     private $userName;
 
     private $firstName;
 
     private $lastName;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
+    private $avatarPath;
 
     public function getUserName(): ?string
     {
@@ -53,6 +42,17 @@ class UserDto
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+        return $this;
+    }
+
+    public function getAvatarPath(): ?string
+    {
+        return $this->avatarPath;
+    }
+
+    public function setAvatarPath(string $avatarPath): self
+    {
+        $this->avatarPath= $avatarPath;
         return $this;
     }
 }

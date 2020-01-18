@@ -1,14 +1,36 @@
 .nav {
 
+    .container {
+        height: 50px;
+    }
+
+    color: rgba(255, 255, 255, 0.5);
+
     a {
         color: white;
     }
 
-    .logoutText {
+    .accountWrapper {
 
-        &:hover {
-            text-decoration: underline;
-            cursor: pointer;
+        .avatar {
+            width: 50px;
+            height: 50px;
+
+            border: solid 3px white;
+            border-radius: 50%;
+        }
+
+        .userText {
+            padding-right: 1rem;
+        }
+
+        .logoutText {
+            padding-right: 1rem;
+
+            &:hover {
+                text-decoration: underline;
+                cursor: pointer;
+            }
         }
     }
 }

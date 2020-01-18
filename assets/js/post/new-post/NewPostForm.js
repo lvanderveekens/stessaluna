@@ -45,6 +45,7 @@ const NewPostForm = ({ createPost }) => {
             <Form.Group>
               <Form.Label>Text</Form.Label>
               <Form.Control
+                className={styles.textInput}
                 as="textarea"
                 type="text"
                 name="text"

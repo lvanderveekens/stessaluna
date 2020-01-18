@@ -14,6 +14,8 @@ class PostDto
 
     private $imagePath;
 
+    private $avatarPath;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -66,6 +68,17 @@ class PostDto
     public function setImagePath(?string $imagePath): self
     {
         $this->imagePath= $imagePath;
+        return $this;
+    }
+
+    public function getAvatarPath(): ?string
+    {
+        return $this->avatarPath;
+    }
+
+    public function setAvatarPath(?string $avatarPath): self
+    {
+        $this->avatarPath = $avatarPath;
         return $this;
     }
 }

@@ -3,18 +3,35 @@
     margin: 10px 0 10px 0;
     border: 1px solid #ced4da;
 
-    .postHeader {
+    .header {
         display: flex;
         justify-content: space-between;
+        vertical-align: middle;
         margin-bottom: 1rem;
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+
+            padding: 3px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .usernameTimestampWrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            .timestamp {
+                font-size: 0.6rem;
+            }
+        }
     }
 
-    .postTimestamp {
-        font-size: 0.6rem;
-    }
-
-    .postText {
+    .text {
         margin-bottom: 1rem;
+        word-wrap: break-word; 
     }
 
     .deleteButton:hover {
@@ -23,7 +40,7 @@
         opacity: .6;
     }
 
-    .postImage {
+    .image {
         width: 100%;
         display: block;
         margin-right: auto;

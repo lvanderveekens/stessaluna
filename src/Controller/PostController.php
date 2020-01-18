@@ -6,6 +6,8 @@ use App\Dto\PostDto;
 use App\Entity\Post;
 use App\Service\FileUploader;
 use DateTime;
+use ErrorException;
+use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,6 +20,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PostController extends AbstractController
 {
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * @Route("/", methods={"GET"})
      */
@@ -67,8 +79,12 @@ class PostController extends AbstractController
         $post = $entityManager->getRepository(Post::class)->find($id);
 
         if ($post->getImageFilename()) {
-            $imagesDir = $this->getParameter('images_directory');
-            unlink($imagesDir . '/' . $post->getImageFilename());
+            try {
+                $imagesDir = $this->getParameter('images_directory');
+                unlink($imagesDir . '/' . $post->getImageFilename());
+            } catch (Exception $e) {
+                $this->logger->error($e);
+            }
         }
 
         $entityManager->remove($post);
@@ -84,6 +100,11 @@ class PostController extends AbstractController
         $dto->setText($post->getText());
         $dto->setUserName($post->getUser()->getFirstName() . ' ' . $post->getUser()->getLastName());
         $dto->setCreatedAt($post->getCreatedAt());
+
+        if ($post->getUser()->getAvatarFilename()) {
+            // TODO: move base upload path to a common place
+            $dto->setAvatarPath('/uploads/avatars/' .  $post->getUser()->getAvatarFilename());
+        }
 
         if ($post->getImageFilename()) {
             // TODO: move base upload path to a common place
