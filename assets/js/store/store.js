@@ -15,6 +15,7 @@ const store = createStore(
 ); 
 
 store.subscribe(() => {
+  // TODO: use cookies instead of localstorage
   const token = store.getState().auth.token;
   if (token != null) {
     localStorage.setItem('luna-app:jwt-token', token);

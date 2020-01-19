@@ -8,31 +8,35 @@ import axios from '../http/client';
 import { logOut } from '../auth/actions';
 import history from '../history/history';
 
-const NavBar = ({ authenticated, logOut }) => {
+const NavBar = ({ loggedIn, user, logOut }) => {
 
-  const [user, setUser] = useState({})
+  // const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    // TODO: move to redux state currentUser?
-    if (authenticated) {
-      setLoading(true);
-      axios.get('/api/users/me')
-        .then(res => {
-          console.log(res.data);
-          setUser(res.data);
-          setLoading(false);
-        })
-        .catch(err => {
-          console.log(err);
-          setLoading(false);
-        });
-    }
-  }, [authenticated]);
+  // useEffect(() => {
+  //   // TODO: move to redux state currentUser?
+  //   if (loggedIn) {
+  //     setLoading(true);
+  //     axios.get('/api/users/me')
+  //       .then(res => {
+  //         console.log(res.data);
+  //         setUser(res.data);
+  //         setLoading(false);
+  //       })
+  //       .catch(err => {
+  //         console.log(err);
+  //         setLoading(false);
+  //       });
+  //   }
+  // }, [loggedIn]);
 
   const handleLogoutClick = () => {
     logOut();
     history.push('/login');
+  };
+
+  user = {
+    firstName: "aap",
   };
 
   return (
@@ -41,7 +45,7 @@ const NavBar = ({ authenticated, logOut }) => {
         <Navbar.Brand href="/">Luna-app</Navbar.Brand>
 
         {!loading && (
-          authenticated && user.firstName != ""
+          loggedIn && user.firstName
             ? (
               <Fragment>
                 <span className={styles.accountWrapper}>
@@ -62,12 +66,14 @@ const NavBar = ({ authenticated, logOut }) => {
 };
 
 NavBar.propTypes = {
-  authenticated: PropTypes.bool.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
+  user: PropTypes.object,
   logOut: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  authenticated: state.auth.authenticated
+  loggedIn: state.auth.loggedIn,
+  user: state.auth.user
 });
 
 const actionCreators = {

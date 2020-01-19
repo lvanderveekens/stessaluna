@@ -29,8 +29,7 @@ axios.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._processed) {
       originalRequest._processed = true;
 
-      const refreshToken = store.getState().auth.refreshToken;
-      return axios.post('/api/token/refresh', { refreshToken })
+      return axios.post('/api/token/refresh', { refreshToken: store.getState().auth.refreshToken })
         .then(res => {
           store.dispatch(storeToken(res.data));
           return axios(originalRequest);

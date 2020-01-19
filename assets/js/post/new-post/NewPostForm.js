@@ -25,6 +25,8 @@ const NewPostForm = ({ createPost }) => {
     createPost(values.text, values.image, () => reset(values, resetForm));
   };
 
+  const test = "aap";
+
   const reset = (values, resetForm) => {
     if (values.image) {
       fileInput.current.value = null;
@@ -50,6 +52,7 @@ const NewPostForm = ({ createPost }) => {
                 type="text"
                 name="text"
                 value={values.text}
+                placeholder={`What's up, ${test}?`}
                 onChange={handleChange}
                 isInvalid={!!errors.text}
               />

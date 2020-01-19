@@ -1,17 +1,23 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { Fragment } from 'react';
-import ReactDom from 'react-dom';
+import React, { Fragment, useEffect } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import HomePage from './home/HomePage';
 import LoginPage from './login/LoginPage';
-import { Provider } from 'react-redux';
+import { connect } from 'react-redux';
 import PrivateRoute from './route/PrivateRoute';
 import NotFoundPage from './not-found/NotFoundPage';
-import store from './store/store';
 import Helmet from 'react-helmet';
 import history from './history/history';
 
-const App = () => {
+const App = ({ loggedIn }) => {
+
+  useEffect(() => {
+    console.log("APP");
+    console.log(loggedIn);
+    // if (loggedIn) {
+      // TODO: fetch user here and store in redux
+    // };
+  });
 
   return (
     <Fragment>
@@ -32,9 +38,8 @@ const App = () => {
   );
 };
 
-ReactDom.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);
+const mapStateToProps = state => ({
+  loggedIn: state.auth.loggedIn,
+});
+
+export default connect(mapStateToProps)(App);

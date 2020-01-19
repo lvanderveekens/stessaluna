@@ -6,10 +6,19 @@ export const logIn = (username, password, onSuccess) => {
     axios.post('/api/token', { username, password })
       .then(res => {
         dispatch(storeToken(res.data));
-        dispatch(logInSuccess());
-        onSuccess();
+
+        // TODO: move
+        axios.get('/api/users/me')
+          .then(res => {
+            dispatch(success(res.data));
+            onSuccess();
+          });
       })
       .catch(console.log);
+  };
+
+  function success(user) {
+    return { type: ActionTypes.LOGIN_SUCCESS, payload: { user } };
   };
 };
 
@@ -17,29 +26,18 @@ export const logOut = () => {
   return dispatch => {
     axios.post('/api/logout')
       .then(res => {
-        dispatch(logOutSuccess());
-        dispatch(deleteToken(res.data));
+        dispatch(deleteToken());
+        dispatch(success());
       })
       .catch(console.log);
   };
+
+  function success() { return { type: ActionTypes.LOGOUT_SUCCESS }; };
 };
 
 export const storeToken = ({ token, refreshToken }) => ({
   type: ActionTypes.STORE_TOKEN,
-  payload: { 
-    token, 
-    refreshToken,
-  }
+  payload: { token, refreshToken, }
 });
 
-export const deleteToken = () => ({
-  type: ActionTypes.DELETE_TOKEN,
-});
-
-const logInSuccess = () => ({
-  type: ActionTypes.LOGIN_SUCCESS,
-});
-
-const logOutSuccess = () => ({
-  type: ActionTypes.LOGOUT_SUCCESS,
-});
+export const deleteToken = () => ({ type: ActionTypes.DELETE_TOKEN });
