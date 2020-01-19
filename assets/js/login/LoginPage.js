@@ -9,9 +9,14 @@ import NavBar from '../nav/NavBar';
 const LoginPage = ({ history, logIn }) => {
 
   const handleSubmit = (values) => {
-    logIn(values.username, values.password, () => {
-      history.push('/');
-    });
+    logIn(values.username, values.password)
+      .then(() => {
+        history.push('/');
+      })
+      .catch((error) => {
+        // TODO: show error on screen?
+        console.log("AAP2");
+      });
   };
 
   return (

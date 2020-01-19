@@ -17,23 +17,19 @@ const authReducer = (state = initialState, action) => {
         token: action.payload.token,
         refreshToken: action.payload.refreshToken
       };
-    case ActionTypes.DELETE_TOKEN:
-      return {
-        ...state,
-        token: null,
-        refreshToken: null
-      };
     case ActionTypes.LOGIN_SUCCESS:
       return {
         ...state,
         loggedIn: true,
-        user: action.payload.user,
       };
     case ActionTypes.LOGOUT_SUCCESS:
       return {
-        ...state,
         loggedIn: false,
-        user: null
+      };
+    case ActionTypes.FETCH_CURRENT_USER_SUCCESS:
+      return {
+        ...state,
+        user: action.payload.user,
       };
     default:
       return state;

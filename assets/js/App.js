@@ -8,16 +8,16 @@ import PrivateRoute from './route/PrivateRoute';
 import NotFoundPage from './not-found/NotFoundPage';
 import Helmet from 'react-helmet';
 import history from './history/history';
+import { fetchCurrentUser } from './auth/actions';
+import PropTypes from 'prop-types';
 
-const App = ({ loggedIn }) => {
+const App = ({ loggedIn, fetchUser }) => {
 
   useEffect(() => {
-    console.log("APP");
-    console.log(loggedIn);
-    // if (loggedIn) {
-      // TODO: fetch user here and store in redux
-    // };
-  });
+    if (loggedIn) {
+      fetchUser();
+    };
+  }, []);
 
   return (
     <Fragment>
@@ -38,8 +38,17 @@ const App = ({ loggedIn }) => {
   );
 };
 
+App.propTypes = {
+  loggedIn: PropTypes.bool.isRequired,
+  fetchUser: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = state => ({
   loggedIn: state.auth.loggedIn,
 });
 
-export default connect(mapStateToProps)(App);
+const actionCreators = {
+  fetchUser: fetchCurrentUser,
+};
+
+export default connect(mapStateToProps, actionCreators)(App);
