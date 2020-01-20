@@ -14,7 +14,7 @@ const schema = yup.object({
   file: yup.mixed(),
 });
 
-const NewPostForm = ({ createPost }) => {
+const NewPostForm = ({ user, createPost }) => {
 
   const fileInput = React.createRef();
 
@@ -24,8 +24,6 @@ const NewPostForm = ({ createPost }) => {
   const handleSubmit = (values, { resetForm }) => {
     createPost(values.text, values.image, () => reset(values, resetForm));
   };
-
-  const test = "aap";
 
   const reset = (values, resetForm) => {
     if (values.image) {
@@ -52,7 +50,7 @@ const NewPostForm = ({ createPost }) => {
                 type="text"
                 name="text"
                 value={values.text}
-                placeholder={`What's up, ${test}?`}
+                placeholder={user && `What's up, ${user.firstName}?`}
                 onChange={handleChange}
                 isInvalid={!!errors.text}
               />
@@ -120,11 +118,16 @@ const NewPostForm = ({ createPost }) => {
 };
 
 NewPostForm.propTypes = {
-  createPost: PropTypes.func
+  user: PropTypes.object,
+  createPost: PropTypes.func.isRequired
 };
+
+const mapStateToProps = (state) => ({
+  user: state.auth.user
+});
 
 const actionCreators = {
   createPost,
 };
 
-export default connect(null, actionCreators)(NewPostForm);
+export default connect(mapStateToProps, actionCreators)(NewPostForm);
