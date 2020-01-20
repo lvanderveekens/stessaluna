@@ -21,11 +21,21 @@
         }
 
         .userText {
-            padding-right: 1rem;
+            display: none;
+
+            @media (min-width: 576px) {
+                display: inline;
+                padding-right: 1rem;
+            }
         }
 
         .logoutText {
-            padding-right: 1rem;
+            display: none;
+
+            @media (min-width: 576px) {
+                display: inline;
+                padding-right: 1rem;
+            }
 
             &:hover {
                 text-decoration: underline;

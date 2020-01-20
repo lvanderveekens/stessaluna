@@ -18,8 +18,7 @@ const NavBar = ({ user, logOut }) => {
     <Navbar className={`${styles.nav} mb-4`} bg="primary" variant="dark">
       <Container className={styles.container}>
         <Navbar.Brand href="/">Luna-app</Navbar.Brand>
-
-        {user 
+        {user
           ? (
             <span className={styles.accountWrapper}>
               <span className={styles.userText}>Signed in as: <a href="#login">{user.firstName}</a></span>
