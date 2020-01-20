@@ -1,21 +1,24 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import LoginForm from './LoginForm';
 import { Row, Col, Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { logIn } from '../auth/actions';
 import NavBar from '../nav/NavBar';
+import styles from './LoginPage.scss?module';
 
 const LoginPage = ({ history, logIn }) => {
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleSubmit = (values) => {
+    setErrorMessage("");
     logIn(values.username, values.password)
       .then(() => {
         history.push('/');
       })
       .catch((error) => {
-        // TODO: show error on screen?
-        console.log("AAP2");
+        setErrorMessage(error.response.data.message);
       });
   };
 
@@ -28,6 +31,9 @@ const LoginPage = ({ history, logIn }) => {
           <Col md={6}>
             <h4>Login</h4>
             <LoginForm onSubmit={handleSubmit} />
+            {errorMessage && (
+              <div className={styles.errorMessage}>{errorMessage}</div>
+            )}
           </Col>
           <Col />
         </Row>

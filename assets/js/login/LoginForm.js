@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
+import styles from './LoginForm.scss?module';
 
 const LoginForm = ({ onSubmit }) => {
 
@@ -18,7 +19,7 @@ const LoginForm = ({ onSubmit }) => {
       initialValues={{ username: '', password: '' }}
     >
       {({ handleSubmit, handleChange, values, errors, }) => (
-        <Form noValidate onSubmit={handleSubmit}>
+        <Form noValidate className={styles.loginForm} onSubmit={handleSubmit}>
           <Form.Group>
             <Form.Label>username</Form.Label>
             <Form.Control

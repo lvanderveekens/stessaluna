@@ -26,7 +26,7 @@ axios.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (error.response.status === 401 && !originalRequest._processed) {
+    if (error.response.status === 401 && originalRequest.url !== '/api/token' && !originalRequest._processed) {
       originalRequest._processed = true;
 
       return axios.post('/api/token/refresh', { refreshToken: store.getState().auth.refreshToken })

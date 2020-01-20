@@ -4,7 +4,6 @@ import styles from './NavBar.scss?module';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import axios from '../http/client';
 import { logOut } from '../auth/actions';
 import history from '../history/history';
 
