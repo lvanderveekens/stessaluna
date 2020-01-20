@@ -1,11 +1,17 @@
 .newPostForm {
 
-    textarea {
-        resize: none;
+    .testWrapper {
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+
+        textarea {
+            border: none;
+        }
     }
 
     .textInput {
-        height: 100px;
+        resize: none;
+        height: 130px;
     }
 
     .imageInput {
@@ -18,34 +24,28 @@
     }
 
     .imageUpload {
-        display: block;
-        position: relative; 
-
-        width: 30%;
-        padding-top: 30%;
-
-        @media (min-width: 768px) {
-            width: 70%;
-            padding-top: 70%;
-        }
+        width: 100%;
+        padding: 0 0.75rem;
+        background-color: #f5f5f5;
+        border-top: 1px solid #ced4da;
 
         .imageUploadBox {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            background-color: #f1f1f1;
-            border: 1px solid #ced4da;
-            border-radius: .25rem;
+            // display: flex;
+            // justify-content: center;
+            // align-items: center;
 
             background-size: cover;
             background-position: center;
+
+            .imageLabel {
+                margin: 0;
+                padding-top: 0.2rem;
+                padding-bottom: 0.2rem;
+            }
         }
+    }
+
+    .error {
+        color: #dc3545;
     }
 }
