@@ -1,46 +1,118 @@
 .newPostForm {
 
-    .testWrapper {
+    .inputBox {
         border: 1px solid #ced4da;
         border-radius: 0.25rem;
+        margin-bottom: 0.5rem;
 
-        textarea {
+        .textInput {
             border: none;
+            resize: none;
+            margin-bottom: 0.8rem;
+
+            &:focus {
+                box-shadow: none;
+            }
+        }
+
+        .imageInput {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
         }
     }
 
-    .textInput {
-        resize: none;
-        height: 130px;
+    .images {
+
+        margin-bottom: 0.4rem;
+
+        .imageContainer {
+            width: 25%;
+
+            @media (min-width: 768px) {
+                width: 40%;
+            }
+
+
+            display: inline-block;
+
+            .aspectRatioBox {
+
+                &:before{
+                    content: "";
+                    display: block;
+                    padding-top: 100%; 	/* ratio of 1:1*/
+                }
+    
+                position: relative;
+                margin: 0 0.5rem;
+                border: 1px solid #ced4da;
+    
+                img {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+    
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .imageOverlay {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+            
+                    opacity: 0;
+            
+                    &:hover {
+                        opacity: 1;
+                    }
+            
+                    &:after {
+                        background: rgba(0,0,0,.4);
+                        content: '';
+                        height: 100%;
+                        position: absolute;
+                        width: 100%;
+                    }
+            
+                    .deleteButton {
+                        color: white;
+                        z-index: 1;
+                        font-size: 1rem;
+                        line-height: 1rem;
+            
+                        cursor: pointer;
+            
+                        position: absolute;
+                        top: 4px;
+                        right: 4px;
+                    }
+                }
+            }
+        }
     }
 
-    .imageInput {
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        z-index: -1;
-    }
-
-    .imageUpload {
+    .attachments {
         width: 100%;
-        padding: 0 0.75rem;
         background-color: #f5f5f5;
         border-top: 1px solid #ced4da;
 
-        .imageUploadBox {
-            // display: flex;
-            // justify-content: center;
-            // align-items: center;
+        .imageLabel {
+            margin: 0;
+            padding: 0.2rem 0.4rem;
 
-            background-size: cover;
-            background-position: center;
-
-            .imageLabel {
-                margin: 0;
-                padding-top: 0.2rem;
-                padding-bottom: 0.2rem;
+            &:hover {
+                background-color: #e0e0e0e0;
+                cursor: pointer;
             }
         }
     }

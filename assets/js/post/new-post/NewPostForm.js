@@ -10,16 +10,14 @@ import { connect } from 'react-redux';
 import { createPost } from '../actions';
 
 const schema = yup.object({
-  text: yup.string().required("Text is a required field!"),
+  text: yup.string().required("Message is missing."),
   file: yup.mixed(),
 });
 
 const NewPostForm = ({ user, createPost }) => {
 
   const fileInput = React.createRef();
-
   const [imageUrl, setImageUrl] = useState("");
-  const [imageHover, setImageHover] = useState(false);
 
   const handleSubmit = (values, { resetForm }) => {
     createPost(values.text, values.image, () => reset(values, resetForm));
@@ -32,6 +30,19 @@ const NewPostForm = ({ user, createPost }) => {
     resetForm();
   };
 
+  const handleImageChange = (setFieldValue) => (event) => {
+    const image = event.currentTarget.files[0];
+    if (image) {
+      setFieldValue("image", image);
+      setImageUrl(URL.createObjectURL(image));
+    }
+  };
+
+  const handleDeleteImageClick = (setFieldValue) => (event) => {
+    setFieldValue("image", null);
+    fileInput.current.value = null;
+  }
+
   return (
     <Fragment>
       <h4>New post</h4>
@@ -39,78 +50,55 @@ const NewPostForm = ({ user, createPost }) => {
         validationSchema={schema}
         onSubmit={handleSubmit}
         initialValues={{ text: '', image: null }}
+        validateOnChange={false}
+        validateOnBlur={false}
       >
         {({ handleSubmit, handleChange, setFieldValue, values, errors, }) => (
           <Form className={styles.newPostForm} noValidate onSubmit={handleSubmit}>
-            <Form.Group>
-              <div className={styles.testWrapper}>
-                <Form.Control
-                  className={styles.textInput}
-                  as="textarea"
-                  type="text"
-                  name="text"
-                  value={values.text}
-                  placeholder={user && `What's up, ${user.firstName}?`}
-                  onChange={handleChange}
-                  isInvalid={!!errors.text}
-                />
-                <div className={styles.imageUpload}>
-                  <div
-                    className={styles.imageUploadBox}
-                    style={values.image
-                      ? (imageHover
-                        ? { backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url(${imageUrl}` }
-                        : { backgroundImage: `url(${imageUrl})` })
-                      : {}}
-                    onMouseEnter={() => setImageHover(true)}
-                    onMouseLeave={() => setImageHover(false)}
-                  >
-                    {values.image
-                      ? (
-                        imageHover && (
-                          <div
-                            className="btn"
-                            onClick={() => {
-                              setFieldValue("image", null);
-                              fileInput.current.value = null;
-                            }}
-                          >
-                            <span className="mr-2"><FontAwesomeIcon icon={faTimesCircle} /></span>
-                            Remove
-                          </div>
-                        )
-                      ) : (
-                        <Form.Label className={styles.imageLabel} htmlFor="image">
-                          <span className="mr-2"><FontAwesomeIcon icon={faImage} /></span>
-                          Image 
-                      </Form.Label>
-                      )}
-                  </div>
-                </div>
-              </div>
-              {errors.text && (
-                <div className={styles.error}>{errors.text}</div>
-              )}
-            </Form.Group>
-            <Form.Group>
+            <div className={styles.inputBox}>
+              <Form.Control
+                className={styles.textInput}
+                as="textarea"
+                type="text"
+                name="text"
+                value={values.text}
+                placeholder={user && `What's up, ${user.firstName}?`}
+                onChange={handleChange}
+              />
               <Form.Control
                 className={styles.imageInput}
                 id="image"
                 name="image"
                 type="file"
-                onChange={(event) => { 
-                  const image = event.currentTarget.files[0];
-                  if (image) {
-                    setFieldValue("image", image);
-                    setImageUrl(URL.createObjectURL(image));
-                  }
-                }}
-                isInvalid={!!errors.file}
+                onChange={handleImageChange(setFieldValue)}
                 accept=".jpg,.png"
                 ref={fileInput}
               />
-            </Form.Group>
-            <Button type="submit">Submit</Button>
+              {values.image && (
+                <div className={styles.images}>
+                  <div className={styles.imageContainer}>
+                    <div className={styles.aspectRatioBox}>
+                      <img src={imageUrl} />
+                      <div className={styles.imageOverlay}>
+                        <span className={styles.deleteButton} onClick={handleDeleteImageClick(setFieldValue)}>
+                          <FontAwesomeIcon icon={faTimesCircle} />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div className={styles.attachments}>
+                <Form.Label className={styles.imageLabel} htmlFor="image">
+                  <span className="mr-2"><FontAwesomeIcon icon={faImage} /></span>
+                  Image
+                </Form.Label>
+              </div>
+            </div>
+            <Button className="mb-2" type="submit">Submit</Button>
+            {errors.text && (
+              <div className={styles.error}>{errors.text}</div>
+            )}
           </Form>
         )}
       </Formik>
