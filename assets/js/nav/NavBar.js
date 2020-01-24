@@ -24,7 +24,7 @@ const NavBar = ({ user, logOut }) => {
               <span className={styles.userText}>Signed in as: <a href="#login">{user.firstName}</a></span>
               <span className={styles.logoutText} onClick={handleLogoutClick}>Logout</span>
               {/* TODO: placeholder avatar */}
-              <img className={styles.avatar} src={user.avatarPath} />
+              <img className={styles.avatar} src={user.avatar} />
             </span>
           ) : (
             <Link to="/login">Login</Link>

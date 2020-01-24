@@ -35,7 +35,7 @@ class UserController extends AbstractController
 
         if ($user->getAvatarFilename()) {
             // TODO: move base upload path to a common place
-            $dto->setAvatarPath('/uploads/avatars/' .  $user->getAvatarFilename());
+            $dto->setAvatar('/uploads/avatars/' .  $user->getAvatarFilename());
         }
         return $dto;
     }

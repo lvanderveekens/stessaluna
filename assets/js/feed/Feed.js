@@ -28,10 +28,10 @@ const Feed = ({ loading, posts, fetchPosts, deletePost }) => {
                 key={index}
                 userName={post.userName}
                 text={post.text}
-                imagePath={post.imagePath}
+                image={post.image}
                 timestamp={moment(post.createdAt).fromNow()}
                 onDelete={() => deletePost(post.id)}
-                avatarPath={post.avatarPath}
+                avatar={post.avatar}
               />)
         )}
     </Fragment>

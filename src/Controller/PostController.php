@@ -103,12 +103,12 @@ class PostController extends AbstractController
 
         if ($post->getUser()->getAvatarFilename()) {
             // TODO: move base upload path to a common place
-            $dto->setAvatarPath('/uploads/avatars/' .  $post->getUser()->getAvatarFilename());
+            $dto->setAvatar('/uploads/avatars/' .  $post->getUser()->getAvatarFilename());
         }
 
         if ($post->getImageFilename()) {
             // TODO: move base upload path to a common place
-            $dto->setImagePath('/uploads/images/' .  $post->getImageFilename());
+            $dto->setImage('/uploads/images/' .  $post->getImageFilename());
         }
         return $dto;
     }

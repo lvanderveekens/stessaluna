@@ -10,7 +10,7 @@ class UserDto
 
     private $lastName;
 
-    private $avatarPath;
+    private $avatar;
 
     public function getUserName(): ?string
     {
@@ -45,14 +45,14 @@ class UserDto
         return $this;
     }
 
-    public function getAvatarPath(): ?string
+    public function getAvatar(): ?string
     {
-        return $this->avatarPath;
+        return $this->avatar;
     }
 
-    public function setAvatarPath(string $avatarPath): self
+    public function setAvatar(string $avatar): self
     {
-        $this->avatarPath= $avatarPath;
+        $this->avatar= $avatar;
         return $this;
     }
 }

@@ -12,9 +12,9 @@ class PostDto
 
     private $createdAt;
 
-    private $imagePath;
+    private $image;
 
-    private $avatarPath;
+    private $avatar;
 
     public function getId(): ?int
     {
@@ -60,25 +60,25 @@ class PostDto
         return $this;
     }
 
-    public function getImagePath(): ?string
+    public function getImage(): ?string
     {
-        return $this->imagePath;
+        return $this->image;
     }
 
-    public function setImagePath(?string $imagePath): self
+    public function setImage(?string $image): self
     {
-        $this->imagePath= $imagePath;
+        $this->image = $image;
         return $this;
     }
 
-    public function getAvatarPath(): ?string
+    public function getAvatar(): ?string
     {
-        return $this->avatarPath;
+        return $this->avatar;
     }
 
-    public function setAvatarPath(?string $avatarPath): self
+    public function setAvatar(?string $avatar): self
     {
-        $this->avatarPath = $avatarPath;
+        $this->avatar = $avatar;
         return $this;
     }
 }
