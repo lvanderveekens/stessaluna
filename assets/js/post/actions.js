@@ -3,17 +3,23 @@ import axios from '../http/client';
 
 export const fetchPosts = () => {
   return dispatch => {
-    dispatch(fetchPostsBegin());
+    dispatch(begin());
 
     axios.get('/api/posts/')
       .then(res => {
-        dispatch(fetchPostsSuccess(res.data));
+        dispatch(success(res.data));
       })
       .catch((error) => {
-        dispatch(fetchPostsFailure());
+        dispatch(failure());
         console.log(error);
       });
   };
+
+  function begin() { return { type: ActionTypes.FETCH_POSTS_BEGIN, }; };
+
+  function success(posts) { return { type: ActionTypes.FETCH_POSTS_SUCCESS, payload: { posts } }; };
+
+  function failure() { return { type: ActionTypes.FETCH_POSTS_FAILURE }; };
 };
 
 export const createPost = (text, image, onSuccess) => {
@@ -25,11 +31,13 @@ export const createPost = (text, image, onSuccess) => {
     axios.post('/api/posts/', formData)
       .then(res => {
         console.log(res.data);
-        dispatch(createPostSuccess(res.data));
+        dispatch(success(res.data));
         onSuccess();
       })
       .catch(console.log);
   };
+
+  function success(post) { return { type: ActionTypes.CREATE_POST_SUCCESS, payload: { post } }; };
 };
 
 export const deletePost = (id) => {
@@ -37,31 +45,23 @@ export const deletePost = (id) => {
     axios.delete('/api/posts/' + id)
       .then(res => {
         console.log(res.data);
-        dispatch(deletePostSuccess(id));
+        dispatch(success(id));
       })
       .catch(console.log);
   };
+
+  function success(id) { return { type: ActionTypes.DELETE_POST_SUCCESS, payload: { id } }; };
 };
 
-const fetchPostsBegin = () => ({
-  type: ActionTypes.FETCH_POSTS_BEGIN,
-});
+export const addComment = (postId, text) => {
+  return dispatch => {
+    axios.post(`/api/posts/${postId}/comments/`, { text })
+      .then(res => {
+        console.log(res.data);
+        dispatch(success(postId, res.data));
+      })
+      .catch(console.log);
+  };
 
-const fetchPostsSuccess = (posts) => ({
-  type: ActionTypes.FETCH_POSTS_SUCCESS,
-  payload: { posts }
-});
-
-const fetchPostsFailure = () => ({
-  type: ActionTypes.FETCH_POSTS_FAILURE,
-});
-
-const createPostSuccess = (post) => ({
-  type: ActionTypes.CREATE_POST_SUCCESS,
-  payload: { post }
-});
-
-const deletePostSuccess = (id) => ({
-  type: ActionTypes.DELETE_POST_SUCCESS,
-  payload: { id }
-});
+  function success(postId, comment) { return { type: ActionTypes.ADD_COMMENT_SUCCESS, payload: { postId, comment } }; };
+};

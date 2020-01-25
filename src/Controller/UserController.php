@@ -26,7 +26,8 @@ class UserController extends AbstractController
         return $this->json($this->convertToDto($user));
     }
 
-    private static function convertToDto(User $user): UserDto
+    // TODO: move away from the controller
+    public static function convertToDto(User $user): UserDto
     {
         $dto = new UserDto();
         $dto->setUserName($user->getUserName());

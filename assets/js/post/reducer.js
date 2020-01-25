@@ -33,6 +33,15 @@ const postReducer = (state = initialState, action) => {
         ...state,
         items: state.items.filter(post => post.id !== action.payload.id) 
       };
+    case ActionTypes.ADD_COMMENT_SUCCESS:
+      return {
+        ...state,
+        items: state.items.map((post) =>
+          post.id === action.payload.postId
+            ? { ...post, comments: [...post.comments, action.payload.comment] }
+            : post
+        )
+      };
     default:
       return state;
   }

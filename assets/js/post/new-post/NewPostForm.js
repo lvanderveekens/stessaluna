@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { Button, Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload, faTimesCircle, faImage } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle, faImage } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { createPost } from '../actions';
 

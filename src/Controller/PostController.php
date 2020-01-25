@@ -74,9 +74,9 @@ class PostController extends AbstractController
      */
     public function deletePostById(int $id)
     {
-        $entityManager = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         // TODO: what if $id does not exist? return 404
-        $post = $entityManager->getRepository(Post::class)->find($id);
+        $post = $em->getRepository(Post::class)->find($id);
 
         if ($post->getImageFilename()) {
             try {
@@ -87,8 +87,8 @@ class PostController extends AbstractController
             }
         }
 
-        $entityManager->remove($post);
-        $entityManager->flush();
+        $em->remove($post);
+        $em->flush();
 
         return new Response('Deleted post with id ' . $id);
     }
@@ -98,8 +98,14 @@ class PostController extends AbstractController
         $dto = new PostDto();
         $dto->setId($post->getId());
         $dto->setText($post->getText());
-        $dto->setUserName($post->getUser()->getFirstName() . ' ' . $post->getUser()->getLastName());
+        $dto->setUser(UserController::convertToDto($post->getUser()));
         $dto->setCreatedAt($post->getCreatedAt());
+
+        $comments = array_map(function ($comment) {
+            return CommentController::convertToDto($comment);
+        }, $post->getComments()->toArray());
+
+        $dto->setComments($comments);
 
         if ($post->getUser()->getAvatarFilename()) {
             // TODO: move base upload path to a common place

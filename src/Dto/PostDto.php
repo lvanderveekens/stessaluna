@@ -8,13 +8,15 @@ class PostDto
 
     private $text;
 
-    private $userName;
+    private $user;
 
     private $createdAt;
 
     private $image;
 
     private $avatar;
+
+    private $comments;
 
     public function getId(): ?int
     {
@@ -38,14 +40,14 @@ class PostDto
         return $this;
     }
 
-    public function getUserName(): ?string
+    public function getUser(): ?UserDto
     {
-        return $this->userName;
+        return $this->user;
     }
 
-    public function setUserName(string $userName): self
+    public function setUser(UserDto $user): self
     {
-        $this->userName = $userName;
+        $this->user = $user;
         return $this;
     }
 
@@ -79,6 +81,17 @@ class PostDto
     public function setAvatar(?string $avatar): self
     {
         $this->avatar = $avatar;
+        return $this;
+    }
+
+    public function getComments(): array
+    {
+        return $this->comments;
+    }
+
+    public function setComments(array $comments): self
+    {
+        $this->comments = $comments;
         return $this;
     }
 }

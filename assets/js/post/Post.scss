@@ -1,50 +1,103 @@
 .post {
-    padding: 1rem;
-    margin: 0.5rem 0 0.5rem 0;
+
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
+    margin: 0.5rem 0 0.5rem 0;
 
-    .header {
-        display: flex;
-        justify-content: space-between;
-        vertical-align: middle;
-        margin-bottom: 1rem;
+    .content {
+        padding: 1rem;
 
-        .avatar {
-            width: 50px;
-            height: 50px;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            vertical-align: middle;
+            margin-bottom: 1rem;
 
-            padding: 3px;
-            border-radius: 50%;
-            margin-right: 0.5rem;
+            .avatar {
+                width: 50px;
+                height: 50px;
+
+                padding: 3px;
+                border-radius: 50%;
+                margin-right: 0.5rem;
+            }
+
+            .usernameTimestampWrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                .timestamp {
+                    font-size: 0.8rem;
+                }
+            }
         }
 
-        .usernameTimestampWrapper {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        .text {
+            margin-bottom: 1rem;
+            word-wrap: break-word; 
+        }
 
-            .timestamp {
-                font-size: 0.7rem;
+        .deleteButton:hover {
+            cursor: hand;
+            cursor: pointer;
+            opacity: .6;
+        }
+
+        .image {
+            width: 100%;
+            display: block;
+            margin-right: auto;
+            margin-left: auto;
+        }
+    }
+
+    .activity {
+        display: flex;
+        justify-content: flex-end;
+
+        padding: 0.5rem 1rem;
+
+        .numberOfComments {
+            cursor: pointer;
+        }
+    }
+
+    .actions {
+        border-top: 1px solid #ced4da;
+
+        display: flex;
+        justify-content: space-evenly;
+
+        .addComment {
+            cursor: pointer;
+
+            .commentIcon {
+                margin-right: 0.4rem;
+
+                svg {
+                    vertical-align: -0.18rem;
+                }
+
             }
         }
     }
+    
+    .comments {
+        border-top: 1px solid #ced4da;
 
-    .text {
-        margin-bottom: 1rem;
-        word-wrap: break-word; 
-    }
+        .new {
 
-    .deleteButton:hover {
-        cursor: hand;
-        cursor: pointer;
-        opacity: .6;
-    }
+            display: flex;;
+            align-items: center;
 
-    .image {
-        width: 100%;
-        display: block;
-        margin-right: auto;
-        margin-left: auto;
+            .inputWrapper {
+                flex-grow: 100;
+
+                input {
+                    width: 100%;
+                }
+            }
+        }
     }
 }

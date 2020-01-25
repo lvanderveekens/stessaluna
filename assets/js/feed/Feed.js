@@ -23,15 +23,17 @@ const Feed = ({ loading, posts, fetchPosts, deletePost }) => {
           ? (<div>No posts found!</div>)
           : posts
             .sort((post, other) => new Date(other.createdAt) - new Date(post.createdAt))
-            .map((post, index) =>
+            .map((post) =>
               <Post
-                key={index}
-                userName={post.userName}
+                key={post.id}
+                id={post.id}
+                userName={`${post.user.firstName} ${post.user.lastName}`}
                 text={post.text}
                 image={post.image}
                 timestamp={moment(post.createdAt).fromNow()}
                 onDelete={() => deletePost(post.id)}
                 avatar={post.avatar}
+                comments={post.comments}
               />)
         )}
     </Fragment>

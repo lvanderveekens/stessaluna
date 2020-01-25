@@ -2,14 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
  */
-class Post
+class Comment
 {
     /**
      * @ORM\Id()
@@ -29,25 +27,16 @@ class Post
     private $createdAt;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $imageFilename;
+    private $post;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
-     */
-    private $comments;
-
-    public function __construct()
-    {
-        $this->comments = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -62,6 +51,7 @@ class Post
     public function setText(string $text): self
     {
         $this->text = $text;
+
         return $this;
     }
 
@@ -77,14 +67,14 @@ class Post
         return $this;
     }
 
-    public function getImageFilename(): ?string
+    public function getPost(): ?Post
     {
-        return $this->imageFilename;
+        return $this->post;
     }
 
-    public function setImageFilename(?string $imageFilename): self
+    public function setPost(?Post $post): self
     {
-        $this->imageFilename = $imageFilename;
+        $this->post = $post;
 
         return $this;
     }
@@ -99,13 +89,5 @@ class Post
         $this->user = $user;
 
         return $this;
-    }
-
-    /**
-     * @return Collection|Comment[]
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
     }
 }

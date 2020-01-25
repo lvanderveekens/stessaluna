@@ -13,7 +13,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/api/logout", methods={"POST"})
      */
-    public function createPost(Request $request): Response
+    public function logOut(Request $request): Response
     {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
