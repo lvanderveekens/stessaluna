@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
 import Feed from '../feed/Feed';
-import NewPostForm from '../post/new-post/NewPostForm';
+import NewPostForm from '../post/new/NewPostForm';
 import NavBar from '../nav/NavBar';
 
 const HomePage = () => {

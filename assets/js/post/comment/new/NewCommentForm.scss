@@ -1,0 +1,13 @@
+.new {
+
+    display: flex;;
+    align-items: center;
+
+    .inputWrapper {
+        flex-grow: 100;
+
+        input {
+            width: 100%;
+        }
+    }
+}

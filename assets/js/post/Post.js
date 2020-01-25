@@ -6,24 +6,17 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
 import { connect } from 'react-redux';
 import { addComment } from './actions';
+import CommentSection from './comment/section/CommentSection';
 
-const Post = ({ id, text, userName, timestamp, image, onDelete, avatar, comments, addComment }) => {
+const Post = ({ id, text, userName, timestamp, image, onDelete, avatar, comments }) => {
 
   const [showComments, setShowComments] = useState(false);
-  const [newComment, setNewComment] = useState("");
-
-  const handleAddCommentSubmit = (e) => {
-    e.preventDefault();
-    addComment(id, newComment);
-    setNewComment("");
-  };
 
   return (
     <div className={styles.post}>
       <div className={styles.content}>
         <div className={styles.header}>
           <div className="d-flex">
-            {/* TODO: what if avatar doesn't exist */}
             <img className={styles.avatar} src={avatar} />
             <div className={styles.usernameTimestampWrapper}>
               <div>{userName}</div>
@@ -51,30 +44,7 @@ const Post = ({ id, text, userName, timestamp, image, onDelete, avatar, comments
           Add comment
         </div>
       </div>
-      {showComments && (
-        <div className={styles.comments}>
-          <form onSubmit={handleAddCommentSubmit}>
-            <div className={styles.new}>
-              {/* input field must autosize  */}
-              <div className={styles.inputWrapper}>
-                <input type="text" name="comment" onChange={(e) => setNewComment(e.target.value)} value={newComment} />
-              </div>
-              <div>
-                <input type="submit" value="Submit" />
-              </div>
-            </div>
-          </form>
-          {comments && (
-            comments
-              .sort((comment, other) => new Date(other.createdAt) - new Date(comment.createdAt))
-              .map((comment) =>
-                <div key={comment.id}>
-                  {comment.createdAt} {comment.user.firstName}: {comment.text}
-                </div>
-              )
-          )}
-        </div>
-      )}
+      {showComments && (<CommentSection postId={id} comments={comments} />)}
     </div>
   );
 };
@@ -88,7 +58,6 @@ Post.propTypes = {
   onDelete: PropTypes.func.isRequired,
   avatar: PropTypes.string,
   comments: PropTypes.array,
-  addComment: PropTypes.func.isRequired,
 };
 
 const actionCreators = {
