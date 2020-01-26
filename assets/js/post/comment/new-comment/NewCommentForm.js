@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import styles from './NewCommentForm.scss?module';
 import PropTypes from 'prop-types';
 
-const NewCommentForm = ({ addComment }) => {
+const NewCommentForm = ({ onSubmit }) => {
 
   const [text, setText] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addComment(text);
+    onSubmit(text);
     setText("");
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.newCommentForm} onSubmit={handleSubmit}>
       <div className={styles.new}>
         {/* TODO: input field must autosize  */}
         <div className={styles.inputWrapper}>
@@ -28,7 +28,7 @@ const NewCommentForm = ({ addComment }) => {
 };
 
 NewCommentForm.propTypes = {
-  addComment: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired
 };
 
 export default NewCommentForm;

@@ -1,0 +1,31 @@
+.comment {
+
+    font-size: 0.9rem;
+    display: flex;
+
+    .avatar {
+        margin-right: 0.4rem;
+
+        img {
+            width: 40px;
+            height: 40px;
+            padding: 3px;
+            border-radius: 50%;
+        }
+    }
+
+    .author {
+        color: black;
+        margin-right: 0.4rem;
+
+    }
+
+    .text {
+        color: grey;
+    }
+
+    .timestamp {
+        font-size: 0.7rem;
+        color: grey;
+    }
+}

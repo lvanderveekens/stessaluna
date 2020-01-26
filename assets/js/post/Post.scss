@@ -28,7 +28,8 @@
                 justify-content: center;
 
                 .timestamp {
-                    font-size: 0.8rem;
+                    font-size: 0.7rem;
+                    color: grey;
                 }
             }
         }
@@ -65,6 +66,8 @@
 
     .actions {
         border-top: 1px solid #ced4da;
+        padding-top: 0.3rem;
+        padding-bottom: 0.3rem;
 
         display: flex;
         justify-content: space-evenly;

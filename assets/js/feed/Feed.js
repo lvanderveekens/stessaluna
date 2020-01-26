@@ -27,7 +27,7 @@ const Feed = ({ loading, posts, fetchPosts, deletePost }) => {
               <Post
                 key={post.id}
                 id={post.id}
-                userName={`${post.user.firstName} ${post.user.lastName}`}
+                author={`${post.user.firstName} ${post.user.lastName}`}
                 text={post.text}
                 image={post.image}
                 timestamp={moment(post.createdAt).fromNow()}
