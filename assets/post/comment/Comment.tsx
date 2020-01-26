@@ -1,8 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import styles from './Comment.scss?module';
 
-const Comment = ({ timestamp, author, avatar, text }) => {
+interface Props {
+  timestamp: string;
+  author: string;
+  avatar: string;
+  text: string;
+}
+
+const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text }) => {
 
   return (
     <div className={styles.comment}>
@@ -18,13 +24,6 @@ const Comment = ({ timestamp, author, avatar, text }) => {
       </div>
     </div>
   );
-};
-
-Comment.propTypes = {
-  timestamp: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  avatar: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
 };
 
 export default Comment;
