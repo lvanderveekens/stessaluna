@@ -10,6 +10,7 @@
         "gesdinet/jwt-refresh-token-bundle": "^0.9.0",
         "lexik/jwt-authentication-bundle": "^2.6",
         "sensio/framework-extra-bundle": "^5.5",
+        "spatie/image-optimizer": "^1.2",
         "symfony/asset": "5.0.*",
         "symfony/console": "5.0.*",
         "symfony/dotenv": "5.0.*",

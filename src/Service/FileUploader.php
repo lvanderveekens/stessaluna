@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Psr\Log\LoggerInterface;
+use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -29,7 +30,12 @@ class FileUploader
         $filename = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
 
         try {
-            $file->move($targetDirectory, $filename);
+            $newFile = $file->move($targetDirectory, $filename);
+
+            $optimizerChain = OptimizerChainFactory::create();
+            $optimizerChain
+                ->useLogger($this->logger)
+                ->optimize($newFile->getPathname());
         } catch (FileException $e) {
             $this->logger->error($e);
         }

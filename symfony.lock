@@ -180,6 +180,9 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "spatie/image-optimizer": {
+        "version": "1.2.1"
+    },
     "symfony/asset": {
         "version": "v5.0.2"
     },
