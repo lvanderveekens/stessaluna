@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Post.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,6 +7,8 @@ import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
 import { connect } from 'react-redux';
 import { addComment } from './actions';
 import CommentSection from './comment/comment-section/CommentSection';
+import Linkify from 'linkifyjs/react';
+
 
 const Post = ({ id, text, author, timestamp, image, onDelete, avatar, comments }) => {
 
@@ -31,8 +33,7 @@ const Post = ({ id, text, author, timestamp, image, onDelete, avatar, comments }
             <FontAwesomeIcon icon={faTimes} color="red" />
           </div>
         </div>
-        <div className={styles.text}>{text}</div>
-
+        <div className={styles.text}><Linkify>{text}</Linkify></div>
         {image && (
           <img className={styles.image} src={image} />
         )}
