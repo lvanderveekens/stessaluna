@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { addComment } from './actions';
 import CommentSection from './comment/comment-section/CommentSection';
 import Linkify from 'linkifyjs/react';
-
+import * as linkify from 'linkifyjs';
 
 const Post = ({ id, text, author, timestamp, image, onDelete, avatar, comments }) => {
 
@@ -17,6 +17,29 @@ const Post = ({ id, text, author, timestamp, image, onDelete, avatar, comments }
   const toggleComments = () => {
     setShowComments(!showComments);
   };
+
+  const youtubeLink = linkify.find(text)
+    // TODO: there are different youtube URL formats
+    .find(link => link.type == "url" &&
+      (link.value.includes("youtube.com") || link.value.includes("youtu.be"))
+    );
+
+  let videoIdentifier 
+  if (youtubeLink) {
+    console.log(youtubeLink);
+
+    if (youtubeLink.value.includes("youtube.com/watch?v=")) {
+      const phrase = youtubeLink.value; 
+      const myRegexp = /watch\?v=(.*)/;
+      const match = myRegexp.exec(phrase);
+      videoIdentifier = match[1]
+    } else if (youtubeLink.value.includes("youtu.be")) {
+      const phrase = youtubeLink.value;
+      const myRegexp = /youtu.be\/(.*)/; 
+      const match = myRegexp.exec(phrase);
+      videoIdentifier = match[1]
+    }
+  }
 
   return (
     <div className={styles.post}>
@@ -36,6 +59,16 @@ const Post = ({ id, text, author, timestamp, image, onDelete, avatar, comments }
         <div className={styles.text}><Linkify>{text}</Linkify></div>
         {image && (
           <img className={styles.image} src={image} />
+        )}
+        {videoIdentifier && (
+          <div className={styles.videoContainer}>
+            <iframe
+              // width="560"
+              // height="315"
+              src={`https://www.youtube.com/embed/${videoIdentifier}`}
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            />
+          </div>
         )}
       </div>
       {/* TODO: separate component */}
