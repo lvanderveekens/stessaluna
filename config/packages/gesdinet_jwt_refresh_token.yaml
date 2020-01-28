@@ -1,2 +1,4 @@
 gesdinet_jwt_refresh_token:
-    token_parameter_name: refreshToken
+    token_parameter_name: refresh_token
+    # a month in seconds
+    ttl: 2592000 

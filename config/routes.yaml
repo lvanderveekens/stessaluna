@@ -1,6 +1,8 @@
+# TODO: change to /api/login 
 lexik_jwt_login_check:
   path: /api/token
 
+# TODO: Do I still need this? Won't the server refresh the token for me.
 gesdinet_jwt_refresh_token:
   path:       /api/token/refresh
   controller: gesdinet.jwtrefreshtoken::refresh
