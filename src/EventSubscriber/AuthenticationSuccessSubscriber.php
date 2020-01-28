@@ -6,18 +6,12 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthenticationSuccessSubscriber implements EventSubscriberInterface
 {
-    private $params;
-
-    public function __construct(ParameterBagInterface $params)
-    {
-        $this->params = $params;
-    }
-
     public static function getSubscribedEvents()
     {
         return [
@@ -25,19 +19,33 @@ class AuthenticationSuccessSubscriber implements EventSubscriberInterface
         ];
     }
 
+    private $params;
+    private $logger;
+
+    public function __construct(ParameterBagInterface $params, LoggerInterface $logger)
+    {
+        $this->params = $params;
+        $this->logger = $logger;
+    }
+
     public function onAuthenticationSuccess(AuthenticationSuccessEvent $event)
     {
-        $eventData = $event->getData();
+        $response = $event->getResponse();
 
-        if (isset($eventData['token']) && isset($eventData['refresh_token'])) {
-            $response = $event->getResponse();
-            $this->setTokenCookie($response, $eventData['token']);
-            $this->setRefreshTokenCookie($response, $eventData['refresh_token']);
+        $token = $event->getData()['token'];
+        if ($token) {
+            $this->setTokenCookie($response, $token);
+        }
+
+        $refreshToken = $event->getData()['refresh_token'];
+        if ($refreshToken) {
+            $this->setRefreshTokenCookie($response, $refreshToken);
         }
     }
 
     private function setTokenCookie(Response $response, string $token)
     {
+        $this->logger->info("@@@ New token found");
         $tokenTtl = $this->params->get("lexik_jwt_authentication.token_ttl");
         $response->headers->setCookie(
             // TODO: set secure to true when using https
@@ -55,8 +63,9 @@ class AuthenticationSuccessSubscriber implements EventSubscriberInterface
         );
     }
 
-    private function setRefreshTokenCookie(Response $response, string $refreshToken)
+    private function setRefreshTokenCookie(Response $response, string $refreshToken) 
     {
+        $this->logger->info("@@@ New refresh token");
         $refreshTokenTtl = $this->params->get("gesdinet_jwt_refresh_token.ttl");
         $response->headers->setCookie(
             // TODO: set secure to true when using https
