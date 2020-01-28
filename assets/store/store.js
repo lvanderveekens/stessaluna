@@ -15,19 +15,11 @@ const store = createStore(
 ); 
 
 store.subscribe(() => {
-  // TODO: use cookies instead of localstorage
-  const token = store.getState().auth.token;
-  if (token != null) {
-    localStorage.setItem('luna-app:jwt-token', token);
+  const loggedIn = store.getState().auth.loggedIn;
+  if (loggedIn != null) {
+    localStorage.setItem('logged-in', loggedIn);
   } else {
-    localStorage.removeItem('luna-app:jwt-token');
-  }
-
-  const refreshToken = store.getState().auth.refreshToken;
-  if (refreshToken != null) {
-    localStorage.setItem('luna-app:refresh-token', refreshToken);
-  } else {
-    localStorage.removeItem('luna-app:refresh-token');
+    localStorage.removeItem('logged-in');
   }
 });
 

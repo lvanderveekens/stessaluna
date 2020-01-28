@@ -5,7 +5,6 @@ export const logIn = (username, password) => {
   return dispatch => {
     return axios.post('/api/token', { username, password })
       .then(res => {
-        dispatch(storeToken(res.data));
         dispatch(fetchCurrentUser());
         dispatch(success());
       })
@@ -40,8 +39,3 @@ export const fetchCurrentUser = () => {
   };
   function success(user) { return { type: ActionTypes.FETCH_CURRENT_USER_SUCCESS, payload: { user } }; };
 };
-
-export const storeToken = ({ token, refreshToken }) => ({
-  type: ActionTypes.STORE_TOKEN,
-  payload: { token, refreshToken, }
-});
