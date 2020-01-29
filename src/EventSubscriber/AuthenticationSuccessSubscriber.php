@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
 
+// TODO: convert into jwt subscriber together with requestsubscriber
 class AuthenticationSuccessSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
