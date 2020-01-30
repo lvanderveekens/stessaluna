@@ -29,12 +29,10 @@ class CsrfTokenSubscriber implements EventSubscriberInterface
 
     public function setCsrfTokenCookie(ResponseEvent $event)
     {
-        // TODO: do I need this check?
-        if (!$event->isMasterRequest()) {
+        $request = $event->getRequest();
+        if ($request->getMethod() != 'GET' || strpos($request->getPathInfo(), '/api') === 0) {
             return;
         }
-
-        // TODO: don't include in responses from /api
 
         // TODO: make cookie secure later
         $event->getResponse()->headers->setCookie(new Cookie(

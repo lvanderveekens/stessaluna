@@ -13,7 +13,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 /**
@@ -52,8 +55,10 @@ class PostController extends AbstractController
     {
         $csrfToken = "";
         if (!$this->isCsrfTokenValid('react', $csrfToken)) {
-            throw new InvalidCsrfTokenException();
+            // cannot throw AuthenticationException, because JWTTokenAuthenticator turns that into a JWT token not found
+            throw new AccessDeniedException("Invalid CSRF token");
         }
+
         $user = $this->getUser();
 
         $post = new Post();

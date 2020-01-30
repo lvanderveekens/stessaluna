@@ -1,12 +1,12 @@
 import axios from 'axios';
-import store from '../store/store';
-import { storeToken } from '../auth/actions';
 import history from '../history/history';
 
 axios.interceptors.response.use(
   (response) => { return response; },
   (error) => {
     const originalRequest = error.config;
+
+    // TODO: why does this loop... when HTTP POST to /posts returns 401
 
     if (error.response.status === 401 && originalRequest.url === '/api/token/refresh') {
       history.push('/login');
