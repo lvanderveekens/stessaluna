@@ -53,12 +53,6 @@ class PostController extends AbstractController
      */
     public function createPost(Request $request, FileUploader $fileUploader): Response
     {
-        $csrfToken = "";
-        if (!$this->isCsrfTokenValid('react', $csrfToken)) {
-            // cannot throw AuthenticationException, because JWTTokenAuthenticator turns that into a JWT token not found
-            throw new AccessDeniedException("Invalid CSRF token");
-        }
-
         $user = $this->getUser();
 
         $post = new Post();

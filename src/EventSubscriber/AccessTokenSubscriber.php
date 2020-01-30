@@ -20,6 +20,13 @@ class AccessTokenSubscriber implements EventSubscriberInterface
         $this->logger = $logger;
     }
 
+    public static function getSubscribedEvents()
+    {
+        return [
+            Events::AUTHENTICATION_SUCCESS => 'setAccessTokenCookie'
+        ];
+    }
+
     public function setAccessTokenCookie(AuthenticationSuccessEvent $event)
     {
         $token = $event->getData()['token'];
@@ -43,12 +50,5 @@ class AccessTokenSubscriber implements EventSubscriberInterface
                 )
             );
         }
-    }
-
-    public static function getSubscribedEvents()
-    {
-        return [
-            Events::AUTHENTICATION_SUCCESS => 'setAccessTokenCookie'
-        ];
     }
 }

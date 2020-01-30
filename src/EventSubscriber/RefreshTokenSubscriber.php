@@ -22,6 +22,14 @@ class RefreshTokenSubscriber implements EventSubscriberInterface {
         $this->logger = $logger;
     }
 
+    public static function getSubscribedEvents()
+    {
+        return [
+            KernelEvents::REQUEST => 'setRefreshTokenAttribute',
+            Events::AUTHENTICATION_SUCCESS => 'setRefreshTokenCookie'
+        ];
+    }
+
     public function setRefreshTokenAttribute(RequestEvent $event) {
         $request = $event->getRequest();
         // The GesdinetJWTRefreshTokenBundle expects the refresh token at a certain place in the request
@@ -51,13 +59,5 @@ class RefreshTokenSubscriber implements EventSubscriberInterface {
                 )
             );
         }
-    }
-
-    public static function getSubscribedEvents()
-    {
-        return [
-            KernelEvents::REQUEST => 'setRefreshTokenAttribute',
-            Events::AUTHENTICATION_SUCCESS => 'setRefreshTokenCookie'
-        ];
     }
 }
