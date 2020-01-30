@@ -41,7 +41,7 @@ const NewPostForm = ({ user, createPost }) => {
   const handleDeleteImageClick = (setFieldValue) => (event) => {
     setFieldValue("image", null);
     fileInput.current.value = null;
-  }
+  };
 
   return (
     <Fragment>
@@ -58,11 +58,10 @@ const NewPostForm = ({ user, createPost }) => {
             <div className={styles.inputBox}>
               <Form.Control
                 className={styles.textInput}
-                as="textarea"
                 type="text"
                 name="text"
                 value={values.text}
-                placeholder={user && `What's up, ${user.firstName}?`}
+                placeholder={user && `What's new, ${user.firstName}?`}
                 onChange={handleChange}
               />
               <Form.Control
@@ -95,7 +94,7 @@ const NewPostForm = ({ user, createPost }) => {
                 </Form.Label>
               </div>
             </div>
-            <Button className="mb-2" type="submit">Submit</Button>
+            <Button className="mb-2" type="submit">Create</Button>
             {errors.text && (
               <div className={styles.error}>{errors.text}</div>
             )}
