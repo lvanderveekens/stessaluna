@@ -45,14 +45,13 @@ class RefreshTokenSubscriber implements EventSubscriberInterface {
 
             $response = $event->getResponse();
             $response->headers->setCookie(
-                // TODO: set secure to true when using https
                 new Cookie(
                     "refresh_token",
                     $refreshToken,
                     new \DateTime('+' . $refreshTokenTtl . ' seconds'),
                     "/",
                     null,
-                    false,
+                    true /* secure */,
                     true,
                     false,
                     'strict'

@@ -48,14 +48,13 @@ class CsrfTokenSubscriber implements EventSubscriberInterface
             return;
         }
 
-        // TODO: make cookie secure later
         $event->getResponse()->headers->setCookie(new Cookie(
             "csrf_token",
             $this->csrfTokenManager->getToken(self::TOKEN_ID)->getValue(),
             0 /* expire */,
             "/" /* path */,
             null /* domain */,
-            false /* secure */,
+            true /* secure */,
             false /* httpOnly */,
             false /* raw */,
             Cookie::SAMESITE_STRICT

@@ -36,14 +36,13 @@ class AccessTokenSubscriber implements EventSubscriberInterface
 
             $response = $event->getResponse();
             $response->headers->setCookie(
-                // TODO: set secure to true when using https
                 new Cookie(
                     "access_token",
                     $token,
                     new \DateTime('+' . $tokenTtl . ' seconds'),
                     "/",
                     null,
-                    false,
+                    true /* secure */,
                     true,
                     false,
                     'strict'
