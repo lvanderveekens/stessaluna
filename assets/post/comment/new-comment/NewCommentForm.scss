@@ -1,20 +1,27 @@
 
 .newCommentForm {
-    margin-bottom: 1rem;;
 
-    .new {
+    font-size: 0.9rem;
 
-        display: flex;
-        align-items: center;
+    .avatar {
+        margin-right: 0.4rem;
 
-        .inputWrapper {
-            flex-grow: 100;
-
-            input {
-                width: 100%;
-                padding: .375rem .75rem;
-            }
+        img {
+            width: 40px;
+            height: 40px;
+            padding: 3px;
+            border-radius: 50%;
         }
     }
 
+    .inputWrapper {
+        flex-grow: 100;
+
+        input {
+            width: 100%;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            padding: 0.2rem 0;
+        }
+    }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { addComment, deleteComment }  from '../../actions';
 import NewCommentForm from '../new-comment/NewCommentForm';
@@ -7,9 +7,17 @@ import styles from './CommentSection.scss?module';
 import Comment from '../Comment';
 import moment from 'moment';
 
-const CommentSection = ({ postId, comments, addComment, deleteComment }) => {
+interface Props {
+  postId: number
+  comments: any[]
+  addComment: (postId: number, text: string) => void
+  deleteComment: (postId: number, commentId: number) => void
+  user: any
+}
 
-  const handleNewCommentSubmit = (text: string) => {
+const CommentSection: FunctionComponent<Props> = ({ postId, comments, addComment, deleteComment, user }) => {
+
+  const handleSubmitComment = (text: string) => {
     addComment(postId, text);
   };
 
@@ -19,10 +27,10 @@ const CommentSection = ({ postId, comments, addComment, deleteComment }) => {
 
   return (
     <div className={styles.comments}>
-      <NewCommentForm onSubmit={handleNewCommentSubmit} />
+      <NewCommentForm onSubmit={handleSubmitComment} avatar={user.avatar} />
       {comments && (
         comments
-          .sort((comment, other) => new Date(other.createdAt).getDate() - new Date(comment.createdAt).getDate())
+          .sort((comment, other) => new Date(other.createdAt).getTime() - new Date(comment.createdAt).getTime())
           .map((comment) =>
             <Comment
               key={comment.id}
@@ -38,16 +46,13 @@ const CommentSection = ({ postId, comments, addComment, deleteComment }) => {
   );
 };
 
-CommentSection.propTypes = {
-  postId: PropTypes.number.isRequired,
-  comments: PropTypes.array.isRequired,
-  addComment: PropTypes.func.isRequired,
-  deleteComment: PropTypes.func.isRequired,
-};
-
 const actionCreators = {
   addComment,
   deleteComment,
 };
 
-export default connect(null, actionCreators)(CommentSection);
+const mapStateToProps = (state) => ({
+  user: state.auth.user
+})
+
+export default connect(mapStateToProps, actionCreators)(CommentSection);

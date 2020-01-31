@@ -63,8 +63,6 @@ const Post = ({ id, text, author, timestamp, image, onDelete, avatar, comments }
         {videoIdentifier && (
           <div className={styles.videoContainer}>
             <iframe
-              // width="560"
-              // height="315"
               src={`https://www.youtube.com/embed/${videoIdentifier}`}
               allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             />
