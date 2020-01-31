@@ -15,7 +15,7 @@ const NavBar = ({ user, logOut }) => {
   };
 
   return (
-    <Navbar className={`${styles.nav} mb-4`} bg="primary" variant="dark">
+    <Navbar className={`${styles.nav} mb-4`} bg="dark" variant="dark">
       <Container className={styles.container}>
         <Navbar.Brand href="/">Luna-app</Navbar.Brand>
         {user

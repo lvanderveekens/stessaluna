@@ -42,6 +42,19 @@ const postReducer = (state = initialState, action) => {
             : post
         )
       };
+    case ActionTypes.DELETE_COMMENT_SUCCESS:
+      return {
+        ...state,
+        items: state.items.map((post) =>
+          post.id === action.payload.postId
+            ? { ...post, comments: post.comments.filter(comment => comment.id !== action.payload.id) }
+            : post
+        )
+      };
+      return {
+        ...state,
+        items: state.items.filter(post => post.id !== action.payload.id) 
+      };
     default:
       return state;
   }

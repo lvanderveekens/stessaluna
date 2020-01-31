@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -64,6 +65,19 @@ class CommentController extends AbstractController
         $em->flush();
 
         return $this->json($this->convertToDto($comment));
+    }
+
+    /**
+     * @Route("/{id}", methods={"DELETE"})
+     */
+    public function deleteCommentById(int $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        // TODO: what if $id does not exist? return 404
+        $comment = $em->getRepository(Comment::class)->find($id);
+        $em->remove($comment);
+        $em->flush();
+        return new Response('Deleted comment with id ' . $id);
     }
 
     public static function convertToDto(Comment $comment): CommentDto

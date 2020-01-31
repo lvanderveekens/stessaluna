@@ -5,7 +5,6 @@
     .new {
 
         display: flex;
-        ;
         align-items: center;
 
         .inputWrapper {
@@ -13,6 +12,7 @@
 
             input {
                 width: 100%;
+                padding: .375rem .75rem;
             }
         }
     }

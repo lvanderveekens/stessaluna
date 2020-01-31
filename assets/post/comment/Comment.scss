@@ -14,18 +14,42 @@
         }
     }
 
-    .author {
-        color: black;
-        margin-right: 0.4rem;
+    .content {
 
+        margin-right: 1rem;
+        flex-grow: 1;
+
+        .author {
+            color: black;
+            margin-right: 0.4rem;
+        }
+
+        .text {
+            color: grey;
+            padding-right: 1rem;
+        }
+
+        .timestamp {
+            font-size: 0.7rem;
+            color: grey;
+        }
     }
 
-    .text {
+    .menu {
+        visibility: hidden;
+
         color: grey;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        margin-left: auto;
     }
 
-    .timestamp {
-        font-size: 0.7rem;
-        color: grey;
+    &:hover {
+        .menu {
+            visibility: visible;
+        }
     }
+
 }

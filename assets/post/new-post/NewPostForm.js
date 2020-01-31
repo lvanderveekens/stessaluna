@@ -94,7 +94,7 @@ const NewPostForm = ({ user, createPost }) => {
                 </Form.Label>
               </div>
             </div>
-            <Button className="mb-2" type="submit">Create</Button>
+            <Button className="btn btn-dark mb-2" type="submit">Create</Button>
             {errors.text && (
               <div className={styles.error}>{errors.text}</div>
             )}

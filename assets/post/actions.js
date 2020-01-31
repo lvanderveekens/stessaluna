@@ -65,3 +65,16 @@ export const addComment = (postId, text) => {
 
   function success(postId, comment) { return { type: ActionTypes.ADD_COMMENT_SUCCESS, payload: { postId, comment } }; };
 };
+
+export const deleteComment = (postId, commentId) => {
+  return dispatch => {
+    axios.delete(`/api/posts/${postId}/comments/${commentId}/`)
+      .then(res => {
+        console.log(res.data);
+        dispatch(success(commentId));
+      })
+      .catch(console.log);
+  };
+
+  function success(id) { return { type: ActionTypes.DELETE_COMMENT_SUCCESS, payload: { id } }; };
+};

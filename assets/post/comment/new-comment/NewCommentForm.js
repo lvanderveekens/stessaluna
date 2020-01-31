@@ -17,10 +17,10 @@ const NewCommentForm = ({ onSubmit }) => {
       <div className={styles.new}>
         {/* TODO: input field must autosize  */}
         <div className={styles.inputWrapper}>
-          <input type="text" name="comment" onChange={(e) => setText(e.target.value)} value={text} />
+          <input type="text" name="comment" onChange={(e) => setText(e.target.value)} placeholder="Write a comment" value={text} />
         </div>
         <div>
-          <input type="submit" value="Submit" />
+          <input className="btn btn-dark" type="submit" value="Submit" />
         </div>
       </div>
     </form>
