@@ -34,21 +34,43 @@
         }
     }
 
-    .menu {
+    .menuIcon {
         visibility: hidden;
+        position: relative;
 
         color: grey;
-        cursor: pointer;
+
+        svg {
+            cursor: pointer;
+        }
 
         display: flex;
         align-items: center;
         margin-left: auto;
-    }
 
-    &:hover {
-        .menu {
-            visibility: visible;
+        .menuPopup {
+            white-space: nowrap;
+
+            position: absolute;
+
+            top: 100%;
+            right: 100%;
+
+            color: black;
+            background-color: #f5f5f5;
+
+            border: 1px solid #ced4da; 
+            border-radius: 3px;
+
+            div {
+                padding: 0.2rem 0.5rem;
+            }
         }
     }
 
+    &:hover {
+        .menuIcon {
+            visibility: visible;
+        }
+    }
 }

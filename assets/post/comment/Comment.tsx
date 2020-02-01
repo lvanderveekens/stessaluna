@@ -1,7 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState, useRef, useEffect } from 'react';
 import styles from './Comment.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+var classNames = require('classnames/dedupe');
+
 
 interface Props {
   timestamp: string;
@@ -12,6 +14,24 @@ interface Props {
 }
 
 const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text, onDelete }) => {
+
+  const [showMenu, setShowMenu] = useState(false);
+
+  var menuIconClass = classNames(styles.menuIcon, { 'visible': showMenu });
+
+  const menuPopupRef = useRef(null)
+
+  function handleClickOutside(event) {
+    if (menuPopupRef.current && !menuPopupRef.current.contains(event.target)) {
+      setShowMenu(false);
+    }
+  }
+
+  // TODO: move popup into own clss
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => { document.removeEventListener("mousedown", handleClickOutside); };
+  });
 
   return (
     <div className={styles.comment}>
@@ -26,8 +46,13 @@ const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text, on
             </span>
             <span className={styles.text}>{text}</span>
           </div>
-          <div className={styles.menu}>
-            <FontAwesomeIcon icon={faEllipsisV} onClick={() => { }} />
+          <div className={menuIconClass}>
+            <FontAwesomeIcon icon={faEllipsisV} onClick={() => setShowMenu(!showMenu)} />
+            {showMenu && (
+              <div ref={menuPopupRef} className={styles.menuPopup}>
+                <div>Delete comment</div>
+              </div>
+            )}
           </div>
         </div>
         <div className={styles.timestamp}>{timestamp}</div>
