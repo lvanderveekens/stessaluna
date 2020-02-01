@@ -1,8 +1,7 @@
-import React, { FunctionComponent, useReducer } from 'react';
+import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { addComment, deleteComment }  from '../../actions';
 import NewCommentForm from '../new-comment/NewCommentForm';
-import PropTypes from 'prop-types';
 import styles from './CommentSection.scss?module';
 import Comment from '../Comment';
 import moment from 'moment';

@@ -27,7 +27,7 @@ const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text, on
     }
   }
 
-  // TODO: move popup into own clss
+  // TODO: move popup menu into own component
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => { document.removeEventListener("mousedown", handleClickOutside); };
@@ -49,8 +49,8 @@ const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text, on
           <div className={menuIconClass}>
             <FontAwesomeIcon icon={faEllipsisV} onClick={() => setShowMenu(!showMenu)} />
             {showMenu && (
-              <div ref={menuPopupRef} className={styles.menuPopup}>
-                <div>Delete comment</div>
+              <div ref={menuPopupRef} className={styles.menuPopup} onClick={() => setShowMenu(false)}>
+                <div onClick={onDelete}>Delete comment</div>
               </div>
             )}
           </div>

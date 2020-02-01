@@ -2,6 +2,7 @@
 
     font-size: 0.9rem;
     display: flex;
+    margin-top: 0.3rem;
 
     .avatar {
         margin-right: 0.4rem;
@@ -35,7 +36,11 @@
     }
 
     .menuIcon {
-        visibility: hidden;
+
+        @media (hover: hover) {
+            visibility: hidden;
+        }
+
         position: relative;
 
         color: grey;
@@ -64,6 +69,7 @@
 
             div {
                 padding: 0.2rem 0.5rem;
+                cursor: pointer;
             }
         }
     }

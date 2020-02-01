@@ -47,7 +47,7 @@ const postReducer = (state = initialState, action) => {
         ...state,
         items: state.items.map((post) =>
           post.id === action.payload.postId
-            ? { ...post, comments: post.comments.filter(comment => comment.id !== action.payload.id) }
+            ? { ...post, comments: post.comments.filter(comment => comment.id !== action.payload.commentId) }
             : post
         )
       };

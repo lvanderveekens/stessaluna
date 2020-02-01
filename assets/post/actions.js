@@ -68,13 +68,13 @@ export const addComment = (postId, text) => {
 
 export const deleteComment = (postId, commentId) => {
   return dispatch => {
-    axios.delete(`/api/posts/${postId}/comments/${commentId}/`)
+    axios.delete(`/api/posts/${postId}/comments/${commentId}`)
       .then(res => {
         console.log(res.data);
-        dispatch(success(commentId));
+        dispatch(success(postId, commentId));
       })
       .catch(console.log);
   };
 
-  function success(id) { return { type: ActionTypes.DELETE_COMMENT_SUCCESS, payload: { id } }; };
+  function success(postId, commentId) { return { type: ActionTypes.DELETE_COMMENT_SUCCESS, payload: { postId, commentId } }; };
 };

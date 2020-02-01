@@ -26,8 +26,6 @@ const Post = ({ id, text, author, timestamp, image, onDelete, avatar, comments }
 
   let videoIdentifier 
   if (youtubeLink) {
-    console.log(youtubeLink);
-
     if (youtubeLink.value.includes("youtube.com/watch?v=")) {
       const phrase = youtubeLink.value; 
       const myRegexp = /watch\?v=(.*)/;
