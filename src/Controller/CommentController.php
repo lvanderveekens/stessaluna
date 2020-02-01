@@ -29,7 +29,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/", methods={"GET"})
+     * @Route(methods={"GET"})
      */
     public function getComments(int $postId): JsonResponse
     {
@@ -43,7 +43,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/", methods={"POST"})
+     * @Route(methods={"POST"})
      */
     public function addComment(int $postId, Request $request): JsonResponse
     {

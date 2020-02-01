@@ -5,7 +5,7 @@ export const fetchPosts = () => {
   return dispatch => {
     dispatch(begin());
 
-    axios.get('/api/posts/')
+    axios.get('/api/posts')
       .then(res => {
         dispatch(success(res.data));
       })
@@ -28,7 +28,7 @@ export const createPost = (text, image, onSuccess) => {
     formData.append('text', text);
     formData.append('image', image);
 
-    axios.post('/api/posts/', formData)
+    axios.post('/api/posts', formData)
       .then(res => {
         console.log(res.data);
         dispatch(success(res.data));
@@ -55,7 +55,7 @@ export const deletePost = (id) => {
 
 export const addComment = (postId, text) => {
   return dispatch => {
-    axios.post(`/api/posts/${postId}/comments/`, { text })
+    axios.post(`/api/posts/${postId}/comments`, { text })
       .then(res => {
         console.log(res.data);
         dispatch(success(postId, res.data));

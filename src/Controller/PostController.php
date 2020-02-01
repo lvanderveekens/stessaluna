@@ -35,7 +35,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/", methods={"GET"})
+     * @Route(methods={"GET"})
      */
     public function getPosts(): JsonResponse
     {
@@ -49,7 +49,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/", methods={"POST"})
+     * @Route(methods={"POST"})
      */
     public function createPost(Request $request, FileUploader $fileUploader): Response
     {
