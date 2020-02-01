@@ -20,7 +20,7 @@ const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text, on
       </div>
       <div className={styles.content}>
         <div className="d-flex">
-          <div>
+          <div className="mr-3">
             <span className={styles.author}>
               {author}
             </span>
