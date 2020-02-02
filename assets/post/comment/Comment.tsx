@@ -19,10 +19,10 @@ const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text, on
 
   var menuIconClass = classNames(styles.menuIcon, { 'visible': showMenu });
 
-  const menuPopupRef = useRef(null)
+  const menuRef = useRef(null)
 
   function handleClickOutside(event) {
-    if (menuPopupRef.current && !menuPopupRef.current.contains(event.target)) {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
       setShowMenu(false);
     }
   }
@@ -46,10 +46,10 @@ const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text, on
             </span>
             <span className={styles.text}>{text}</span>
           </div>
-          <div className={menuIconClass}>
-            <FontAwesomeIcon icon={faEllipsisV} onClick={() => setShowMenu(!showMenu)} />
+          <div ref={menuRef} className={menuIconClass} onClick={() => setShowMenu(!showMenu)}>
+            <FontAwesomeIcon icon={faEllipsisV} />
             {showMenu && (
-              <div ref={menuPopupRef} className={styles.menuPopup} onClick={() => setShowMenu(false)}>
+              <div className={styles.menuPopup} onClick={() => setShowMenu(false)}>
                 <div onClick={onDelete}>Delete comment</div>
               </div>
             )}
