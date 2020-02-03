@@ -1,8 +1,6 @@
-import React, { FunctionComponent, useState, useRef, useEffect } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import styles from './Comment.scss?module';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
-var classNames = require('classnames/dedupe');
+import ThreeDotsMenu from '../../menu/ThreeDotsMenu';
 
 
 interface Props {
@@ -15,30 +13,22 @@ interface Props {
 
 const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text, onDelete }) => {
 
-  const [showMenu, setShowMenu] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  var menuIconClass = classNames(styles.menuIcon, { 'visible': showMenu });
-
-  const menuRef = useRef(null)
-
-  function handleClickOutside(event) {
-    if (menuRef.current && !menuRef.current.contains(event.target)) {
-      setShowMenu(false);
-    }
-  }
-
-  // TODO: move popup menu into own component
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => { document.removeEventListener("mousedown", handleClickOutside); };
-  });
+  const showMenu = hovering || menuOpen
+  console.log(showMenu);
 
   return (
     <div className={styles.comment}>
       <div className={styles.avatar}>
         <img src={avatar} />
       </div>
-      <div className={styles.content}>
+      <div
+        className={styles.content}
+        onMouseEnter={() => setHovering(true)}
+        onMouseLeave={() => setHovering(false)}
+      >
         <div className="d-flex">
           <div className="mr-3">
             <span className={styles.author}>
@@ -46,14 +36,9 @@ const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text, on
             </span>
             <span className={styles.text}>{text}</span>
           </div>
-          <div ref={menuRef} className={menuIconClass} onClick={() => setShowMenu(!showMenu)}>
-            <FontAwesomeIcon icon={faEllipsisV} />
-            {showMenu && (
-              <div className={styles.menuPopup} onClick={() => setShowMenu(false)}>
-                <div onClick={onDelete}>Delete comment</div>
-              </div>
-            )}
-          </div>
+          <ThreeDotsMenu hidden={!showMenu} open={menuOpen} setOpen={setMenuOpen}>
+            <div onClick={onDelete}>Delete comment</div>
+          </ThreeDotsMenu>
         </div>
         <div className={styles.timestamp}>{timestamp}</div>
       </div>
