@@ -5,12 +5,12 @@ import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 var classNames = require('classnames/dedupe');
 
 interface Props {
-  hidden: boolean
+  hidden?: boolean
   open: boolean
   setOpen: (open: boolean) => void
 };
 
-const ThreeDotsMenu: FunctionComponent<Props> = ({ children, hidden, open, setOpen }) => {
+const ThreeDotsMenu: FunctionComponent<Props> = ({ children, hidden = false, open, setOpen }) => {
 
   const menuRef = useRef(null)
 
@@ -29,12 +29,14 @@ const ThreeDotsMenu: FunctionComponent<Props> = ({ children, hidden, open, setOp
 
   return (
     <div ref={menuRef} className={menuIconClass} onClick={() => setOpen(!open)}>
-      <FontAwesomeIcon icon={faEllipsisV} />
-      {open && (
-        <div className={styles.menuPopup} onClick={() => setOpen(false)}>
-          {children}
-        </div>
-      )}
+      <div className="position-relative">
+        <FontAwesomeIcon icon={faEllipsisV} />
+        {open && (
+          <div className={styles.menuPopup} onClick={() => setOpen(false)}>
+            {children}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

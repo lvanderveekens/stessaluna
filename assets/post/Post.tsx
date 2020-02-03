@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, FunctionComponent } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Post.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,10 +9,23 @@ import { addComment } from './actions';
 import CommentSection from './comment/comment-section/CommentSection';
 import Linkify from 'linkifyjs/react';
 import * as linkify from 'linkifyjs';
+import ThreeDotsMenu from '../menu/ThreeDotsMenu';
 
-const Post = ({ id, text, author, timestamp, image, onDelete, avatar, comments }) => {
+interface Props {
+  id: number
+  text: string
+  author: string
+  timestamp: string
+  image: string
+  onDelete: () => void
+  avatar: string
+  comments: any[]
+};
+
+const Post: FunctionComponent<Props> = ({ id, text, author, timestamp, image, onDelete, avatar, comments }) => {
 
   const [showComments, setShowComments] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleComments = () => {
     setShowComments(!showComments);
@@ -43,15 +56,15 @@ const Post = ({ id, text, author, timestamp, image, onDelete, avatar, comments }
     <div className={styles.post}>
       <div className={styles.content}>
         <div className={styles.header}>
-          <div className="d-flex">
+          <div className="d-flex w-100">
             <img className={styles.avatar} src={avatar} />
             <div className={styles.usernameTimestampWrapper}>
               <div>{author}</div>
               <span className={styles.timestamp}>{timestamp}</span>
             </div>
-          </div>
-          <div className={styles.deleteButton} onClick={onDelete}>
-            <FontAwesomeIcon icon={faTimes} color="red" />
+            <ThreeDotsMenu open={menuOpen} setOpen={setMenuOpen}>
+              <div onClick={onDelete}>Delete post</div>
+            </ThreeDotsMenu>
           </div>
         </div>
         <div className={styles.text}><Linkify>{text}</Linkify></div>
@@ -83,17 +96,6 @@ const Post = ({ id, text, author, timestamp, image, onDelete, avatar, comments }
       {showComments && (<CommentSection postId={id} comments={comments} />)}
     </div>
   );
-};
-
-Post.propTypes = {
-  id: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  timestamp: PropTypes.string.isRequired,
-  image: PropTypes.string,
-  onDelete: PropTypes.func.isRequired,
-  avatar: PropTypes.string,
-  comments: PropTypes.array,
 };
 
 const actionCreators = {
