@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { logIn } from '../auth/actions';
 import NavBar from '../nav/NavBar';
 import styles from './LoginPage.scss?module';
+import { Link } from 'react-router-dom';
 
 const LoginPage = ({ history, logIn }) => {
 
@@ -34,6 +35,7 @@ const LoginPage = ({ history, logIn }) => {
             {errorMessage && (
               <div className={styles.errorMessage}>{errorMessage}</div>
             )}
+            <p>Or create a new account <Link to="/register">here</Link>.</p>
           </Col>
           <Col />
         </Row>

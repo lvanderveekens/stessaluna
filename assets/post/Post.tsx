@@ -1,8 +1,6 @@
-import React, { useState, Fragment, FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, FunctionComponent } from 'react';
 import styles from './Post.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
 import { connect } from 'react-redux';
 import { addComment } from './actions';
@@ -10,6 +8,7 @@ import CommentSection from './comment/comment-section/CommentSection';
 import Linkify from 'linkifyjs/react';
 import * as linkify from 'linkifyjs';
 import ThreeDotsMenu from '../menu/ThreeDotsMenu';
+import YouTubeVideo from './video/YouTubeVideo';
 
 interface Props {
   id: number
@@ -32,23 +31,15 @@ const Post: FunctionComponent<Props> = ({ id, text, author, timestamp, image, on
   };
 
   const youtubeLink = linkify.find(text)
-    // TODO: there are different youtube URL formats
     .find(link => link.type == "url" &&
-      (link.value.includes("youtube.com") || link.value.includes("youtu.be"))
-    );
+      (link.value.includes("youtube.com") || link.value.includes("youtu.be")));
 
-  let videoIdentifier 
+  let youtubeVideoId
   if (youtubeLink) {
     if (youtubeLink.value.includes("youtube.com/watch?v=")) {
-      const phrase = youtubeLink.value; 
-      const myRegexp = /watch\?v=(.*)/;
-      const match = myRegexp.exec(phrase);
-      videoIdentifier = match[1]
-    } else if (youtubeLink.value.includes("youtu.be")) {
-      const phrase = youtubeLink.value;
-      const myRegexp = /youtu.be\/(.*)/; 
-      const match = myRegexp.exec(phrase);
-      videoIdentifier = match[1]
+      youtubeVideoId = /watch\?v=(.*)/.exec(youtubeLink.value)[1];
+    } else if (youtubeLink.value.includes("youtu.be/")) {
+      youtubeVideoId = /youtu.be\/(.*)/.exec(youtubeLink.value)[1]
     }
   }
 
@@ -68,25 +59,14 @@ const Post: FunctionComponent<Props> = ({ id, text, author, timestamp, image, on
           </div>
         </div>
         <div className={styles.text}><Linkify>{text}</Linkify></div>
-        {image && (
-          <img className={styles.image} src={image} />
-        )}
-        {videoIdentifier && (
-          <div className={styles.videoContainer}>
-            <iframe
-              src={`https://www.youtube.com/embed/${videoIdentifier}`}
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            />
-          </div>
-        )}
+        {image && (<img className={styles.image} src={image} />)}
+        {youtubeVideoId && (<YouTubeVideo id={youtubeVideoId} />)}
       </div>
-      {/* TODO: separate component */}
       <div className={styles.activity}>
         {comments && comments.length > 0 && (
           <div className={styles.numberOfComments} onClick={toggleComments}>Comments: {comments.length}</div>
         )}
       </div>
-      {/* TODO: separate component */}
       <div className={styles.actions}>
         <div className={styles.addComment} onClick={() => setShowComments(true)}>
           <span className={styles.commentIcon}><FontAwesomeIcon icon={faCommentAlt} /></span>

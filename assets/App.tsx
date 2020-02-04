@@ -9,6 +9,7 @@ import NotFoundPage from './not-found/NotFoundPage';
 import Helmet from 'react-helmet';
 import history from './history/history';
 import { fetchCurrentUser } from './auth/actions';
+import RegistrationPage from './register/RegistrationPage';
 
 interface Props {
   loggedIn: boolean;
@@ -34,6 +35,7 @@ const App: FunctionComponent<Props> = ({ loggedIn, fetchUser }) => {
         <Switch>
           <PrivateRoute exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/register" component={RegistrationPage} />
 
           <Route component={NotFoundPage} />
         </Switch>
