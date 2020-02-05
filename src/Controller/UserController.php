@@ -30,7 +30,7 @@ class UserController extends AbstractController
     public static function convertToDto(User $user): UserDto
     {
         $dto = new UserDto();
-        $dto->setUserName($user->getUserName());
+        $dto->setUserName($user->getUsername());
         $dto->setFirstName($user->getFirstName());
         $dto->setLastName($user->getLastName());
 

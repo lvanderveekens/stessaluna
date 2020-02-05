@@ -4,7 +4,7 @@ namespace App\Dto;
 
 class UserDto
 {
-    private $userName;
+    private $username;
 
     private $firstName;
 
@@ -12,14 +12,14 @@ class UserDto
 
     private $avatar;
 
-    public function getUserName(): string
+    public function getUsername(): ?string
     {
-        return $this->userName;
+        return $this->username;
     }
 
-    public function setUserName(string $userName): self
+    public function setUsername(string $username): self
     {
-        $this->userName = $userName;
+        $this->username = $username;
         return $this;
     }
 

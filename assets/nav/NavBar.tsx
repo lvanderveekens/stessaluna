@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Navbar, Container } from "react-bootstrap";
 import styles from './NavBar.scss?module';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logOut } from '../user/actions';
 import history from '../history/history';
+import User from '../user/user.interface';
 
-const NavBar = ({ user, logOut }) => {
+interface Props {
+  user?: User
+  logOut: () => void;
+}
+
+const NavBar: FunctionComponent<Props> = ({ user, logOut }) => {
 
   const handleLogoutClick = () => {
     logOut();
@@ -21,7 +26,7 @@ const NavBar = ({ user, logOut }) => {
         {user
           ? (
             <span className={styles.accountWrapper}>
-              <span className={styles.userText}>Signed in as: <a href="#login">{user.firstName}</a></span>
+              <span className={styles.userText}>Signed in as: <a href="#login">{user.username}</a></span>
               <span className={styles.logoutText} onClick={handleLogoutClick}>Logout</span>
               {/* TODO: placeholder avatar */}
               <img className={styles.avatar} src={user.avatar} />
@@ -34,14 +39,7 @@ const NavBar = ({ user, logOut }) => {
   );
 };
 
-NavBar.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
-  user: PropTypes.object,
-  logOut: PropTypes.func.isRequired,
-};
-
 const mapStateToProps = state => ({
-  loggedIn: state.auth.loggedIn,
   user: state.auth.user
 });
 

@@ -1,5 +1,4 @@
-import React, { Fragment, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment, useState, FC, useRef } from 'react';
 import styles from './NewPostForm.scss?module';
 import { Formik } from 'formik';
 import { Button, Form } from 'react-bootstrap';
@@ -8,15 +7,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle, faImage } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { createPost } from '../actions';
+import User from '../../user/user.interface';
 
 const schema = yup.object({
   text: yup.string().required("Message is missing."),
   file: yup.mixed(),
 });
 
-const NewPostForm = ({ user, createPost }) => {
+interface Props {
+  user?: User
+  createPost: (text: string, image: string, any) => void
+}
 
-  const fileInput = React.createRef();
+const NewPostForm: FC<Props> = ({ user, createPost }) => {
+
+  const fileInput = useRef(null);
   const [imageUrl, setImageUrl] = useState("");
 
   const handleSubmit = (values, { resetForm }) => {
@@ -61,7 +66,7 @@ const NewPostForm = ({ user, createPost }) => {
                 type="text"
                 name="text"
                 value={values.text}
-                placeholder={user && `What's new, ${user.firstName}?`}
+                placeholder={user && `What's new, ${user.username}?`}
                 onChange={handleChange}
               />
               <Form.Control
@@ -103,11 +108,6 @@ const NewPostForm = ({ user, createPost }) => {
       </Formik>
     </Fragment>
   );
-};
-
-NewPostForm.propTypes = {
-  user: PropTypes.object,
-  createPost: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
