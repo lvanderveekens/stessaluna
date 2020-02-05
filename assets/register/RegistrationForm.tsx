@@ -5,10 +5,16 @@ import * as yup from 'yup';
 import styles from './RegistrationForm.scss?module';
 
 interface Props {
-  onSubmit: () => void
+  onSubmit: (values: FormValues) => void
 }
 
-const RegistrationForm: FunctionComponent<Props> = () => {
+interface FormValues {
+  username: string
+  password: string
+  confirmPassword: string
+}
+
+const RegistrationForm: FunctionComponent<Props> = ({ onSubmit }) => {
 
   const schema = yup.object({
     username: yup.string().required("Please fill in your username."),
@@ -17,14 +23,12 @@ const RegistrationForm: FunctionComponent<Props> = () => {
   });
 
   // TODO: onSubmit check if username already exists...
-
-  const handleSubmit = () => {
-  };
+  // TODO: check if passwords match
 
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       initialValues={{ username: '', password: '', confirmPassword: ''}}
       validateOnChange={false}
     >

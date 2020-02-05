@@ -19,8 +19,12 @@ security:
                 check_path:      /api/token
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        register:
+            pattern: ^/api/register
+            anonymous: true 
+            stateless: true
         api:
-            pattern: ^/api/
+            pattern: ^/api
             anonymous: false 
             stateless: true
             guard:
@@ -31,4 +35,5 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api/token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

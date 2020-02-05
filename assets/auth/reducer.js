@@ -1,4 +1,4 @@
-import ActionTypes from './actionTypes';
+import ActionTypes from '../user/actionTypes';
 
 const loggedIn = localStorage.getItem('logged-in') == 'true';
 

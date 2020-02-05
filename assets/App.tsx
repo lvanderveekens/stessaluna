@@ -8,19 +8,19 @@ import PrivateRoute from './route/PrivateRoute';
 import NotFoundPage from './not-found/NotFoundPage';
 import Helmet from 'react-helmet';
 import history from './history/history';
-import { fetchCurrentUser } from './auth/actions';
+import { fetchCurrentUser } from './user/actions';
 import RegistrationPage from './register/RegistrationPage';
 
 interface Props {
   loggedIn: boolean;
-  fetchUser: () => void;
+  fetchCurrentUser: () => void;
 }
 
-const App: FunctionComponent<Props> = ({ loggedIn, fetchUser }) => {
+const App: FunctionComponent<Props> = ({ loggedIn, fetchCurrentUser }) => {
 
   useEffect(() => {
     if (loggedIn) {
-      fetchUser();
+      fetchCurrentUser();
     };
   }, []);
 
@@ -49,7 +49,7 @@ const mapStateToProps = state => ({
 });
 
 const actionCreators = {
-  fetchUser: fetchCurrentUser,
+  fetchCurrentUser,
 };
 
 export default connect(mapStateToProps, actionCreators)(App);

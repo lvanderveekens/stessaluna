@@ -12,7 +12,7 @@ class UserDto
 
     private $avatar;
 
-    public function getUserName(): ?string
+    public function getUserName(): string
     {
         return $this->userName;
     }
@@ -28,7 +28,7 @@ class UserDto
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): self
+    public function setFirstName(?string $firstName): self
     {
         $this->firstName= $firstName;
         return $this;
@@ -39,7 +39,7 @@ class UserDto
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): self
+    public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
         return $this;
@@ -50,7 +50,7 @@ class UserDto
         return $this->avatar;
     }
 
-    public function setAvatar(string $avatar): self
+    public function setAvatar(?string $avatar): self
     {
         $this->avatar= $avatar;
         return $this;

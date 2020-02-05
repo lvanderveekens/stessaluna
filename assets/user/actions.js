@@ -29,6 +29,21 @@ export const logOut = () => {
   function success() { return { type: ActionTypes.LOGOUT_SUCCESS }; };
 };
 
+export const register = (username, password) => {
+  return dispatch => {
+    return axios.post('/api/register', { username, password })
+      .then(res => {
+        dispatch(success());
+      })
+      .catch((error) => {
+        console.log(error);
+        return Promise.reject(error);
+      });
+  };
+
+  function success() { return { type: ActionTypes.REGISTER_SUCCESS }; };
+};
+
 export const fetchCurrentUser = () => {
   return dispatch => {
     axios.get('/api/users/me')

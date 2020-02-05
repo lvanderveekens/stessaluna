@@ -4,7 +4,7 @@ import styles from './NavBar.scss?module';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { logOut } from '../auth/actions';
+import { logOut } from '../user/actions';
 import history from '../history/history';
 
 const NavBar = ({ user, logOut }) => {
