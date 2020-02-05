@@ -12,8 +12,8 @@ const RegistrationPage = ({ }) => {
         <Row>
           <Col />
           <Col md={6}>
-            <h4>New account</h4>
-            <RegistrationForm />
+            <h4 className="mb-3">Register</h4>
+            <RegistrationForm onSubmit={() => { }} />
           </Col>
           <Col />
         </Row>

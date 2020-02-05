@@ -1,31 +1,31 @@
 import React, { FunctionComponent } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { Formik } from 'formik';
+import { Formik, FormikValues } from 'formik';
 import * as yup from 'yup';
-import styles from './RegistrationForm.scss?module';
+import PropTypes from 'prop-types';
+import styles from './LoginForm.scss?module';
 
 interface Props {
-  onSubmit: () => void
+  onSubmit: (values: FormValues) => void
 }
 
-const RegistrationForm: FunctionComponent<Props> = () => {
+export interface FormValues {
+  username: string;
+  password: string;
+}
+
+const LoginForm: FunctionComponent<Props> = ({ onSubmit }) => {
 
   const schema = yup.object({
     username: yup.string().required("Please fill in your username."),
     password: yup.string().required("Please fill in your password."),
-    confirmPassword: yup.string().required("Please fill in your password another time."),
   });
-
-  // TODO: onSubmit check if username already exists...
-
-  const handleSubmit = () => {
-  };
 
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={handleSubmit}
-      initialValues={{ username: '', password: '', confirmPassword: ''}}
+      onSubmit={onSubmit}
+      initialValues={{ username: '', password: '' }}
       validateOnChange={false}
     >
       {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
@@ -36,9 +36,9 @@ const RegistrationForm: FunctionComponent<Props> = () => {
               type="text"
               name="username"
               value={values.username}
+              isInvalid={errors.username && touched.username}
               onChange={handleChange}
               onBlur={handleBlur}
-              isInvalid={errors.username && touched.username}
             />
             {errors.username && touched.username && (
               <div className="invalid-feedback">{errors.username}</div>
@@ -50,26 +50,12 @@ const RegistrationForm: FunctionComponent<Props> = () => {
               type="password"
               name="password"
               value={values.password}
+              isInvalid={errors.password && touched.password}
               onChange={handleChange}
               onBlur={handleBlur}
-              isInvalid={errors.password && touched.password}
             />
             {errors.password && touched.password && (
               <div className="invalid-feedback">{errors.password}</div>
-            )}
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Confirm password</Form.Label>
-            <Form.Control
-              type="password"
-              name="confirmPassword"
-              value={values.confirmPassword}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              isInvalid={errors.confirmPassword && touched.confirmPassword}
-            />
-            {errors.confirmPassword && touched.confirmPassword && (
-              <div className="invalid-feedback">{errors.confirmPassword}</div>
             )}
           </Form.Group>
           <Button type="submit">Submit</Button>
@@ -79,4 +65,4 @@ const RegistrationForm: FunctionComponent<Props> = () => {
   );
 };
 
-export default RegistrationForm;
+export default LoginForm;
