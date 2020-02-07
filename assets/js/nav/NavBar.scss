@@ -1,13 +1,16 @@
+
+
 .nav {
 
+    color: white;
+    margin-bottom: 1.5rem;
+
     .container {
-        height: 50px;
-    }
+        height: 40px;
 
-    color: rgba(255, 255, 255, 0.5);
-
-    a {
-        color: white;
+        &>a {
+            color: white;
+        }
     }
 
     .accountWrapper {
@@ -15,13 +18,19 @@
         display: flex;
         align-items: center;
 
-        .avatar {
-            width: 50px;
-            height: 50px;
+        &:hover {
+            cursor: pointer;
+        }
 
-            border: solid 3px white;
+        .avatar {
+            width: 30px;
+            height: 30px;
+
+            border: solid 2px white;
             border-radius: 50%;
             overflow: hidden;
+
+            margin-right: 0.7rem;
 
             img {
                 width: 100%;
@@ -29,25 +38,11 @@
         }
 
         .userText {
+
             display: none;
 
             @media (min-width: 576px) {
                 display: inline;
-                padding-right: 1rem;
-            }
-        }
-
-        .logoutText {
-            display: none;
-
-            @media (min-width: 576px) {
-                display: inline;
-                padding-right: 1rem;
-            }
-
-            &:hover {
-                text-decoration: underline;
-                cursor: pointer;
             }
         }
     }

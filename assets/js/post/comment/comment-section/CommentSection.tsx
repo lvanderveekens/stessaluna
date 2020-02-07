@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { addComment, deleteComment }  from '../../actions';
 import NewCommentForm from '../new-comment/NewCommentForm';
 import styles from './CommentSection.scss?module';
+import { Comment as CommentModel} from '../comment.interface';
 import Comment from '../Comment';
 import moment from 'moment';
 
 interface Props {
   postId: number
-  comments: any[]
+  comments: CommentModel[]
   addComment: (postId: number, text: string) => void
   deleteComment: (postId: number, commentId: number) => void
   user: any
@@ -34,7 +35,7 @@ const CommentSection: FunctionComponent<Props> = ({ postId, comments, addComment
             <Comment
               key={comment.id}
               timestamp={moment(comment.createdAt).fromNow()}
-              author={`${comment.user.firstName} ${comment.user.lastName}`}
+              author={comment.user.username}
               avatar={comment.user.avatar}
               text={comment.text}
               onDelete={handleDeleteComment(comment.id)}

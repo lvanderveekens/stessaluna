@@ -1,11 +1,12 @@
 import React, { FunctionComponent } from 'react';
-import { Navbar, Container } from "react-bootstrap";
+import { Navbar, Container, Dropdown } from "react-bootstrap";
 import styles from './NavBar.scss?module';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logOut } from '../user/actions';
 import history from '../history/history';
 import User from '../user/user.interface';
+import CustomToggle from '../dropdown/CustomToggle';
 
 interface Props {
   user?: User
@@ -20,18 +21,24 @@ const NavBar: FunctionComponent<Props> = ({ user, logOut }) => {
   };
 
   return (
-    <Navbar className={`${styles.nav} mb-4`} bg="dark" variant="dark">
+    <Navbar className={styles.nav} bg="dark" variant="dark">
       <Container className={styles.container}>
-        <Navbar.Brand href="/">Luna-app</Navbar.Brand>
+        <Navbar.Brand href="/">StessaLuna</Navbar.Brand>
         {user
           ? (
-            <div className={styles.accountWrapper}>
-              <span className={styles.userText}>Signed in as: <a href="#login">{user.username}</a></span>
-              <span className={styles.logoutText} onClick={handleLogoutClick}>Logout</span>
-              <div className={styles.avatar}>
-                <img src={user.avatar} />
-              </div>
-            </div>
+            <Dropdown >
+              <Dropdown.Toggle as={CustomToggle} id="something">
+                <div className={styles.accountWrapper}>
+                  <div className={styles.avatar}>
+                    <img src={user.avatar} />
+                  </div>
+                  <span className={styles.userText}>{user.username}</span>
+                </div>
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={handleLogoutClick}>Logout</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           ) : (
             <Link to="/login">Login</Link>
           )}

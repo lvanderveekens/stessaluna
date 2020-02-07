@@ -17,7 +17,6 @@ const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text, on
   const [menuOpen, setMenuOpen] = useState(false);
 
   const showMenu = hovering || menuOpen
-  console.log(showMenu);
 
   return (
     <div className={styles.comment}>
