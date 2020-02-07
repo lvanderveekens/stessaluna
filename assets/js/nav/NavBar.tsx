@@ -25,13 +25,13 @@ const NavBar: FunctionComponent<Props> = ({ user, logOut }) => {
         <Navbar.Brand href="/">Luna-app</Navbar.Brand>
         {user
           ? (
-            <span className={styles.accountWrapper}>
+            <div className={styles.accountWrapper}>
               <span className={styles.userText}>Signed in as: <a href="#login">{user.username}</a></span>
               <span className={styles.logoutText} onClick={handleLogoutClick}>Logout</span>
-              <span className={styles.avatar}>
+              <div className={styles.avatar}>
                 <img src={user.avatar} />
-              </span>
-            </span>
+              </div>
+            </div>
           ) : (
             <Link to="/login">Login</Link>
           )}

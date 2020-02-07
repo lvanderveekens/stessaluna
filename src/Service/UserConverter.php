@@ -29,7 +29,7 @@ class UserConverter
             // TODO: move base upload path to a common place
             $dto->setAvatar('/uploads/avatars/' .  $user->getAvatarFilename());
         } else {
-            $dto->setAvatar($this->packages->getUrl('build/images/default-avatar.svg'));
+            $dto->setAvatar($this->packages->getUrl('build/images/avatar-placeholder.svg'));
         }
         return $dto;
     }

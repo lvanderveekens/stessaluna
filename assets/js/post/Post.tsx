@@ -48,7 +48,9 @@ const Post: FunctionComponent<Props> = ({ id, text, author, timestamp, image, on
       <div className={styles.content}>
         <div className={styles.header}>
           <div className="d-flex w-100">
-            <img className={styles.avatar} src={avatar} />
+            <div className={styles.avatar}>
+              <img src={avatar} />
+            </div>
             <div className={styles.usernameTimestampWrapper}>
               <div>{author}</div>
               <span className={styles.timestamp}>{timestamp}</span>
