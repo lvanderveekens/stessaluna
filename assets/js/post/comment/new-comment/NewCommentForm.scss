@@ -19,12 +19,21 @@
 
     .inputWrapper {
         flex-grow: 100;
+        display: flex;
+        align-items: center;
 
-        input {
-            width: 100%;
-            border: 1px solid #ced4da;
-            border-radius: 0.25rem;
+        textarea {
+            // width: 100%;
+            resize: none;
+            // outline: none;
+
             padding: 0.2rem 0.2rem;
+            // margin-bottom: 0.5rem;
+
+            &:focus {
+                box-shadow: none;
+                border-color: #ced4da;
+            }
         }
     }
 }

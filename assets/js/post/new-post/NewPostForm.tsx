@@ -8,6 +8,7 @@ import { faTimesCircle, faImage } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { createPost } from '../actions';
 import User from '../../user/user.interface';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const schema = yup.object({
   text: yup.string().required("Message is missing."),
@@ -61,8 +62,8 @@ const NewPostForm: FC<Props> = ({ user, createPost }) => {
         {({ handleSubmit, handleChange, setFieldValue, values, errors, }) => (
           <Form className={styles.newPostForm} noValidate onSubmit={handleSubmit}>
             <div className={styles.inputBox}>
-              <Form.Control
-                className={styles.textInput}
+              <TextareaAutosize
+                className={`${styles.textInput} form-control`}
                 type="text"
                 name="text"
                 value={values.text}
