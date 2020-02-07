@@ -28,8 +28,9 @@ const NavBar: FunctionComponent<Props> = ({ user, logOut }) => {
             <span className={styles.accountWrapper}>
               <span className={styles.userText}>Signed in as: <a href="#login">{user.username}</a></span>
               <span className={styles.logoutText} onClick={handleLogoutClick}>Logout</span>
-              {/* TODO: placeholder avatar */}
-              <img className={styles.avatar} src={user.avatar} />
+              <span className={styles.avatar}>
+                <img src={user.avatar} />
+              </span>
             </span>
           ) : (
             <Link to="/login">Login</Link>

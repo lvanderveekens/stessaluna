@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Dto\CommentDto;
 use App\Entity\Comment;
 use App\Entity\Post;
+use App\Service\CommentConverter;
+use App\Service\UserConverter;
 use DateTime;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,14 +20,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CommentController extends AbstractController
 {
-    /**
-     * @var LoggerInterface
-     */
     private $logger;
+    private $commentConverter;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, CommentConverter $commentConverter)
     {
         $this->logger = $logger;
+        $this->commentConverter = $commentConverter;
     }
 
     /**
@@ -38,7 +39,7 @@ class CommentController extends AbstractController
             ->findBy(array('post' => $postId));
 
         return $this->json(array_map(function ($comment) {
-            return $this->convertToDto($comment);
+            return $this->commentConverter->toDto($comment);
         }, $comments));
     }
 
@@ -64,7 +65,7 @@ class CommentController extends AbstractController
         $em->persist($comment);
         $em->flush();
 
-        return $this->json($this->convertToDto($comment));
+        return $this->json($this->commentConverter->toDto($comment));
     }
 
     /**
@@ -78,16 +79,5 @@ class CommentController extends AbstractController
         $em->remove($comment);
         $em->flush();
         return new Response('Deleted comment with id ' . $id);
-    }
-
-    public static function convertToDto(Comment $comment): CommentDto
-    {
-        $dto = new CommentDto();
-        $dto->setId($comment->getId());
-        $dto->setCreatedAt($comment->getCreatedAt());
-        $dto->setText($comment->getText());
-        // TODO: move convertToDto to a common place
-        $dto->setUser(UserController::convertToDto($comment->getUser()));
-        return $dto;
     }
 }

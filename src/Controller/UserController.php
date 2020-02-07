@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Dto\UserDto;
 use App\Entity\User;
+use App\Service\UserConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,6 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
+    private $userConverter;
+
+    public function __construct(UserConverter $userConverter)
+    {
+        $this->userConverter = $userConverter;
+    }
+
     /**
      * @Route("/me", methods={"GET"})
      */
@@ -23,21 +32,6 @@ class UserController extends AbstractController
             throw $this->createNotFoundException('Current user not found');
         }
 
-        return $this->json($this->convertToDto($user));
-    }
-
-    // TODO: move away from the controller
-    public static function convertToDto(User $user): UserDto
-    {
-        $dto = new UserDto();
-        $dto->setUserName($user->getUsername());
-        $dto->setFirstName($user->getFirstName());
-        $dto->setLastName($user->getLastName());
-
-        if ($user->getAvatarFilename()) {
-            // TODO: move base upload path to a common place
-            $dto->setAvatar('/uploads/avatars/' .  $user->getAvatarFilename());
-        }
-        return $dto;
+        return $this->json($this->userConverter->toDto($user));
     }
 }

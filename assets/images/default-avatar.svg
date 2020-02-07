@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="81px" height="84px" viewBox="0 0 81 84" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>Luna app</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="81" height="84"></rect>
+    </defs>
+    <g id="Logos" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="avatar">
+            <g id="avatar-1">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#D8D8D8" xlink:href="#path-1"></use>
+                <g mask="url(#mask-2)" stroke="#979797">
+                    <g transform="translate(12.000000, 11.000000)">
+                        <path d="M0,94 C3.42821645,61.1682317 12.8494717,44.3551632 27.4519963,43.5607946 L27.4519162,43.53125 C27.6356147,43.53125 27.8186951,43.5337059 28.0011537,43.5386176 C28.1820387,43.533696 28.3647534,43.53125 28.5480838,43.53125 L28.549101,43.5608542 C43.151023,44.3560037 52.5718835,61.1690523 56,94 L0,94 Z" id="Path" fill="#FEFEFE" fill-rule="evenodd"></path>
+                        <path d="M27.4005699,43.6980376 C35.6322344,43.6980376 43.1533911,39.4014693 45.8806972,25.5842135 C48.6080033,11.7669576 40.3341685,0.565858538 27.4005699,0.565858538 C14.4669713,0.565858538 6.19313642,11.7669576 8.92044253,25.5842135 C11.6477486,39.4014693 19.1689053,43.6980376 27.4005699,43.6980376 Z" id="Oval" fill="#FEFEFE" fill-rule="evenodd"></path>
+                        <path d="M28.6556267,20 C29.5628256,24.4663559 28.6776167,26.4391699 26,25.9184421" id="Path-12-Copy" fill="none"></path>
+                        <path d="" id="Path-12" fill="none"></path>
+                        <path d="M19.1547142,13 L19.4251609,14.4771288 C19.7011442,15.9844974 19.608356,17.5362596 19.1547142,19 L19.1547142,19 L19.1547142,19" id="Path-13" fill="none"></path>
+                        <path d="M36.1547142,13 L36.4251609,14.4771288 C36.7011442,15.9844974 36.608356,17.5362596 36.1547142,19 L36.1547142,19 L36.1547142,19" id="Path-13-Copy" fill="none"></path>
+                        <path d="M20,31 C21.8994533,33 24.56612,34 28,34 C31.43388,34 34.1005467,33 36,31" id="Path-14" fill="none"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

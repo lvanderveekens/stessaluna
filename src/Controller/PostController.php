@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Dto\PostDto;
 use App\Entity\Post;
+use App\Service\CommentConverter;
 use App\Service\FileUploader;
+use App\Service\UserConverter;
 use DateTime;
 use ErrorException;
 use Exception;
@@ -24,14 +26,14 @@ use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
  */
 class PostController extends AbstractController
 {
-    /**
-     * @var LoggerInterface
-     */
     private $logger;
+    private $commentConverter;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, UserConverter $userConverter, CommentConverter $commentConverter)
     {
         $this->logger = $logger;
+        $this->userConverter = $userConverter;
+        $this->commentConverter = $commentConverter;
     }
 
     /**
@@ -97,24 +99,22 @@ class PostController extends AbstractController
         return new Response('Deleted post with id ' . $id);
     }
 
-    private static function convertToDto(Post $post): PostDto
+    private function convertToDto(Post $post): PostDto
     {
+        $userDto = $this->userConverter->toDto($post->getUser());
+
         $dto = new PostDto();
         $dto->setId($post->getId());
         $dto->setText($post->getText());
-        $dto->setUser(UserController::convertToDto($post->getUser()));
+        $dto->setUser($userDto);
         $dto->setCreatedAt($post->getCreatedAt());
 
         $comments = array_map(function ($comment) {
-            return CommentController::convertToDto($comment);
+            return $this->commentConverter->toDto($comment);
         }, $post->getComments()->toArray());
 
         $dto->setComments($comments);
-
-        if ($post->getUser()->getAvatarFilename()) {
-            // TODO: move base upload path to a common place
-            $dto->setAvatar('/uploads/avatars/' .  $post->getUser()->getAvatarFilename());
-        }
+        $dto->setAvatar($userDto->getAvatar());
 
         if ($post->getImageFilename()) {
             // TODO: move base upload path to a common place
