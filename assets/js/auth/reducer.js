@@ -5,6 +5,7 @@ const loggedIn = localStorage.getItem('logged-in') == 'true';
 const initialState = {
   loggedIn: loggedIn,
   user: null,
+  loading: false,
 };
 
 const authReducer = (state = initialState, action) => {

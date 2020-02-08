@@ -12,15 +12,17 @@ import { fetchCurrentUser } from './user/actions';
 import RegistrationPage from './register/RegistrationPage';
 
 interface Props {
-  loggedIn: boolean;
-  fetchCurrentUser: () => void;
+  loggedIn: boolean
+  fetchCurrentUser: () => void
 }
 
 const App: FunctionComponent<Props> = ({ loggedIn, fetchCurrentUser }) => {
 
-  if (loggedIn) {
-    fetchCurrentUser();
-  };
+  useEffect(() => {
+    if (loggedIn) {
+      fetchCurrentUser();
+    };
+  }, []);
 
   return (
     <Fragment>

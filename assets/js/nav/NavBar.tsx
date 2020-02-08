@@ -9,11 +9,12 @@ import User from '../user/user.interface';
 import CustomToggle from '../dropdown/CustomToggle';
 
 interface Props {
+  loggedIn: boolean
   user?: User
-  logOut: () => void;
+  logOut: () => void
 }
 
-const NavBar: FunctionComponent<Props> = ({ user, logOut }) => {
+const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
 
   const handleLogoutClick = () => {
     logOut();
@@ -24,8 +25,8 @@ const NavBar: FunctionComponent<Props> = ({ user, logOut }) => {
     <Navbar className={styles.nav} bg="dark" variant="dark">
       <Container className={styles.container}>
         <Navbar.Brand className={styles.brand} href="/">StessaLuna</Navbar.Brand>
-        {user
-          ? (
+        {loggedIn
+          ? (user && (
             <Dropdown >
               <Dropdown.Toggle as={CustomToggle} id="something">
                 <div className={styles.accountWrapper}>
@@ -39,6 +40,7 @@ const NavBar: FunctionComponent<Props> = ({ user, logOut }) => {
                 <Dropdown.Item onClick={handleLogoutClick}>Logout</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
+          )
           ) : (
             <Link to="/login">Login</Link>
           )}
@@ -48,7 +50,8 @@ const NavBar: FunctionComponent<Props> = ({ user, logOut }) => {
 };
 
 const mapStateToProps = state => ({
-  user: state.auth.user
+  loggedIn: state.auth.loggedIn,
+  user: state.auth.user,
 });
 
 const actionCreators = {

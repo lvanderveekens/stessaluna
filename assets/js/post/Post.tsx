@@ -19,7 +19,7 @@ interface Props {
   image: string
   onDelete: () => void
   comments: any[]
-  user: User
+  user?: User
 };
 
 const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, comments, onDelete, user }) => {
@@ -56,7 +56,7 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
               <div>{author.username}</div>
               <span className={styles.timestamp}>{timestamp}</span>
             </div>
-            {user.id == author.id && (
+            {user && user.id == author.id && (
               <ThreeDotsMenu open={menuOpen} setOpen={setMenuOpen}>
                 <div onClick={onDelete}>Delete post</div>
               </ThreeDotsMenu>
