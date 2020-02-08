@@ -18,11 +18,9 @@ interface Props {
 
 const App: FunctionComponent<Props> = ({ loggedIn, fetchCurrentUser }) => {
 
-  useEffect(() => {
-    if (loggedIn) {
-      fetchCurrentUser();
-    };
-  }, []);
+  if (loggedIn) {
+    fetchCurrentUser();
+  };
 
   return (
     <Fragment>

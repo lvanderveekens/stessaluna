@@ -84,6 +84,10 @@ class PostController extends AbstractController
         // TODO: what if $id does not exist? return 404
         $post = $em->getRepository(Post::class)->find($id);
 
+        if ($this->getUser()->getId() != $post->getUser()->getId()) {
+            throw new AccessDeniedHttpException("Only the owner can delete this post");
+        }
+
         if ($post->getImageFilename()) {
             try {
                 $imagesDir = $this->getParameter('images_directory');

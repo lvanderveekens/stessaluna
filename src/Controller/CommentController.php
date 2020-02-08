@@ -78,7 +78,7 @@ class CommentController extends AbstractController
         $comment = $em->getRepository(Comment::class)->find($id);
 
         if ($this->getUser()->getId() != $comment->getUser()->getId()) {
-            throw new AccessDeniedHttpException("You are not the owner of this comment");
+            throw new AccessDeniedHttpException("Only the owner can delete this comment");
         }
 
         $em->remove($comment);

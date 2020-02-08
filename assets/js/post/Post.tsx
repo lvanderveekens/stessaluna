@@ -9,19 +9,20 @@ import Linkify from 'linkifyjs/react';
 import * as linkify from 'linkifyjs';
 import ThreeDotsMenu from '../menu/ThreeDotsMenu';
 import YouTubeVideo from './video/YouTubeVideo';
+import User from '../user/user.interface';
 
 interface Props {
   id: number
-  text: string
-  author: string
+  author: User
   timestamp: string
+  text: string
   image: string
   onDelete: () => void
-  avatar: string
   comments: any[]
+  user: User
 };
 
-const Post: FunctionComponent<Props> = ({ id, text, author, timestamp, image, onDelete, avatar, comments }) => {
+const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, comments, onDelete, user }) => {
 
   const [showComments, setShowComments] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -49,15 +50,17 @@ const Post: FunctionComponent<Props> = ({ id, text, author, timestamp, image, on
         <div className={styles.header}>
           <div className="d-flex w-100">
             <div className={styles.avatar}>
-              <img src={avatar} />
+              <img src={author.avatar} />
             </div>
             <div className={styles.usernameTimestampWrapper}>
-              <div>{author}</div>
+              <div>{author.username}</div>
               <span className={styles.timestamp}>{timestamp}</span>
             </div>
-            <ThreeDotsMenu open={menuOpen} setOpen={setMenuOpen}>
-              <div onClick={onDelete}>Delete post</div>
-            </ThreeDotsMenu>
+            {user.id == author.id && (
+              <ThreeDotsMenu open={menuOpen} setOpen={setMenuOpen}>
+                <div onClick={onDelete}>Delete post</div>
+              </ThreeDotsMenu>
+            )}
           </div>
         </div>
         <div className={styles.text}><Linkify>{text}</Linkify></div>
@@ -80,8 +83,12 @@ const Post: FunctionComponent<Props> = ({ id, text, author, timestamp, image, on
   );
 };
 
+const mapStateToProps = state => ({
+  user: state.auth.user
+});
+
 const actionCreators = {
   addComment,
 };
 
-export default connect(null, actionCreators)(Post);
+export default connect(mapStateToProps, actionCreators)(Post);

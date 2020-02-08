@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, FunctionComponent } from 'react';
 import PropTypes from 'prop-types';
 import Post from '../post/Post';
 import { connect } from 'react-redux';
@@ -7,7 +7,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 
-const Feed = ({ loading, posts, fetchPosts, deletePost }) => {
+interface Props {
+  loading: boolean
+  posts: any[]
+  fetchPosts: () => void
+  deletePost: (id: number) => void
+};
+
+const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost }) => {
 
   useEffect(() => {
     fetchPosts();
@@ -22,29 +29,21 @@ const Feed = ({ loading, posts, fetchPosts, deletePost }) => {
         : (posts.length == 0
           ? (<div>No posts found!</div>)
           : posts
-            .sort((post, other) => new Date(other.createdAt) - new Date(post.createdAt))
+            .sort((post, other) => new Date(other.createdAt).getTime() - new Date(post.createdAt).getTime())
             .map((post) =>
               <Post
                 key={post.id}
                 id={post.id}
-                author={`${post.user.username}`}
+                author={post.user}
                 text={post.text}
                 image={post.image}
                 timestamp={moment(post.createdAt).fromNow()}
                 onDelete={() => deletePost(post.id)}
-                avatar={post.avatar}
                 comments={post.comments}
               />)
         )}
     </Fragment>
   );
-};
-
-Feed.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  posts: PropTypes.array.isRequired,
-  fetchPosts: PropTypes.func.isRequired,
-  deletePost: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
