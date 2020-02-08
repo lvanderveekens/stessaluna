@@ -21,6 +21,7 @@ class UserConverter
     public function toDto(User $user) 
     {
         $dto = new UserDto();
+        $dto->setId($user->getId());
         $dto->setUserName($user->getUsername());
         $dto->setFirstName($user->getFirstName());
         $dto->setLastName($user->getLastName());

@@ -35,8 +35,8 @@ const CommentSection: FunctionComponent<Props> = ({ postId, comments, addComment
             <Comment
               key={comment.id}
               timestamp={moment(comment.createdAt).fromNow()}
-              author={comment.user.username}
-              avatar={comment.user.avatar}
+              author={comment.user}
+              user={user}
               text={comment.text}
               onDelete={handleDeleteComment(comment.id)}
             />

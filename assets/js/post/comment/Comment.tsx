@@ -1,17 +1,18 @@
 import React, { FunctionComponent, useState } from 'react';
 import styles from './Comment.scss?module';
 import ThreeDotsMenu from '../../menu/ThreeDotsMenu';
+import User from '../../user/user.interface';
 
 
 interface Props {
+  author: User
   timestamp: string;
-  author: string;
-  avatar: string;
   text: string;
+  user: User
   onDelete: () => void
 }
 
-const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text, onDelete }) => {
+const Comment: FunctionComponent<Props> = ({ author, timestamp, text, user, onDelete }) => {
 
   const [hovering, setHovering] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -21,7 +22,7 @@ const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text, on
   return (
     <div className={styles.comment}>
       <div className={styles.avatar}>
-        <img src={avatar} />
+        <img src={author.avatar} />
       </div>
       <div
         className={styles.content}
@@ -30,12 +31,14 @@ const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text, on
       >
         <div className="d-flex">
           <div className="mr-3">
-            <span className={styles.author}>{author}</span>
+            <span className={styles.author}>{author.username}</span>
             <span className={styles.text}>{text}</span>
           </div>
-          <ThreeDotsMenu hidden={!showMenu} open={menuOpen} setOpen={setMenuOpen}>
-            <div onClick={onDelete}>Delete comment</div>
-          </ThreeDotsMenu>
+          {user.id == author.id && (
+            <ThreeDotsMenu hidden={!showMenu} open={menuOpen} setOpen={setMenuOpen}>
+              <div onClick={onDelete}>Delete comment</div>
+            </ThreeDotsMenu>
+          )}
         </div>
         <div className={styles.timestamp}>{timestamp}</div>
       </div>

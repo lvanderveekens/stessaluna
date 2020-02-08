@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -74,8 +75,12 @@ class CommentController extends AbstractController
     public function deleteCommentById(int $id)
     {
         $em = $this->getDoctrine()->getManager();
-        // TODO: what if $id does not exist? return 404
         $comment = $em->getRepository(Comment::class)->find($id);
+
+        if ($this->getUser()->getId() != $comment->getUser()->getId()) {
+            throw new AccessDeniedHttpException("You are not the owner of this comment");
+        }
+
         $em->remove($comment);
         $em->flush();
         return new Response('Deleted comment with id ' . $id);

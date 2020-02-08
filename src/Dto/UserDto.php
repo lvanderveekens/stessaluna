@@ -4,6 +4,8 @@ namespace App\Dto;
 
 class UserDto
 {
+    private $id;
+
     private $username;
 
     private $firstName;
@@ -11,6 +13,17 @@ class UserDto
     private $lastName;
 
     private $avatar;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     public function getUsername(): ?string
     {
