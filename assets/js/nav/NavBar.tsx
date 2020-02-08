@@ -23,7 +23,7 @@ const NavBar: FunctionComponent<Props> = ({ user, logOut }) => {
   return (
     <Navbar className={styles.nav} bg="dark" variant="dark">
       <Container className={styles.container}>
-        <Navbar.Brand href="/">StessaLuna</Navbar.Brand>
+        <Navbar.Brand className={styles.brand} href="/">StessaLuna</Navbar.Brand>
         {user
           ? (
             <Dropdown >
