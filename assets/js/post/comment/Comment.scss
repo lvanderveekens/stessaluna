@@ -7,7 +7,8 @@
     .avatar {
         margin-right: 0.4rem;
 
-        width: 40px;
+        flex-basis: 40px;
+        flex-shrink: 0;
         height: 40px;
         border: 1px solid #343a40;
         border-radius: 50%;
@@ -30,6 +31,7 @@
 
         .text {
             color: grey;
+            word-break: break-word;
         }
 
         .timestamp {

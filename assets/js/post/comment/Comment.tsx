@@ -30,9 +30,7 @@ const Comment: FunctionComponent<Props> = ({ timestamp, author, avatar, text, on
       >
         <div className="d-flex">
           <div className="mr-3">
-            <span className={styles.author}>
-              {author}
-            </span>
+            <span className={styles.author}>{author}</span>
             <span className={styles.text}>{text}</span>
           </div>
           <ThreeDotsMenu hidden={!showMenu} open={menuOpen} setOpen={setMenuOpen}>
