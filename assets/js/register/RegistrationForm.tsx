@@ -76,7 +76,7 @@ const RegistrationForm: FunctionComponent<Props> = ({ onSubmit }) => {
               <div className="invalid-feedback">{errors.confirmPassword}</div>
             )}
           </Form.Group>
-          <Button type="submit">Submit</Button>
+          <Button className="btn btn-dark" type="submit">Submit</Button>
         </Form>
       )}
     </Formik>
