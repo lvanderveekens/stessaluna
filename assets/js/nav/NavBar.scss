@@ -6,6 +6,17 @@
     margin-bottom: 1.5rem;
     padding: 0;
 
+    a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .dropDown {
+        a {
+            color: #424b52;
+        }
+    }
+
     .container {
 
         &>a {

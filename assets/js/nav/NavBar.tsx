@@ -28,10 +28,10 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
   return (
     <Navbar className={styles.nav} bg="dark" variant="dark">
       <Container className={styles.container}>
-        <Navbar.Brand className={styles.brand} href="/">StessaLuna</Navbar.Brand>
+        <Navbar.Brand className={styles.brand}><Link to="/">StessaLuna</Link></Navbar.Brand>
         {loggedIn
           ? (user && (
-            <Dropdown >
+            <Dropdown className={styles.dropDown}>
               <Dropdown.Toggle as={CustomToggle} id="something">
                 <div className={styles.accountWrapper}>
                   <div className={styles.avatar}>
