@@ -54,3 +54,14 @@ export const fetchCurrentUser = () => {
   };
   function success(user) { return { type: ActionTypes.FETCH_CURRENT_USER_SUCCESS, payload: { user } }; };
 };
+
+export const updateCurrentUser = (data) => {
+  return dispatch => {
+    axios.post('/api/users/me', data)
+      .then(res => {
+        dispatch(success(res.data));
+      })
+      .catch(console.log);
+  };
+  function success(user) { return { type: ActionTypes.UPDATE_CURRENT_USER_SUCCESS, payload: { user } }; };
+};

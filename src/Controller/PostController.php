@@ -53,7 +53,7 @@ class PostController extends AbstractController
     /**
      * @Route(methods={"POST"})
      */
-    public function createPost(Request $request, FileUploader $fileUploader): Response
+    public function createPost(Request $request, FileUploader $fileUploader): JsonResponse
     {
         $user = $this->getUser();
 
