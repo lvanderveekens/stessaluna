@@ -8,7 +8,7 @@ const NotFoundPage = ({ location }) => {
   return (
     <div>
       <p style={{ textAlign: "center" }}>
-        <p>Page <code>{location.pathname}</code> not found!</p>
+        Page <code>{location.pathname}</code> not found!
         <Link to="/">Go to Home</Link>
       </p>
     </div>

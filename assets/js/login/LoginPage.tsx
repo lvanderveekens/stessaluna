@@ -28,23 +28,18 @@ const LoginPage: FunctionComponent<Props> = ({ history, logIn }) => {
   };
 
   return (
-    <Fragment>
-      <NavBar />
-      <Container>
-        <Row>
-          <Col />
-          <Col md={6}>
-            <h4 className="mb-3">Login</h4>
-            <LoginForm onSubmit={handleSubmit} />
-            {errorMessage && (
-              <div className={styles.errorMessage}>{errorMessage}</div>
-            )}
-            <p>Or <Link to="/register">click here</Link> to create a new account.</p>
-          </Col>
-          <Col />
-        </Row>
-      </Container>
-    </Fragment>
+    <Row>
+      <Col />
+      <Col md={6}>
+        <h4 className="mb-3">Login</h4>
+        <LoginForm onSubmit={handleSubmit} />
+        {errorMessage && (
+          <div className={styles.errorMessage}>{errorMessage}</div>
+        )}
+        <p>Or <Link to="/register">click here</Link> to create a new account.</p>
+      </Col>
+      <Col />
+    </Row>
   );
 };
 

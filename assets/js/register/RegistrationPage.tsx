@@ -1,6 +1,5 @@
-import React, { Fragment } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import NavBar from '../nav/NavBar';
+import React from 'react';
+import {  Row, Col } from 'react-bootstrap';
 import RegistrationForm from './RegistrationForm';
 import { connect } from 'react-redux';
 import { register } from '../user/actions';
@@ -12,19 +11,14 @@ interface Props {
 const RegistrationPage = ({ register }) => {
 
   return (
-    <Fragment>
-      <NavBar />
-      <Container>
-        <Row>
-          <Col />
-          <Col md={6}>
-            <h4 className="mb-3">Register</h4>
-            <RegistrationForm onSubmit={({ username, password }) => { register(username, password) }} />
-          </Col>
-          <Col />
-        </Row>
-      </Container>
-    </Fragment>
+    <Row>
+      <Col />
+      <Col md={6}>
+        <h4 className="mb-3">Register</h4>
+        <RegistrationForm onSubmit={({ username, password }) => { register(username, password) }} />
+      </Col>
+      <Col />
+    </Row>
   );
 };
 

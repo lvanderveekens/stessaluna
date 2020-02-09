@@ -16,6 +16,10 @@ interface Props {
 
 const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
 
+  const handleProfileClick = () => {
+    history.push('/profile');
+  };
+
   const handleLogoutClick = () => {
     logOut();
     history.push('/login');
@@ -37,6 +41,7 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
                 </div>
               </Dropdown.Toggle>
               <Dropdown.Menu>
+                <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
                 <Dropdown.Item onClick={handleLogoutClick}>Logout</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

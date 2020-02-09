@@ -10,6 +10,9 @@ import Helmet from 'react-helmet';
 import history from './history/history';
 import { fetchCurrentUser } from './user/actions';
 import RegistrationPage from './register/RegistrationPage';
+import NavBar from './nav/NavBar';
+import { Container } from 'react-bootstrap';
+import ProfilePage from './profile/ProfilePage';
 
 interface Props {
   loggedIn: boolean
@@ -32,13 +35,17 @@ const App: FunctionComponent<Props> = ({ loggedIn, fetchCurrentUser }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
       <Router history={history}>
-        <Switch>
-          <PrivateRoute exact path="/" component={HomePage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/register" component={RegistrationPage} />
+        <NavBar />
+        <Container>
+          <Switch>
+            <PrivateRoute exact path="/" component={HomePage} />
+            <PrivateRoute exact path="/profile" component={ProfilePage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/register" component={RegistrationPage} />
 
-          <Route component={NotFoundPage} />
-        </Switch>
+            <Route component={NotFoundPage} />
+          </Switch>
+        </Container>
       </Router>
     </Fragment>
   );
