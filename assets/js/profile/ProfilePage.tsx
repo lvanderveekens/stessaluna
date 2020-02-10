@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, createRef, useRef } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import User from '../user/user.interface';
 import { connect } from 'react-redux';
@@ -7,12 +7,14 @@ import { updateCurrentUser } from '../user/actions';
 
 interface Props {
   user?: User
-  updateCurrentUser: (data: FormData) => void
+  updateCurrentUser: (data: FormData) => Promise<void>
 }
 
 const ProfilePage: FC<Props> = ({ user, updateCurrentUser }) => {
 
+  const formRef = useRef<HTMLFormElement>();
   const [avatarUrl, setAvatarUrl] = useState(null);
+  const [feedbackMessage, setFeedbackMessage] = useState(null);
 
   useEffect(() => {
     if (user) {
@@ -29,8 +31,17 @@ const ProfilePage: FC<Props> = ({ user, updateCurrentUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setFeedbackMessage(null)
+
     const data = new FormData(e.target);
-    updateCurrentUser(data);
+
+    // data.delete("avatar");
+
+    updateCurrentUser(data)
+      .then(() => setFeedbackMessage("Saved"))
+      .catch(error => setFeedbackMessage(error))
+
+    formRef.current.reset();
   }
 
   return (
@@ -39,7 +50,7 @@ const ProfilePage: FC<Props> = ({ user, updateCurrentUser }) => {
       <Col md={6}>
         <h4 className="mb-3">Profile</h4>
         {user && (
-          <form onSubmit={handleSubmit}>
+          <form className="mb-3" ref={formRef} onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="username">Username</label>
               <input name="username" type="text" className="form-control" value={user.username} readOnly />
@@ -57,6 +68,9 @@ const ProfilePage: FC<Props> = ({ user, updateCurrentUser }) => {
             </div>
             <Button className="btn btn-dark" type="submit">Save</Button>
           </form>
+        )}
+        {feedbackMessage && (
+          <div>{feedbackMessage}</div>
         )}
       </Col>
       <Col />

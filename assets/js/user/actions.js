@@ -55,13 +55,21 @@ export const fetchCurrentUser = () => {
   function success(user) { return { type: ActionTypes.FETCH_CURRENT_USER_SUCCESS, payload: { user } }; };
 };
 
-export const updateCurrentUser = (data) => {
+export const updateCurrentUser = (formData) => {
+  // Workaround for old PHP bug where formdata is not parsed when using PUT/PATCH
+  formData.append('_method', 'PUT');
+
   return dispatch => {
-    axios.post('/api/users/me', data)
-      .then(res => {
-        dispatch(success(res.data));
-      })
-      .catch(console.log);
+    return new Promise((resolve, reject) => {
+      axios.post('/api/users/me', formData)
+        .then(res => {
+          dispatch(success(res.data));
+          resolve(res);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
   };
   function success(user) { return { type: ActionTypes.UPDATE_CURRENT_USER_SUCCESS, payload: { user } }; };
 };
