@@ -36,28 +36,14 @@ class UserController extends AbstractController
     /**
      * @Route("/me", methods={"PUT"})
      */
+    // TODO: move to ProfileController?
     public function updateCurrentUser(Request $request, FileUploader $fileUploader): JsonResponse
     {
         $user = $this->getUser();
 
-        /*
-         * Avatar is null when user doesn't change it. How to let it stay the same...
-         */
-        $avatar = $request->files->get('avatar');
+        $resetAvatar = filter_var($request->get("resetAvatar"), FILTER_VALIDATE_BOOLEAN);
 
-        if ($request->files->has("avatar")) {
-            print("");
-        } else {
-            print("");
-        }
-
-
-
-        if ($avatar) {
-            $imageFilename = $fileUploader->upload($avatar, $this->getParameter('images_directory'));
-            $user->setAvatarFilename($imageFilename);
-        } else {
-            // TODO: only delete when avatar is set to default or something
+        if ($resetAvatar) {
             if ($user->getAvatarFilename()) {
                 try {
                     $imagesDir = $this->getParameter('images_directory');
@@ -66,8 +52,20 @@ class UserController extends AbstractController
                     $this->logger->error($e);
                 }
             }
-
             $user->setAvatarFilename(null);
+        } else if ($request->files->get("avatar")) {
+            // TODO: refactor
+            if ($user->getAvatarFilename()) {
+                try {
+                    $imagesDir = $this->getParameter('images_directory');
+                    unlink($imagesDir . '/' . $user->getAvatarFilename());
+                } catch (Exception $e) {
+                    $this->logger->error($e);
+                }
+            }
+            $avatar = $request->files->get("avatar");
+            $imageFilename = $fileUploader->upload($avatar, $this->getParameter('images_directory'));
+            $user->setAvatarFilename($imageFilename);
         }
 
         $em = $this->getDoctrine()->getManager();

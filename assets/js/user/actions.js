@@ -56,7 +56,7 @@ export const fetchCurrentUser = () => {
 };
 
 export const updateCurrentUser = (formData) => {
-  // Workaround for old PHP bug where formdata is not parsed when using PUT/PATCH
+  // Workaround for old PHP bug where formdata is not parsed when using PUT/PATCH 
   formData.append('_method', 'PUT');
 
   return dispatch => {
