@@ -22,19 +22,20 @@ export const fetchPosts = () => {
   function failure() { return { type: ActionTypes.FETCH_POSTS_FAILURE }; };
 };
 
-export const createPost = (text, image, onSuccess) => {
+export const createPost = (text, image) => {
   return dispatch => {
     const formData = new FormData();
     formData.append('text', text);
     formData.append('image', image);
 
-    axios.post('/api/posts', formData)
+    return axios.post('/api/posts', formData)
       .then(res => {
         console.log(res.data);
         dispatch(success(res.data));
-        onSuccess();
       })
-      .catch(console.log);
+      .catch((error) => {
+        return Promise.reject(error);
+      });
   };
 
   function success(post) { return { type: ActionTypes.CREATE_POST_SUCCESS, payload: { post } }; };

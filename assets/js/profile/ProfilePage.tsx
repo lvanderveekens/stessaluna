@@ -70,6 +70,7 @@ const ProfilePage: FC<Props> = ({ user, updateCurrentUser }) => {
       <Col md={6}>
         <h4 className="mb-3">Profile</h4>
         {user && (
+          // TODO: move into separate form component
           <Formik
             initialValues={{ username: '', avatar: null}}
             enableReinitialize

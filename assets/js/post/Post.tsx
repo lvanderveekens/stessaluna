@@ -15,8 +15,8 @@ interface Props {
   id: number
   author: User
   timestamp: string
-  text: string
-  image: string
+  text?: string
+  image?: string
   onDelete: () => void
   comments: any[]
   user?: User
@@ -31,16 +31,18 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
     setShowComments(!showComments);
   };
 
-  const youtubeLink = linkify.find(text)
-    .find(link => link.type == "url" &&
-      (link.value.includes("youtube.com") || link.value.includes("youtu.be")));
-
   let youtubeVideoId
-  if (youtubeLink) {
-    if (youtubeLink.value.includes("youtube.com/watch?v=")) {
-      youtubeVideoId = /watch\?v=(.*)/.exec(youtubeLink.value)[1];
-    } else if (youtubeLink.value.includes("youtu.be/")) {
-      youtubeVideoId = /youtu.be\/(.*)/.exec(youtubeLink.value)[1]
+  if (text) {
+    const youtubeLink = linkify.find(text)
+      .find(link => link.type == "url" &&
+        (link.value.includes("youtube.com") || link.value.includes("youtu.be")));
+
+    if (youtubeLink) {
+      if (youtubeLink.value.includes("youtube.com/watch?v=")) {
+        youtubeVideoId = /watch\?v=(.*)/.exec(youtubeLink.value)[1];
+      } else if (youtubeLink.value.includes("youtu.be/")) {
+        youtubeVideoId = /youtu.be\/(.*)/.exec(youtubeLink.value)[1]
+      }
     }
   }
 

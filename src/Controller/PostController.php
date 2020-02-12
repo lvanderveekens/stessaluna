@@ -8,7 +8,6 @@ use App\Service\CommentConverter;
 use App\Service\FileUploader;
 use App\Service\UserConverter;
 use DateTime;
-use ErrorException;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,9 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
-use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 /**
  * @Route("/api/posts")
@@ -59,8 +55,12 @@ class PostController extends AbstractController
 
         $post = new Post();
         $post->setUser($user);
-        $post->setText($request->request->get('text'));
         $post->setCreatedAt(new DateTime('now'));
+
+        $text = $request->request->get('text');
+        if (!empty($text)) {
+            $post->setText($text);
+        }
 
         $postImage = $request->files->get('image');
         if ($postImage) {

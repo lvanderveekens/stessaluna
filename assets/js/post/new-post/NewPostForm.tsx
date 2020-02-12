@@ -11,29 +11,32 @@ import User from '../../user/user.interface';
 import TextareaAutosize from 'react-textarea-autosize';
 
 const schema = yup.object({
-  text: yup.string().required("Message is missing."),
+  text: yup.string(),
   file: yup.mixed(),
 });
 
 interface Props {
   user?: User
-  createPost: (text: string, image: string, any) => void
+  createPost: (text: string, image: string) => Promise<void>
 }
 
 const NewPostForm: FC<Props> = ({ user, createPost }) => {
 
   const fileInput = useRef(null);
   const [imageUrl, setImageUrl] = useState("");
+  const [errorMessage, setErrorMessage] = useState("")
 
   const handleSubmit = (values, { resetForm }) => {
-    createPost(values.text, values.image, () => reset(values, resetForm));
-  };
+    setErrorMessage("");
 
-  const reset = (values, resetForm) => {
-    if (values.image) {
-      fileInput.current.value = null;
-    }
-    resetForm();
+    createPost(values.text, values.image)
+      .then(() => {
+        if (values.image) {
+          fileInput.current.value = null;
+        }
+        resetForm();
+      })
+      .catch((error) => setErrorMessage(error.response.data.detail));
   };
 
   const handleImageChange = (setFieldValue) => (e) => {
@@ -109,12 +112,12 @@ const NewPostForm: FC<Props> = ({ user, createPost }) => {
               </div>
             </div>
             <Button className="btn btn-dark mb-2" type="submit">Create</Button>
-            {errors.text && (
-              <div className={styles.error}>{errors.text}</div>
-            )}
           </Form>
         )}
       </Formik>
+      {errorMessage && (
+        <div className="alert alert-danger">{errorMessage}</div>
+      )}
     </Fragment>
   );
 };
