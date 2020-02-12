@@ -36,18 +36,25 @@ const NewPostForm: FC<Props> = ({ user, createPost }) => {
     resetForm();
   };
 
-  const handleImageChange = (setFieldValue) => (event) => {
-    const image = event.currentTarget.files[0];
+  const handleImageChange = (setFieldValue) => (e) => {
+    const image = e.currentTarget.files[0];
     if (image) {
       setFieldValue("image", image);
       setImageUrl(URL.createObjectURL(image));
     }
   };
 
-  const handleDeleteImageClick = (setFieldValue) => (event) => {
+  const handleDeleteImageClick = (setFieldValue) => (e) => {
     setFieldValue("image", null);
     fileInput.current.value = null;
   };
+
+  const handleKeyDown = (submit: () => void) => (e) => {
+    if (e.keyCode == 13 && e.shiftKey == false) {
+      e.preventDefault();
+      submit();
+    }
+  }
 
   return (
     <Fragment>
@@ -69,6 +76,7 @@ const NewPostForm: FC<Props> = ({ user, createPost }) => {
                 value={values.text}
                 placeholder={user && `What's new, ${user.username}?`}
                 onChange={handleChange}
+                onKeyDown={handleKeyDown(handleSubmit)}
               />
               <Form.Control
                 className={styles.imageInput}

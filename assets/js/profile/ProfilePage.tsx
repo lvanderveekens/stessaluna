@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, createRef, useRef } from 'react';
+import React, { FC, useState, useEffect, createRef, useRef, Fragment } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import User from '../user/user.interface';
 import { connect } from 'react-redux';
@@ -6,7 +6,7 @@ import styles from './ProfilePage.scss?module';
 import { updateCurrentUser } from '../user/actions';
 import { Formik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faUpload, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
   user?: User
@@ -93,13 +93,26 @@ const ProfilePage: FC<Props> = ({ user, updateCurrentUser }) => {
                   </div>
                   <div className="form-group">
                     <label>Avatar</label>
-                    <label className={styles.avatarContainer} htmlFor="avatar">
+                    <div className={styles.avatarContainer}>
                       <div className={styles.aspectRatioBox}>
                         {avatarUrl
-                          ? (<img src={avatarUrl} />)
-                          : (<FontAwesomeIcon className={styles.uploadIcon} icon={faUpload} />)}
+                          ? (
+                            <Fragment>
+                              <img src={avatarUrl} />
+                              {!avatarUrl.includes('avatar-default') && (
+                                <div className={styles.overlay}>
+                                  <FontAwesomeIcon className={styles.deleteIcon} icon={faTimes}
+                                    onClick={handleAvatarDelete(setFieldValue)} />
+                                </div>
+                              )}
+                            </Fragment>
+                          ) : (
+                            <label htmlFor="avatar">
+                              <FontAwesomeIcon className={styles.uploadIcon} icon={faUpload} />
+                            </label>
+                          )}
                       </div>
-                    </label>
+                    </div>
                     <input
                       id="avatar"
                       name="avatar"
@@ -107,11 +120,6 @@ const ProfilePage: FC<Props> = ({ user, updateCurrentUser }) => {
                       className="form-control d-none"
                       onChange={handleAvatarChange(setFieldValue)}
                     />
-                    {avatarUrl && !avatarUrl.includes('avatar-default') && (
-                      <Button className="btn btn-dark" onClick={handleAvatarDelete(setFieldValue)}>
-                        Delete test
-                      </Button>
-                    )}
                   </div>
                   <Button className="btn btn-dark" type="submit">Save</Button>
                 </form>

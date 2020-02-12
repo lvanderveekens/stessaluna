@@ -4,8 +4,6 @@
     width: 100px;
     border: 1px solid #ced4da; 
 
-    cursor: pointer;
-
     .aspectRatioBox {
         position: relative;
         height: 0;
@@ -13,7 +11,6 @@
         padding-bottom: 100%;
 
         background-color: #f5f5f5;
-        border-top: 1px solid #ced4da;
 
         img {
             position: absolute;
@@ -24,11 +21,43 @@
             object-fit: cover;
         }
 
+        &:hover img {
+            opacity: 0.3;
+            transition: 0.3s;
+        }
+
+        .overlay {
+            opacity: 0;
+        }
+
+        &:hover .overlay {
+            opacity: 1;
+            transition: 0.3s;
+        }
+
+        .deleteIcon {
+            position: absolute;
+            top: 0.1rem;
+            right: 0.3rem;
+
+            font-size: 1.3rem;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
         .uploadIcon {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+
+            font-size: 1.2rem;
+
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 }

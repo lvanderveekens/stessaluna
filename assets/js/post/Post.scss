@@ -45,6 +45,7 @@
         .text {
             margin-bottom: 1rem;
             word-wrap: break-word; 
+            white-space: pre-wrap;
         }
 
         .deleteButton:hover {
