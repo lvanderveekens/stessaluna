@@ -4,7 +4,7 @@
     font-size: 0.9rem;
 
     .avatar {
-        margin-right: 0.4rem;
+        margin-right: 0.7rem;
         width: 40px;
         height: 40px;
 
@@ -25,12 +25,8 @@
         align-items: center;
 
         textarea {
-            // width: 100%;
             resize: none;
-            // outline: none;
-
-            padding: 0.2rem 0.2rem;
-            // margin-bottom: 0.5rem;
+            padding: 0 0.2rem;
 
             &:focus {
                 box-shadow: none;
