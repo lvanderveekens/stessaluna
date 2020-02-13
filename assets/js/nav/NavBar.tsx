@@ -26,7 +26,7 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
   };
 
   return (
-    <Navbar className={styles.nav} bg="dark" variant="dark">
+    <Navbar className={styles.nav} bg="dark" variant="dark" sticky="top">
       <Container className={styles.container}>
         <Navbar.Brand className={styles.brand}><Link to="/">StessaLuna</Link></Navbar.Brand>
         {loggedIn
