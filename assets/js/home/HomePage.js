@@ -16,7 +16,7 @@ const HomePage = () => {
 
   return (
     <Row>
-      <Col ref={refCallback} md={4} lg={3} className="mb-4">
+      <Col ref={refCallback} md={5} lg={3} className="mb-4">
         <div className="position-sticky" style={{ top: top }}>
           <NewPostForm />
         </div>

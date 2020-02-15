@@ -106,9 +106,16 @@
         background-color: #f5f5f5;
         border-top: 1px solid #ced4da;
 
-        .imageLabel {
+        label {
             margin: 0;
-            padding: 0.2rem 0.4rem;
+        }
+
+        span {
+            padding: 0.2rem 0.5rem;
+
+            svg {
+                margin-right: 0.4rem;
+            }
 
             &:hover {
                 background-color: #e0e0e0e0;
@@ -119,5 +126,41 @@
 
     .error {
         color: #dc3545;
+    }
+}
+
+.chooseExercise {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+
+    .header {
+        overflow: hidden;
+
+        .deleteButton {
+            float: right;
+            margin-right: 0.5rem;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .exerciseOption {
+        text-align: center;
+        font-weight: bold;
+
+        border: inherit;
+        border-radius: inherit;
+        background-color: #fff;
+
+        padding: 0.4rem;
+        margin: 0.8rem;
+
+        &:hover {
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
     }
 }
