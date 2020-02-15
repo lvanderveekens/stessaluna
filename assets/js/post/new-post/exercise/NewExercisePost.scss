@@ -1,0 +1,22 @@
+.newExercisePost {
+
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        overflow: hidden;
+        margin: .375rem .75rem;
+
+        .closeButton {
+            float: right;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
