@@ -1,0 +1,35 @@
+.chooseExercise {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+
+    .header {
+        overflow: hidden;
+        margin: 0.5rem;
+
+        .closeButton {
+            float: right;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .exerciseOption {
+        text-align: center;
+        font-weight: bold;
+
+        border: inherit;
+        border-radius: inherit;
+        background-color: #fff;
+
+        padding: 0.4rem;
+        margin: 0.8rem;
+
+        &:hover {
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+    }
+}
