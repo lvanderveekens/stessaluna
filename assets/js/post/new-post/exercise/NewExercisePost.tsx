@@ -12,7 +12,7 @@ const NewExercisePost: FC<Props> = ({ onClose }) => {
   return (
     <Fragment>
       {type === null
-        ? <ChooseExercise onChoice={exercise => setType(exercise)} onClose={onClose} />
+        ? <ChooseExercise onChoice={type => setType(type)} onClose={onClose} />
         : (<div>{type}</div>)}
     </Fragment>
   );
