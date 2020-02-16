@@ -1,8 +1,8 @@
 import React, { FC, useState, Fragment } from 'react';
 import ChooseExercise from './choose/ChooseExercise';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './NewExercisePost.scss?module';
+import ExerciseType from './type';
+import NewAorbExercise from './aorb/NewAorbExercise';
 
 interface Props {
   onClose: () => void
@@ -10,21 +10,20 @@ interface Props {
 
 const NewExercisePost: FC<Props> = ({ onClose }) => {
 
-  const [type, setType] = useState(null);
+  // TODO: change back to null later
+  const [type, setType] = useState(ExerciseType.A_OR_B);
+
+  const renderNewExercise = () => {
+    switch (type) {
+      case ExerciseType.A_OR_B: return <NewAorbExercise onClose={onClose} />;
+    }
+  }
 
   return (
     <div className={styles.newExercisePost}>
-      <div className={styles.header}>
-        <span>New Exercise</span>
-        <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={onClose} />
-      </div>
       {type === null
         ? <ChooseExercise onChoice={type => setType(type)} onClose={onClose} />
-        : (
-          <div>
-            {type}
-          </div>
-        )}
+        : renderNewExercise()}
     </div>
   );
 };
