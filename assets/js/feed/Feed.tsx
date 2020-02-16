@@ -6,6 +6,7 @@ import { fetchPosts, deletePost } from '../post/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
+import { Spinner } from 'react-bootstrap';
 
 interface Props {
   loading: boolean
@@ -25,7 +26,7 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
       <h4>Feed</h4>
 
       {loading
-        ? (<p><span className="mr-2"><FontAwesomeIcon icon={faCircleNotch} spin={true} /></span>Loading posts...</p>)
+        ? <Spinner animation="border" variant="warning" />
         : (posts.length == 0
           ? (<div>No posts found!</div>)
           : posts

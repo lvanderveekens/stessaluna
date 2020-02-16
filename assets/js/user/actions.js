@@ -50,7 +50,9 @@ export const fetchCurrentUser = () => {
       .then(res => {
         dispatch(success(res.data));
       })
-      .catch(console.log);
+      .catch((error) => {
+        console.log(error);
+      });
   };
   function success(user) { return { type: ActionTypes.FETCH_CURRENT_USER_SUCCESS, payload: { user } }; };
 };

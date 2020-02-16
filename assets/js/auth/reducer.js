@@ -19,10 +19,21 @@ const authReducer = (state = initialState, action) => {
       return {
         loggedIn: false,
       };
+    case ActionTypes.FETCH_CURRENT_USER_BEGIN:
+      return {
+        ...state,
+        loading: true
+      };
     case ActionTypes.FETCH_CURRENT_USER_SUCCESS:
       return {
         ...state,
         user: action.payload.user,
+        loading: false
+      };
+    case ActionTypes.FETCH_CURRENT_USER_FAILED:
+      return {
+        ...state,
+        loading: false
       };
     case ActionTypes.UPDATE_CURRENT_USER_SUCCESS:
       return {
