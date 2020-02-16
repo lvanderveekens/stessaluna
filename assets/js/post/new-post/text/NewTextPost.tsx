@@ -2,7 +2,7 @@ import React, { FC, useRef, useState, Fragment } from 'react';
 import * as yup from 'yup';
 import User from '../../../user/user.interface';
 import TextareaAutosize from 'react-textarea-autosize';
-import { faTimesCircle, faImage, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle, faImage, faGraduationCap, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Formik } from 'formik';
 import { Button, Form, Spinner } from 'react-bootstrap';
 import styles from './NewTextPost.scss?module';
@@ -97,18 +97,14 @@ const NewTextPost: FC<Props> = ({ user, createPost, onExercise }) => {
                     {values.image && (
                       <div className={styles.images}>
                         <div className={styles.imageContainer}>
-                          <div className={styles.aspectRatioBox}>
-                            <img src={imageUrl} />
-                            <div className={styles.imageOverlay}>
-                              <span className={styles.deleteButton} onClick={handleDeleteImageClick(setFieldValue)}>
-                                <FontAwesomeIcon icon={faTimesCircle} />
-                              </span>
-                            </div>
+                          <img src={imageUrl} />
+                          <div className={styles.imageOverlay}>
+                            <FontAwesomeIcon className={styles.removeIcon} icon={faTimes} onClick={handleDeleteImageClick(setFieldValue)} />
                           </div>
                         </div>
                       </div>
                     )}
-                    <div className={styles.attachments}>
+                    <div className={styles.actions}>
                       <Form.Label htmlFor="image">
                         <span><FontAwesomeIcon icon={faImage} />Image</span>
                       </Form.Label>
