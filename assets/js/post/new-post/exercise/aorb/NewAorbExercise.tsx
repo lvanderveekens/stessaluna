@@ -21,6 +21,11 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
   const [twoSpansValue2, setTwoSpansValue2] = useState('');
 
   const myRef = useRef(null);
+  const twoSpansLeftRef = useRef(null);
+  const twoSpansRightRef = useRef(null);
+
+  const [a, setA] = useState('');
+  const [b, setB] = useState('');
 
   const insertChoice = () => {
     const text = myRef.current.textContent;
@@ -31,9 +36,10 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
     setShowChoice(true);
   };
 
-  const handleInput = (e) => {
-    console.log(e.target.textContent);
-    // setText(e.target.textContent);
+  const handleDeleteChoice = () => {
+    const combinedText = twoSpansLeftRef.current.textContent + twoSpansRightRef.current.textContent;
+    setSingleSpanValue(combinedText)
+    setShowChoice(false);
   }
 
   const renderInputSentences = () => {
@@ -47,13 +53,16 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
               {showChoice
                 ? (
                   <>
-                    <span className={styles.spanInput} contentEditable suppressContentEditableWarning>{twoSpansValue1}</span>
-                    <span className={styles.aOrB}>A or B</span>
-                    <span className={styles.spanInput} contentEditable suppressContentEditableWarning>{twoSpansValue2}</span>
+                    <span ref={twoSpansLeftRef} contentEditable suppressContentEditableWarning>{twoSpansValue1}</span>
+                    <span className={styles.aOrB}>
+                      <span className={styles.a}>A)<span contentEditable /></span>  
+                      <span className={styles.b}>B)<span contentEditable /></span>  
+                    </span>
+                    <span ref={twoSpansRightRef} contentEditable suppressContentEditableWarning>{twoSpansValue2}</span>
                   </>
                 )
                 : (
-                  <span ref={myRef} className={styles.spanInput} onInput={handleInput} contentEditable suppressContentEditableWarning>{singleSpanValue}</span> 
+                  <span ref={myRef} className={styles.singleSpan} contentEditable suppressContentEditableWarning>{singleSpanValue}</span> 
                 )}
             </div>
 

@@ -30,31 +30,55 @@
             font-family: monospace;
         }
 
-        input {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border: none;
-            padding: 0;
-        }
-
         .inputWrapper {
             flex-grow: 1;
-            border: 1px solid red;
+            border: 1px solid #ced4da;
             cursor: text;
 
+            .singleSpan {
+                display: inline-block;
+            }
 
-            .spanInput {
-                // display: inline-block;
-                border: 1px solid grey;
-                // vertical-align: top;
-                // white-space: pre-wrap;
+            span {
                 outline: none;
             }
 
             .aOrB {
-                color: green;
+                cursor: default;
+            }
+
+            .a {
                 display: inline-block;
+                color: green;
+                background-color: #e0ffe0;
+
+                border-bottom-left-radius: 0.5rem;
+                border-top-left-radius: 0.5rem;
+
+                span {
+                    display: inline-block;
+                    padding-right: 0.4rem;
+                    padding-left: 0.4rem;
+
+                    cursor: text;
+                }
+            }
+
+            .b {
+                display: inline-block;
+                color: red;
+                background-color: #ffe5e5;
+
+                border-bottom-right-radius: 0.5rem;
+                border-top-right-radius: 0.5rem;
+
+                span {
+                    display: inline-block;
+                    padding-right: 0.4rem;
+                    padding-left: 0.4rem;
+
+                    cursor: text;
+                }
             }
         }
     }
