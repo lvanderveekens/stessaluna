@@ -31,8 +31,15 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
     const text = myRef.current.textContent;
     const sel = window.getSelection();
 
-    setTwoSpansValue1(text.slice(0, sel.anchorOffset));
-    setTwoSpansValue2(text.slice(sel.anchorOffset));
+    if (sel.anchorNode.textContent == text) {
+      setTwoSpansValue1(text.slice(0, sel.anchorOffset));
+      setTwoSpansValue2(text.slice(sel.anchorOffset));
+    } else {
+      // focus is not in text box
+      setTwoSpansValue1(text);
+      setTwoSpansValue2('');
+    }
+
     setShowChoice(true);
   };
 
@@ -55,8 +62,14 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
                   <>
                     <span ref={twoSpansLeftRef} contentEditable suppressContentEditableWarning>{twoSpansValue1}</span>
                     <span className={styles.aOrB}>
-                      <span className={styles.a}>A)<span contentEditable /></span>  
-                      <span className={styles.b}>B)<span contentEditable /></span>  
+                      <span className={styles.a}>
+                        <span className={styles.aLabel}>A</span>
+                        <span className={styles.aContent} contentEditable />
+                      </span>
+                      <span className={styles.b}>
+                        <span className={styles.bLabel}>B</span>
+                        <span className={styles.bContent} contentEditable />
+                      </span>
                     </span>
                     <span ref={twoSpansRightRef} contentEditable suppressContentEditableWarning>{twoSpansValue2}</span>
                   </>
