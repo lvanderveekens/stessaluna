@@ -1,11 +1,10 @@
-import React, { FC, useState, useRef, Fragment } from 'react';
+import React, { FC, useState, useRef } from 'react';
 import styles from './NewAorbExercise.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
-import AutosizeInput from 'react-input-autosize';
-import { text } from '@fortawesome/fontawesome-svg-core';
 import { Button } from 'react-bootstrap';
-import TextareaAutosize from 'react-textarea-autosize';
+import ContentEditable from 'react-contenteditable'
+import { renderToString } from 'react-dom/server'
 
 interface Props {
   onClose: () => void
@@ -16,38 +15,29 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
   const [textInputCount, setTextInputCount] = useState(1);
   const [showChoice, setShowChoice] = useState(false);
 
-  const [singleSpanValue, setSingleSpanValue] = useState('');
-  const [twoSpansValue1, setTwoSpansValue1] = useState('');
-  const [twoSpansValue2, setTwoSpansValue2] = useState('');
-
-  const myRef = useRef(null);
-  const twoSpansLeftRef = useRef(null);
-  const twoSpansRightRef = useRef(null);
-
-  const [a, setA] = useState('');
-  const [b, setB] = useState('');
-
   const insertChoice = () => {
-    const text = myRef.current.textContent;
     const sel = window.getSelection();
-
-    if (sel.anchorNode.textContent == text) {
-      setTwoSpansValue1(text.slice(0, sel.anchorOffset));
-      setTwoSpansValue2(text.slice(sel.anchorOffset));
-    } else {
-      // focus is not in text box
-      setTwoSpansValue1(text);
-      setTwoSpansValue2('');
-    }
-
-    setShowChoice(true);
+    // const range = sel.getRangeAt(0);
+    const aOrBInput = renderToString(
+      <span className={styles.aOrB} contentEditable={false}>
+        <span className={styles.a}>
+          <span className={styles.aLabel} >A</span>
+          <span className={styles.aContent} contentEditable />
+        </span>
+        <span className={styles.b}>
+          <span className={styles.bLabel}>B</span>
+          <span className={styles.bContent} contentEditable />
+        </span>
+      </span>
+    )
+    setHtml(html.slice(0, sel.anchorOffset) + aOrBInput + html.slice(sel.anchorOffset));
   };
 
-  const handleDeleteChoice = () => {
-    const combinedText = twoSpansLeftRef.current.textContent + twoSpansRightRef.current.textContent;
-    setSingleSpanValue(combinedText)
-    setShowChoice(false);
-  }
+  const contentEditableRef = useRef(null);
+  const [html, setHtml] = useState('');
+  const handleChange = e => {
+    setHtml(e.target.value.replace(/&nbsp;/, ' '));
+  };
 
   const renderInputSentences = () => {
     let sentences = []
@@ -57,28 +47,12 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
           <div className={styles.inputSentence}>
             <div className={styles.inputIndex}>{i + 1}.</div>
             <div className={styles.inputWrapper}>
-              {showChoice
-                ? (
-                  <>
-                    <span ref={twoSpansLeftRef} contentEditable suppressContentEditableWarning>{twoSpansValue1}</span>
-                    <span className={styles.aOrB}>
-                      <span className={styles.a}>
-                        <span className={styles.aLabel}>A</span>
-                        <span className={styles.aContent} contentEditable />
-                      </span>
-                      <span className={styles.b}>
-                        <span className={styles.bLabel}>B</span>
-                        <span className={styles.bContent} contentEditable />
-                      </span>
-                    </span>
-                    <span ref={twoSpansRightRef} contentEditable suppressContentEditableWarning>{twoSpansValue2}</span>
-                  </>
-                )
-                : (
-                  <span ref={myRef} className={styles.singleSpan} contentEditable suppressContentEditableWarning>{singleSpanValue}</span> 
-                )}
+              <ContentEditable
+                innerRef={contentEditableRef}
+                html={html} // innerHTML of the editable div
+                onChange={handleChange} // handle innerHTML change
+              />
             </div>
-
           </div>
           <div className={styles.actions}>
             <Button onClick={insertChoice} disabled={showChoice}>A or B</Button>
