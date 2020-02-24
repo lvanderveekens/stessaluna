@@ -54,6 +54,8 @@
                 border-bottom-left-radius: 0.5rem;
                 border-top-left-radius: 0.5rem;
 
+            }
+
                 .aLabel {
                     border-right: 1px solid #ced4da;
                     padding: 0 0.3rem;
@@ -66,8 +68,6 @@
 
                     cursor: text;
                 }
-            }
-
 
             .b {
                 display: inline-block;
@@ -76,6 +76,7 @@
 
                 border-bottom-right-radius: 0.5rem;
                 border-top-right-radius: 0.5rem;
+            }
 
                 .bLabel {
                     border-right: 1px solid #ced4da;
@@ -89,7 +90,6 @@
 
                     cursor: text;
                 }
-            }
         }
     }
     
