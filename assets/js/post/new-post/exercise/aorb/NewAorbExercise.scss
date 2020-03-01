@@ -54,8 +54,6 @@
                 border-bottom-left-radius: 0.5rem;
                 border-top-left-radius: 0.5rem;
 
-            }
-
                 .aLabel {
                     border-right: 1px solid #ced4da;
                     padding: 0 0.3rem;
@@ -68,6 +66,7 @@
 
                     cursor: text;
                 }
+            }
 
             .b {
                 display: inline-block;
@@ -113,6 +112,24 @@
                 background-color: #f5f5f5;
                 cursor: pointer;
             }
+        }
+    }
+}
+
+.insertAorb {
+    display: flex;
+    align-items: center;
+
+    div {
+        display: flex;
+        align-items: center;
+
+        label {
+            margin-bottom: 0;
+        }
+
+        input {
+            width: 100%;
         }
     }
 }

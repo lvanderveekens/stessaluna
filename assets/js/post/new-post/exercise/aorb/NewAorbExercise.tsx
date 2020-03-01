@@ -1,10 +1,20 @@
-import React, { FC, useState, useRef } from 'react';
+import React, { FC, useMemo, useCallback, useRef, useEffect, useState } from 'react'
 import styles from './NewAorbExercise.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'react-bootstrap';
-import ContentEditable from 'react-contenteditable'
-import { renderToString } from 'react-dom/server'
+import ContentEditable from 'react-contenteditable';
+import { renderToString } from 'react-dom/server';
+import { Editor, Transforms, Range, createEditor } from 'slate';
+import { withHistory } from 'slate-history';
+import {
+  Slate,
+  Editable,
+  ReactEditor,
+  withReact,
+  useSelected,
+  useFocused,
+} from 'slate-react';
 
 interface Props {
   onClose: () => void
@@ -15,111 +25,79 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
   const [textInputCount, setTextInputCount] = useState(1);
   const [showChoice, setShowChoice] = useState(false);
 
-  const insertChoice = () => {
-    const sel = window.getSelection();
-    const aOrBInput = renderToString(
-      <span className={styles.aOrB} contentEditable={false} onClick={() => console.log("CLICKED")}>
+  const [aInput, setAInput] = useState('');
+  const [bInput, setBInput] = useState('');
+
+  const renderElement = useCallback(props => <Element {...props} />, [])
+
+  const withAorb = editor => {
+    const { isInline, isVoid } = editor;
+  
+    editor.isInline = element => {
+      return element.type === 'aorb' ? true : isInline(element);
+    }
+  
+    editor.isVoid = element => {
+      return element.type === 'aorb' ? true : isVoid(element)
+    }
+  
+    return editor;
+  }
+
+  const editor = useMemo(
+    () => withAorb(withReact(withHistory(createEditor()))),
+    []
+  )
+
+  const insertAorb = (e) => {
+    const aorb = { type: 'aorb', a: aInput, b: bInput, children: [{ text: '' }] }
+    Transforms.insertNodes(editor, aorb)
+    Transforms.move(editor)
+    // TODO: form reset instead of?
+    setAInput('');
+    setBInput('');
+  }
+  
+  const Element = props => {
+    const { attributes, children, element } = props
+    switch (element.type) {
+      case 'aorb':
+        return <AorbElement {...props} />
+      default:
+        return <div {...attributes}>{children}</div>
+    }
+  }
+
+  const AorbElement = ({ attributes, children, element }) => {
+    const selected = useSelected()
+    const focused = useFocused()
+    return (
+      <span
+        {...attributes}
+        className={styles.aOrB}
+        contentEditable={false}
+        onClick={() => console.log("CLICKED")}
+      >
         <span className={styles.a}>
           <span className={styles.aLabel}>A</span>
-          <span className={styles.aContent} contentEditable={true} />
+          <span className={styles.aContent}>{element.a}</span>
         </span>
         <span className={styles.b}>
           <span className={styles.bLabel}>B</span>
-          <span className={styles.bContent} contentEditable={true} />
+          <span className={styles.bContent}>{element.b}</span>
         </span>
+        {children}
       </span>
     )
-    setHtml(html.slice(0, sel.anchorOffset) + aOrBInput + html.slice(sel.anchorOffset));
-    setChoiceInserted(true);
-  };
-
-  const contentEditableRef = useRef(null);
-  const [html, setHtml] = useState('');
-
-  const [choiceInserted, setChoiceInserted] = useState(false);
-
-  const handleChange = e => {
-    const newHtml = e.target.value.replace(/&nbsp;/, ' ')
-    console.log("HANDLING CHANGE");
-    console.log(newHtml);
-    setHtml(newHtml);
-  };
-
-  const handleKeyDown = e => {
-
-
-    // TODO: On delete, we need to update the html state too?
-
-    if (e.key == "Backspace") {
-      var selection = document.getSelection();
-
-      if (selection.rangeCount) {
-        var selRange = selection.getRangeAt(0);
-        console.log(selRange);
-        if (selection.anchorNode.nodeName === "#text") {
-          var textNode = (selection.anchorNode as Text);
-          var previousSibling = textNode.previousElementSibling as HTMLElement;
-
-          if (selRange.startOffset === 0 && previousSibling && previousSibling.contentEditable === "false") {
-              e.preventDefault();
-              console.log('DELETE NOW: after A or B');
-              previousSibling.remove();
-          }
-        } else if (selection.anchorNode.nodeName === "DIV") {
-          var divNode = (selection.anchorNode as HTMLDivElement)
-          if (divNode.className === 'myWrapper') {
-            if (selRange.startOffset > 0) {
-              var lastChild = (divNode.lastElementChild as HTMLElement);
-              if (lastChild && lastChild.contentEditable === 'false') {
-                e.preventDefault();
-                console.log('DELETE NOW: end of input');
-                lastChild.remove();
-              }
-            }
-          }
-        }
-      }
-    } else if (e.key == "Delete") {
-
-      var selection = document.getSelection();
-      console.log(selection);
-      console.log(selection.anchorNode);
-
-      if (selection.rangeCount) {
-        var selRange = selection.getRangeAt(0);
-
-        if (selection.anchorNode.nodeName === "#text") {
-          var textNode = (selection.anchorNode as Text);
-          var nextSibling = (selection.anchorNode.nextSibling as HTMLElement);
-          if (selRange.startOffset === textNode.length && nextSibling.contentEditable === "false") {
-            e.preventDefault();
-            console.log("DELETE NOW: before A and B");
-            nextSibling.remove();
-          }
-        } else if (selection.anchorNode.nodeName === "DIV") {
-          var divNode = (selection.anchorNode as HTMLDivElement)
-          if (divNode.className === 'myWrapper') {
-
-            if (selRange.startOffset === 0) {
-
-              var firstChild = (selection.anchorNode.firstChild as HTMLElement);
-              if (firstChild && firstChild.contentEditable === 'false') {
-                e.preventDefault();
-                console.log('DELETE NOW: beginning of input');
-                firstChild.remove();
-              }
-            }
-          }
-        }
-      }
-    }
-        // console.log(previous);
-        // var previousPrevious = previous.previousSibling;
-        // console.log(previousPrevious);
-
-        // .parentNode.removeChild(selection.anchorNode.previousSibling)
-      // }
   }
+
+  const initialValue = [
+    {
+      children: [{ text: '' }]
+    },
+  ] as any;
+
+  const [value, setValue] = useState(initialValue)
 
   const renderInputSentences = () => {
     let sentences = []
@@ -129,17 +107,41 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
           <div className={styles.inputSentence}>
             <div className={styles.inputIndex}>{i + 1}.</div>
             <div className={styles.inputWrapper}>
-              <ContentEditable
-                className="myWrapper"
-                innerRef={contentEditableRef}
-                html={html} // innerHTML of the editable div
-                onChange={handleChange} // handle innerHTML change
-                onKeyDown={handleKeyDown}
-              />
+              <Slate
+                editor={editor}
+                value={value}
+                onChange={value => { setValue(value) }}
+              >
+                <Editable
+                  renderElement={renderElement}
+                  // onKeyDown={onKeyDown}
+                  placeholder="Enter some text..."
+                />
+              </Slate>
             </div>
           </div>
           <div className={styles.actions}>
-            <Button onClick={insertChoice} >A or B</Button>
+            <div className={styles.insertAorb}>
+              <div>
+                <label htmlFor="a">A)</label>
+                <input
+                  name="a"
+                  type="text"
+                  value={aInput}
+                  onChange={(e) => setAInput(e.target.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="b">B)</label>
+                <input
+                  name="b"
+                  type="text"
+                  value={bInput}
+                  onChange={(e) => setBInput(e.target.value)}
+                />
+              </div>
+              <Button onClick={insertAorb}>Insert</Button>
+            </div>
           </div>
         </div>
       )
