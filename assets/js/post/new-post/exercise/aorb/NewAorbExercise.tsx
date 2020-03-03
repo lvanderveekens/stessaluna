@@ -30,8 +30,9 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
 
   const [aInput, setAInput] = useState('');
   const [bInput, setBInput] = useState('');
-
   const renderElement = useCallback(props => <Element {...props} />, [])
+
+  const myRef = useRef();
 
   const withAorb = editor => {
     const { isInline, isVoid } = editor;
@@ -54,8 +55,10 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
 
   const insertAorb = (e) => {
     const aorb = { type: 'aorb', a: aInput, b: bInput, children: [{ text: '' }] }
-    Transforms.insertNodes(editor, aorb)
-    Transforms.move(editor)
+
+    Transforms.insertNodes(editor, aorb);
+    // Editor.focus();
+
     // reset form
     setAInput('');
     setBInput('');
@@ -103,15 +106,26 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
   const [value, setValue] = useState(initialValue)
 
   const handleChange = (value: Node[]) => {
-    // console.log("@@@");
-    // console.log(value);
-    // console.log("@@@");
-
     setValue(value);
 
     const aorbExists = value[0].children.some(child => child.type === 'aorb')
     setShowInsertButton(!aorbExists)
   };
+
+  const renderLeaf = useCallback(props => {
+    return <Leaf {...props} />
+  }, [])
+
+  const Leaf = props => {
+    return (
+      <span
+        {...props.attributes}
+        className={styles.leaf}
+      >
+        {props.children}
+      </span>
+    )
+  }
 
   const renderInputSentences = () => {
     let sentences = []
@@ -128,7 +142,9 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
               >
                 <Editable
                   renderElement={renderElement}
+                  renderLeaf={renderLeaf}
                   placeholder="Enter some text..."
+                  // style={{ lineHeight: 1.5 }}
                 />
               </Slate>
             </div>
