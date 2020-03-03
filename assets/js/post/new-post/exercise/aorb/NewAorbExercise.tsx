@@ -15,6 +15,7 @@ import {
   useSelected,
   useFocused,
 } from 'slate-react';
+import { Node } from 'slate';
 
 interface Props {
   onClose: () => void
@@ -24,6 +25,8 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
 
   const [textInputCount, setTextInputCount] = useState(1);
   const [showChoice, setShowChoice] = useState(false);
+
+  const [showInsertButton, setShowInsertButton] = useState(true);
 
   const [aInput, setAInput] = useState('');
   const [bInput, setBInput] = useState('');
@@ -53,7 +56,7 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
     const aorb = { type: 'aorb', a: aInput, b: bInput, children: [{ text: '' }] }
     Transforms.insertNodes(editor, aorb)
     Transforms.move(editor)
-    // TODO: form reset instead of?
+    // reset form
     setAInput('');
     setBInput('');
   }
@@ -99,6 +102,17 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
 
   const [value, setValue] = useState(initialValue)
 
+  const handleChange = (value: Node[]) => {
+    // console.log("@@@");
+    // console.log(value);
+    // console.log("@@@");
+
+    setValue(value);
+
+    const aorbExists = value[0].children.some(child => child.type === 'aorb')
+    setShowInsertButton(!aorbExists)
+  };
+
   const renderInputSentences = () => {
     let sentences = []
     for (let i = 0; i < textInputCount; i++) {
@@ -110,38 +124,39 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
               <Slate
                 editor={editor}
                 value={value}
-                onChange={value => { setValue(value) }}
+                onChange={handleChange}
               >
                 <Editable
                   renderElement={renderElement}
-                  // onKeyDown={onKeyDown}
                   placeholder="Enter some text..."
                 />
               </Slate>
             </div>
           </div>
           <div className={styles.actions}>
-            <div className={styles.insertAorb}>
-              <div>
-                <label htmlFor="a">A)</label>
-                <input
-                  name="a"
-                  type="text"
-                  value={aInput}
-                  onChange={(e) => setAInput(e.target.value)}
-                />
+            {showInsertButton && (
+              <div className={styles.insertAorb}>
+                <div className={styles.aInputGroup}>
+                  <label htmlFor="a">A)</label>
+                  <input
+                    name="a"
+                    type="text"
+                    value={aInput}
+                    onChange={(e) => setAInput(e.target.value)}
+                  />
+                </div>
+                <div className={styles.bInputGroup}>
+                  <label htmlFor="b">B)</label>
+                  <input
+                    name="b"
+                    type="text"
+                    value={bInput}
+                    onChange={(e) => setBInput(e.target.value)}
+                  />
+                </div>
+                <Button className={styles.insertButton} onClick={insertAorb}>Insert</Button>
               </div>
-              <div>
-                <label htmlFor="b">B)</label>
-                <input
-                  name="b"
-                  type="text"
-                  value={bInput}
-                  onChange={(e) => setBInput(e.target.value)}
-                />
-              </div>
-              <Button onClick={insertAorb}>Insert</Button>
-            </div>
+            )} 
           </div>
         </div>
       )

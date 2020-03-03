@@ -37,6 +37,7 @@
         "prop-types": "^15.7.2",
         "react": "^16.12.0",
         "react-bootstrap": "^1.0.0-beta.16",
+        "react-contenteditable": "^3.3.3",
         "react-dom": "^16.12.0",
         "react-helmet": "^5.2.1",
         "react-input-autosize": "^2.2.2",
@@ -47,6 +48,9 @@
         "redux-devtools-extension": "^2.13.8",
         "redux-thunk": "^2.3.0",
         "sass-loader": "^7.0.1",
+        "slate": "^0.57.1",
+        "slate-history": "^0.57.1",
+        "slate-react": "^0.57.1",
         "yup": "^0.28.0"
     }
 }
