@@ -1,21 +1,7 @@
-import React, { FC, useMemo, useCallback, useRef, useEffect, useState } from 'react'
+import React, { FC, useState } from 'react'
 import styles from './NewAorbExercise.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Button } from 'react-bootstrap';
-import ContentEditable from 'react-contenteditable';
-import { renderToString } from 'react-dom/server';
-import { Editor, Transforms, Range, createEditor } from 'slate';
-import { withHistory } from 'slate-history';
-import {
-  Slate,
-  Editable,
-  ReactEditor,
-  withReact,
-  useSelected,
-  useFocused,
-} from 'slate-react';
-import { Node } from 'slate';
 import AorbInput from './AorbInput';
 
 interface Props {
@@ -24,17 +10,32 @@ interface Props {
 
 const NewAorbExercise: FC<Props> = ({ onClose }) => {
   
-  const [textInputCount, setTextInputCount] = useState(1);
+  const [aorbInputs, setAorbInputs] = useState([{ createdOn: new Date().getTime(), input: <AorbInput /> }]);
 
-  const renderInputSentences = () => {
-    let sentences = []
-    for (let i = 0; i < textInputCount; i++) {
-      sentences.push(
-        <AorbInput index={i + 1} />
-      )
-    }
-    return sentences;
-  };
+  const addInput = () => {
+    setAorbInputs([...aorbInputs, {
+      createdOn: new Date().getTime(),
+      input: <AorbInput />
+    }]);
+  }
+
+  const deleteInput = (index: number) => () => {
+    const inputs = [...aorbInputs];
+    inputs.splice(index, 1);
+    setAorbInputs(inputs);
+  }
+
+  const renderInputs = () => {
+    return aorbInputs.map((aorbInput, i) => (
+      <div key={aorbInput.createdOn} className={styles.inputRow}>
+        <div className={styles.inputIndex}>{i + 1}.</div>
+        {aorbInput.input}
+        <div className={styles.deleteInput} onClick={deleteInput(i)}>
+          <FontAwesomeIcon icon={faTimes} />
+        </div>
+      </div>
+    ))
+  }
 
   return (
     <div className={styles.newAorbExercise}>
@@ -43,10 +44,10 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
         <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={onClose} />
       </div>
       <div className={styles.sentences}>
-        {renderInputSentences()}
+        {renderInputs()}
       </div>
       <div className={styles.addSentence}>
-        <span className={styles.addIcon} onClick={() => setTextInputCount(textInputCount + 1)}>
+        <span className={styles.addIcon} onClick={addInput}>
           <FontAwesomeIcon icon={faPlus} />
         </span>
       </div>

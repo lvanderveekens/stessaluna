@@ -7,10 +7,9 @@ import { Node } from 'slate';
 import { Button } from 'react-bootstrap';
 
 interface Props {
-  index: number
 }
 
-const AorbInput: FC<Props> = ({ index }) => {
+const AorbInput: FC<Props> = () => {
 
   const [showInsertButton, setShowInsertButton] = useState(true);
 
@@ -68,11 +67,11 @@ const AorbInput: FC<Props> = ({ index }) => {
         onClick={() => console.log("CLICKED")}
       >
         <span className={styles.a}>
-          <span className={styles.aLabel}>A</span>
+          <span className={styles.aLabel}>A)</span>
           <span className={styles.aContent}>{element.a}</span>
         </span>
         <span className={styles.b}>
-          <span className={styles.bLabel}>B</span>
+          <span className={styles.bLabel}>B)</span>
           <span className={styles.bContent}>{element.b}</span>
         </span>
         {children}
@@ -111,23 +110,19 @@ const AorbInput: FC<Props> = ({ index }) => {
   }
 
   return (
-    <div>
-      <div className={styles.inputSentence}>
-        {/* TODO: move index to parent? */}
-        <div className={styles.inputIndex}>{index}.</div>
-        <div className={styles.inputWrapper}>
-          <Slate
-            editor={editor}
-            value={value}
-            onChange={handleChange}
-          >
-            <Editable
-              renderElement={renderElement}
-              renderLeaf={renderLeaf}
-              placeholder="Enter some text..."
-            />
-          </Slate>
-        </div>
+    <div className={styles.aorbInput}>
+      <div className={styles.editorWrapper}>
+        <Slate
+          editor={editor}
+          value={value}
+          onChange={handleChange}
+        >
+          <Editable
+            renderElement={renderElement}
+            renderLeaf={renderLeaf}
+            placeholder="Type exercise..."
+          />
+        </Slate>
       </div>
       <div className={styles.actions}>
         {showInsertButton && (
@@ -150,7 +145,7 @@ const AorbInput: FC<Props> = ({ index }) => {
                 onChange={(e) => setBInput(e.target.value)}
               />
             </div>
-            <Button className={styles.insertButton} onClick={insertAorb}>Insert</Button>
+            <Button className={`${styles.insertButton} btn btn-dark`} onClick={insertAorb}>Insert</Button>
           </div>
         )}
       </div>
