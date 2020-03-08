@@ -120,7 +120,7 @@ const AorbInput: FC<Props> = () => {
           <Editable
             renderElement={renderElement}
             renderLeaf={renderLeaf}
-            placeholder="Type exercise..."
+            placeholder="Type something..."
           />
         </Slate>
       </div>
@@ -145,7 +145,7 @@ const AorbInput: FC<Props> = () => {
                 onChange={(e) => setBInput(e.target.value)}
               />
             </div>
-            <Button className={`${styles.insertButton} btn btn-dark`} onClick={insertAorb}>Insert</Button>
+            <Button className={`${styles.insertButton} btn btn-dark`} onClick={insertAorb}>Add</Button>
           </div>
         )}
       </div>

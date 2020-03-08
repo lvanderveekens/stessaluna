@@ -1,6 +1,6 @@
 .aorbInput {
     flex-grow: 1;
-    margin-right: 0.4rem;
+    margin-right: 0.5rem;
 
     .editorWrapper {
         border: 1px solid #ced4da;
@@ -21,6 +21,7 @@
         .a {
             display: inline-block;
             color: green;
+            border: 1px solid green;
             background-color: #e0ffe0;
     
             border-bottom-left-radius: 0.5rem;
@@ -41,6 +42,7 @@
         .b {
             display: inline-block;
             color: red;
+            border: 1px solid red;
             background-color: #ffe5e5;
     
             border-bottom-right-radius: 0.5rem;
@@ -84,39 +86,39 @@
                 background-color: inherit;
                 margin-left: 0.3rem;
                 margin-right: 0.3rem;
+                text-overflow: ellipsis;
             }
         }
     
         .aInputGroup {
-            color: green;
-    
-            input {
-                color: green;
-                padding: 0;
-            }
-    
-            background-color: #e0ffe0;
+
             border-bottom-left-radius: 0.5rem;
             border-top-left-radius: 0.5rem;
+
+            color: green;
+            border: 1px solid green;
+
+            input {
+                padding: 0;
+                color: green;
+            }
     
-            // margin-left: 1rem;
         }
     
         .bInputGroup {
-    
-            color: red;
-            margin-right: 0.4rem;
-    
-            input {
-                color: red;
-                padding: 0;
-            }
-    
-            background-color: #ffe5e5;
             border-bottom-right-radius: 0.5rem;
             border-top-right-radius: 0.5rem;
     
-            // margin-right: 1rem;
+            margin-right: 0.4rem;
+    
+            color: red;
+            border: 1px solid red;
+
+            input {
+                padding: 0;
+                color: red;
+            }
+
         }
     
         .insertButton {

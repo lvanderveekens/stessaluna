@@ -3,6 +3,7 @@ import styles from './NewAorbExercise.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 import AorbInput from './AorbInput';
+import { Button } from 'react-bootstrap';
 
 interface Props {
   onClose: () => void
@@ -40,7 +41,7 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
   return (
     <div className={styles.newAorbExercise}>
       <div className={styles.header}>
-        <span>A or B</span>
+        <span>A or B exercise</span>
         <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={onClose} />
       </div>
       <div className={styles.sentences}>

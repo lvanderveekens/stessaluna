@@ -3,6 +3,7 @@ import ChooseExercise from './choose/ChooseExercise';
 import styles from './NewExercisePost.scss?module';
 import ExerciseType from './type';
 import NewAorbExercise from './aorb/NewAorbExercise';
+import { Button } from 'react-bootstrap';
 
 interface Props {
   onClose: () => void
@@ -20,10 +21,15 @@ const NewExercisePost: FC<Props> = ({ onClose }) => {
   }
 
   return (
-    <div className={styles.newExercisePost}>
-      {type === null
-        ? <ChooseExercise onChoice={type => setType(type)} onClose={onClose} />
-        : renderNewExercise()}
+    <div>
+      <div className={styles.newExercisePost}>
+        {type === null
+          ? <ChooseExercise onChoice={type => setType(type)} onClose={onClose} />
+          : renderNewExercise()}
+      </div>
+      {type && (
+        <Button className="btn btn-dark mb-2" type="submit">Create</Button>
+      )}
     </div>
   );
 };
