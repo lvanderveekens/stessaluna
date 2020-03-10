@@ -21,15 +21,10 @@ const NewExercisePost: FC<Props> = ({ onClose }) => {
   }
 
   return (
-    <div>
-      <div className={styles.newExercisePost}>
-        {type === null
-          ? <ChooseExercise onChoice={type => setType(type)} onClose={onClose} />
-          : renderNewExercise()}
-      </div>
-      {type && (
-        <Button className="btn btn-dark mb-2" type="submit">Create</Button>
-      )}
+    <div className={styles.newExercisePost}>
+      {type === null
+        ? <ChooseExercise onChoice={type => setType(type)} onClose={onClose} />
+        : renderNewExercise()}
     </div>
   );
 };

@@ -1,0 +1,21 @@
+[
+    {
+        "type": "text",
+        "text": "Hey hoe is het daar?",
+        "image": "<base64 string>"
+
+    },
+    {
+        "type": "exercise",
+        "exercise": "aorb",
+        "sentences": [
+            {
+                "parts": [
+                    { "type:": "text", "text": "Hey, hoe " },
+                    { "type": "choice", "a": "gaat", "b": "werkt" },
+                    { "type:": "text", "text": " dat?" }
+                ]
+            }
+        ]
+    }
+]

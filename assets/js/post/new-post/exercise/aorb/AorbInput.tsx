@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useCallback, useState } from 'react'
+import React, { FC, useMemo, useCallback, useState, useEffect } from 'react'
 import styles from './AorbInput.scss?module';
 import { withReact, Slate, Editable, useFocused, useSelected } from 'slate-react';
 import { withHistory } from 'slate-history';
@@ -6,15 +6,22 @@ import { createEditor, Transforms } from 'slate';
 import { Node } from 'slate';
 import { Button } from 'react-bootstrap';
 
-interface Props {
+export interface AorbInputValue {
+  textBefore: string
+  choice?: { a: string, b: string } 
+  textAfter?: string 
 }
 
-const AorbInput: FC<Props> = () => {
+interface Props {
+  value: AorbInputValue
+  onChange: (value: AorbInputValue) => void
+}
 
-  const [showInsertButton, setShowInsertButton] = useState(true);
+const AorbInput: FC<Props> = ({ value, onChange }) => {
 
   const [aInput, setAInput] = useState('');
   const [bInput, setBInput] = useState('');
+
   const renderElement = useCallback(props => <Element {...props} />, [])
 
   const withAorb = editor => {
@@ -57,8 +64,6 @@ const AorbInput: FC<Props> = () => {
   }
 
   const AorbElement = ({ attributes, children, element }) => {
-    const selected = useSelected()
-    const focused = useFocused()
     return (
       <span
         {...attributes}
@@ -79,19 +84,45 @@ const AorbInput: FC<Props> = () => {
     )
   }
 
-  const initialValue = [
-    {
-      children: [{ text: '' }]
-    },
-  ] as any;
+  const createInitialValue = () => {
+    if (value.choice) {
+      return [{
+        children: [
+          { text: value.textBefore },
+          { type: 'aorb', a: value.choice.a, b: value.choice.b, children: [{ text: '' }] },
+          { text: value.textAfter }
+        ]
+      }] as any
+    } else {
+      return [{
+        children: [{ text: value.textBefore }]
+      }] as any
+    }
+  }
 
-  const [value, setValue] = useState(initialValue)
+  const [editorValue, setEditorValue] = useState(createInitialValue());
 
   const handleChange = (value: Node[]) => {
-    setValue(value);
+    setEditorValue(value);
 
-    const aorbExists = value[0].children.some(child => child.type === 'aorb')
-    setShowInsertButton(!aorbExists)
+    const elements = value[0].children;
+
+    let textBefore = "";
+    let choice = null;
+    let textAfter = null;
+
+    if (elements.length == 1) {
+      textBefore = elements[0].text;
+    } else if (value[0].children.length === 3) {
+      textBefore = elements[0].text;
+      choice = { a: elements[1].a, b: elements[1].b };
+      textAfter = elements[2].text;
+    }
+
+    onChange({ textBefore, choice, textAfter });
+
+    // const aorbExists = value[0].children.some(child => child.type === 'aorb')
+    // setShowInsertButton(!aorbExists)
   };
 
   const renderLeaf = useCallback(props => {
@@ -114,7 +145,7 @@ const AorbInput: FC<Props> = () => {
       <div className={styles.editorWrapper}>
         <Slate
           editor={editor}
-          value={value}
+          value={editorValue}
           onChange={handleChange}
         >
           <Editable
@@ -125,7 +156,7 @@ const AorbInput: FC<Props> = () => {
         </Slate>
       </div>
       <div className={styles.actions}>
-        {showInsertButton && (
+        {!value.choice && (
           <div className={styles.insertAorb}>
             <div className={styles.aInputGroup}>
               <label htmlFor="a">A)</label>

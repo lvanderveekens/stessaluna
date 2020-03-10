@@ -1,7 +1,6 @@
 import React, { Fragment, useState, FC } from 'react';
 import NewTextPost from './text/NewTextPost';
 import NewExercisePost from './exercise/NewExercisePost';
-import NewAorbExercise from './exercise/aorb/NewAorbExercise';
 
 interface Props {
 }
