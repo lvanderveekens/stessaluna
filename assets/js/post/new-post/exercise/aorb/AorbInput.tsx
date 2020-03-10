@@ -102,10 +102,10 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
 
   const [editorValue, setEditorValue] = useState(createInitialValue());
 
-  const handleChange = (change: Node[]) => {
-    // only update state on actual change to avoid focus issues when selecting an input field
+  const handleEditorChange = (change: Node[]) => {
+    // only update state on actual change to avoid focus issues when switching between inputs
     if (JSON.stringify(editorValue) !== JSON.stringify(change)) {
-      console.log("CHANGED!!!!!!");
+      console.log("CHANGED!");
 
       setEditorValue(change);
 
@@ -148,7 +148,7 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
         <Slate
           editor={editor}
           value={editorValue}
-          onChange={handleChange}
+          onChange={handleEditorChange}
         >
           <Editable
             renderElement={renderElement}
