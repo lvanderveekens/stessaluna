@@ -18,6 +18,13 @@ interface Props {
 }
 
 const AorbInput: FC<Props> = ({ value, onChange }) => {
+  useEffect(() => {
+    console.log("VALUE CHANGE");
+  }, [value])
+
+  useEffect(() => {
+    console.log("VALUE CHANGE");
+  }, [value])
 
   const [aInput, setAInput] = useState('');
   const [bInput, setBInput] = useState('');
@@ -102,10 +109,10 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
 
   const [editorValue, setEditorValue] = useState(createInitialValue());
 
-  const handleChange = (value: Node[]) => {
-    setEditorValue(value);
+  const handleChange = (change: Node[]) => {
+    setEditorValue(change);
 
-    const elements = value[0].children;
+    const elements = change[0].children;
 
     let textBefore = "";
     let choice = null;
@@ -113,13 +120,20 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
 
     if (elements.length == 1) {
       textBefore = elements[0].text;
-    } else if (value[0].children.length === 3) {
+    } else if (elements.length === 3) {
       textBefore = elements[0].text;
       choice = { a: elements[1].a, b: elements[1].b };
       textAfter = elements[2].text;
     }
+    const realChange = { textBefore, choice, textAfter };
 
-    onChange({ textBefore, choice, textAfter });
+    if (JSON.stringify(value) !== JSON.stringify(realChange)) {
+      console.log("DIFFERENT!");
+      console.log(value);
+      console.log(realChange);
+      onChange(realChange);
+    }
+
 
     // const aorbExists = value[0].children.some(child => child.type === 'aorb')
     // setShowInsertButton(!aorbExists)

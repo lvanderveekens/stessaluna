@@ -11,9 +11,9 @@ interface Props {
 
 const NewAorbExercise: FC<Props> = ({ onClose }) => {
   const [sentences, setSentences] = useState([
-    { textBefore: "wat?" },
+    { textBefore: "wat?", choice: null, textAfter: null },
     { textBefore: "ok", choice: { a: "keuze A", b: "Keuze B" }, textAfter: "ja" },
-    { textBefore: "daaro" },
+    { textBefore: "daaro", choice: null, textAfter: null },
   ] as AorbInputValue[]);
 
   const addSentence = () => {
