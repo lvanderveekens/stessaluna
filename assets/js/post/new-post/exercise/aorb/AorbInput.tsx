@@ -18,13 +18,6 @@ interface Props {
 }
 
 const AorbInput: FC<Props> = ({ value, onChange }) => {
-  useEffect(() => {
-    console.log("VALUE CHANGE");
-  }, [value])
-
-  useEffect(() => {
-    console.log("VALUE CHANGE");
-  }, [value])
 
   const [aInput, setAInput] = useState('');
   const [bInput, setBInput] = useState('');
@@ -110,33 +103,28 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
   const [editorValue, setEditorValue] = useState(createInitialValue());
 
   const handleChange = (change: Node[]) => {
-    setEditorValue(change);
+    // only update state on actual change to avoid focus issues when selecting an input field
+    if (JSON.stringify(editorValue) !== JSON.stringify(change)) {
+      console.log("CHANGED!!!!!!");
 
-    const elements = change[0].children;
+      setEditorValue(change);
 
-    let textBefore = "";
-    let choice = null;
-    let textAfter = null;
+      const elements = change[0].children;
 
-    if (elements.length == 1) {
-      textBefore = elements[0].text;
-    } else if (elements.length === 3) {
-      textBefore = elements[0].text;
-      choice = { a: elements[1].a, b: elements[1].b };
-      textAfter = elements[2].text;
-    }
-    const realChange = { textBefore, choice, textAfter };
+      let textBefore = "";
+      let choice = null;
+      let textAfter = null;
 
-    if (JSON.stringify(value) !== JSON.stringify(realChange)) {
-      console.log("DIFFERENT!");
-      console.log(value);
-      console.log(realChange);
+      if (elements.length == 1) {
+        textBefore = elements[0].text;
+      } else if (elements.length === 3) {
+        textBefore = elements[0].text;
+        choice = { a: elements[1].a, b: elements[1].b };
+        textAfter = elements[2].text;
+      }
+      const realChange = { textBefore, choice, textAfter };
       onChange(realChange);
     }
-
-
-    // const aorbExists = value[0].children.some(child => child.type === 'aorb')
-    // setShowInsertButton(!aorbExists)
   };
 
   const renderLeaf = useCallback(props => {
