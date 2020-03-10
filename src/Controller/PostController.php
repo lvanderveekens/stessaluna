@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Dto\PostDto;
 use App\Entity\Post;
+use App\Entity\User;
 use App\Service\CommentConverter;
 use App\Service\FileUploader;
 use App\Service\UserConverter;
@@ -24,6 +25,7 @@ class PostController extends AbstractController
 {
     private $logger;
     private $commentConverter;
+    private $userConverter;
 
     public function __construct(LoggerInterface $logger, UserConverter $userConverter, CommentConverter $commentConverter)
     {

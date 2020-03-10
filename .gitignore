@@ -32,3 +32,5 @@ yarn-error.log
 ###< lexik/jwt-authentication-bundle ###
 
 *.swp
+
+.idea/

@@ -11,16 +11,15 @@ interface Props {
 
 const NewAorbExercise: FC<Props> = ({ onClose }) => {
 
-  // Added id field in order to have unique keys later on
   const [sentences, setSentences] = useState([
-    { id: 1, textBefore: "wat?" },
-    { id: 2, textBefore: "ok", choice: { a: "keuze A", b: "Keuze B" }, textAfter: "ja" },
-    { id: 3, textBefore: "daaro", },
-  ] as any);
+    { id: 1, value: { textBefore: "wat?" } },
+    { id: 2, value: { textBefore: "ok", choice: { a: "keuze A", b: "Keuze B" }, textAfter: "ja" } },
+    { id: 3, value: { textBefore: "daaro", } },
+  ] as { id: number, value: AorbInputValue }[]);
 
   const addSentence = () => {
     const nextId = sentences.length ? (sentences[sentences.length - 1].id + 1) : 1
-    const newSentence = { id: nextId, textBefore: "" };
+    const newSentence = { id: nextId, value: { textBefore: "" } };
     setSentences([...sentences, newSentence]);
   }
 
@@ -32,12 +31,12 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
 
   const onSubmit = () => {
     console.log("submitted");
-    console.log(sentences)
+    console.log(sentences.map((s) => s.value))
   };
 
   const handleChange = (index: number) => (change: AorbInputValue) => {
     const newSentences = [...sentences];
-    newSentences[index] = { id: newSentences[index].id, ...change };
+    newSentences[index].value = change;
     setSentences(newSentences);
   }
 
@@ -45,7 +44,7 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
     return sentences.map((sentence, i) => (
       <div key={sentence.id} className={styles.inputRow}>
         <div className={styles.inputIndex}>{i + 1}.</div>
-        <AorbInput value={sentence} onChange={handleChange(i)} />
+        <AorbInput value={sentence.value} onChange={handleChange(i)} />
         <div className={styles.deleteInput} onClick={deleteInput(i)}>
           <FontAwesomeIcon icon={faTimes} />
         </div>
