@@ -6,16 +6,29 @@
 
     },
     {
-        "type": "exercise",
-        "exercise": "aorb",
-        "sentences": [
+        "type": "aorb",
+        "aorbExercises": [
             {
-                "parts": [
-                    { "type:": "text", "text": "Hey, hoe " },
-                    { "type": "choice", "a": "gaat", "b": "werkt" },
-                    { "type:": "text", "text": " dat?" }
-                ]
+                "textBefore": "Hey, hoe",
+                "choice": { "a": "gaat", "b": "werkt"},
+                "textAfter": " dat?"
+            },
+            {
+                "textBefore": "Come",
+                "choice": { "a": "stai", "b": "va"},
+                "textAfter": "?"
             }
         ]
     }
 ]
+
+
+post
+====
+id: 1, type: "aorb"
+
+
+aorb_exercise
+=============
+id: 5, post_id: 1, textBefore: "hey, hoe ", choice_a: "gaat", choice_b: "werkt", textAfter: " het?"
+id: 6, post_id: 1, textBefore: "ciao, come ", choice_a: "va", choice_b: "stai", textAfter: "?"
