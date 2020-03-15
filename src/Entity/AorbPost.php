@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Entity\Post;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,18 +13,44 @@ use Doctrine\ORM\Mapping as ORM;
 class AorbPost extends Post
 {
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\AorbSentence", mappedBy="post", orphanRemoval=true, cascade={"persist"})
      */
-    protected $testje;
+    private $sentences;
 
-    public function getTestje(): ?string
+    public function __construct()
     {
-        return $this->testje;
+        parent::__construct();
+        $this->sentences = new ArrayCollection();
     }
 
-    public function setTestje(string $testje): self
+    /**
+     * @return Collection|AorbSentence[]
+     */
+    public function getSentences(): Collection
     {
-        $this->testje = $testje;
+        return $this->sentences;
+    }
+
+    public function addSentence(AorbSentence $sentence): self
+    {
+        if (!$this->sentences->contains($sentence)) {
+            $this->sentences[] = $sentence;
+            $sentence->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSentence(AorbSentence $sentence): self
+    {
+        if ($this->sentences->contains($sentence)) {
+            $this->sentences->removeElement($sentence);
+            // set the owning side to null (unless already changed)
+            if ($sentence->getPost() === $this) {
+                $sentence->setPost(null);
+            }
+        }
+
         return $this;
     }
 }

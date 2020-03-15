@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Dto\PostDto;
+use App\Entity\AorbPost;
+use App\Entity\AorbSentence;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Service\CommentConverter;
@@ -51,24 +53,42 @@ class PostController extends AbstractController
     /**
      * @Route(methods={"POST"})
      */
-    public function createPost(Request $request, FileUploader $fileUploader): JsonResponse
+    public function createPost(Request $request): JsonResponse
     {
-        $user = $this->getUser();
+        // TODO: move to service
+        $type = $request->get('type');
+        if ($type == 'aorb') {
+            $user = $this->getUser();
 
-        $post = new Post();
-        $post->setUser($user);
-        $post->setCreatedAt(new DateTime('now'));
+            $post = new AorbPost();
+            $post->setUser($user);
+            $post->setCreatedAt(new DateTime('now'));
 
-        $text = $request->request->get('text');
-        if (!empty($text)) {
-            $post->setText($text);
+            foreach ($request->get('sentences') as $s) {
+                $sentence = new AorbSentence();
+                $sentence->setTextBefore($s['textBefore']);
+                $sentence->setChoiceA($s['choice']['a']);
+                $sentence->setChoiceB($s['choice']['b']);
+                $sentence->setTextAfter($s['textAfter']);
+
+                $post->addSentence($sentence);
+            }
         }
 
-        $postImage = $request->files->get('image');
-        if ($postImage) {
-            $imageFilename = $fileUploader->upload($postImage, $this->getParameter('images_directory'));
-            $post->setImageFilename($imageFilename);
-        }
+
+        // $aapje = $request->request->parameters;
+
+        // // $text = $request->request->get('text');
+        // if (!empty($text)) {
+        //     // $post->setText($text);
+        // }
+
+        // TODO: do later
+        // $postImage = $request->files->get('image');
+        // if ($postImage) {
+        //     $imageFilename = $fileUploader->upload($postImage, $this->getParameter('images_directory'));
+        //     $post->setImageFilename($imageFilename);
+        // }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($post);
@@ -111,7 +131,7 @@ class PostController extends AbstractController
 
         $dto = new PostDto();
         $dto->setId($post->getId());
-        $dto->setText($post->getText());
+        // $dto->setText($post->getText());
         $dto->setUser($userDto);
         $dto->setCreatedAt($post->getCreatedAt());
 
@@ -122,10 +142,10 @@ class PostController extends AbstractController
         $dto->setComments($comments);
         $dto->setAvatar($userDto->getAvatar());
 
-        if ($post->getImageFilename()) {
+        // if ($post->getImageFilename()) {
             // TODO: move base upload path to a common place
-            $dto->setImage('/uploads/images/' .  $post->getImageFilename());
-        }
+            // $dto->setImage('/uploads/images/' .  $post->getImageFilename());
+        // }
         return $dto;
     }
 }

@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 import AorbInput, { AorbInputValue } from './AorbInput';
 import { Button } from 'react-bootstrap';
+import { createPost } from '../../../actions';
+import axios from '../../../../http/client';
 
 interface Props {
   onClose: () => void
@@ -12,9 +14,8 @@ interface Props {
 const NewAorbExercise: FC<Props> = ({ onClose }) => {
 
   const [sentences, setSentences] = useState([
-    { id: 1, value: { textBefore: "wat?" } },
+    { id: 1, value: { textBefore: "Quanto", choice: { a: "costa", b: "costano" }, textAfter: "il caffe?" } },
     { id: 2, value: { textBefore: "ok", choice: { a: "keuze A", b: "Keuze B" }, textAfter: "ja" } },
-    { id: 3, value: { textBefore: "daaro", } },
   ] as { id: number, value: AorbInputValue }[]);
 
   const addSentence = () => {
@@ -30,8 +31,16 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
   }
 
   const onSubmit = () => {
-    console.log("submitted");
-    console.log(sentences.map((s) => s.value))
+    console.log("Submitting");
+
+    const data = { type: 'aorb', sentences: sentences.map((s) => s.value) };
+    console.log(data);
+
+    axios.post('/api/posts', data)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(console.log);
   };
 
   const handleChange = (index: number) => (change: AorbInputValue) => {

@@ -11,6 +11,7 @@
         "lexik/jwt-authentication-bundle": "^2.6",
         "sensio/framework-extra-bundle": "^5.5",
         "spatie/image-optimizer": "^1.2",
+        "symfony-bundles/json-request-bundle": "3.0",
         "symfony/asset": "5.0.*",
         "symfony/console": "5.0.*",
         "symfony/dotenv": "5.0.*",
