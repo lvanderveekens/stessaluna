@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Post\Comment;
 
 use App\Dto\CommentDto;
 use App\Entity\Comment;
+use App\Service\UserConverter;
 use Psr\Log\LoggerInterface;
 
 class CommentConverter

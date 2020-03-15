@@ -9,9 +9,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploader
 {
-    /**
-     * @var LoggerInterface
-     */
     private $logger;
 
     public function __construct(LoggerInterface $logger)

@@ -7,8 +7,9 @@ use App\Entity\AorbPost;
 use App\Entity\AorbSentence;
 use App\Entity\Post;
 use App\Entity\User;
-use App\Service\CommentConverter;
+use App\Service\Post\Comment\CommentConverter;
 use App\Service\FileUploader;
+use App\Service\Post\PostCreator;
 use App\Service\UserConverter;
 use DateTime;
 use Exception;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -26,14 +28,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
     private $logger;
+
     private $commentConverter;
+
     private $userConverter;
 
-    public function __construct(LoggerInterface $logger, UserConverter $userConverter, CommentConverter $commentConverter)
-    {
+    private $postCreator;
+
+    public function __construct(
+        LoggerInterface $logger,
+        UserConverter $userConverter,
+        CommentConverter $commentConverter,
+        PostCreator $postCreator
+    ) {
         $this->logger = $logger;
         $this->userConverter = $userConverter;
         $this->commentConverter = $commentConverter;
+        $this->postCreator = $postCreator;
     }
 
     /**
@@ -55,45 +66,14 @@ class PostController extends AbstractController
      */
     public function createPost(Request $request): JsonResponse
     {
-        // TODO: move to service
         $type = $request->get('type');
-        if ($type == 'aorb') {
-            $user = $this->getUser();
-
-            $post = new AorbPost();
-            $post->setUser($user);
-            $post->setCreatedAt(new DateTime('now'));
-
-            foreach ($request->get('sentences') as $s) {
-                $sentence = new AorbSentence();
-                $sentence->setTextBefore($s['textBefore']);
-                $sentence->setChoiceA($s['choice']['a']);
-                $sentence->setChoiceB($s['choice']['b']);
-                $sentence->setTextAfter($s['textAfter']);
-
-                $post->addSentence($sentence);
-            }
+        switch ($type) {
+            case 'aorb':
+                $post = $this->postCreator->createAorbPost($request->get('sentences'), $this->getUser());
+                break;
+            default:
+                throw new BadRequestHttpException("Received unknown post type: $type");
         }
-
-
-        // $aapje = $request->request->parameters;
-
-        // // $text = $request->request->get('text');
-        // if (!empty($text)) {
-        //     // $post->setText($text);
-        // }
-
-        // TODO: do later
-        // $postImage = $request->files->get('image');
-        // if ($postImage) {
-        //     $imageFilename = $fileUploader->upload($postImage, $this->getParameter('images_directory'));
-        //     $post->setImageFilename($imageFilename);
-        // }
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($post);
-        $entityManager->flush();
-
         return $this->json($this->convertToDto($post));
     }
 

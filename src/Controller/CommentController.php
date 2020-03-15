@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Dto\CommentDto;
 use App\Entity\Comment;
 use App\Entity\Post;
-use App\Service\CommentConverter;
+use App\Service\Post\Comment\CommentConverter;
 use App\Service\UserConverter;
 use DateTime;
 use Psr\Log\LoggerInterface;
