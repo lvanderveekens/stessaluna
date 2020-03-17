@@ -11,7 +11,7 @@ use Stessaluna\Domain\User\Entity\User;
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"text" = "TextPost", "aorb" = "AorbPost"})
+ * @ORM\DiscriminatorMap({"text" = "Stessaluna\Domain\Post\Text\Entity\TextPost", "aorb" = "Stessaluna\Domain\Post\Aorb\Entity\AorbPost"})
  */
 abstract class Post
 {
@@ -28,13 +28,13 @@ abstract class Post
     protected $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Stessaluna\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Stessaluna\Domain\User\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="Stessaluna\Entity\Comment", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="Stessaluna\Domain\Post\Comment\Entity\Comment", mappedBy="post")
      */
     protected $comments;
 

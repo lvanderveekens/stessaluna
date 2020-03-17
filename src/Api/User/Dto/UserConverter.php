@@ -17,7 +17,7 @@ class UserConverter
         $this->packages = $packages;
     }
 
-    public function toDto(User $user) 
+    public function toDto(User $user): UserDto
     {
         $dto = new UserDto();
         $dto->setId($user->getId());

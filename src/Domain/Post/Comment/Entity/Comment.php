@@ -3,9 +3,11 @@
 namespace Stessaluna\Domain\Post\Comment\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Stessaluna\Domain\Post\Entity\Post;
+use Stessaluna\Domain\User\Entity\User;
 
 /**
- * @ORM\Entity(repositoryClass="Stessaluna\Repository\CommentRepository")
+ * @ORM\Entity
  */
 class Comment
 {
@@ -27,13 +29,13 @@ class Comment
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Stessaluna\Entity\Post", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="Stessaluna\Domain\Post\Entity\Post", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $post;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Stessaluna\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Stessaluna\Domain\User\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

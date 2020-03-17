@@ -2,9 +2,9 @@
 
 namespace Stessaluna\Infrastructure\Post\Repository;
 
-use Stessaluna\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Stessaluna\Domain\Post\Entity\Post;
 
 /**
  * @method Post|null find($id, $lockMode = null, $lockVersion = null)

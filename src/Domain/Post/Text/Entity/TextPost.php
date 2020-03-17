@@ -2,8 +2,8 @@
 
 namespace Stessaluna\Domain\Post\Text\Entity;
 
-use Stessaluna\Entity\Post;
 use Doctrine\ORM\Mapping as ORM;
+use Stessaluna\Domain\Post\Entity\Post;
 
 /**
  * @ORM\Entity

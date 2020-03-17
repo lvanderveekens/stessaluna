@@ -5,7 +5,7 @@ namespace Stessaluna\Domain\Post\Aorb\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Stessaluna\Repository\AorbSentenceRepository")
+ * @ORM\Entity
  */
 class AorbSentence
 {
@@ -37,7 +37,7 @@ class AorbSentence
     private $textAfter;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Stessaluna\Entity\AorbPost", inversedBy="sentences")
+     * @ORM\ManyToOne(targetEntity="AorbPost", inversedBy="sentences")
      * @ORM\JoinColumn(nullable=false)
      */
     private $post;

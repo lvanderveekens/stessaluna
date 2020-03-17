@@ -7,8 +7,8 @@ use Psr\Log\LoggerInterface;
 use Stessaluna\Api\Post\Aorb\Dto\AorbChoiceDto;
 use Stessaluna\Api\Post\Aorb\Dto\AorbPostDto;
 use Stessaluna\Api\Post\Aorb\Dto\AorbSentenceDto;
-use Stessaluna\Application\Post\Dto\PostDto;
-use Stessaluna\Application\User\Dto\UserConverter as DtoUserConverter;
+use Stessaluna\Api\Post\Dto\PostDto;
+use Stessaluna\Api\User\Dto\UserConverter;
 use Stessaluna\Domain\Post\Aorb\Entity\AorbPost;
 use Stessaluna\Domain\Post\Comment\Dto\CommentConverter;
 use Stessaluna\Domain\Post\Entity\Post;
@@ -36,7 +36,7 @@ class PostController extends AbstractController
 
     public function __construct(
         LoggerInterface $logger,
-        DtoUserConverter $userConverter,
+        UserConverter $userConverter,
         CommentConverter $commentConverter,
         PostCreator $postCreator
     ) {

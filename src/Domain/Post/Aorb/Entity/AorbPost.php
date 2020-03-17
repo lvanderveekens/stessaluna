@@ -2,18 +2,19 @@
 
 namespace Stessaluna\Domain\Post\Aorb\Entity;
 
-use Stessaluna\Domain\Post\Entity\Post;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Stessaluna\Domain\Post\Entity\Post;
 
 /**
  * @ORM\Entity
  */
 class AorbPost extends Post
 {
+
     /**
-     * @ORM\OneToMany(targetEntity="Stessaluna\Entity\AorbSentence", mappedBy="post", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AorbSentence", mappedBy="post", orphanRemoval=true, cascade={"persist"})
      */
     private $sentences;
 

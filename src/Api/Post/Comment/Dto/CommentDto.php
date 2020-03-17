@@ -1,6 +1,8 @@
 <?php
 
-namespace Stessaluna\Dto\Post\Comment;
+namespace Stessaluna\Api\Post\Comment\Dto;
+
+use Stessaluna\Api\User\Dto\UserDto;
 
 class CommentDto
 {

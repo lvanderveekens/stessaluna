@@ -1,6 +1,6 @@
 <?php
 
-namespace Stessaluna\Controller;
+namespace Stessaluna\Api\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

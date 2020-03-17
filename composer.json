@@ -52,12 +52,12 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "Stessaluna\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "Stessaluna\\Tests\\": "tests/"
         }
     },
     "replace": {

@@ -10,9 +10,33 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            App:
+            Post:
                 is_bundle: false
                 type: annotation
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+                dir: '%kernel.project_dir%/src/Domain/Post/Entity'
+                prefix: 'Stessaluna\Domain\Post\Entity'
+                alias: Post
+            AorbPost:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Domain/Post/Aorb/Entity'
+                prefix: 'Stessaluna\Domain\Post\Aorb\Entity'
+                alias: AorbPost
+            TextPost:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Domain/Post/Text/Entity'
+                prefix: 'Stessaluna\Domain\Post\Text\Entity'
+                alias: TextPost
+            User:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Domain/User/Entity'
+                prefix: 'Stessaluna\Domain\User\Entity'
+                alias: User
+            Comment:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Domain/Post/Comment/Entity'
+                prefix: 'Stessaluna\Domain\Post\Comment\Entity'
+                alias: Comment

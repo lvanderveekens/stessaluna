@@ -1,6 +1,6 @@
 <?php
 
-namespace Stessaluna\DataFixtures;
+namespace Stessaluna\Infrastructure\Persistence\Doctrine\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;

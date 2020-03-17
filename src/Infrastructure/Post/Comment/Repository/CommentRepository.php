@@ -2,9 +2,9 @@
 
 namespace Stessaluna\Infrastructure\Post\Comment\Repository;
 
-use Stessaluna\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Stessaluna\Domain\Post\Comment\Entity\Comment;
 
 /**
  * @method Comment|null find($id, $lockMode = null, $lockVersion = null)

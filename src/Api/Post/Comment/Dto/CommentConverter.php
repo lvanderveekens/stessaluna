@@ -1,18 +1,20 @@
 <?php
 
-namespace Stessaluna\Domain\Post\Comment\Dto;
+namespace Stessaluna\Api\Post\Comment\Dto;
 
-use Stessaluna\Application\User\Dto\UserConverter as DtoUserConverter;
+use Stessaluna\Api\User\Dto\UserConverter;
 use Stessaluna\Dto\Post\Comment\CommentDto;
 use Psr\Log\LoggerInterface;
+use Stessaluna\Domain\Post\Comment\Entity\Comment;
 
 // TODO: Gebruik Post als Aggregate Root
 class CommentConverter
 {
     private $logger;
+
     private $userConverter;
 
-    public function __construct(LoggerInterface $logger, DtoUserConverter $userConverter)
+    public function __construct(LoggerInterface $logger, UserConverter $userConverter)
     {
         $this->logger = $logger;
         $this->userConverter = $userConverter;

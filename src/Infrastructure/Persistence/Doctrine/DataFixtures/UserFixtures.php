@@ -1,10 +1,10 @@
 <?php
 
-namespace Stessaluna\DataFixtures;
+namespace Stessaluna\Infrastructure\Persistence\Doctrine\DataFixtures;
 
-use Stessaluna\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Stessaluna\Domain\User\Entity\User;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
