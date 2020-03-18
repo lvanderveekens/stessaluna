@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass="Stessaluna\Repository\UserRepository")
+ * @ORM\Entity
  */
 class User implements UserInterface
 {

@@ -1,3 +1,15 @@
-controllers:
-    resource: ../../src/Controller/
+default_controller:
+    resource: ../../src/Api/Controller/
+    type: annotation
+
+security_controllers:
+    resource: ../../src/Api/Security/Controller/
+    type: annotation
+
+user_controllers:
+    resource: ../../src/Api/User/Controller/
+    type: annotation
+
+post_controllers:
+    resource: ../../src/Api/Post/Controller/
     type: annotation

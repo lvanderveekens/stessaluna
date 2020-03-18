@@ -2,9 +2,8 @@
 
 namespace Stessaluna\Api\Post\Dto;
 
-use Stessaluna\Dto\Post\Comment\CommentDto;
-use Stessaluna\Dto\UserDto;
 use DateTimeInterface;
+use Stessaluna\Api\User\Dto\UserDto;
 
 abstract class PostDto
 {

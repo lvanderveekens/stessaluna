@@ -1,16 +1,16 @@
 <?php
 
-namespace Stessaluna\Application\Post\Controller;
+namespace Stessaluna\Api\Post\Controller;
 
 use Exception;
 use Psr\Log\LoggerInterface;
 use Stessaluna\Api\Post\Aorb\Dto\AorbChoiceDto;
 use Stessaluna\Api\Post\Aorb\Dto\AorbPostDto;
 use Stessaluna\Api\Post\Aorb\Dto\AorbSentenceDto;
+use Stessaluna\Api\Post\Comment\Dto\CommentConverter;
 use Stessaluna\Api\Post\Dto\PostDto;
 use Stessaluna\Api\User\Dto\UserConverter;
 use Stessaluna\Domain\Post\Aorb\Entity\AorbPost;
-use Stessaluna\Domain\Post\Comment\Dto\CommentConverter;
 use Stessaluna\Domain\Post\Entity\Post;
 use Stessaluna\Domain\Post\Service\PostCreator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
