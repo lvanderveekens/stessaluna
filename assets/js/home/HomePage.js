@@ -16,7 +16,7 @@ const HomePage = () => {
 
   return (
     <Row>
-      <Col ref={refCallback} md={6} lg={4} className="mb-4">
+      <Col ref={refCallback} md={6} lg={5} className="mb-4">
         <div className="position-sticky" style={{ top: top }}>
           <NewPost />
         </div>

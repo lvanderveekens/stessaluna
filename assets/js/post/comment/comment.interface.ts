@@ -1,8 +1,10 @@
 import User from "../../user/user.interface";
 
-export interface Comment {
+interface Comment {
     id: number
     createdAt: string
     text: string
     user: User
 }
+
+export default Comment;

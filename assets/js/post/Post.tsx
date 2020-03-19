@@ -10,6 +10,7 @@ import * as linkify from 'linkifyjs';
 import ThreeDotsMenu from '../menu/ThreeDotsMenu';
 import YouTubeVideo from './video/YouTubeVideo';
 import User from '../user/user.interface';
+import AorbContent from './aorb/AorbContent';
 
 interface Props {
   id: number
@@ -19,10 +20,11 @@ interface Props {
   image?: string
   onDelete: () => void
   comments: any[]
-  user?: User
+  user?: User,
 };
 
-const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, comments, onDelete, user }) => {
+// TODO: this component should be a wrapper for the more specific posts
+const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, comments, onDelete, user, children }) => {
 
   const [showComments, setShowComments] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -65,9 +67,12 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
             )}
           </div>
         </div>
-        <div className={styles.text}><Linkify>{text}</Linkify></div>
+
+        {children}
+
+        {/* <div className={styles.text}><Linkify>{text}</Linkify></div>
         {image && (<img className={styles.image} src={image} />)}
-        {youtubeVideoId && (<YouTubeVideo id={youtubeVideoId} />)}
+        {youtubeVideoId && (<YouTubeVideo id={youtubeVideoId} />)} */}
       </div>
       <div className={styles.activity}>
         {comments && comments.length > 0 && (

@@ -1,16 +1,16 @@
 import React, { Fragment, useEffect, FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
 import Post from '../post/Post';
 import { connect } from 'react-redux';
 import { fetchPosts, deletePost } from '../post/actions';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import { Spinner } from 'react-bootstrap';
+import AorbContent from '../post/aorb/AorbContent';
+import PostInterface from '../post/post.interface';
+
 
 interface Props {
   loading: boolean
-  posts: any[]
+  posts: PostInterface[]
   fetchPosts: () => void
   deletePost: (id: number) => void
 };
@@ -36,12 +36,15 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
                 key={post.id}
                 id={post.id}
                 author={post.user}
-                text={post.text}
-                image={post.image}
+                // text={post.text}
+                // image={post.image}
                 timestamp={moment(post.createdAt).fromNow()}
                 onDelete={() => deletePost(post.id)}
                 comments={post.comments}
-              />)
+              >
+                {post.type == 'aorb' && (<AorbContent sentences={post.sentences} />)}
+              </Post>
+            )
         )}
     </Fragment>
   );

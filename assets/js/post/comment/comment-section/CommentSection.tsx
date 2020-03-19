@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { addComment, deleteComment }  from '../../actions';
 import NewCommentForm from '../new-comment/NewCommentForm';
 import styles from './CommentSection.scss?module';
-import { Comment as CommentModel} from '../comment.interface';
+import CommentInterface from '../comment.interface';
 import Comment from '../Comment';
 import moment from 'moment';
 
 interface Props {
   postId: number
-  comments: CommentModel[]
+  comments: CommentInterface[]
   addComment: (postId: number, text: string) => void
   deleteComment: (postId: number, commentId: number) => void
   user: any
