@@ -28,6 +28,8 @@
             resize: none;
             padding: 0 0.2rem;
 
+            font-size: inherit;
+
             &:focus {
                 box-shadow: none;
                 border-color: #ced4da;

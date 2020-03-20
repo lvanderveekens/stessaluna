@@ -25,7 +25,6 @@ interface Props {
   user?: User,
 };
 
-// TODO: this component should be a wrapper for the more specific posts
 const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, comments, onDelete, user, children }) => {
 
   const [showComments, setShowComments] = useState(false);

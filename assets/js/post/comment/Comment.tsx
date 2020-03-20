@@ -1,12 +1,10 @@
 import React, { FunctionComponent, useState } from 'react';
 import styles from './Comment.scss?module';
-import ThreeDotsMenu from '../../menu/ThreeDotsMenu';
 import User from '../../user/user.interface';
 import { Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import CustomToggle from '../../dropdown/CustomToggle';
-
 
 interface Props {
   author: User
@@ -18,22 +16,17 @@ interface Props {
 
 const Comment: FunctionComponent<Props> = ({ author, timestamp, text, user, onDelete }) => {
 
-  const [hovering, setHovering] = useState(false);
-
   return (
     <div className={styles.comment}>
       <div className={styles.avatar}>
         <img src={author.avatar} />
       </div>
-      <div
-        className={styles.content}
-        onMouseEnter={() => setHovering(true)}
-        onMouseLeave={() => setHovering(false)}
-      >
+      <div className={styles.content}>
         <div className="d-flex">
           <div className="mr-3">
             <span className={styles.author}>{author.username}</span>
             <span className={styles.text}>{text}</span>
+            <div className={styles.timestamp}>{timestamp}</div>
           </div>
           {user.id == author.id && (
             <div className={styles.threeDotsMenu}>
@@ -50,7 +43,6 @@ const Comment: FunctionComponent<Props> = ({ author, timestamp, text, user, onDe
             </div>
           )}
         </div>
-        <div className={styles.timestamp}>{timestamp}</div>
       </div>
     </div>
   );
