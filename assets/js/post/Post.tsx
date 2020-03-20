@@ -7,10 +7,12 @@ import { addComment } from './actions';
 import CommentSection from './comment/comment-section/CommentSection';
 import Linkify from 'linkifyjs/react';
 import * as linkify from 'linkifyjs';
-import ThreeDotsMenu from '../menu/ThreeDotsMenu';
 import YouTubeVideo from './video/YouTubeVideo';
 import User from '../user/user.interface';
 import AorbContent from './aorb/AorbContent';
+import { Dropdown } from 'react-bootstrap';
+import CustomToggle from '../dropdown/CustomToggle';
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
   id: number
@@ -27,7 +29,6 @@ interface Props {
 const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, comments, onDelete, user, children }) => {
 
   const [showComments, setShowComments] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleComments = () => {
     setShowComments(!showComments);
@@ -61,9 +62,18 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
               <span className={styles.timestamp}>{timestamp}</span>
             </div>
             {user && user.id == author.id && (
-              <ThreeDotsMenu open={menuOpen} setOpen={setMenuOpen}>
-                <div onClick={onDelete}>Delete post</div>
-              </ThreeDotsMenu>
+              <div className={styles.threeDotsMenu}>
+                <Dropdown>
+                  <Dropdown.Toggle as={CustomToggle} id="something">
+                    <span className={styles.iconWrapper}>
+                      <FontAwesomeIcon className={styles.icon} icon={faEllipsisV} />
+                    </span>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item onClick={onDelete}>Delete</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
             )}
           </div>
         </div>

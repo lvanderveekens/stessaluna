@@ -1,10 +1,10 @@
 <?php
 
-namespace Stessaluna\Post\Comment\Controller;
+namespace Stessaluna\Api\Post\Comment\Controller;
 
 use DateTime;
 use Psr\Log\LoggerInterface;
-use Stessaluna\Domain\Post\Comment\Dto\CommentConverter;
+use Stessaluna\Api\Post\Comment\Dto\CommentConverter;
 use Stessaluna\Domain\Post\Comment\Entity\Comment;
 use Stessaluna\Domain\Post\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

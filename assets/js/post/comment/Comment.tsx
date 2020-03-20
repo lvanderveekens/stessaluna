@@ -2,6 +2,10 @@ import React, { FunctionComponent, useState } from 'react';
 import styles from './Comment.scss?module';
 import ThreeDotsMenu from '../../menu/ThreeDotsMenu';
 import User from '../../user/user.interface';
+import { Dropdown } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import CustomToggle from '../../dropdown/CustomToggle';
 
 
 interface Props {
@@ -15,9 +19,6 @@ interface Props {
 const Comment: FunctionComponent<Props> = ({ author, timestamp, text, user, onDelete }) => {
 
   const [hovering, setHovering] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const showMenu = hovering || menuOpen
 
   return (
     <div className={styles.comment}>
@@ -35,9 +36,18 @@ const Comment: FunctionComponent<Props> = ({ author, timestamp, text, user, onDe
             <span className={styles.text}>{text}</span>
           </div>
           {user.id == author.id && (
-            <ThreeDotsMenu hidden={!showMenu} open={menuOpen} setOpen={setMenuOpen}>
-              <div onClick={onDelete}>Delete comment</div>
-            </ThreeDotsMenu>
+            <div className={styles.threeDotsMenu}>
+              <Dropdown>
+                <Dropdown.Toggle as={CustomToggle} id="something">
+                  <span className={styles.iconWrapper}>
+                    <FontAwesomeIcon className={styles.icon} icon={faEllipsisV} />
+                  </span>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={onDelete}>Delete</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
           )}
         </div>
         <div className={styles.timestamp}>{timestamp}</div>

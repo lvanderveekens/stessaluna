@@ -4,6 +4,15 @@
     border-radius: 0.25rem;
     margin-bottom: 0.7rem;
 
+    .threeDotsMenu {
+        margin-left: auto;
+
+        .iconWrapper {
+            cursor: pointer;
+            padding: 0 0.2rem;
+        }
+    }
+
     .content {
         padding: 1rem;
 

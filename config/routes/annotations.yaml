@@ -2,14 +2,18 @@ default_controller:
     resource: ../../src/Api/Controller/
     type: annotation
 
-security_controllers:
+security_controller:
     resource: ../../src/Api/Security/Controller/
     type: annotation
 
-user_controllers:
+user_controller:
     resource: ../../src/Api/User/Controller/
     type: annotation
 
-post_controllers:
+post_controller:
     resource: ../../src/Api/Post/Controller/
+    type: annotation
+
+comment_controller:
+    resource: ../../src/Api/Post/Comment/Controller/
     type: annotation

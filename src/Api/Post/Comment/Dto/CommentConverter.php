@@ -3,7 +3,6 @@
 namespace Stessaluna\Api\Post\Comment\Dto;
 
 use Stessaluna\Api\User\Dto\UserConverter;
-use Stessaluna\Dto\Post\Comment\CommentDto;
 use Psr\Log\LoggerInterface;
 use Stessaluna\Domain\Post\Comment\Entity\Comment;
 

@@ -4,6 +4,15 @@
     display: flex;
     margin-top: 0.5rem;
 
+    .threeDotsMenu {
+        margin-left: auto;
+
+        .iconWrapper {
+            cursor: pointer;
+            padding: 0 0.2rem;
+        }
+    }
+
     .avatar {
         margin-right: 0.7rem;
 
