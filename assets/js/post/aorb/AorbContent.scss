@@ -1,27 +1,30 @@
-.choiceA {
+.choiceA,
+.choiceB {
     display: inline-block;
-    color: green;
-    border: 1px solid green;
-    // background-color: #e0ffe0;
-
-    border-bottom-left-radius: 0.5rem;
-    border-top-left-radius: 0.5rem;
+    color: #a9c5de;
+    border: 1px solid #a9c5de;
 
     padding: 0 0.3rem;
+
+    .label {
+        padding-right: 0.3rem;
+    }
+}
+
+.choiceA {
+    border-bottom-left-radius: 0.5rem;
+    border-top-left-radius: 0.5rem;
 }
 
 .choiceB {
-    display: inline-block;
-    color: red;
-    border: 1px solid red;
-    // background-color: #ffe5e5;
-
     border-bottom-right-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
-
-    padding: 0 0.3rem;
 }
 
-.choiceLabel {
-    padding-right: 0.3rem;
+.sentence {
+    padding-bottom: 0.5rem;
+
+    .index {
+        font-family: sans-serif;
+    }
 }

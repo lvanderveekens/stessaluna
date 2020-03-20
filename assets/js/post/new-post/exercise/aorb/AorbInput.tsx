@@ -72,11 +72,11 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
         onClick={() => console.log("CLICKED")}
       >
         <span className={styles.a}>
-          <span className={styles.aLabel}>A)</span>
+          <span className={styles.aLabel}>A</span>
           <span className={styles.aContent}>{element.a}</span>
         </span>
         <span className={styles.b}>
-          <span className={styles.bLabel}>B)</span>
+          <span className={styles.bLabel}>B</span>
           <span className={styles.bContent}>{element.b}</span>
         </span>
         {children}
@@ -161,7 +161,7 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
         {!value.choice && (
           <div className={styles.insertAorb}>
             <div className={styles.aInputGroup}>
-              <label htmlFor="a">A)</label>
+              <label htmlFor="a">A</label>
               <input
                 name="a"
                 type="text"
@@ -170,7 +170,7 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
               />
             </div>
             <div className={styles.bInputGroup}>
-              <label htmlFor="b">B)</label>
+              <label htmlFor="b">B</label>
               <input
                 name="b"
                 type="text"

@@ -9,12 +9,11 @@ import User from '../user/user.interface';
 import CustomToggle from '../dropdown/CustomToggle';
 
 interface Props {
-  loggedIn: boolean
   user?: User
   logOut: () => void
 }
 
-const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
+const NavBar: FunctionComponent<Props> = ({ user, logOut }) => {
 
   const handleProfileClick = () => {
     history.push('/profile');
@@ -29,8 +28,8 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
     <Navbar className={styles.nav} bg="dark" variant="dark" sticky="top">
       <Container className={styles.container}>
         <Navbar.Brand className={styles.brand}><Link to="/">Stessaluna</Link></Navbar.Brand>
-        {loggedIn
-          ? (user && (
+        {user
+          ? (
             <Dropdown className={styles.dropDown}>
               <Dropdown.Toggle as={CustomToggle} id="something">
                 <div className={styles.accountWrapper}>
@@ -46,9 +45,8 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
               </Dropdown.Menu>
             </Dropdown>
           )
-          ) : (
-            <Link to="/login">Login</Link>
-          )}
+          : <Link className={styles.loginLink} to="/login">Login</Link>
+        }
       </Container>
     </Navbar>
   );
