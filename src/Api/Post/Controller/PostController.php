@@ -89,14 +89,15 @@ class PostController extends AbstractController
             throw new AccessDeniedHttpException("Only the author can delete this post");
         }
 
-        if ($post->getImageFilename()) {
-            try {
-                $imagesDir = $this->getParameter('images_directory');
-                unlink($imagesDir . '/' . $post->getImageFilename());
-            } catch (Exception $e) {
-                $this->logger->error($e);
-            }
-        }
+        // TODO: reenable when fixing text posts
+        // if ($post->getImageFilename()) {
+        //     try {
+        //         $imagesDir = $this->getParameter('images_directory');
+        //         unlink($imagesDir . '/' . $post->getImageFilename());
+        //     } catch (Exception $e) {
+        //         $this->logger->error($e);
+        //     }
+        // }
 
         $em->remove($post);
         $em->flush();
