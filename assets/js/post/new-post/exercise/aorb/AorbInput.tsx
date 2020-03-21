@@ -6,6 +6,7 @@ import { createEditor, Transforms } from 'slate';
 import { Node } from 'slate';
 import { Button } from 'react-bootstrap';
 
+// TODO: is this the right place for this interface?
 export interface AorbInputValue {
   textBefore: string
   choice?: { a: string, b: string } 

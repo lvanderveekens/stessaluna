@@ -12,7 +12,7 @@ interface AbstractPost {
     comments: Comment[]
 }
 
-// TODO: move to own classes
+// TODO: move to own files?
 export interface AorbPost extends AbstractPost {
     type: 'aorb'
     sentences: AorbSentence[]

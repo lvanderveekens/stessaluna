@@ -6,53 +6,58 @@ import AorbInput, { AorbInputValue } from './AorbInput';
 import { Button } from 'react-bootstrap';
 import { createPost } from '../../../actions';
 import axios from '../../../../http/client';
+import { connect } from 'react-redux';
+import { NewAorbPostRequest } from '../../new-post-request.interface';
+import NewPost from '../../NewPost';
 
 interface Props {
   onClose: () => void
+  createPost: (post: NewAorbPostRequest) => Promise<void>
 }
 
-const NewAorbExercise: FC<Props> = ({ onClose }) => {
+const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
 
-  const [sentences, setSentences] = useState([
+  const [inputValues, setInputValues] = useState([
     { id: 1, value: { textBefore: "" } }
   ] as { id: number, value: AorbInputValue }[]);
 
   const addSentence = () => {
-    const nextId = sentences.length ? (sentences[sentences.length - 1].id + 1) : 1
-    const newSentence = { id: nextId, value: { textBefore: "" } };
-    setSentences([...sentences, newSentence]);
+    const nextId = inputValues.length ? (inputValues[inputValues.length - 1].id + 1) : 1
+    const newInputValue = { id: nextId, value: { textBefore: "" } };
+    setInputValues([...inputValues, newInputValue]);
   }
 
   const deleteInput = (index: number) => () => {
-    const newSentences = [...sentences];
-    newSentences.splice(index, 1);
-    setSentences(newSentences)
+    const newInputValues = [...inputValues];
+    newInputValues.splice(index, 1);
+    setInputValues(newInputValues);
   }
 
   const onSubmit = () => {
-    console.log("Submitting");
+    const sentences = inputValues.map((s) => ({
+      textBefore: s.value.textBefore,
+      choice: { a: s.value.choice.a, b: s.value.choice.b },
+      textAfter: s.value.textAfter,
+    }));
 
-    const data = { type: 'aorb', sentences: sentences.map((s) => s.value) };
-    console.log(data);
-
-    axios.post('/api/posts', data)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(console.log);
+    createPost(new NewAorbPostRequest(sentences))
+      .then(() => {
+        const nextId = inputValues.length ? (inputValues[inputValues.length - 1].id + 1) : 1
+        setInputValues([{ id: nextId, value: { textBefore: "" } }]);
+      });
   };
 
   const handleChange = (index: number) => (change: AorbInputValue) => {
-    const newSentences = [...sentences];
-    newSentences[index].value = change;
-    setSentences(newSentences);
+    const newInputValues = [...inputValues];
+    newInputValues[index].value = change;
+    setInputValues(newInputValues);
   }
 
   const renderInputs = () => {
-    return sentences.map((sentence, i) => (
-      <div key={sentence.id} className={styles.inputRow}>
+    return inputValues.map((inputValue, i) => (
+      <div key={inputValue.id} className={styles.inputRow}>
         <div className={styles.inputIndex}>{i + 1}.</div>
-        <AorbInput value={sentence.value} onChange={handleChange(i)} />
+        <AorbInput value={inputValue.value} onChange={handleChange(i)} />
         <div className={styles.deleteInput} onClick={deleteInput(i)}>
           <FontAwesomeIcon icon={faTimes} />
         </div>
@@ -81,4 +86,8 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
   );
 };
 
-export default NewAorbExercise;
+const actionCreators = {
+  createPost,
+};
+
+export default connect(null, actionCreators)(NewAorbExercise);

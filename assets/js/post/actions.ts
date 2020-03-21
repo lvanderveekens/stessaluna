@@ -1,5 +1,7 @@
 import ActionTypes from "./actionTypes";
 import axios from '../http/client';
+import { AorbSentence } from "./post.interface";
+import { NewPostRequest } from "./new-post/new-post-request.interface";
 
 export const fetchPosts = () => {
   return dispatch => {
@@ -22,13 +24,9 @@ export const fetchPosts = () => {
   function failure() { return { type: ActionTypes.FETCH_POSTS_FAILURE }; };
 };
 
-export const createPost = (text, image) => {
+export const createPost = (post: NewPostRequest) => {
   return dispatch => {
-    const formData = new FormData();
-    formData.append('text', text);
-    formData.append('image', image);
-
-    return axios.post('/api/posts', formData)
+    return axios.post('/api/posts', post)
       .then(res => {
         console.log(res.data);
         dispatch(success(res.data));
