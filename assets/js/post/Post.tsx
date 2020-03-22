@@ -3,7 +3,7 @@ import styles from './Post.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
 import { connect } from 'react-redux';
-import { addComment } from './actions';
+import { addComment } from '../store/post/actions';
 import CommentSection from './comment/comment-section/CommentSection';
 import Linkify from 'linkifyjs/react';
 import * as linkify from 'linkifyjs';

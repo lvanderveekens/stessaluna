@@ -8,7 +8,7 @@ import { Button, Form, Spinner } from 'react-bootstrap';
 import styles from './NewTextPost.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
-import { createPost } from '../../actions';
+import { createPost } from '../../../store/post/actions';
 
 const schema = yup.object({
   text: yup.string(),

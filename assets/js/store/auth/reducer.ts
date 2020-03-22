@@ -1,4 +1,5 @@
-import ActionTypes from '../user/actionTypes';
+import ActionTypes from './actionTypes';
+import { AuthState } from './state.interface';
 
 const loggedIn = localStorage.getItem('logged-in') == 'true';
 
@@ -8,7 +9,7 @@ const initialState = {
   loading: false,
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state: AuthState = initialState, action) => {
   switch (action.type) {
     case ActionTypes.LOGIN_SUCCESS:
       return {
@@ -19,18 +20,18 @@ const authReducer = (state = initialState, action) => {
       return {
         loggedIn: false,
       };
-    case ActionTypes.FETCH_CURRENT_USER_BEGIN:
+    case ActionTypes.FETCH_USER_PENDING:
       return {
         ...state,
         loading: true
       };
-    case ActionTypes.FETCH_CURRENT_USER_SUCCESS:
+    case ActionTypes.FETCH_USER_SUCCESS:
       return {
         ...state,
         user: action.payload.user,
         loading: false
       };
-    case ActionTypes.FETCH_CURRENT_USER_FAILED:
+    case ActionTypes.FETCH_USER_ERROR:
       return {
         ...state,
         loading: false

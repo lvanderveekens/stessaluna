@@ -2,7 +2,7 @@ import React, { Fragment, useState, FunctionComponent } from 'react';
 import LoginForm from './LoginForm';
 import { Row, Col, Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { logIn } from '../user/actions';
+import { logIn } from '../store/auth/actions';
 import NavBar from '../nav/NavBar';
 import styles from './LoginPage.scss?module';
 import { Link } from 'react-router-dom';

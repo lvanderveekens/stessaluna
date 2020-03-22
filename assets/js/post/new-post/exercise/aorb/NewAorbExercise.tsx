@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 import AorbInput, { AorbInputValue } from './AorbInput';
 import { Button } from 'react-bootstrap';
-import { createPost } from '../../../actions';
+import { createPost } from '../../../../store/post/actions';
 import axios from '../../../../http/client';
 import { connect } from 'react-redux';
 import { NewAorbPostRequest } from '../../new-post-request.interface';

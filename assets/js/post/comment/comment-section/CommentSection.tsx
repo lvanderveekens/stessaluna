@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
-import { addComment, deleteComment }  from '../../actions';
+import { addComment, deleteComment }  from '../../../store/post/actions';
 import NewCommentForm from '../new-comment/NewCommentForm';
 import styles from './CommentSection.scss?module';
 import CommentInterface from '../comment.interface';

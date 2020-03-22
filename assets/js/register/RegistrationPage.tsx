@@ -2,7 +2,7 @@ import React from 'react';
 import {  Row, Col } from 'react-bootstrap';
 import RegistrationForm from './RegistrationForm';
 import { connect } from 'react-redux';
-import { register } from '../user/actions';
+import { register } from '../store/auth/actions';
 
 interface Props {
   register: (username: string, password: string) => void

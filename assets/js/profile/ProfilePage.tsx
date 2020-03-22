@@ -3,7 +3,7 @@ import { Row, Col, Button } from 'react-bootstrap';
 import User from '../user/user.interface';
 import { connect } from 'react-redux';
 import styles from './ProfilePage.scss?module';
-import { updateCurrentUser } from '../user/actions';
+import { updateCurrentUser } from '../store/auth/actions';
 import { Formik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faTimes } from '@fortawesome/free-solid-svg-icons';

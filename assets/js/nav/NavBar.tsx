@@ -3,30 +3,30 @@ import { Navbar, Container, Spinner, Nav } from "react-bootstrap";
 import styles from './NavBar.scss?module';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logOut } from '../user/actions';
+import { logOut } from '../store/auth/actions';
 import User from '../user/user.interface';
 import { useMediaQuery } from 'react-responsive'
+import { State } from '../store';
 
 interface Props {
   loggedIn: boolean
   user?: User
+  loading: boolean
   logOut: () => void
 }
 
-const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
+const NavBar: FunctionComponent<Props> = ({ loggedIn, user, loading, logOut }) => {
 
   const isMobile = useMediaQuery({ maxWidth: 480 });
-  const isLoadingUser = loggedIn && !user;
   const [expanded, setExpanded] = useState(false);
 
   const renderMenu = () => {
-    if (!loggedIn) {
-      return <Link className={styles.link} to="/login">Login</Link>;
-    }
-    if (isLoadingUser) {
+    if (loading) {
       return <span style={{ padding: '0 0.5rem' }}> <Spinner animation="border" variant="warning" size="sm" /> </span> 
     }
-
+    if (!loggedIn || !user) {
+      return <Link className={styles.link} to="/login">Login</Link>;
+    }
     return isMobile ? renderMobileMenu() : renderDesktopMenu();
   }
 
@@ -82,9 +82,10 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: State) => ({
   loggedIn: state.auth.loggedIn,
   user: state.auth.user,
+  loading: state.auth.loading,
 });
 
 const actionCreators = {

@@ -1,13 +1,14 @@
 import ActionTypes from './actionTypes';
+import { PostState } from './state.interface';
 
 const initialState = {
   loading: false,
   items: []
 };
 
-const postReducer = (state = initialState, action) => {
+const postReducer = (state: PostState = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.FETCH_POSTS_BEGIN:
+    case ActionTypes.FETCH_POSTS_PENDING:
       return {
         ...state,
         loading: true
@@ -18,7 +19,7 @@ const postReducer = (state = initialState, action) => {
         loading: false,
         items: action.payload.posts
       };
-    case ActionTypes.FETCH_POSTS_FAILURE:
+    case ActionTypes.FETCH_POSTS_ERROR:
       return {
         ...state,
         loading: false

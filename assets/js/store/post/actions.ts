@@ -1,27 +1,24 @@
 import ActionTypes from "./actionTypes";
-import axios from '../http/client';
-import { AorbSentence } from "./post.interface";
-import { NewPostRequest } from "./new-post/new-post-request.interface";
+import axios from '../../http/client';
+import { NewPostRequest } from "../../post/new-post/new-post-request.interface";
 
 export const fetchPosts = () => {
   return dispatch => {
-    dispatch(begin());
+    dispatch(pending());
 
     axios.get('/api/posts')
       .then(res => {
         dispatch(success(res.data));
       })
-      .catch((error) => {
-        dispatch(failure());
-        console.log(error);
+      .catch((e) => {
+        dispatch(error());
+        console.log(e);
       });
   };
 
-  function begin() { return { type: ActionTypes.FETCH_POSTS_BEGIN, }; };
-
+  function pending() { return { type: ActionTypes.FETCH_POSTS_PENDING, }; };
   function success(posts) { return { type: ActionTypes.FETCH_POSTS_SUCCESS, payload: { posts } }; };
-
-  function failure() { return { type: ActionTypes.FETCH_POSTS_FAILURE }; };
+  function error() { return { type: ActionTypes.FETCH_POSTS_ERROR }; };
 };
 
 export const createPost = (post: NewPostRequest) => {

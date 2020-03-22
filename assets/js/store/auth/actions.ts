@@ -1,11 +1,11 @@
 import ActionTypes from "./actionTypes";
-import axios from '../http/client';
+import axios from '../../http/client';
 
 export const logIn = (username, password) => {
   return dispatch => {
     return axios.post('/api/token', { username, password })
       .then(res => {
-        dispatch(fetchCurrentUser());
+        dispatch(fetchUser());
         dispatch(success());
       })
       .catch((error) => {
@@ -44,17 +44,22 @@ export const register = (username, password) => {
   function success() { return { type: ActionTypes.REGISTER_SUCCESS }; };
 };
 
-export const fetchCurrentUser = () => {
+export const fetchUser = () => {
   return dispatch => {
+    dispatch(pending());
     axios.get('/api/users/me')
       .then(res => {
         dispatch(success(res.data));
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((e) => {
+        dispatch(error());
+        console.log(e);
       });
   };
-  function success(user) { return { type: ActionTypes.FETCH_CURRENT_USER_SUCCESS, payload: { user } }; };
+
+  function pending() { return { type: ActionTypes.FETCH_USER_PENDING }; };
+  function success(user) { return { type: ActionTypes.FETCH_USER_SUCCESS, payload: { user } }; };
+  function error() { return { type: ActionTypes.FETCH_USER_ERROR }; };
 };
 
 export const updateCurrentUser = (formData) => {

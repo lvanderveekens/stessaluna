@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, FunctionComponent } from 'react';
 import Post from '../post/Post';
 import { connect } from 'react-redux';
-import { fetchPosts, deletePost } from '../post/actions';
+import { fetchPosts, deletePost } from '../store/post/actions';
 import moment from 'moment';
 import { Spinner } from 'react-bootstrap';
 import AorbContent from '../post/aorb/AorbContent';
