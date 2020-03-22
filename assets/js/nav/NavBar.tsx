@@ -1,10 +1,9 @@
-import React, { FunctionComponent } from 'react';
-import { Navbar, Container, Dropdown, Spinner, Nav, NavDropdown } from "react-bootstrap";
+import React, { FunctionComponent, useState } from 'react';
+import { Navbar, Container, Spinner, Nav } from "react-bootstrap";
 import styles from './NavBar.scss?module';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logOut } from '../user/actions';
-import history from '../history/history';
 import User from '../user/user.interface';
 import { useMediaQuery } from 'react-responsive'
 
@@ -18,6 +17,7 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
 
   const isMobile = useMediaQuery({ maxWidth: 480 });
   const isLoadingUser = loggedIn && !user;
+  const [expanded, setExpanded] = useState(false);
 
   const renderMenu = () => {
     if (!loggedIn) {
@@ -41,9 +41,9 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
           </div>
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link href="/profile">Profile</Nav.Link>
-            <Nav.Link href="/login" onClick={() => logOut()}>Logout</Nav.Link>
+          <Nav className="mr-auto" onSelect={() => setExpanded(false)}>
+            <Link className={styles.link} to="/profile" onClick={() => setExpanded(false)}>Profile</Link>
+            <Link className={styles.link} to="/login" onClick={() => { setExpanded(false); logOut(); }}>Logout</Link>
           </Nav>
         </Navbar.Collapse>
       </>
@@ -66,7 +66,14 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
   }
   
   return (
-    <Navbar className={styles.nav} bg="dark" variant="dark" sticky="top" expand="lg" collapseOnSelect={true}>
+    <Navbar className={styles.nav}
+      bg="dark"
+      variant="dark"
+      sticky="top"
+      expand="lg"
+      expanded={expanded}
+      onToggle={(expanded) => setExpanded(expanded)}
+    >
       <Container className={styles.container}>
         <Navbar.Brand className={styles.brand}><Link to="/">Stessaluna</Link></Navbar.Brand>
         {renderMenu()}
