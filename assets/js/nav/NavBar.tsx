@@ -20,41 +20,32 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
   const isLoadingUser = loggedIn && !user;
 
   const renderMenu = () => {
-    if (isMobile) {
-      return renderMobileMenu();
-    } else {
-      return renderDesktopMenu();
+    if (!loggedIn) {
+      return <Link className={styles.link} to="/login">Login</Link>;
     }
+    if (isLoadingUser) {
+      return <span style={{ padding: '0 0.5rem' }}> <Spinner animation="border" variant="warning" size="sm" /> </span> 
+    }
+
+    return isMobile ? renderMobileMenu() : renderDesktopMenu();
   }
 
   const renderMobileMenu = () => {
     return (
       <>
-        {!loggedIn && (
-          <Link className={styles.link} to="/login">Login</Link>
-        )}
-        {isLoadingUser && (
-          <span style={{ padding: '.25rem .75rem' }}>
-            <Spinner animation="border" variant="warning" size="sm" />
-          </span>
-        )}
-        {user && (
-          <>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ border: 'unset', padding: 'unset' }}>
-              <div className={styles.accountWrapperSmall}>
-                <div className={styles.avatar}>
-                  <img src={user.avatar} />
-                </div>
-              </div>
-            </Navbar.Toggle>
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="mr-auto">
-                <Nav.Link href="/profile">Profile</Nav.Link>
-                <Nav.Link href="/login" onClick={() => logOut()}>Logout</Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
-          </>
-        )}
+        <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ border: 'unset', padding: 'unset' }}>
+          <div className={styles.accountWrapperSmall}>
+            <div className={styles.avatar}>
+              <img src={user.avatar} />
+            </div>
+          </div>
+        </Navbar.Toggle>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="/profile">Profile</Nav.Link>
+            <Nav.Link href="/login" onClick={() => logOut()}>Logout</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
       </>
     );
   };
@@ -62,24 +53,14 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, logOut }) => {
   const renderDesktopMenu = () => {
     return (
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        {!loggedIn && (
-          <Link className={styles.link} to="/login">Login</Link>
-        )}
-        {isLoadingUser && (
-          <Spinner animation="border" variant="warning" size="sm" />
-        )}
-        {user && (
-          <>
-            <div className={styles.accountWrapperLarge}>
-              <div className={styles.avatar}>
-                <img src={user.avatar} />
-              </div>
-              <span className={styles.userText}>{user.username}</span>
-            </div>
-            <Link className={styles.link} to="/profile">Profile</Link>
-            <Link className={styles.link} to="/login" onClick={() => logOut()}>Logout</Link>
-          </>
-        )}
+        <div className={styles.accountWrapperLarge}>
+          <div className={styles.avatar}>
+            <img src={user.avatar} />
+          </div>
+          <span className={styles.userText}>{user.username}</span>
+        </div>
+        <Link className={styles.link} to="/profile">Profile</Link>
+        <Link className={styles.link} to="/login" onClick={() => logOut()}>Logout</Link>
       </div>
     );
   }
