@@ -26,7 +26,7 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
   const [aInput, setAInput] = useState('');
   const [bInput, setBInput] = useState('');
 
-  const renderElement = useCallback(props => <Element {...props} />, [value.choice && value.choice.correct])
+  const renderElement = props => <Element {...props} />;
 
   const withAorb = editor => {
     const { isInline, isVoid } = editor;
@@ -57,7 +57,6 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
   }
 
   const Element = props => {
-    console.log("Render Element")
     const { attributes, children, element } = props
     switch (element.type) {
       case 'aorb':
@@ -78,8 +77,14 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
   }
 
   const AorbElement = ({ attributes, children, element }) => {
-    const aClassName = cx('a', { 'correctChoice': (value.choice && value.choice.correct === 'a') });
-    const bClassName = cx('b', { 'correctChoice': (value.choice && value.choice.correct === 'b') });
+    const aClassName = cx('a', {
+      'correct': (value.choice && value.choice.correct === 'a'),
+      'incorrect': (value.choice && value.choice.correct === 'b')
+    });
+    const bClassName = cx('b', {
+      'correct': (value.choice && value.choice.correct === 'b'),
+      'incorrect': (value.choice && value.choice.correct === 'a')
+    });
 
     return (
       <span
@@ -88,12 +93,12 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
         contentEditable={false}
       >
         <span className={aClassName} onClick={handleClickOnA}>
-          <span className={styles.aLabel}>A</span>
-          <span className={styles.aContent}>{element.a}</span>
+          <span className={styles.label}>A</span>
+          <span className={styles.content}>{element.a}</span>
         </span>
         <span className={bClassName} onClick={handleClickOnB}>
-          <span className={styles.bLabel}>B</span>
-          <span className={styles.bContent}>{element.b}</span>
+          <span className={styles.label}>B</span>
+          <span className={styles.content}>{element.b}</span>
         </span>
         {children}
       </span>
@@ -119,12 +124,8 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
   const [editorValue, setEditorValue] = useState(createInitialValue());
 
   const handleEditorChange = (change: Node[]) => {
-    console.log("handleEditorChange");
-    console.log(change);
     // only update state on actual change to avoid focus issues when switching between inputs
     if (JSON.stringify(editorValue) !== JSON.stringify(change)) {
-      console.log("CHANGED!");
-
       setEditorValue(change);
 
       const elements = change[0].children;
@@ -202,7 +203,7 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
           </div>
         )}
         {value.choice && !value.choice.correct && (
-          <span>Click on A or B to mark it as correct.</span>
+          <span><i>Click on A or B to mark it as correct.</i></span>
         )}
       </div>
     </div>

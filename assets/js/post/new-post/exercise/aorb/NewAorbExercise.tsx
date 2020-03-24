@@ -24,16 +24,22 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
   const addSentence = () => {
     const nextId = inputValues.length ? (inputValues[inputValues.length - 1].id + 1) : 1
     const newInputValue = { id: nextId, value: { textBefore: "" } };
-    setInputValues([...inputValues, newInputValue]);
+    const newInputValues = [...inputValues, newInputValue]
+    console.log("setInputValue() - addSentence");
+    console.log(newInputValues);
+    setInputValues(newInputValues);
   }
 
   const deleteInput = (index: number) => () => {
     const newInputValues = [...inputValues];
     newInputValues.splice(index, 1);
+    console.log("setInputValue() - deleteInput");
+    console.log(newInputValues);
     setInputValues(newInputValues);
   }
 
   const onSubmit = () => {
+    // TODO: validate or disable create button until everything's all and well
     const sentences = inputValues.map((s) => ({
       textBefore: s.value.textBefore,
       choice: { a: s.value.choice.a, b: s.value.choice.b },
@@ -48,8 +54,13 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
   };
 
   const handleChange = (index: number) => (change: AorbInputValue) => {
+    console.log("HANDLE CHANGE");
+    console.log(change);
+    console.log(inputValues);
     const newInputValues = [...inputValues];
     newInputValues[index].value = change;
+    console.log("setInputValue() - handleChange");
+    console.log(newInputValues);
     setInputValues(newInputValues);
   }
 
@@ -69,7 +80,7 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
     <div className={styles.newAorbExercise}>
       <div className={styles.wrapper}>
         <div className={styles.header}>
-          <span>A or B exercise</span>
+          <span>Exercise: A or B</span>
           <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={onClose} />
         </div>
         <div className={styles.sentences}>

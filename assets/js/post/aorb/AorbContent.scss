@@ -1,13 +1,19 @@
+@import '../../../css/colors';
+
 .choiceA,
 .choiceB {
     display: inline-block;
-    color: #a9c5de;
-    border: 1px solid #a9c5de;
+    color: $stessaluna-aorb-default;
+    border: 1px solid $stessaluna-aorb-default;
 
     padding: 0 0.3rem;
 
     .label {
         padding-right: 0.3rem;
+    }
+
+    .text {
+        color: $stessaluna-aorb-default-text;
     }
 }
 
