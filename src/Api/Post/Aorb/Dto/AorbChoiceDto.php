@@ -8,10 +8,13 @@ class AorbChoiceDto
 
     private $b;
 
-    public function __construct(string $a, string $b)
+    private $correct;
+
+    public function __construct(string $a, string $b, string $correct)
     {
         $this->a = $a;
         $this->b = $b;
+        $this->correct = $correct;
     }
 
     public function getA(): string
@@ -22,5 +25,10 @@ class AorbChoiceDto
     public function getB(): string
     {
         return $this->b;
+    }
+
+    public function getCorrect(): string
+    {
+        return $this->correct;
     }
 }

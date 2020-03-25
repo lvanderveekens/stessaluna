@@ -32,6 +32,7 @@ export interface AorbSentence {
 export interface AorbChoice {
     a: string
     b: string
+    correct: 'a' | 'b'
 }
 
 export default Post;

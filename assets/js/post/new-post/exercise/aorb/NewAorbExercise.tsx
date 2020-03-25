@@ -5,10 +5,9 @@ import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 import AorbInput, { AorbInputValue } from './AorbInput';
 import { Button } from 'react-bootstrap';
 import { createPost } from '../../../../store/post/actions';
-import axios from '../../../../http/client';
 import { connect } from 'react-redux';
 import { NewAorbPostRequest } from '../../new-post-request.interface';
-import NewPost from '../../NewPost';
+import { AorbSentence } from '../../../post.interface';
 
 interface Props {
   onClose: () => void
@@ -42,9 +41,9 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
     // TODO: validate or disable create button until everything's all and well
     const sentences = inputValues.map((s) => ({
       textBefore: s.value.textBefore,
-      choice: { a: s.value.choice.a, b: s.value.choice.b },
+      choice: { a: s.value.choice.a, b: s.value.choice.b, correct: s.value.choice.correct },
       textAfter: s.value.textAfter,
-    }));
+    } as AorbSentence));
 
     createPost(new NewAorbPostRequest(sentences))
       .then(() => {

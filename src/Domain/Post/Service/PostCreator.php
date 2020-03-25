@@ -8,6 +8,7 @@ use Stessaluna\Domain\User\Entity\User;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Stessaluna\Domain\Post\Aorb\Entity\AorbChoice;
 
 class PostCreator
 {
@@ -15,7 +16,7 @@ class PostCreator
 
     private $em;
 
-    // TODO: Use repository instead!
+    // TODO: Use repository interface instead of entity manager?
     public function __construct(LoggerInterface $logger, EntityManagerInterface $em)
     {
         $this->logger = $logger;
@@ -31,8 +32,13 @@ class PostCreator
         foreach ($sentences as $s) {
             $sentence = new AorbSentence();
             $sentence->setTextBefore($s['textBefore']);
-            $sentence->setChoiceA($s['choice']['a']);
-            $sentence->setChoiceB($s['choice']['b']);
+
+            $choice = new AorbChoice();
+            $choice->setA($s['choice']['a']);
+            $choice->setB($s['choice']['b']);
+            $choice->setCorrect($s['choice']['correct']);
+            $sentence->setChoice($choice);
+
             $sentence->setTextAfter($s['textAfter']);
 
             $post->addSentence($sentence);

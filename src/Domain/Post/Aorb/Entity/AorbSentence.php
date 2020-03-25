@@ -21,15 +21,10 @@ class AorbSentence
      */
     private $textBefore;
 
-    /**
-     * @ORM\Column(type="string", length=255)
+    /** 
+     * @ORM\Embedded(class = "AorbChoice") 
      */
-    private $choiceA;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $choiceB;
+    private $choice;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -59,26 +54,14 @@ class AorbSentence
         return $this;
     }
 
-    public function getChoiceA(): ?string
+    public function getChoice(): ?AorbChoice
     {
-        return $this->choiceA;
+        return $this->choice;
     }
 
-    public function setChoiceA(string $choiceA): self
+    public function setChoice(AorbChoice $choice): self
     {
-        $this->choiceA = $choiceA;
-
-        return $this;
-    }
-
-    public function getChoiceB(): ?string
-    {
-        return $this->choiceB;
-    }
-
-    public function setChoiceB(string $choiceB): self
-    {
-        $this->choiceB = $choiceB;
+        $this->choice = $choice;
 
         return $this;
     }

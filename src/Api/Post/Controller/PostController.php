@@ -65,6 +65,7 @@ class PostController extends AbstractController
      */
     public function createPost(Request $request): JsonResponse
     {
+        // TODO: parse request object instead of separate parameters?
         $type = $request->get('type');
         switch ($type) {
             case 'aorb':
@@ -111,7 +112,7 @@ class PostController extends AbstractController
             $dto = new AorbPostDto();
 
             $sentences = array_map(function ($s) {
-                $choice = new AorbChoiceDto($s->getChoiceA(), $s->getChoiceB());
+                $choice = new AorbChoiceDto($s->getChoice()->getA(), $s->getChoice()->getB(), $s->getChoice()->getCorrect());
                 return new AorbSentenceDto($s->getTextBefore(), $choice, $s->getTextAfter());
             }, $post->getSentences()->toArray());
 
