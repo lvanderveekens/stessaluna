@@ -203,7 +203,7 @@ const AorbInput: FC<Props> = ({ value, onChange }) => {
           </div>
         )}
         {value.choice && !value.choice.correct && (
-          <span><i>Click on A or B to mark it as correct.</i></span>
+          <span className={styles.markAsCorrectHint}>Click on A or B to mark it as correct.</span>
         )}
       </div>
     </div>

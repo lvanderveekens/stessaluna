@@ -4,16 +4,18 @@
 .choiceB {
     display: inline-block;
     color: $stessaluna-aorb-default;
+    background: $stessaluna-aorb-default-bg;
     border: 1px solid $stessaluna-aorb-default;
 
-    padding: 0 0.3rem;
+    // padding: 0 0.3rem;
 
     .label {
-        padding-right: 0.3rem;
+        padding: 0 0.4rem;
     }
 
     .text {
         color: $stessaluna-aorb-default-text;
+        padding-right: 0.4rem;
     }
 }
 

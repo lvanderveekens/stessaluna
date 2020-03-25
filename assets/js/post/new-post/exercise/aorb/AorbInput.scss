@@ -24,28 +24,29 @@
         .b {
             display: inline-block;
             border: 1px solid $stessaluna-aorb-default;
+            background: $stessaluna-aorb-default-bg;
 
             &.correct {
                 border: 1px solid $stessaluna-aorb-correct;
+                background: $stessaluna-aorb-correct-bg;
 
-                .label,
-                .content {
+                .label {
                     color: $stessaluna-aorb-correct;
                 }
             }
 
             &.incorrect {
                 border: 1px solid $stessaluna-aorb-incorrect;
+                background: $stessaluna-aorb-incorrect-bg;
 
-                .label,
-                .content {
+                .label {
                     color: $stessaluna-aorb-incorrect;
                 }
             }
 
             .label {
                 color: $stessaluna-aorb-default;
-                padding: 0 0.3rem;
+                padding: 0 0.4rem;
             }
     
             .content {
@@ -89,7 +90,6 @@
                 width: 100%;
                 border: none;
     
-                background-color: inherit;
                 margin-left: 0.3rem;
                 margin-right: 0.3rem;
                 text-overflow: ellipsis;
@@ -100,10 +100,16 @@
         .bInputGroup {
             color: $stessaluna-aorb-default;
             border: 1px solid $stessaluna-aorb-default;
+            background: $stessaluna-aorb-default-bg;
 
             input {
                 padding: 0;
                 color: $stessaluna-aorb-default-text;
+                background: unset;
+
+                &:focus {
+                    outline: none;
+                }
             }
         }
     
@@ -130,5 +136,9 @@
             // overriding the element styles
             vertical-align: unset !important;
         }
+    }
+    .markAsCorrectHint {
+        font-style: italic;
+        font-size: 0.85rem;
     }
 }
