@@ -2,12 +2,13 @@ import React, { FC, useState } from 'react'
 import styles from './NewAorbExercise.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
-import AorbInput, { AorbInputValue } from './AorbInput';
+import AorbInput from './AorbInput';
 import { Button } from 'react-bootstrap';
 import { createPost } from '../../../../store/post/actions';
 import { connect } from 'react-redux';
 import { NewAorbPostRequest } from '../../new-post-request.interface';
 import { AorbSentence } from '../../../post.interface';
+import { AorbInputValue } from './aorb-input.interface';
 
 interface Props {
   onClose: () => void
@@ -43,7 +44,7 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
       textBefore: s.value.textBefore,
       choice: { a: s.value.choice.a, b: s.value.choice.b, correct: s.value.choice.correct },
       textAfter: s.value.textAfter,
-    } as AorbSentence));
+    } as AorbInputValue));
 
     createPost(new NewAorbPostRequest(sentences))
       .then(() => {

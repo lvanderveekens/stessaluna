@@ -3,21 +3,22 @@
 namespace Stessaluna\Api\Post\Dto;
 
 use DateTimeInterface;
+use Stessaluna\Api\Post\Comment\Dto\CommentDto;
 use Stessaluna\Api\User\Dto\UserDto;
 
 abstract class PostDto
 {
-    protected $id;
+    protected int $id;
 
-    protected $type;
+    protected string $type;
 
-    protected $createdAt;
+    protected DateTimeInterface $createdAt;
 
-    protected $user;
+    protected UserDto $user;
 
-    protected $avatar;
+    protected string $avatar;
 
-    protected $comments;
+    protected array $comments;
 
     public function __construct(string $type)
     {

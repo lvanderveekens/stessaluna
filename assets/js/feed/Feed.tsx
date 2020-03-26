@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { fetchPosts, deletePost } from '../store/post/actions';
 import moment from 'moment';
 import { Spinner } from 'react-bootstrap';
-import AorbContent from '../post/aorb/AorbContent';
 import PostInterface from '../post/post.interface';
-
+import AorbExercise from '../exercise/aorb/AorbExercise';
 
 interface Props {
   loading: boolean
@@ -42,7 +41,7 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
                 onDelete={() => deletePost(post.id)}
                 comments={post.comments}
               >
-                {post.type == 'aorb' && (<AorbContent sentences={post.sentences} />)}
+                {post.type == 'exercise' && post.exercise.type == 'aorb' && (<AorbExercise sentences={post.exercise.sentences} />)}
               </Post>
             )
         )}

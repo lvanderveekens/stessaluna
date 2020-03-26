@@ -11,7 +11,7 @@ use Stessaluna\Domain\User\Entity\User;
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"text" = "Stessaluna\Domain\Post\Text\Entity\TextPost", "aorb" = "Stessaluna\Domain\Post\Aorb\Entity\AorbPost"})
+ * @ORM\DiscriminatorMap({"text" = "Stessaluna\Domain\Post\Text\Entity\TextPost", "exercise" = "Stessaluna\Domain\Post\Exercise\Entity\ExercisePost"})
  */
 abstract class Post
 {

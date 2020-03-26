@@ -2,15 +2,7 @@
 
 namespace Stessaluna\Api\Post\Controller;
 
-use Exception;
-use Psr\Log\LoggerInterface;
-use Stessaluna\Api\Post\Aorb\Dto\AorbChoiceDto;
-use Stessaluna\Api\Post\Aorb\Dto\AorbPostDto;
-use Stessaluna\Api\Post\Aorb\Dto\AorbSentenceDto;
-use Stessaluna\Api\Post\Comment\Dto\CommentConverter;
-use Stessaluna\Api\Post\Dto\PostDto;
-use Stessaluna\Api\User\Dto\UserConverter;
-use Stessaluna\Domain\Post\Aorb\Entity\AorbPost;
+use Stessaluna\Api\Post\Dto\PostDtoConverter;
 use Stessaluna\Domain\Post\Entity\Post;
 use Stessaluna\Domain\Post\Service\PostCreator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,24 +18,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PostController extends AbstractController
 {
-    private $logger;
+    private PostCreator $postCreator;
+    private PostDtoConverter $postDtoConverter;
 
-    private $commentConverter;
-
-    private $userConverter;
-
-    private $postCreator;
-
-    public function __construct(
-        LoggerInterface $logger,
-        UserConverter $userConverter,
-        CommentConverter $commentConverter,
-        PostCreator $postCreator
-    ) {
-        $this->logger = $logger;
-        $this->userConverter = $userConverter;
-        $this->commentConverter = $commentConverter;
+    public function __construct(PostCreator $postCreator, PostDtoConverter $postDtoConverter)
+    {
         $this->postCreator = $postCreator;
+        $this->postDtoConverter = $postDtoConverter;
     }
 
     /**
@@ -56,7 +37,7 @@ class PostController extends AbstractController
             ->findAll();
 
         return $this->json(array_map(function ($post) {
-            return $this->convertToDto($post);
+            return $this->postDtoConverter->toDto($post);
         }, $posts));
     }
 
@@ -74,7 +55,7 @@ class PostController extends AbstractController
             default:
                 throw new BadRequestHttpException("Received unknown post type: $type");
         }
-        return $this->json($this->convertToDto($post));
+        return $this->json($this->postDtoConverter->toDto($post));
     }
 
     /**
@@ -104,42 +85,5 @@ class PostController extends AbstractController
         $em->flush();
 
         return new Response('Deleted post with id ' . $id);
-    }
-
-    private function convertToDto(Post $post): PostDto
-    {
-        if ($post instanceof AorbPost) {
-            $dto = new AorbPostDto();
-
-            $sentences = array_map(function ($s) {
-                $choice = new AorbChoiceDto($s->getChoice()->getA(), $s->getChoice()->getB(), $s->getChoice()->getCorrect());
-                return new AorbSentenceDto($s->getTextBefore(), $choice, $s->getTextAfter());
-            }, $post->getSentences()->toArray());
-
-            $dto->setSentences($sentences);
-
-            $userDto = $this->userConverter->toDto($post->getUser());
-
-            $dto->setId($post->getId());
-            // $dto->setText($post->getText());
-            $dto->setUser($userDto);
-            $dto->setCreatedAt($post->getCreatedAt());
-
-            $comments = array_map(function ($comment) {
-                return $this->commentConverter->toDto($comment);
-            }, $post->getComments()->toArray());
-
-            $dto->setComments($comments);
-            $dto->setAvatar($userDto->getAvatar());
-        }
-
-
-        // $dto = new PostDto();
-
-        // if ($post->getImageFilename()) {
-            // TODO: move base upload path to a common place
-            // $dto->setImage('/uploads/images/' .  $post->getImageFilename());
-        // }
-        return $dto;
     }
 }

@@ -1,4 +1,4 @@
-import { AorbSentence } from "../post.interface";
+import { AorbInputValue } from "./exercise/aorb/aorb-input.interface";
 
 export interface NewPostRequest {
     type: string
@@ -6,9 +6,9 @@ export interface NewPostRequest {
 
 export class NewAorbPostRequest implements NewPostRequest {
     type = 'aorb'
-    sentences: AorbSentence[]
+    sentences: AorbInputValue[]
 
-    constructor(sentences: AorbSentence[]) {
+    constructor(sentences: AorbInputValue[]) {
         this.sentences = sentences;
     }
 }

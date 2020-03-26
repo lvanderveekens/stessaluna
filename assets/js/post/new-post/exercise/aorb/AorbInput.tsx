@@ -7,14 +7,8 @@ import { Node } from 'slate';
 import { Button } from 'react-bootstrap';
 import classNames from 'classnames/bind';
 import actionTypes from '../../../../store/auth/actionTypes';
+import { AorbInputValue } from './aorb-input.interface';
 let cx = classNames.bind(styles);
-
-// TODO: is this the right place for this interface?
-export interface AorbInputValue {
-  textBefore: string
-  choice?: { a: string, b: string, correct?: 'a' | 'b' } 
-  textAfter?: string 
-}
 
 interface Props {
   value: AorbInputValue

@@ -5,6 +5,7 @@ namespace Stessaluna\Api\Post\Comment\Controller;
 use DateTime;
 use Psr\Log\LoggerInterface;
 use Stessaluna\Api\Post\Comment\Dto\CommentConverter;
+use Stessaluna\Api\Post\Comment\Dto\CommentDtoConverter;
 use Stessaluna\Domain\Post\Comment\Entity\Comment;
 use Stessaluna\Domain\Post\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,12 +20,10 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CommentController extends AbstractController
 {
-    private $logger;
-    private $commentConverter;
+    private CommentDtoConverter $commentConverter;
 
-    public function __construct(LoggerInterface $logger, CommentConverter $commentConverter)
+    public function __construct(CommentDtoConverter $commentConverter)
     {
-        $this->logger = $logger;
         $this->commentConverter = $commentConverter;
     }
 

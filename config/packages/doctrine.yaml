@@ -16,18 +16,30 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Domain/Post/Entity'
                 prefix: 'Stessaluna\Domain\Post\Entity'
                 alias: Post
-            AorbPost:
-                is_bundle: false
-                type: annotation
-                dir: '%kernel.project_dir%/src/Domain/Post/Aorb/Entity'
-                prefix: 'Stessaluna\Domain\Post\Aorb\Entity'
-                alias: AorbPost
             TextPost:
                 is_bundle: false
                 type: annotation
                 dir: '%kernel.project_dir%/src/Domain/Post/Text/Entity'
                 prefix: 'Stessaluna\Domain\Post\Text\Entity'
                 alias: TextPost
+            ExercisePost:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Domain/Post/Exercise/Entity'
+                prefix: 'Stessaluna\Domain\Post\Exercise\Entity'
+                alias: ExercisePost
+            Exercise:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Domain/Exercise/Entity'
+                prefix: 'Stessaluna\Domain\Exercise\Entity'
+                alias: Exercise
+            AorbExercise:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Domain/Exercise/Aorb/Entity'
+                prefix: 'Stessaluna\Domain\Exercise\Aorb\Entity'
+                alias: AorbExercise
             User:
                 is_bundle: false
                 type: annotation

@@ -3,12 +3,15 @@
 namespace Stessaluna\Domain\Post\Service;
 
 use Stessaluna\Domain\Post\Aorb\Entity\AorbPost;
-use Stessaluna\Domain\Post\Aorb\Entity\AorbSentence;
+use Stessaluna\Domain\Exercise\Aorb\Entity\AorbSentence;
 use Stessaluna\Domain\User\Entity\User;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Stessaluna\Domain\Post\Aorb\Entity\AorbChoice;
+use Stessaluna\Domain\Exercise\Aorb\Entity\AorbChoice;
+use Stessaluna\Domain\Exercise\Aorb\Entity\AorbExercise;
+use Stessaluna\Domain\Exercise\Aorb\Entity\AorbSentence as EntityAorbSentence;
+use Stessaluna\Domain\Post\Exercise\Entity\ExercisePost;
 
 class PostCreator
 {
@@ -23,11 +26,13 @@ class PostCreator
         $this->em = $em;
     }
 
-    public function createAorbPost(array $sentences, User $user): AorbPost
+    public function createAorbPost(array $sentences, User $user): ExercisePost
     {
-        $post = new AorbPost();
+        $post = new ExercisePost();
         $post->setUser($user);
         $post->setCreatedAt(new DateTime('now'));
+
+        $exercise = new AorbExercise();
 
         foreach ($sentences as $s) {
             $sentence = new AorbSentence();
@@ -41,8 +46,10 @@ class PostCreator
 
             $sentence->setTextAfter($s['textAfter']);
 
-            $post->addSentence($sentence);
+            $exercise->addSentence($sentence);
         }
+
+        $post->setExercise($exercise);
 
         $this->em->persist($post);
         $this->em->flush();

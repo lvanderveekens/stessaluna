@@ -1,8 +1,7 @@
 import User from "../user/user.interface";
 import Comment from './comment/comment.interface';
 
-
-type Post = AorbPost | TextPost;
+type Post = ExercisePost | TextPost;
 
 interface AbstractPost {
     id: number
@@ -13,14 +12,21 @@ interface AbstractPost {
 }
 
 // TODO: move to own files?
-export interface AorbPost extends AbstractPost {
-    type: 'aorb'
-    sentences: AorbSentence[]
+export interface ExercisePost extends AbstractPost {
+    type: 'exercise'
+    exercise: Exercise
 }
 
 export interface TextPost extends AbstractPost {
     type: 'text'
     text: "aap"
+}
+
+type Exercise = AorbExercixe
+
+export interface AorbExercixe {
+    type: 'aorb'
+    sentences: AorbSentence[]
 }
 
 export interface AorbSentence {
@@ -32,7 +38,6 @@ export interface AorbSentence {
 export interface AorbChoice {
     a: string
     b: string
-    correct: 'a' | 'b'
 }
 
 export default Post;
