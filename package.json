@@ -12,7 +12,7 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "dev-server": "encore dev-server --host lucianos-mac.local --https --key ./certs/lucianos-mac.local+3-key.pem --cert ./certs/lucianos-mac.local+3.pem",
+        "dev-server": "encore dev-server --host 0.0.0.0 --public lucianos-mac.local:8080 --https --key ./certs/lucianos-mac.local+3-key.pem --cert ./certs/lucianos-mac.local+3.pem",
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
