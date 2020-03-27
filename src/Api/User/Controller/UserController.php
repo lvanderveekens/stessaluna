@@ -4,7 +4,7 @@ namespace Stessaluna\Api\User\Controller;
 
 use Exception;
 use Psr\Log\LoggerInterface;
-use Stessaluna\Api\User\Dto\UserConverter;
+use Stessaluna\Api\User\Dto\UserDtoConverter;
 use Stessaluna\Infrastructure\FileUpload\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,13 +16,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
-    private $userConverter;
-    private $logger;
+    private LoggerInterface $logger;
 
-    public function __construct(UserConverter $userConverter, LoggerInterface $logger)
+    private UserDtoConverter $userDtoConverter;
+
+    public function __construct(LoggerInterface $logger, UserDtoConverter $userDtoConverter)
     {
-        $this->userConverter = $userConverter;
         $this->logger = $logger;
+        $this->userDtoConverter = $userDtoConverter;
     }
 
     /**
@@ -30,7 +31,7 @@ class UserController extends AbstractController
      */
     public function getCurrentUser(): JsonResponse
     {
-        return $this->json($this->userConverter->toDto($this->getUser()));
+        return $this->json($this->userDtoConverter->toDto($this->getUser()));
     }
 
     /**
@@ -71,6 +72,6 @@ class UserController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
-        return $this->json($this->userConverter->toDto($user));
+        return $this->json($this->userDtoConverter->toDto($user));
     }
 }

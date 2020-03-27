@@ -2,20 +2,20 @@
 
 namespace Stessaluna\Api\Post\Comment\Dto;
 
-use Stessaluna\Api\User\Dto\UserConverter;
 use Psr\Log\LoggerInterface;
+use Stessaluna\Api\User\Dto\UserDtoConverter;
 use Stessaluna\Domain\Post\Comment\Entity\Comment;
 
 class CommentDtoConverter
 {
     private $logger;
 
-    private $userConverter;
+    private UserDtoConverter $userDtoConverter;
 
-    public function __construct(LoggerInterface $logger, UserConverter $userConverter)
+    public function __construct(LoggerInterface $logger, UserDtoConverter $userDtoConverter)
     {
         $this->logger = $logger;
-        $this->userConverter = $userConverter;
+        $this->userDtoConverter = $userDtoConverter;
     }
 
     public function toDto(Comment $comment): CommentDto
@@ -25,7 +25,7 @@ class CommentDtoConverter
         $dto->setCreatedAt($comment->getCreatedAt());
         $dto->setText($comment->getText());
         // TODO: move convertToDto to a common place
-        $dto->setUser($this->userConverter->toDto($comment->getUser()));
+        $dto->setUser($this->userDtoConverter->toDto($comment->getUser()));
         return $dto;
     }
 }

@@ -6,10 +6,11 @@ use Psr\Log\LoggerInterface;
 use Stessaluna\Domain\User\Entity\User;
 use Symfony\Component\Asset\Packages;
 
-class UserConverter
+class UserDtoConverter
 {
-    private $logger;
-    private $packages;
+    private LoggerInterface $logger;
+
+    private Packages $packages;
 
     public function __construct(LoggerInterface $logger, Packages $packages)
     {

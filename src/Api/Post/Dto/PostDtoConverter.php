@@ -6,8 +6,9 @@ use Psr\Log\LoggerInterface;
 use Stessaluna\Api\Exercise\Aorb\Dto\AorbChoiceDto;
 use Stessaluna\Api\Exercise\Aorb\Dto\AorbExerciseDto;
 use Stessaluna\Api\Exercise\Aorb\Dto\AorbSentenceDto;
+use Stessaluna\Api\Post\Comment\Dto\CommentDtoConverter;
 use Stessaluna\Api\Post\Exercise\Dto\ExercisePostDto;
-use Stessaluna\Api\User\Dto\UserConverter;
+use Stessaluna\Api\User\Dto\UserDtoConverter;
 use Stessaluna\Domain\Exercise\Aorb\Entity\AorbExercise;
 use Stessaluna\Domain\Post\Entity\Post;
 use Stessaluna\Domain\Post\Exercise\Entity\ExercisePost;
@@ -16,12 +17,15 @@ class PostDtoConverter
 {
     private LoggerInterface $logger;
 
-    private UserConverter $userConverter;
+    private UserDtoConverter $userDtoConverter;
+    
+    private CommentDtoConverter $commentDtoConverter;
 
-    public function __construct(LoggerInterface $logger, UserConverter $userConverter)
+    public function __construct(LoggerInterface $logger, UserDtoConverter $userDtoConverter, CommentDtoConverter $commentDtoConverter)
     {
         $this->logger = $logger;
-        $this->userConverter = $userConverter;
+        $this->userDtoConverter = $userDtoConverter;
+        $this->commentDtoConverter = $commentDtoConverter;
     }
 
     public function toDto(Post $post): PostDto
@@ -47,7 +51,7 @@ class PostDtoConverter
 
             $dto->setExercise($exerciseDto);
 
-            $userDto = $this->userConverter->toDto($post->getUser());
+            $userDto = $this->userDtoConverter->toDto($post->getUser());
 
             $dto->setId($post->getId());
             // $dto->setText($post->getText());
@@ -55,7 +59,7 @@ class PostDtoConverter
             $dto->setCreatedAt($post->getCreatedAt());
 
             $comments = array_map(function ($comment) {
-                return $this->commentConverter->toDto($comment);
+                return $this->commentDtoConverter->toDto($comment);
             }, $post->getComments()->toArray());
 
             $dto->setComments($comments);
