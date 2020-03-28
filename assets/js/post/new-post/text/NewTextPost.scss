@@ -2,8 +2,11 @@
 
     .inputBox {
         border: 1px solid #ced4da;
+
         border-radius: 0.5rem;
         margin-bottom: 1rem;
+
+        overflow: hidden;
 
         .textInput {
             border: none;

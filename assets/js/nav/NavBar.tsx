@@ -38,6 +38,7 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, loading, logOut }) =
             <div className={styles.avatar}>
               <img src={user.avatar} />
             </div>
+            <span className={styles.userText}>{user.username}</span>
           </div>
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
