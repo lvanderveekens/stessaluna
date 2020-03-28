@@ -1,0 +1,30 @@
+@import '../../../css/colors';
+
+.sentence {
+    .choiceA,
+    .choiceB {
+        display: inline-block;
+        color: $stessaluna-aorb-default;
+        background: $stessaluna-aorb-default-bg;
+        border: 1px solid $stessaluna-aorb-default;
+
+        .label {
+            padding: 0 0.4rem;
+        }
+
+        .text {
+            color: $stessaluna-aorb-default-text;
+            padding-right: 0.4rem;
+        }
+    }
+
+    .choiceA {
+        border-bottom-left-radius: 0.5rem;
+        border-top-left-radius: 0.5rem;
+    }
+    
+    .choiceB {
+        border-bottom-right-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+    }
+}

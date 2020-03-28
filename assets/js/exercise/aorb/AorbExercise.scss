@@ -1,36 +1,21 @@
-@import '../../../css/colors';
+.exercise {
 
-.choiceA,
-.choiceB {
-    display: inline-block;
-    color: $stessaluna-aorb-default;
-    background: $stessaluna-aorb-default-bg;
-    border: 1px solid $stessaluna-aorb-default;
-
-    .label {
-        padding: 0 0.4rem;
+    .header {
+        text-align: center;
+        margin-bottom: 0.8rem;
+        font-weight: bold;
+        font-size: larger;
     }
 
-    .text {
-        color: $stessaluna-aorb-default-text;
-        padding-right: 0.4rem;
-    }
-}
+    .sentenceWrapper {
 
-.choiceA {
-    border-bottom-left-radius: 0.5rem;
-    border-top-left-radius: 0.5rem;
-}
+        display: flex;
+        align-items: center;
+        justify-content: center;;
+        padding-bottom: 0.5rem;
 
-.choiceB {
-    border-bottom-right-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-}
-
-.sentence {
-    padding-bottom: 0.5rem;
-
-    .index {
-        font-family: sans-serif;
+        .index {
+            margin-right: 0.3rem;
+        }
     }
 }
