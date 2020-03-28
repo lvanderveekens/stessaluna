@@ -2,20 +2,26 @@
 
     .header {
         text-align: center;
-        margin-bottom: 0.8rem;
+        margin-bottom: 1rem;
         font-weight: bold;
         font-size: larger;
     }
 
-    .sentenceWrapper {
+    .sentences {
 
-        display: flex;
-        align-items: center;
-        justify-content: center;;
-        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
 
-        .index {
-            margin-right: 0.3rem;
+        .sentenceWrapper {
+
+            display: flex;
+            align-items: center;
+            justify-content: center;;
+            padding-bottom: 0.5rem;
+
+            .index {
+                margin-right: 0.3rem;
+                // min-width: 1rem;
+            }
         }
     }
 }

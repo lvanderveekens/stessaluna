@@ -26,6 +26,11 @@
             border: 1px solid $stessaluna-aorb-default;
             background: $stessaluna-aorb-default-bg;
 
+            // i hope this does not break anything in slatejs
+            user-select: none;
+
+            cursor: pointer;
+
             &.correct {
                 border: 1px solid $stessaluna-aorb-correct;
                 background: $stessaluna-aorb-correct-bg;
@@ -53,7 +58,6 @@
                 display: inline-block;
                 padding-right: 0.4rem;
                 color: $stessaluna-aorb-default-text;
-                cursor: text;
             }
         }
 

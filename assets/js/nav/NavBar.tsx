@@ -42,7 +42,7 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, loading, logOut }) =
           </div>
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto" onSelect={() => setExpanded(false)}>
+          <Nav className={styles.mobileNav} onSelect={() => setExpanded(false)}>
             <Link className={styles.link} to="/profile" onClick={() => setExpanded(false)}>Profile</Link>
             <Link className={styles.link} to="/login" onClick={() => { setExpanded(false); logOut(); }}>Logout</Link>
           </Nav>
