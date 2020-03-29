@@ -3,6 +3,7 @@
 namespace Stessaluna\Api\Exercise\Controller;
 
 use Psr\Log\LoggerInterface;
+use stdClass;
 use Stessaluna\Api\Exercise\Dto\ExerciseDtoConverter;
 use Stessaluna\Domain\Exercise\Aorb\Entity\AorbExercise;
 use Stessaluna\Domain\Exercise\Entity\Exercise;
@@ -39,25 +40,40 @@ class ExerciseController extends AbstractController
      */
     public function submitAnswer(int $id, Request $req): JsonResponse
     {
-        // $request = toSubmitAnswerRequest($req);
-
+        // TODO: move validation logic to domain
         $exercise = $this->exerciseRepository->findById($id);
         if ($exercise instanceof AorbExercise) {
-            // return $this->json($exercise->getSentences());
+            $request = toAorbAnswerDto($req);
+
+            $feedback = [];
+
+            $sentences = $exercise->getSentences()->toArray();
+            for ($i = 0; $i < count($sentences); $i++) {
+                $correct = $sentences[$i]->getChoice()->getCorrect();
+                $answer = $request->choices[$i];
+                if ($correct === $answer) {
+                    array_push($feedback, true);
+                } else {
+                    array_push($feedback, false);
+                }
+            }
+
+            return $this->json(array('feedback' => $feedback));
         }
 
         return $this->json($this->exerciseDtoConverter->toDto($exercise));
     }
 }
 
-function toSubmitAnswerRequest(Request $req): SubmitAnswerRequest
+function toAorbAnswerDto(Request $req): AorbAnswerDto
 {
-    $request = new SubmitAnswerRequest();
-    // $request->banaan = $req->get('banaan');
+    $request = new AorbAnswerDto();
+    $request->choices = $req->get('choices');
     return $request;
 }
 
-class SubmitAnswerRequest
+class AorbAnswerDto
 {
-    public int $type;
+    /** @var string[] an array containing 'a' and 'b' characters */
+    public array $choices;
 }

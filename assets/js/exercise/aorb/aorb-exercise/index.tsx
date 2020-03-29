@@ -10,14 +10,17 @@ interface Props {
 
 const AorbExerciseContainer: FunctionComponent<Props> = ({ id, sentences }) => { 
 
-    const [choices, setChoices] = useState(new Array(sentences.length).fill(null));
+    const [choices, setChoices] = useState(new Array(sentences.length).fill(null) as ('a' | 'b')[]);
 
     const handleChoice = (index: number) => (choice: 'a' | 'b') => {
         setChoices(choices.map((c, i) => i == index ? choice : c))
     };
 
     const handleSubmit = () => {
-        axios.post(`/api/exercises/${id}/answers`, {})
+        // TODO: only allow submitting after filling in everything
+        // TODO: use redux 
+        
+        axios.post(`/api/exercises/${id}/answers`, { choices })
             .then(res => {
                 console.log(res.data);
             })
