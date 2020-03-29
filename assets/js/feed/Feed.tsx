@@ -6,6 +6,9 @@ import moment from 'moment';
 import { Spinner } from 'react-bootstrap';
 import PostInterface from '../post/post.interface';
 import AorbExercise from '../exercise/aorb/AorbExercise';
+import AorbExerciseInterface from '../exercise/aorb/aorb-exercise.interface';
+import ExercisePostInterface from '../post/exercise/exercise-post.interface';
+import TextPostInterface from '../post/text/text-exercise.interface';
 
 interface Props {
   loading: boolean
@@ -19,6 +22,27 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
   useEffect(() => {
     fetchPosts();
   }, []);
+
+  const renderPostContent = (post: PostInterface) => {
+    switch(post.type) {
+      case 'text':
+        return renderTextPost(post as TextPostInterface);
+      case 'exercise':
+        return renderExercisePost(post as ExercisePostInterface);
+    }
+  }
+
+  const renderTextPost = (post: TextPostInterface) => {
+    return <p>text post</p>
+  }
+
+  const renderExercisePost = (post: ExercisePostInterface) => {
+    switch(post.exercise.type) {
+      case 'aorb':
+        const exercise = post.exercise as AorbExerciseInterface;
+        return <AorbExercise sentences={exercise.sentences} />
+    }
+  }
 
   return (
     <Fragment>
@@ -34,14 +58,14 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
               <Post
                 key={post.id}
                 id={post.id}
-                author={post.user}
+                author={post.author}
                 // text={post.text}
                 // image={post.image}
                 timestamp={moment(post.createdAt).fromNow()}
                 onDelete={() => deletePost(post.id)}
                 comments={post.comments}
               >
-                {post.type == 'exercise' && post.exercise.type == 'aorb' && (<AorbExercise sentences={post.exercise.sentences} />)}
+                {renderPostContent(post)}
               </Post>
             )
         )}

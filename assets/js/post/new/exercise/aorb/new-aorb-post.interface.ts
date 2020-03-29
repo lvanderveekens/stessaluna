@@ -1,8 +1,5 @@
-import { AorbInputValue } from "./exercise/aorb/aorb-input.interface";
-
-export interface NewPostRequest {
-    type: string
-}
+import { NewPostRequest } from "../../new-post.interface";
+import { AorbInputValue } from "./aorb-input.interface";
 
 export class NewAorbPostRequest implements NewPostRequest {
     type = 'aorb'

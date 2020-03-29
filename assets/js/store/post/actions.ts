@@ -1,6 +1,6 @@
 import ActionTypes from "./actionTypes";
 import axios from '../../http/client';
-import { NewPostRequest } from "../../post/new-post/new-post-request.interface";
+import { NewPostRequest } from "../../post/new/new-post.interface";
 
 export const fetchPosts = () => {
   return dispatch => {

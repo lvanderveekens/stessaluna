@@ -1,8 +1,9 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Feed from '../feed/Feed';
-import NewPost from '../post/new-post/NewPost';
+// import NewPost from '../post/new-post/NewPost';
 import { useState } from 'react';
+import NewPost from '../post/new/NewPost';
 
 const HomePage = () => {
 

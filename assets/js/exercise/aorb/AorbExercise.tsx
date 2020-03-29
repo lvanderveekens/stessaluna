@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useState } from 'react';
 import styles from './AorbExercise.scss?module';
-import { AorbSentence as AorbSentenceInterface } from '../../post/post.interface';
 import AorbSentence from './AorbSentence';
 import { Button } from 'react-bootstrap';
+import { AorbSentence as AorbSentenceInterface } from './aorb-exercise.interface';
 
 interface Props {
   sentences: AorbSentenceInterface[]

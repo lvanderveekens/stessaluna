@@ -6,9 +6,8 @@ import AorbInput from './AorbInput';
 import { Button } from 'react-bootstrap';
 import { createPost } from '../../../../store/post/actions';
 import { connect } from 'react-redux';
-import { NewAorbPostRequest } from '../../new-post-request.interface';
-import { AorbSentence } from '../../../post.interface';
 import { AorbInputValue } from './aorb-input.interface';
+import { NewAorbPostRequest } from './new-aorb-post.interface';
 
 interface Props {
   onClose: () => void

@@ -8,6 +8,8 @@ use Stessaluna\Domain\Post\Entity\Post;
 
 abstract class ExerciseDto
 {
+    public int $id;
+
     private string $type;
 
     public function __construct(string $type)
