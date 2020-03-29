@@ -1,6 +1,7 @@
 @import '../../../css/colors';
 
 .sentence {
+
     .choiceA,
     .choiceB {
         display: inline-block;
@@ -25,14 +26,29 @@
     .choiceA {
         border-bottom-left-radius: 0.5rem;
         border-top-left-radius: 0.5rem;
+
+        margin-top: 1px;
+        margin-bottom: 1px;
+        padding-right: 1px;
+        margin-left: 1px;
     }
     
     .choiceB {
         border-bottom-right-radius: 0.5rem;
         border-top-right-radius: 0.5rem;
+
+        margin-top: 1px;
+        margin-bottom: 1px;
+        margin-right: 1px;
+        padding-left: 1px;
     }
 
     .selected {
-        background: blue;
+        color: $stessaluna-aorb-selected;
+        border: 2px solid $stessaluna-aorb-selected;
+        background: $stessaluna-aorb-selected-bg;
+
+        margin: 0;
+        padding: 0;
     }
 }
