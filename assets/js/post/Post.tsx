@@ -9,7 +9,7 @@ import Linkify from 'linkifyjs/react';
 import * as linkify from 'linkifyjs';
 import YouTubeVideo from './video/YouTubeVideo';
 import User from '../user/user.interface';
-import AorbContent from '../exercise/aorb/AorbExercise';
+import AorbContent from '../exercise/aorb/aorb-exercise/AorbExercise';
 import { Dropdown } from 'react-bootstrap';
 import CustomToggle from '../dropdown/CustomToggle';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';

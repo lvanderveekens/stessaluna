@@ -5,7 +5,7 @@ import { fetchPosts, deletePost } from '../store/post/actions';
 import moment from 'moment';
 import { Spinner } from 'react-bootstrap';
 import PostInterface from '../post/post.interface';
-import AorbExercise from '../exercise/aorb/AorbExercise';
+import AorbExercise from '../exercise/aorb/aorb-exercise';
 import ExercisePostInterface from '../post/exercise/exercise-post.interface';
 import TextPostInterface from '../post/text/text-exercise.interface';
 
@@ -38,7 +38,7 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
   const renderExercise = (post: ExercisePostInterface) => {
     switch(post.exercise.type) {
       case 'aorb':
-        return <AorbExercise sentences={post.exercise.sentences} />
+        return <AorbExercise id={post.exercise.id} sentences={post.exercise.sentences} />
     }
   }
 

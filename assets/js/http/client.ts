@@ -2,7 +2,6 @@ import axios from 'axios';
 import history from '../history/history';
 import Cookies from 'js-cookie';
 
-
 axios.interceptors.request.use(
   (config) => {
     const csrfToken = Cookies.get('csrf_token');

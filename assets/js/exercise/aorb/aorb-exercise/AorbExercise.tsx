@@ -1,21 +1,17 @@
 import React, { FunctionComponent, useState } from 'react';
 import styles from './AorbExercise.scss?module';
-import AorbSentence from './AorbSentence';
+import AorbSentence from '../AorbSentence';
 import { Button } from 'react-bootstrap';
-import { AorbSentence as AorbSentenceInterface } from './aorb-exercise.interface';
+import { AorbSentence as AorbSentenceInterface } from '../aorb-exercise.interface';
 
 interface Props {
   sentences: AorbSentenceInterface[]
+  choices: ('a' | 'b')[]
+  onChoice: (index: number) => (choice: 'a' | 'b') => void
+  onSubmit: () => void
 };
 
-const AorbExercise: FunctionComponent<Props> = ({ sentences }) => {
-
-  // const [answers, setAnswers] = useState([]);
-  const [choices, setChoices] = useState(new Array(sentences.length).fill(null)); 
-
-  const handleChoice = (index: number) => (choice: 'a' | 'b') => {
-    setChoices(choices.map((c, i) => i == index ? choice : c))
-  };
+const AorbExercise: FunctionComponent<Props> = ({ sentences, choices, onChoice, onSubmit }) => {
 
   return (
     <div className={styles.exercise}>
@@ -28,13 +24,13 @@ const AorbExercise: FunctionComponent<Props> = ({ sentences }) => {
               textBefore={sentence.textBefore}
               choice={sentence.choice}
               textAfter={sentence.textAfter}
-              onChoice={handleChoice(i)}
+              onChoice={onChoice(i)}
               selected={choices[i]}
             />
           </div>
         ))}
       </div>
-      <div><Button className="btn btn-dark" type="submit">Check</Button></div>
+      <div><Button className="btn btn-dark" type="submit" onClick={onSubmit}>Check</Button></div>
     </div>
   );
 };
