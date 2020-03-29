@@ -17,3 +17,7 @@ post_controller:
 comment_controller:
     resource: ../../src/Api/Post/Comment/Controller/
     type: annotation
+
+exercise_controller:
+    resource: ../../src/Api/Exercise/Controller/
+    type: annotation

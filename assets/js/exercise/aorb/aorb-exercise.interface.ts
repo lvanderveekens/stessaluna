@@ -1,6 +1,6 @@
-import Exercise from "../exercise.interface";
+import { AbstractExercise } from "../exercise.interface";
 
-export interface AorbExercise extends Exercise {
+export interface AorbExercise extends AbstractExercise {
     type: 'aorb'
     sentences: AorbSentence[]
 }

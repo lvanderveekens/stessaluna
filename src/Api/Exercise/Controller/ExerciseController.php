@@ -23,8 +23,23 @@ class ExerciseController extends AbstractController
     /**
      * @Route("/{id}/answers", methods={"POST"})
      */
-    public function submitAnswers(Request $request): JsonResponse
+    public function submitAnswer(int $id, Request $req): JsonResponse
     {
+        $request = toSubmitAnswerRequest($req);
+        $this->logger->info(print_r($request, true));
 
+        return $this->json($request);
     }
+}
+
+function toSubmitAnswerRequest(Request $req): SubmitAnswerRequest
+{
+    $request = new SubmitAnswerRequest();
+    $request->banaan = $req->get('banaan');
+    return $request;
+}
+
+class SubmitAnswerRequest
+{
+    public int $banaan;
 }

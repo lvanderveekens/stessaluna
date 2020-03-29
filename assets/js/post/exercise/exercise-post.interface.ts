@@ -1,7 +1,7 @@
-import Post from "../post.interface";
+import { AbstractPost } from "../post.interface";
 import Exercise from "../../exercise/exercise.interface";
 
-export interface ExercisePost extends Post {
+export interface ExercisePost extends AbstractPost {
     type: 'exercise'
     exercise: Exercise
 }

@@ -1,7 +1,11 @@
 import User from "../user/user.interface";
 import Comment from './comment/comment.interface';
+import TextPost from "./text/text-exercise.interface";
+import ExercisePost from "./exercise/exercise-post.interface";
 
-interface Post {
+type Post = TextPost | ExercisePost;
+
+export interface AbstractPost {
     id: number
     type: string
     createdAt: Date

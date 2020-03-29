@@ -1,6 +1,6 @@
-import Post from "../post.interface";
+import { AbstractPost } from '../post.interface';
 
-export interface TextPost extends Post {
+export interface TextPost extends AbstractPost {
     type: 'text'
     text: string
 }

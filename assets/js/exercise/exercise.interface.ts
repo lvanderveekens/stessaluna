@@ -1,6 +1,8 @@
-// type Exercise = AorbExercixe
+import AorbExercise from "./aorb/aorb-exercise.interface";
 
-export interface Exercise {
+type Exercise = AorbExercise
+
+export interface AbstractExercise {
     id: number
     type: string
 }

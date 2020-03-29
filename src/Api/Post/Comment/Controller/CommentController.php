@@ -46,9 +46,6 @@ class CommentController extends AbstractController
      */
     public function addComment(int $postId, Request $request): JsonResponse
     {
-        // TODO: json decoding can become some sort of middleware in Symfony
-        $json = json_decode($request->getContent(), true);
-
         $user = $this->getUser();
 
         $em = $this->getDoctrine()->getManager();
@@ -58,7 +55,7 @@ class CommentController extends AbstractController
         $comment->setPost($post);
         $comment->setUser($user);
         $comment->setCreatedAt(new DateTime('now'));
-        $comment->setText($json['text']);
+        $comment->setText($request->get('text'));
 
         $em->persist($comment);
         $em->flush();
