@@ -4,5 +4,8 @@ namespace Stessaluna\Domain\Exercise\Answer;
 
 class AnswerValidator
 {
-    // TODO:
+    // TODO: route from here to exercise type specific validators
+
+
+
 }

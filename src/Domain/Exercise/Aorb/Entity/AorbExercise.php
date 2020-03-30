@@ -48,7 +48,7 @@ class AorbExercise extends Exercise
             $this->sentences->removeElement($sentence);
             // set the owning side to null (unless already changed)
             if ($sentence->getExercise() === $this) {
-                $sentence->setExercise($this);
+                $sentence->setExercise(null);
             }
         }
 

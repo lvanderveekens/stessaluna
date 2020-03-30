@@ -11,6 +11,7 @@ use Stessaluna\Domain\Exercise\Repository\ExerciseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -40,39 +41,55 @@ class ExerciseController extends AbstractController
      */
     public function submitAnswer(int $id, Request $req): JsonResponse
     {
-        // TODO: move validation logic to domain
         $exercise = $this->exerciseRepository->findById($id);
+
+        // TODO: move validation logic to domain
+        // TODO: check if answer type matches exercise
+
         if ($exercise instanceof AorbExercise) {
-            $request = toAorbAnswerDto($req);
-
-            $feedback = [];
-
-            $sentences = $exercise->getSentences()->toArray();
-            for ($i = 0; $i < count($sentences); $i++) {
-                $correct = $sentences[$i]->getChoice()->getCorrect();
-                $answer = $request->choices[$i];
-                if ($correct === $answer) {
-                    array_push($feedback, true);
-                } else {
-                    array_push($feedback, false);
-                }
+            $type = $req->get('type');
+            if ($type !== 'aorb') {
+                throw new BadRequestHttpException("Received unknown answer type: $type");
             }
 
-            return $this->json(array('feedback' => $feedback));
-        }
+            $answer = toAorbAnswer($req);
+            // TODO: store answer
 
+            $this->answerRepository->create($answer);
+
+            // TODO: this is checking whether the feedback is correct... move this elsewhere
+            // $feedback = [];
+            // $sentences = $exercise->getSentences()->toArray();
+            // for ($i = 0; $i < count($sentences); $i++) {
+            //     $correct = $sentences[$i]->getChoice()->getCorrect();
+            //     $answer = $answer->choices[$i];
+            //     if ($correct === $answer) {
+            //         array_push($feedback, true);
+            //     } else {
+            //         array_push($feedback, false);
+            //     }
+            // }
+
+            return $this->json(array('feedback' => 'aap'));
+        }
         return $this->json($this->exerciseDtoConverter->toDto($exercise));
     }
 }
 
-function toAorbAnswerDto(Request $req): AorbAnswerDto
+function toAorbAnswer(Request $req): AorbAnswer
 {
-    $request = new AorbAnswerDto();
+    $request = new AorbAnswer();
     $request->choices = $req->get('choices');
     return $request;
 }
 
-class AorbAnswerDto
+class SubmitAnswerDtoRequest
+{
+    public string $type;
+
+}
+
+class AorbAnswer
 {
     /** @var string[] an array containing 'a' and 'b' characters */
     public array $choices;
