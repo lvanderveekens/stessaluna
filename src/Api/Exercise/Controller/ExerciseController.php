@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Stessaluna\Api\Exercise\Controller;
 
+use Exception;
 use Psr\Log\LoggerInterface;
 use stdClass;
 use Stessaluna\Api\Exercise\Dto\ExerciseDtoConverter;
@@ -40,62 +43,53 @@ class ExerciseController extends AbstractController
     /**
      * @Route("/{id}/answers", methods={"POST"})
      */
-    public function submitAnswer(int $id, Request $request): JsonResponse
+    public function submitAnswer(int $id, Request $req): JsonResponse
     {
+        $request = toSubmitAnswerRequestDto($req);
         $exercise = $this->exerciseRepository->findById($id);
 
         // TODO: move validation logic to domain
         // TODO: check if answer type matches exercise
 
-        if ($exercise instanceof AorbExercise) {
-            $type = $request->get('type');
-            if ($type !== 'aorb') {
-                throw new BadRequestHttpException("Received unknown answer type: $type");
+        if ($request instanceof SubmitAorbAnswerRequestDto) {
+            if (!$exercise instanceof AorbExercise) {
+                throw new BadRequestHttpException("Request type does not match exercise");
             }
-
-            $choices = $request->get('choices');
 
             $answer = new Answer();
             $answer->setUser($this->getUser());
-            $answer->setChoices($choices);
+            $answer->setChoices($request->choices);
 
             $exercise->addAnswer($answer);
             $this->exerciseRepository->save($exercise);
-
-            // TODO: this is checking whether the feedback is correct... move this elsewhere
-            // $feedback = [];
-            // $sentences = $exercise->getSentences()->toArray();
-            // for ($i = 0; $i < count($sentences); $i++) {
-            //     $correct = $sentences[$i]->getChoice()->getCorrect();
-            //     $answer = $answer->choices[$i];
-            //     if ($correct === $answer) {
-            //         array_push($feedback, true);
-            //     } else {
-            //         array_push($feedback, false);
-            //     }
-            // }
-
             return $this->json(array('status' => 'ok'));
         }
+
         return $this->json($this->exerciseDtoConverter->toDto($exercise));
     }
 }
 
-// function toAorbAnswer(Request $req): AorbAnswer
-// {
-//     $request = new AorbAnswer();
-//     $request->choices = $req->get('choices');
-//     return $request;
-// }
+// TODO: test <?php declare(strict_types=1);
+function toSubmitAnswerRequestDto(Request $req): SubmitAnswerRequestDto
+{
+    $type = $req->get('type');
+    switch ($type) {
+        case 'aorb':
+            $request = new SubmitAorbAnswerRequestDto();
+            $request->choices = $req->get("choices");
+            break;
+        default:
+            throw new BadRequestHttpException("Received unknown answer type: $type");
+    }
+    return $request;
+}
 
-// class SubmitAnswerDtoRequest
-// {
-//     public string $type;
+interface SubmitAnswerRequestDto
+{
+}
 
-// }
-
-// class AorbAnswer
-// {
-//     /** @var string[] an array containing 'a' and 'b' characters */
-//     public array $choices;
-// }
+class SubmitAorbAnswerRequestDto
+{
+    /** @var string[] an array containing 'a' and 'b' characters */
+    public array $choices;
+}
