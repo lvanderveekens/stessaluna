@@ -19,6 +19,13 @@ class ExerciseDoctrineRepository extends ServiceEntityRepository implements Exer
         return $this->find($id);
     }
 
+    function save(Exercise $exercise): Exercise
+    {
+        $this->getEntityManager()->persist($exercise);
+        $this->getEntityManager()->flush();
+        return $exercise;
+    }
+
     // /**
     //  * @return Post[] Returns an array of Post objects
     //  */

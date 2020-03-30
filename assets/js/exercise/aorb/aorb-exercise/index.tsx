@@ -20,7 +20,7 @@ const AorbExerciseContainer: FunctionComponent<Props> = ({ id, sentences }) => {
         // TODO: only allow submitting after filling in everything
         // TODO: use redux 
         
-        axios.post(`/api/exercises/${id}/answers`, { choices })
+        axios.post(`/api/exercises/${id}/answers`, { type: 'aorb', choices })
             .then(res => {
                 console.log(res.data);
             })

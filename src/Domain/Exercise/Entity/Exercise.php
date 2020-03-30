@@ -20,7 +20,7 @@ abstract class Exercise
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private int $id;
+    private $id;
 
     /**
      * @ORM\OneToMany(
@@ -30,7 +30,7 @@ abstract class Exercise
      *     cascade={"persist"}
      * )
      */
-    private ArrayCollection $answers;
+    private Collection $answers;
 
     public function __construct()
     {
@@ -65,7 +65,8 @@ abstract class Exercise
             $this->answers->removeElement($answer);
             // set the owning side to null (unless already changed)
             if ($answer->getExercise() === $this) {
-                $answer->setExercise(null);
+                // TODO: check if answer is still removed when deleting an exercise
+                // $answer->setExercise(null);
             }
         }
 

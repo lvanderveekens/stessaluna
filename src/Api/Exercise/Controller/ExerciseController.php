@@ -5,6 +5,7 @@ namespace Stessaluna\Api\Exercise\Controller;
 use Psr\Log\LoggerInterface;
 use stdClass;
 use Stessaluna\Api\Exercise\Dto\ExerciseDtoConverter;
+use Stessaluna\Domain\Exercise\Answer\Entity\Answer;
 use Stessaluna\Domain\Exercise\Aorb\Entity\AorbExercise;
 use Stessaluna\Domain\Exercise\Entity\Exercise;
 use Stessaluna\Domain\Exercise\Repository\ExerciseRepository;
@@ -39,7 +40,7 @@ class ExerciseController extends AbstractController
     /**
      * @Route("/{id}/answers", methods={"POST"})
      */
-    public function submitAnswer(int $id, Request $req): JsonResponse
+    public function submitAnswer(int $id, Request $request): JsonResponse
     {
         $exercise = $this->exerciseRepository->findById($id);
 
@@ -47,15 +48,19 @@ class ExerciseController extends AbstractController
         // TODO: check if answer type matches exercise
 
         if ($exercise instanceof AorbExercise) {
-            $type = $req->get('type');
+            $type = $request->get('type');
             if ($type !== 'aorb') {
                 throw new BadRequestHttpException("Received unknown answer type: $type");
             }
 
-            $answer = toAorbAnswer($req);
-            // TODO: store answer
+            $choices = $request->get('choices');
 
-            $this->answerRepository->create($answer);
+            $answer = new Answer();
+            $answer->setUser($this->getUser());
+            $answer->setChoices($choices);
+
+            $exercise->addAnswer($answer);
+            $this->exerciseRepository->save($exercise);
 
             // TODO: this is checking whether the feedback is correct... move this elsewhere
             // $feedback = [];
@@ -70,27 +75,27 @@ class ExerciseController extends AbstractController
             //     }
             // }
 
-            return $this->json(array('feedback' => 'aap'));
+            return $this->json(array('status' => 'ok'));
         }
         return $this->json($this->exerciseDtoConverter->toDto($exercise));
     }
 }
 
-function toAorbAnswer(Request $req): AorbAnswer
-{
-    $request = new AorbAnswer();
-    $request->choices = $req->get('choices');
-    return $request;
-}
+// function toAorbAnswer(Request $req): AorbAnswer
+// {
+//     $request = new AorbAnswer();
+//     $request->choices = $req->get('choices');
+//     return $request;
+// }
 
-class SubmitAnswerDtoRequest
-{
-    public string $type;
+// class SubmitAnswerDtoRequest
+// {
+//     public string $type;
 
-}
+// }
 
-class AorbAnswer
-{
-    /** @var string[] an array containing 'a' and 'b' characters */
-    public array $choices;
-}
+// class AorbAnswer
+// {
+//     /** @var string[] an array containing 'a' and 'b' characters */
+//     public array $choices;
+// }
