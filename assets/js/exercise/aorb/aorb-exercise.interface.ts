@@ -14,6 +14,7 @@ export interface AorbSentence {
 export interface AorbChoice {
     a: string
     b: string
+    correct?: string
 }
 
 export default AorbExercise;

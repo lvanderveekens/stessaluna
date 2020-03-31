@@ -11,6 +11,7 @@ use Stessaluna\Api\Exercise\Aorb\Dto\AorbExerciseDto;
 use Stessaluna\Api\Exercise\Aorb\Dto\AorbSentenceDto;
 use Stessaluna\Domain\Exercise\Answer\Entity\Answer;
 use Stessaluna\Domain\Exercise\Aorb\Entity\AorbExercise;
+use Stessaluna\Domain\Exercise\Aorb\Entity\AorbSentence;
 use Stessaluna\Domain\Exercise\Entity\Exercise;
 use Stessaluna\Domain\User\Entity\User;
 
@@ -29,13 +30,27 @@ class ExerciseDtoConverter
     public function toDto(Exercise $exercise, User $user): ExerciseDto
     {
         $dto = null;
+
         if ($exercise instanceof AorbExercise) {
             $dto = new AorbExerciseDto();
 
-            $sentences = array_map(function ($s) {
+            $answersFromUser = array_filter($exercise->getAnswers()->toArray(), function (Answer $answer) use ($user) {
+                return $answer->getUser() == $user;
+            });
+
+            if (count($answersFromUser) > 0) {
+                $dto->answer = $this->answerDtoConverter->toDto($answersFromUser[0]);
+            }
+
+            $sentences = array_map(function (AorbSentence $s) use ($dto) {
                 $choice = new AorbChoiceDto();
                 $choice->a = $s->getChoice()->getA();
                 $choice->b = $s->getChoice()->getB();
+
+                if (isset($dto->answer)) {
+                    // already answered so return the correct values as well
+                    $choice->correct = $s->getChoice()->getCorrect();
+                }
 
                 $sentence = new AorbSentenceDto();
                 $sentence->textBefore = $s->getTextBefore();
@@ -49,13 +64,6 @@ class ExerciseDtoConverter
 
         }
 
-        $answersFromUser = array_filter($exercise->getAnswers()->toArray(), function (Answer $answer) use ($user) {
-            return $answer->getUser() == $user;
-        });
-
-        if (count($answersFromUser) > 0) {
-            $dto->answer = $this->answerDtoConverter->toDto($answersFromUser[0]);
-        }
 
         $dto->id = $exercise->getId();
         return $dto;

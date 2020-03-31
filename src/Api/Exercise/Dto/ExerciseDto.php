@@ -12,7 +12,7 @@ abstract class ExerciseDto
 
     private string $type;
 
-    public AnswerDto $answer;
+    public ?AnswerDto $answer = null;
 
     public function __construct(string $type)
     {

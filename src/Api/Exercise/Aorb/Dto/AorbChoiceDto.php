@@ -7,4 +7,6 @@ class AorbChoiceDto
     public string $a;
 
     public string $b;
+
+    public ?string $correct = null;
 }

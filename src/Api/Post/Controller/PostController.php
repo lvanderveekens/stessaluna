@@ -2,6 +2,7 @@
 
 namespace Stessaluna\Api\Post\Controller;
 
+use Psr\Log\LoggerInterface;
 use Stessaluna\Api\Post\Dto\PostDtoConverter;
 use Stessaluna\Domain\Post\Entity\Post;
 use Stessaluna\Domain\Post\Service\PostCreator;
@@ -18,13 +19,17 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PostController extends AbstractController
 {
+    private LoggerInterface $logger;
+
     private PostCreator $postCreator;
+
     private PostDtoConverter $postDtoConverter;
 
-    public function __construct(PostCreator $postCreator, PostDtoConverter $postDtoConverter)
+    public function __construct(PostCreator $postCreator, PostDtoConverter $postDtoConverter, LoggerInterface $logger)
     {
         $this->postCreator = $postCreator;
         $this->postDtoConverter = $postDtoConverter;
+        $this->logger = $logger;
     }
 
     /**
@@ -37,6 +42,8 @@ class PostController extends AbstractController
             ->findAll();
 
         return $this->json(array_map(function ($post) {
+            $aap = $this->postDtoConverter->toDto($post, $this->getUser());
+            $this->logger->warning(print_r($aap,true));
             return $this->postDtoConverter->toDto($post, $this->getUser());
         }, $posts));
     }
