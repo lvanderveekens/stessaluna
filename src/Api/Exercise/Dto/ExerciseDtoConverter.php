@@ -64,7 +64,6 @@ class ExerciseDtoConverter
 
         }
 
-
         $dto->id = $exercise->getId();
         return $dto;
     }

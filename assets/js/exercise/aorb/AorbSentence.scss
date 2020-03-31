@@ -51,4 +51,22 @@
         margin: 0;
         padding: 0;
     }
+
+    .correct {
+        color: $stessaluna-aorb-correct;
+        border: 2px solid $stessaluna-aorb-correct;
+        background: $stessaluna-aorb-correct-bg;
+
+        margin: 0;
+        padding: 0;
+    }
+
+    .incorrect {
+        color: $stessaluna-aorb-incorrect;
+        border: 2px solid $stessaluna-aorb-incorrect;
+        background: $stessaluna-aorb-incorrect-bg;
+
+        margin: 0;
+        padding: 0;
+    }
 }
