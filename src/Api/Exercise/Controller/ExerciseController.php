@@ -8,9 +8,9 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use stdClass;
 use Stessaluna\Api\Exercise\Dto\ExerciseDtoConverter;
+use Stessaluna\Domain\Exercise\Answer\Aorb\Entity\AorbAnswer;
 use Stessaluna\Domain\Exercise\Answer\Entity\Answer;
 use Stessaluna\Domain\Exercise\Aorb\Entity\AorbExercise;
-use Stessaluna\Domain\Exercise\Entity\Exercise;
 use Stessaluna\Domain\Exercise\Repository\ExerciseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -53,23 +53,21 @@ class ExerciseController extends AbstractController
 
         if ($request instanceof SubmitAorbAnswerRequestDto) {
             if (!$exercise instanceof AorbExercise) {
-                throw new BadRequestHttpException("Request type does not match exercise");
+                throw new BadRequestHttpException("Answer type does not match exercise");
             }
 
-            $answer = new Answer();
+            $answer = new AorbAnswer();
             $answer->setUser($this->getUser());
             $answer->setChoices($request->choices);
 
             $exercise->addAnswer($answer);
             $this->exerciseRepository->save($exercise);
-            return $this->json(array('status' => 'ok'));
         }
 
-        return $this->json($this->exerciseDtoConverter->toDto($exercise));
+        return $this->json($this->exerciseDtoConverter->toDto($exercise, $this->getUser()));
     }
 }
 
-// TODO: test <?php declare(strict_types=1);
 function toSubmitAnswerRequestDto(Request $req): SubmitAnswerRequestDto
 {
     $type = $req->get('type');
@@ -88,7 +86,7 @@ interface SubmitAnswerRequestDto
 {
 }
 
-class SubmitAorbAnswerRequestDto
+class SubmitAorbAnswerRequestDto implements SubmitAnswerRequestDto
 {
     /** @var string[] an array containing 'a' and 'b' characters */
     public array $choices;

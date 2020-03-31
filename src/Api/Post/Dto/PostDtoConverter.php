@@ -13,6 +13,7 @@ use Stessaluna\Api\User\Dto\UserDtoConverter;
 use Stessaluna\Domain\Exercise\Aorb\Entity\AorbExercise;
 use Stessaluna\Domain\Post\Entity\Post;
 use Stessaluna\Domain\Post\Exercise\Entity\ExercisePost;
+use Stessaluna\Domain\User\Entity\User;
 
 class PostDtoConverter
 {
@@ -37,14 +38,14 @@ class PostDtoConverter
         $this->exerciseDtoConverter = $exerciseDtoConverter;
     }
 
-    public function toDto(Post $post): PostDto
+    public function toDto(Post $post, User $user): PostDto
     {
         $dto = null;
         if ($post instanceof ExercisePost) {
 
             $dto = new ExercisePostDto();
             $dto->id = $post->getId();
-            $dto->exercise = $this->exerciseDtoConverter->toDto($post->getExercise());
+            $dto->exercise = $this->exerciseDtoConverter->toDto($post->getExercise(), $user);
             $dto->author = $this->userDtoConverter->toDto($post->getUser());
             $dto->createdAt = $post->getCreatedAt();
 

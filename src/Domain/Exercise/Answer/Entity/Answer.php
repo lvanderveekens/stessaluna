@@ -1,15 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Stessaluna\Domain\Exercise\Answer\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Stessaluna\Domain\Exercise\Answer\Aorb\Entity\AorbAnswer;
 use Stessaluna\Domain\Exercise\Entity\Exercise;
 use Stessaluna\Domain\User\Entity\User;
 
 /**
  * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({"aorb" = "Stessaluna\Domain\Exercise\Answer\Aorb\Entity\AorbAnswer"})
  */
-class Answer
+abstract class Answer
 {
     /**
      * @ORM\Id()
@@ -17,11 +23,6 @@ class Answer
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(name="choices", type="json_array")
-     */
-    private array $choices;
 
     /**
      * @ORM\ManyToOne(targetEntity="Stessaluna\Domain\User\Entity\User")
@@ -38,19 +39,6 @@ class Answer
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getChoices(): array 
-    {
-        return $this->choices;
-    }
-
-    public function setChoices(array $choices): self {
-        $this->choices = $choices;
-        return $this;
     }
 
     public function getUser(): User

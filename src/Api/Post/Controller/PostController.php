@@ -37,7 +37,7 @@ class PostController extends AbstractController
             ->findAll();
 
         return $this->json(array_map(function ($post) {
-            return $this->postDtoConverter->toDto($post);
+            return $this->postDtoConverter->toDto($post, $this->getUser());
         }, $posts));
     }
 

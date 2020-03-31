@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Stessaluna\Api\Exercise\Dto;
 
-use Doctrine\ORM\Mapping as ORM;
-use Stessaluna\Domain\Exercise\Aorb\Entity\AorbExercise;
-use Stessaluna\Domain\Post\Entity\Post;
+use Stessaluna\Api\Exercise\Answer\Dto\AnswerDto;
 
 abstract class ExerciseDto
 {
     public int $id;
 
     private string $type;
+
+    public AnswerDto $answer;
 
     public function __construct(string $type)
     {
@@ -21,4 +23,5 @@ abstract class ExerciseDto
     {
         return $this->type;
     }
+
 }
