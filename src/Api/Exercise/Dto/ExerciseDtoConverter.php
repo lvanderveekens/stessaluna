@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Stessaluna\Api\Exercise\Dto;
 
 use Psr\Log\LoggerInterface;
-use Stessaluna\Api\Exercise\Answer\Dto\AnswerDtoConverter;
 use Stessaluna\Api\Exercise\Aorb\Dto\AorbChoiceDto;
 use Stessaluna\Api\Exercise\Aorb\Dto\AorbExerciseDto;
 use Stessaluna\Api\Exercise\Aorb\Dto\AorbSentenceDto;
+use Stessaluna\Domain\Exercise\Answer\Aorb\Entity\AorbAnswer;
 use Stessaluna\Domain\Exercise\Answer\Entity\Answer;
 use Stessaluna\Domain\Exercise\Aorb\Entity\AorbExercise;
 use Stessaluna\Domain\Exercise\Aorb\Entity\AorbSentence;
@@ -19,12 +19,9 @@ class ExerciseDtoConverter
 {
     private LoggerInterface $logger;
 
-    private AnswerDtoConverter $answerDtoConverter;
-
-    public function __construct(LoggerInterface $logger, AnswerDtoConverter $answerDtoConverter)
+    public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
-        $this->answerDtoConverter = $answerDtoConverter;
     }
 
     public function toDto(Exercise $exercise, User $user): ExerciseDto
@@ -38,18 +35,21 @@ class ExerciseDtoConverter
                 return $answer->getUser() == $user;
             });
 
+            /** @var AorbAnswer */
+            $answer = null;
             if (count($answersFromUser) > 0) {
-                $dto->answer = $this->answerDtoConverter->toDto($answersFromUser[0]);
+                $answer = $answersFromUser[0];
             }
 
-            $sentences = array_map(function (AorbSentence $s) use ($dto) {
+            $sentences = $exercise->getSentences()->toArray();
+            $sentenceDtos = array_map(function (int $i, AorbSentence $s) use ($answer) {
                 $choice = new AorbChoiceDto();
                 $choice->a = $s->getChoice()->getA();
                 $choice->b = $s->getChoice()->getB();
 
-                if (isset($dto->answer)) {
-                    // already answered so return the correct values as well
+                if (isset($answer)) {
                     $choice->correct = $s->getChoice()->getCorrect();
+                    $choice->answer = $answer->getChoices()[$i];
                 }
 
                 $sentence = new AorbSentenceDto();
@@ -58,9 +58,9 @@ class ExerciseDtoConverter
                 $sentence->textAfter = $s->getTextAfter();
 
                 return $sentence;
-            }, $exercise->getSentences()->toArray());
+            }, array_keys($sentences), $sentences);
 
-            $dto->sentences = $sentences;
+            $dto->sentences = $sentenceDtos;
 
         }
 

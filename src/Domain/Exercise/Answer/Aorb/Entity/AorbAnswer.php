@@ -18,7 +18,7 @@ class AorbAnswer extends Answer
     private array $choices;
 
     /**
-     * @return string[]
+     * @return string[] an array containing 'a' and 'b' characters
      */
     public function getChoices(): array 
     {

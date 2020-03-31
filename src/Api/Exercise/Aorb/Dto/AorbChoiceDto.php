@@ -8,5 +8,9 @@ class AorbChoiceDto
 
     public string $b;
 
+    /** @var string either 'a' or 'b' */
     public ?string $correct = null;
+
+    /** @var string either 'a' or 'b' */
+    public ?string $answer = null;
 }
