@@ -9,9 +9,10 @@ interface Props {
   choices: ('a' | 'b')[]
   onChoice: (index: number) => (choice: 'a' | 'b') => void
   onSubmit: () => void
+  submitDisabled: boolean
 };
 
-const AorbExercise: FunctionComponent<Props> = ({ sentences, choices, onChoice, onSubmit }) => {
+const AorbExercise: FunctionComponent<Props> = ({ sentences, choices, onChoice, onSubmit, submitDisabled }) => {
 
   return (
     <div className={styles.exercise}>
@@ -30,7 +31,7 @@ const AorbExercise: FunctionComponent<Props> = ({ sentences, choices, onChoice, 
           </div>
         ))}
       </div>
-      <div><Button className="btn btn-dark" type="submit" onClick={onSubmit}>Check</Button></div>
+      <div><Button className="btn btn-dark" type="submit" onClick={onSubmit} disabled={submitDisabled}>Check</Button></div>
     </div>
   );
 };

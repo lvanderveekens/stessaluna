@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Stessaluna\Api\Post\Controller;
 
 use Psr\Log\LoggerInterface;
 use Stessaluna\Api\Post\Dto\PostDtoConverter;
 use Stessaluna\Domain\Post\Entity\Post;
+use Stessaluna\Domain\Post\Exercise\Entity\ExercisePost;
 use Stessaluna\Domain\Post\Service\PostCreator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -42,8 +45,6 @@ class PostController extends AbstractController
             ->findAll();
 
         return $this->json(array_map(function ($post) {
-            $aap = $this->postDtoConverter->toDto($post, $this->getUser());
-            $this->logger->warning(print_r($aap,true));
             return $this->postDtoConverter->toDto($post, $this->getUser());
         }, $posts));
     }
@@ -56,13 +57,26 @@ class PostController extends AbstractController
         // TODO: parse request object instead of separate parameters?
         $type = $request->get('type');
         switch ($type) {
-            case 'aorb':
-                $post = $this->postCreator->createAorbPost($request->get('sentences'), $this->getUser());
+            case 'exercise':
+                $post = $this->createExercisePost($request->get('exercise'));
                 break;
             default:
                 throw new BadRequestHttpException("Received unknown post type: $type");
         }
-        return $this->json($this->postDtoConverter->toDto($post));
+        return $this->json($this->postDtoConverter->toDto($post, $this->getUser()));
+    }
+
+    private function createExercisePost($exercise): ExercisePost {
+        // TODO: move to post creator?
+        $type = $exercise['type'];
+        switch ($type) {
+            case 'aorb':
+                $post = $this->postCreator->createAorbExercisePost($exercise['sentences'], $this->getUser());
+                break;
+            default:
+                throw new BadRequestHttpException("Received unknown post type: $type");
+        }
+        return $post;
     }
 
     /**

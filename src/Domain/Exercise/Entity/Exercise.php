@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Stessaluna\Domain\Exercise\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -30,11 +32,11 @@ abstract class Exercise
      *     cascade={"persist"}
      * )
      */
-    private Collection $answers;
+    private $answers;
 
     public function __construct()
     {
-        $this->answer = new ArrayCollection();
+        $this->answers = new ArrayCollection();
     }
 
     public function getId(): ?int

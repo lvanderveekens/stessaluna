@@ -27,8 +27,11 @@ const AorbExerciseContainer: FunctionComponent<Props> = ({ id, sentences }) => {
             .catch((error) => { console.log(error); });
     }
 
+    const submitDisabled = sentences.some(s => s.choice.answer !== null);
+
     return (
-        <AorbExercise sentences={sentences} choices={choices} onChoice={handleChoice} onSubmit={handleSubmit} />
+        <AorbExercise sentences={sentences} choices={choices} onChoice={handleChoice} onSubmit={handleSubmit}
+            submitDisabled={submitDisabled} />
     )
 
 }

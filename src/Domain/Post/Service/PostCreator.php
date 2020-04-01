@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Stessaluna\Domain\Post\Service;
 
 use Stessaluna\Domain\Post\Aorb\Entity\AorbPost;
@@ -26,7 +28,7 @@ class PostCreator
         $this->em = $em;
     }
 
-    public function createAorbPost(array $sentences, User $user): ExercisePost
+    public function createAorbExercisePost(array $sentences, User $user): ExercisePost
     {
         $post = new ExercisePost();
         $post->setUser($user);
