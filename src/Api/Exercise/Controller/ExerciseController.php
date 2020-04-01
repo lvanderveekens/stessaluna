@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Stessaluna\Api\Exercise\Controller;
 
-use Exception;
 use Psr\Log\LoggerInterface;
-use stdClass;
-use Stessaluna\Api\Exercise\Dto\ExerciseDtoConverter;
+use Stessaluna\Api\Exercise\Dto\ExerciseToDtoConverter;
+use Stessaluna\Api\Exercise\Dto\RequestToDtoConverter;
+use Stessaluna\Api\Exercise\Dto\SubmitAorbAnswerRequestDto;
 use Stessaluna\Domain\Exercise\Answer\Aorb\Entity\AorbAnswer;
 use Stessaluna\Domain\Exercise\Answer\Entity\Answer;
 use Stessaluna\Domain\Exercise\Aorb\Entity\AorbExercise;
@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use function Functional\some;
-
 
 /**
  * @Route("/api/exercises")
@@ -33,26 +32,26 @@ class ExerciseController extends AbstractController
 
     private ExerciseRepository $exerciseRepository;
 
-    private ExerciseDtoConverter $exerciseDtoConverter;
+    private ExerciseToDtoConverter $exerciseToDtoConverter;
 
     public function __construct(
         LoggerInterface $logger,
         ExerciseRepository $exerciseRepository,
-        ExerciseDtoConverter $exerciseDtoConverter
+        ExerciseToDtoConverter $exerciseToDtoConverter
     )
     {
         $this->logger = $logger;
         $this->exerciseRepository = $exerciseRepository;
-        $this->exerciseDtoConverter = $exerciseDtoConverter;
+        $this->exerciseToDtoConverter = $exerciseToDtoConverter;
     }
 
     /**
      * @Route("/{id}/answers", methods={"POST"})
      */
-    public function submitAnswer(int $id, Request $req): JsonResponse
+    public function submitAnswer(int $id, Request $request): JsonResponse
     {
         // TODO: move logic to domain
-        $request = toSubmitAnswerRequestDto($req);
+        $request = RequestToDtoConverter::toSubmitAnswerRequestDto($request);
         $exercise = $this->exerciseRepository->findById($id);
 
         $answers = $exercise->getAnswers()->toArray();
@@ -75,30 +74,6 @@ class ExerciseController extends AbstractController
 
         $exercise->addAnswer($answer);
         $exercise = $this->exerciseRepository->save($exercise);
-        return $this->json($this->exerciseDtoConverter->toDto($exercise, $this->getUser()));
+        return $this->json($this->exerciseToDtoConverter->toDto($exercise, $this->getUser()));
     }
-}
-
-function toSubmitAnswerRequestDto(Request $req): SubmitAnswerRequestDto
-{
-    $type = $req->get('type');
-    switch ($type) {
-        case 'aorb':
-            $request = new SubmitAorbAnswerRequestDto();
-            $request->choices = $req->get("choices");
-            break;
-        default:
-            throw new BadRequestHttpException("Received unknown answer type: $type");
-    }
-    return $request;
-}
-
-interface SubmitAnswerRequestDto
-{
-}
-
-class SubmitAorbAnswerRequestDto implements SubmitAnswerRequestDto
-{
-    /** @var string[] an array containing 'a' and 'b' characters */
-    public array $choices;
 }

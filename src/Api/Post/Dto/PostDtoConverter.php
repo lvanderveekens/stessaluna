@@ -3,14 +3,10 @@
 namespace Stessaluna\Api\Post\Dto;
 
 use Psr\Log\LoggerInterface;
-use Stessaluna\Api\Exercise\Aorb\Dto\AorbChoiceDto;
-use Stessaluna\Api\Exercise\Aorb\Dto\AorbExerciseDto;
-use Stessaluna\Api\Exercise\Aorb\Dto\AorbSentenceDto;
-use Stessaluna\Api\Exercise\Dto\ExerciseDtoConverter;
+use Stessaluna\Api\Exercise\Dto\ExerciseToDtoConverter;
 use Stessaluna\Api\Post\Comment\Dto\CommentDtoConverter;
 use Stessaluna\Api\Post\Exercise\Dto\ExercisePostDto;
 use Stessaluna\Api\User\Dto\UserDtoConverter;
-use Stessaluna\Domain\Exercise\Aorb\Entity\AorbExercise;
 use Stessaluna\Domain\Post\Entity\Post;
 use Stessaluna\Domain\Post\Exercise\Entity\ExercisePost;
 use Stessaluna\Domain\User\Entity\User;
@@ -23,19 +19,19 @@ class PostDtoConverter
     
     private CommentDtoConverter $commentDtoConverter;
 
-    private ExerciseDtoConverter $exerciseDtoConverter;
+    private ExerciseToDtoConverter $exerciseToDtoConverter;
 
     public function __construct(
         LoggerInterface $logger,
         UserDtoConverter $userDtoConverter,
         CommentDtoConverter $commentDtoConverter,
-        ExerciseDtoConverter $exerciseDtoConverter
+        ExerciseToDtoConverter $exerciseToDtoConverter
     )
     {
         $this->logger = $logger;
         $this->userDtoConverter = $userDtoConverter;
         $this->commentDtoConverter = $commentDtoConverter;
-        $this->exerciseDtoConverter = $exerciseDtoConverter;
+        $this->exerciseToDtoConverter = $exerciseToDtoConverter;
     }
 
     public function toDto(Post $post, User $user): PostDto
@@ -45,7 +41,7 @@ class PostDtoConverter
 
             $dto = new ExercisePostDto();
             $dto->id = $post->getId();
-            $dto->exercise = $this->exerciseDtoConverter->toDto($post->getExercise(), $user);
+            $dto->exercise = $this->exerciseToDtoConverter->toDto($post->getExercise(), $user);
             $dto->author = $this->userDtoConverter->toDto($post->getUser());
             $dto->createdAt = $post->getCreatedAt();
 

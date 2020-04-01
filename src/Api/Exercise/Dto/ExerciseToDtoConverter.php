@@ -15,7 +15,7 @@ use Stessaluna\Domain\Exercise\Aorb\Entity\AorbSentence;
 use Stessaluna\Domain\Exercise\Entity\Exercise;
 use Stessaluna\Domain\User\Entity\User;
 
-class ExerciseDtoConverter
+class ExerciseToDtoConverter
 {
     private LoggerInterface $logger;
 
