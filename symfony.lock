@@ -126,6 +126,9 @@
             "config/packages/lexik_jwt_authentication.yaml"
         ]
     },
+    "lstrojny/functional-php": {
+        "version": "1.11.0"
+    },
     "monolog/monolog": {
         "version": "2.0.2"
     },

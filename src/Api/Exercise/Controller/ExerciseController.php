@@ -17,12 +17,18 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use function Functional\some;
+
 
 /**
  * @Route("/api/exercises")
  */
 class ExerciseController extends AbstractController
 {
+    private static array $supportedRequestTypeByExercise = [
+        AorbExercise::class => SubmitAorbAnswerRequestDto::class
+    ];
+
     private LoggerInterface $logger;
 
     private ExerciseRepository $exerciseRepository;
@@ -45,25 +51,30 @@ class ExerciseController extends AbstractController
      */
     public function submitAnswer(int $id, Request $req): JsonResponse
     {
+        // TODO: move logic to domain
         $request = toSubmitAnswerRequestDto($req);
         $exercise = $this->exerciseRepository->findById($id);
 
-        // TODO: move validation logic to domain
-        // TODO: check if answer type matches exercise
-
-        if ($request instanceof SubmitAorbAnswerRequestDto) {
-            if (!$exercise instanceof AorbExercise) {
-                throw new BadRequestHttpException("Answer type does not match exercise");
-            }
-
-            $answer = new AorbAnswer();
-            $answer->setUser($this->getUser());
-            $answer->setChoices($request->choices);
-
-            $exercise->addAnswer($answer);
-            $this->exerciseRepository->save($exercise);
+        $answers = $exercise->getAnswers()->toArray();
+        $alreadyAnswered = some($answers, function (Answer $answer) { return $answer->getUser() == $this->getUser(); });
+        if ($alreadyAnswered) {
+            throw new BadRequestHttpException("User already submitted an answer for this exercise");
         }
 
+        if (self::$supportedRequestTypeByExercise[get_class($exercise)] !== get_class($request)) {
+            throw new BadRequestHttpException("Answer type does not match exercise");
+        }
+
+        switch (true) {
+            case $request instanceof SubmitAorbAnswerRequestDto:
+                $answer = new AorbAnswer();
+                $answer->setUser($this->getUser());
+                $answer->setChoices($request->choices);
+                break;
+        }
+
+        $exercise->addAnswer($answer);
+        $exercise = $this->exerciseRepository->save($exercise);
         return $this->json($this->exerciseDtoConverter->toDto($exercise, $this->getUser()));
     }
 }

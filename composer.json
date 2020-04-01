@@ -9,6 +9,7 @@
         "doctrine/orm": "^2.7",
         "gesdinet/jwt-refresh-token-bundle": "^0.9.0",
         "lexik/jwt-authentication-bundle": "^2.6",
+        "lstrojny/functional-php": "^1.11",
         "sensio/framework-extra-bundle": "^5.5",
         "spatie/image-optimizer": "^1.2",
         "symfony-bundles/json-request-bundle": "3.0",
