@@ -1,14 +1,17 @@
 import React, { FunctionComponent, useState } from "react";
 import { AorbSentence as AorbSentenceInterface } from '../aorb-exercise.interface'
 import AorbExercise from "./AorbExercise";
-import axios from "../../../http/client";
+import { connect } from 'react-redux';
+import { submitAnswer } from '../../../store/post/actions';
+import { SubmitAorbAnswerRequest } from '../../submit-answer/request.interface';
 
 interface Props {
     id: number
     sentences: AorbSentenceInterface[]
+    submitAnswer: (exerciseId: number, request: SubmitAorbAnswerRequest) => void
 }
 
-const AorbExerciseContainer: FunctionComponent<Props> = ({ id, sentences }) => { 
+const AorbExerciseContainer: FunctionComponent<Props> = ({ id, sentences, submitAnswer }) => { 
 
     const [choices, setChoices] = useState(new Array(sentences.length).fill(null) as ('a' | 'b')[]);
 
@@ -18,13 +21,7 @@ const AorbExerciseContainer: FunctionComponent<Props> = ({ id, sentences }) => {
 
     const handleSubmit = () => {
         // TODO: only allow submitting after filling in everything
-        // TODO: use redux 
-        
-        axios.post(`/api/exercises/${id}/answers`, { type: 'aorb', choices })
-            .then(res => {
-                console.log(res.data);
-            })
-            .catch((error) => { console.log(error); });
+        submitAnswer(id, new SubmitAorbAnswerRequest(choices))
     }
 
     const submitDisabled = sentences.some(s => s.choice.answer !== null);
@@ -33,7 +30,10 @@ const AorbExerciseContainer: FunctionComponent<Props> = ({ id, sentences }) => {
         <AorbExercise sentences={sentences} choices={choices} onChoice={handleChoice} onSubmit={handleSubmit}
             submitDisabled={submitDisabled} />
     )
-
 }
 
-export default AorbExerciseContainer;
+const actionCreators = {
+    submitAnswer,
+}
+
+export default connect(null, actionCreators)(AorbExerciseContainer);

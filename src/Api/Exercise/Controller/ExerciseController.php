@@ -50,7 +50,6 @@ class ExerciseController extends AbstractController
      */
     public function submitAnswer(int $id, Request $request): JsonResponse
     {
-        // TODO: move logic to domain
         $request = RequestToDtoConverter::toSubmitAnswerRequestDto($request);
         $exercise = $this->exerciseRepository->findById($id);
 

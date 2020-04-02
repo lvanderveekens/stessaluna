@@ -1,6 +1,8 @@
 import ActionTypes from "./actionTypes";
 import axios from '../../http/client';
 import { NewPostRequest } from "../../post/new/new-post.interface";
+import Exercise from "../../exercise/exercise.interface";
+import { SubmitAnswerRequest } from "../../exercise/submit-answer/request.interface";
 
 export const fetchPosts = () => {
   return dispatch => {
@@ -73,4 +75,17 @@ export const deleteComment = (postId, commentId) => {
   };
 
   function success(postId, commentId) { return { type: ActionTypes.DELETE_COMMENT_SUCCESS, payload: { postId, commentId } }; };
+};
+
+export const submitAnswer = (exerciseId: number, request: SubmitAnswerRequest) => {
+  return dispatch => {
+    axios.post(`/api/exercises/${exerciseId}/answers`, request)
+      .then(res => {
+        console.log(res.data);
+        dispatch(success(res.data));
+      })
+      .catch(console.log);
+  };
+
+  function success(exercise: Exercise) { return { type: ActionTypes.SUBMIT_ANSWER_SUCCESS, payload: { exercise } }; };
 };

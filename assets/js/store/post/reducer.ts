@@ -1,5 +1,6 @@
 import ActionTypes from './actionTypes';
 import { PostState } from './state.interface';
+import { ExercisePost } from '../../post/exercise/exercise-post.interface';
 
 const initialState = {
   loading: false,
@@ -52,10 +53,18 @@ const postReducer = (state: PostState = initialState, action) => {
             : post
         )
       };
+    case ActionTypes.SUBMIT_ANSWER_SUCCESS:
+      const exercisePost = state.items
+        .filter((p) => p.type === 'exercise')
+        .map((p) => <ExercisePost>p)
+        .find((ep) => ep.exercise.id === action.payload.exercise.id)
+
       return {
         ...state,
-        items: state.items.filter(post => post.id !== action.payload.id) 
-      };
+        items: state.items.map((post) =>
+          post.id === exercisePost.id ? { ...post, exercise: action.payload.exercise } : post
+        )
+      }
     default:
       return state;
   }
