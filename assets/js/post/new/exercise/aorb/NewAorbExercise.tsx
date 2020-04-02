@@ -32,8 +32,6 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
   const deleteInput = (index: number) => () => {
     const newInputValues = [...inputValues];
     newInputValues.splice(index, 1);
-    console.log("setInputValue() - deleteInput");
-    console.log(newInputValues);
     setInputValues(newInputValues);
   }
 
@@ -53,13 +51,8 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
   };
 
   const handleChange = (index: number) => (change: AorbInputValue) => {
-    console.log("HANDLE CHANGE");
-    console.log(change);
-    console.log(inputValues);
     const newInputValues = [...inputValues];
     newInputValues[index].value = change;
-    console.log("setInputValue() - handleChange");
-    console.log(newInputValues);
     setInputValues(newInputValues);
   }
 
@@ -77,9 +70,9 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
 
   return (
     <div className={styles.newAorbExercise}>
-      <div className={styles.wrapper}>
+      <div>
         <div className={styles.header}>
-          <span>Exercise: A or B</span>
+          <span>A or B</span>
           <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={onClose} />
         </div>
         <div className={styles.sentences}>
