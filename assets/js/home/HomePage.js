@@ -17,7 +17,6 @@ const HomePage = () => {
 
   return (
     <Row className="justify-content-center">
-      {/* <Col /> */}
       <Col ref={refCallback} md={6} lg={5} className="mb-4">
         <div className="position-sticky" style={{ top: top }}>
           <NewPost />
@@ -26,7 +25,6 @@ const HomePage = () => {
       <Col md={6} lg={5} className="mb-4">
         <Feed />
       </Col>
-      {/* <Col /> */}
     </Row>
   );
 };

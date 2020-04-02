@@ -14,12 +14,12 @@
         .sentenceWrapper {
 
             display: flex;
-            align-items: center;
             justify-content: center;;
             padding-bottom: 0.5rem;
 
             .index {
                 margin-right: 0.3rem;
+                line-height: 1.8rem;
                 // min-width: 1rem;
             }
         }
