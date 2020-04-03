@@ -8,8 +8,8 @@ interface Props {
 const NewPost: FC<Props> = ({ }) => {
 
   // TODO: change back to text later
-  const [type, setType] = useState('text');
-  // const [type, setType] = useState('exercise');
+  // const [type, setType] = useState('text');
+  const [type, setType] = useState('exercise');
 
   return (
     <Fragment>

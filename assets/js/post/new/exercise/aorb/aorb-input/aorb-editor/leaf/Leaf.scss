@@ -1,0 +1,7 @@
+.leaf {
+    // targeting the placeholder text
+    span[contenteditable="false"] {
+        // overriding the element styles
+        vertical-align: unset !important;
+    }
+}

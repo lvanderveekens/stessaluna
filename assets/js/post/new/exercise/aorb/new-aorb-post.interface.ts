@@ -1,5 +1,5 @@
 import { NewPostRequest } from "../../new-post.interface";
-import { AorbInputValue } from "./aorb-input.interface";
+import { AorbInputValue } from "./aorb-input/aorb-input.interface";
 import { NewExercisePostRequest, NewExercise } from "../new-exercise-post.interface";
 
 export class NewAorbPostRequest extends NewExercisePostRequest {

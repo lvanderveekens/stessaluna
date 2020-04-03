@@ -1,0 +1,57 @@
+@import '../../../../../../../../css/colors';
+    
+.aorbElement {
+
+    cursor: default;
+
+    .a,
+    .b {
+        display: inline-block;
+        border: 1px solid $stessaluna-aorb-default;
+        background: $stessaluna-aorb-default-bg;
+
+        // i hope this does not break anything in slatejs
+        user-select: none;
+
+        cursor: pointer;
+
+        &.correct {
+            border: 1px solid $stessaluna-aorb-correct;
+            background: $stessaluna-aorb-correct-bg;
+
+            .label {
+                color: $stessaluna-aorb-correct;
+            }
+        }
+
+        &.incorrect {
+            border: 1px solid $stessaluna-aorb-incorrect;
+            background: $stessaluna-aorb-incorrect-bg;
+
+            .label {
+                color: $stessaluna-aorb-incorrect;
+            }
+        }
+
+        .label {
+            color: $stessaluna-aorb-default;
+            padding: 0 0.4rem;
+        }
+
+        .content {
+            display: inline-block;
+            padding-right: 0.4rem;
+            color: $stessaluna-aorb-default-text;
+        }
+    }
+
+    .a {
+        border-bottom-left-radius: 0.5rem;
+        border-top-left-radius: 0.5rem;
+    }
+
+    .b {
+        border-bottom-right-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+    }
+}

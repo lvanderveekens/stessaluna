@@ -1,0 +1,67 @@
+@import '../../../../../../../css/colors';
+
+.actions {
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+
+    .aorbForm {
+        display: flex;
+        align-items: center;
+
+        div {
+            display: flex;
+            align-items: center;
+
+            label {
+                margin-bottom: 0;
+                margin-left: 0.3rem;
+            }
+
+            input {
+                width: 100%;
+                border: none;
+
+                margin-left: 0.3rem;
+                margin-right: 0.3rem;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .aInputGroup,
+        .bInputGroup {
+            color: $stessaluna-aorb-default;
+            border: 1px solid $stessaluna-aorb-default;
+            background: $stessaluna-aorb-default-bg;
+
+            input {
+                padding: 0;
+                color: $stessaluna-aorb-default-text;
+                background: unset;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+
+        .aInputGroup {
+            border-bottom-left-radius: 0.5rem;
+            border-top-left-radius: 0.5rem;
+        }
+
+        .bInputGroup {
+            border-bottom-right-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+            margin-right: 0.4rem;
+        }
+
+        .insertButton {
+            padding: 0 0.3rem;
+        }
+    }
+
+    .markAsCorrectHint {
+        font-style: italic;
+        font-size: 0.85rem;
+    }
+}

@@ -2,11 +2,11 @@ import React, { FC, useState } from 'react'
 import styles from './NewAorbExercise.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
-import AorbInput from './AorbInput';
+import AorbInput from './aorb-input/AorbInput';
 import { Button } from 'react-bootstrap';
-import { createPost } from '../../../../store/post/actions';
+import { createPost, submitAnswer } from '../../../../store/post/actions';
 import { connect } from 'react-redux';
-import { AorbInputValue } from './aorb-input.interface';
+import { AorbInputValue } from './aorb-input/aorb-input.interface';
 import { NewAorbPostRequest } from './new-aorb-post.interface';
 
 interface Props {
@@ -16,6 +16,9 @@ interface Props {
 
 const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
 
+  // TODO: split into presentational and container components
+  const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false);
+
   const [inputValues, setInputValues] = useState([
     { id: 1, value: { textBefore: "hoe werkt ", choice: { a: "ja", b: "nee" }, textAfter: "?" } }
   ] as { id: number, value: AorbInputValue }[]);
@@ -24,14 +27,14 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
     const nextId = inputValues.length ? (inputValues[inputValues.length - 1].id + 1) : 1
     const newInputValue = { id: nextId, value: { textBefore: "" } };
     const newInputValues = [...inputValues, newInputValue]
-    console.log("setInputValue() - addSentence");
-    console.log(newInputValues);
+    setSubmitButtonEnabled(false);
     setInputValues(newInputValues);
   }
 
   const deleteInput = (index: number) => () => {
     const newInputValues = [...inputValues];
     newInputValues.splice(index, 1);
+    setSubmitButtonEnabled(newInputValues.every(({ value }) => value.choice && value.choice.correct));
     setInputValues(newInputValues);
   }
 
@@ -44,15 +47,19 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
     } as AorbInputValue));
 
     createPost(new NewAorbPostRequest(sentences))
-      .then(() => {
-        const nextId = inputValues.length ? (inputValues[inputValues.length - 1].id + 1) : 1
-        setInputValues([{ id: nextId, value: { textBefore: "" } }]);
-      });
+      .then(resetInput);
   };
+
+  const resetInput = () => {
+    const nextId = inputValues.length ? (inputValues[inputValues.length - 1].id + 1) : 1
+    setInputValues([{ id: nextId, value: { textBefore: "" } }]);
+    setSubmitButtonEnabled(false);
+  }
 
   const handleChange = (index: number) => (change: AorbInputValue) => {
     const newInputValues = [...inputValues];
     newInputValues[index].value = change;
+    setSubmitButtonEnabled(newInputValues.every(({ value }) => value.choice && value.choice.correct));
     setInputValues(newInputValues);
   }
 
@@ -84,7 +91,7 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
           </span>
         </div>
       </div>
-      <Button className="btn btn-dark mb-2" type="submit" onClick={onSubmit}>Create</Button>
+      <Button className="btn btn-dark mb-2" type="submit" onClick={onSubmit} disabled={!submitButtonEnabled}>Create</Button>
     </div>
   );
 };

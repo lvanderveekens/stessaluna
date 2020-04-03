@@ -12,8 +12,8 @@ interface Props {
 const NewExercisePost: FC<Props> = ({ onClose }) => {
 
   // TODO: change back to null later
-  const [type, setType] = useState(null);
-  // const [type, setType] = useState(ExerciseType.A_OR_B);
+  // const [type, setType] = useState(null);
+  const [type, setType] = useState(ExerciseType.A_OR_B);
 
   const renderNewExercise = () => {
     switch (type) {
