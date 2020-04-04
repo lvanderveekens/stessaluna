@@ -57,6 +57,9 @@ class PostController extends AbstractController
         // TODO: parse request object instead of separate parameters?
         $type = $request->get('type');
         switch ($type) {
+            case 'text':
+                // TODO: create text post
+                break;
             case 'exercise':
                 $post = $this->createExercisePost($request->get('exercise'));
                 break;
@@ -67,7 +70,6 @@ class PostController extends AbstractController
     }
 
     private function createExercisePost($exercise): ExercisePost {
-        // TODO: move to post creator?
         $type = $exercise['type'];
         switch ($type) {
             case 'aorb':

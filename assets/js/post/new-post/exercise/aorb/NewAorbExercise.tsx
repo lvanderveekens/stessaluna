@@ -4,14 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 import AorbInput from './aorb-input/AorbInput';
 import { Button } from 'react-bootstrap';
-import { createPost, submitAnswer } from '../../../../store/post/actions';
+import { createPost } from '../../../../store/post/actions';
 import { connect } from 'react-redux';
 import { AorbInputValue } from './aorb-input/aorb-input.interface';
-import { NewAorbPostRequest } from './new-aorb-post.interface';
+import { NewAorbPost } from './new-aorb-post.interface';
 
 interface Props {
   onClose: () => void
-  createPost: (post: NewAorbPostRequest) => Promise<void>
+  createPost: (post: NewAorbPost) => Promise<void>
 }
 
 const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
@@ -46,7 +46,7 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
       textAfter: s.value.textAfter,
     } as AorbInputValue));
 
-    createPost(new NewAorbPostRequest(sentences))
+    createPost(new NewAorbPost(sentences))
       .then(resetInput);
   };
 

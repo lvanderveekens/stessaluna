@@ -1,6 +1,6 @@
 import ActionTypes from "./actionTypes";
 import axios from '../../http/client';
-import { NewPostRequest } from "../../post/new/new-post.interface";
+import { NewPost } from "../../post/new-post/new-post.interface";
 import Exercise from "../../exercise/exercise.interface";
 import { SubmitAnswerRequest } from "../../exercise/submit-answer/request.interface";
 
@@ -23,7 +23,7 @@ export const fetchPosts = () => {
   function error() { return { type: ActionTypes.FETCH_POSTS_ERROR }; };
 };
 
-export const createPost = (post: NewPostRequest) => {
+export const createPost = (post: NewPost) => {
   return dispatch => {
     return axios.post('/api/posts', post)
       .then(res => {

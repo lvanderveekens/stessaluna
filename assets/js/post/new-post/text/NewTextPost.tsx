@@ -9,6 +9,7 @@ import styles from './NewTextPost.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { createPost } from '../../../store/post/actions';
+import { NewTextPost as NewTextPostInterface } from './new-text-post.interface';
 
 const schema = yup.object({
   text: yup.string(),
@@ -17,7 +18,7 @@ const schema = yup.object({
 
 interface Props {
   user?: User
-  createPost: (text: string, image: string) => Promise<void>
+  createPost: (post: NewTextPostInterface) => Promise<void>
   onExercise: () => void
 }
 
@@ -50,7 +51,7 @@ const NewTextPost: FC<Props> = ({ user, createPost, onExercise }) => {
   const handleSubmit = (values, { resetForm }) => {
     setErrorMessage("");
 
-    createPost(values.text, values.image)
+    createPost(new NewTextPostInterface(""))
       .then(() => {
         if (values.image) {
           fileInput.current.value = null;

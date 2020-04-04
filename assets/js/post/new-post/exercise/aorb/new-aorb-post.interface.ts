@@ -1,8 +1,7 @@
-import { NewPostRequest } from "../../new-post.interface";
 import { AorbInputValue } from "./aorb-input/aorb-input.interface";
-import { NewExercisePostRequest, NewExercise } from "../new-exercise-post.interface";
+import { NewExercisePost, NewExercise } from "../new-exercise-post.interface";
 
-export class NewAorbPostRequest extends NewExercisePostRequest {
+export class NewAorbPost extends NewExercisePost {
 
     constructor(sentences: AorbInputValue[]) {
         super()
