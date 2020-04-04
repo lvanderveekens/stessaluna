@@ -3,6 +3,7 @@ import axios from '../../http/client';
 import { NewPost } from "../../post/new-post/new-post.interface";
 import Exercise from "../../exercise/exercise.interface";
 import { SubmitAnswerRequest } from "../../exercise/submit-answer/request.interface";
+import { NewTextPost } from "../../post/new-post/text/new-text-post.interface";
 
 export const fetchPosts = () => {
   return dispatch => {
@@ -24,6 +25,14 @@ export const fetchPosts = () => {
 };
 
 export const createPost = (post: NewPost) => {
+
+  if (post instanceof NewTextPost) {
+    // TODO: do form upload
+    const formData = new FormData();
+    formData.append('text', post.text);
+    formData.append('image', post.image);
+  }
+
   return dispatch => {
     return axios.post('/api/posts', post)
       .then(res => {
