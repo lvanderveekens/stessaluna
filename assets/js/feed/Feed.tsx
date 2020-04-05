@@ -7,7 +7,7 @@ import { Spinner } from 'react-bootstrap';
 import PostInterface from '../post/post.interface';
 import AorbExercise from '../exercise/aorb/aorb-exercise';
 import ExercisePostInterface from '../post/exercise/exercise-post.interface';
-import TextPostInterface from '../post/text/text-exercise.interface';
+import TextContent from '../post/text/TextContent';
 
 interface Props {
   loading: boolean
@@ -25,14 +25,10 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
   const renderPostContent = (post: PostInterface) => {
     switch(post.type) {
       case 'text':
-        return renderText(post);
+        return <TextContent text={post.text} imageSrc={post.imagePath} />;
       case 'exercise':
         return renderExercise(post);
     }
-  }
-
-  const renderText = (post: TextPostInterface) => {
-    return <p>text post</p>
   }
 
   const renderExercise = (post: ExercisePostInterface) => {

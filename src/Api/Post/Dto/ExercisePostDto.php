@@ -1,6 +1,6 @@
 <?php
 
-namespace Stessaluna\Api\Post\Exercise\Dto;
+namespace Stessaluna\Api\Post\Dto;
 
 use Stessaluna\Api\Exercise\Dto\ExerciseDto;
 use Stessaluna\Api\Post\Dto\PostDto;

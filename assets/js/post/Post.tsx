@@ -33,21 +33,6 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
     setShowComments(!showComments);
   };
 
-  let youtubeVideoId
-  if (text) {
-    const youtubeLink = linkify.find(text)
-      .find(link => link.type == "url" &&
-        (link.value.includes("youtube.com") || link.value.includes("youtu.be")));
-
-    if (youtubeLink) {
-      if (youtubeLink.value.includes("youtube.com/watch?v=")) {
-        youtubeVideoId = /watch\?v=(.*)/.exec(youtubeLink.value)[1];
-      } else if (youtubeLink.value.includes("youtu.be/")) {
-        youtubeVideoId = /youtu.be\/(.*)/.exec(youtubeLink.value)[1]
-      }
-    }
-  }
-
   return (
     <div className={styles.post}>
       <div className={styles.content}>
@@ -76,12 +61,7 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
             )}
           </div>
         </div>
-
         {children}
-
-        {/* <div className={styles.text}><Linkify>{text}</Linkify></div>
-        {image && (<img className={styles.image} src={image} />)}
-        {youtubeVideoId && (<YouTubeVideo id={youtubeVideoId} />)} */}
       </div>
       <div className={styles.activity}>
         {comments && comments.length > 0 && (

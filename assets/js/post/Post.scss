@@ -51,23 +51,10 @@
             }
         }
 
-        .text {
-            margin-bottom: 1rem;
-            word-wrap: break-word; 
-            white-space: pre-wrap;
-        }
-
         .deleteButton:hover {
             cursor: hand;
             cursor: pointer;
             opacity: .6;
-        }
-
-        .image {
-            width: 100%;
-            display: block;
-            margin-right: auto;
-            margin-left: auto;
         }
 
     }

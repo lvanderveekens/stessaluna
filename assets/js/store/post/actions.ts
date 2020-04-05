@@ -25,16 +25,8 @@ export const fetchPosts = () => {
 };
 
 export const createPost = (post: NewPost) => {
-
-  if (post instanceof NewTextPost) {
-    // TODO: do form upload
-    const formData = new FormData();
-    formData.append('text', post.text);
-    formData.append('image', post.image);
-  }
-
   return dispatch => {
-    return axios.post('/api/posts', post)
+    return axios.post('/api/posts', toRequest(post))
       .then(res => {
         console.log(res.data);
         dispatch(success(res.data));
@@ -45,6 +37,17 @@ export const createPost = (post: NewPost) => {
   };
 
   function success(post) { return { type: ActionTypes.CREATE_POST_SUCCESS, payload: { post } }; };
+
+  function toRequest(post: NewPost) {
+    let data: any = post;
+    if (post instanceof NewTextPost) {
+      data = new FormData();
+      data.append('type', post.type);
+      data.append('text', post.text);
+      data.append('image', post.image);
+    }
+    return data;
+  }
 };
 
 export const deletePost = (id) => {

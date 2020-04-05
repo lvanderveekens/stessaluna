@@ -51,7 +51,6 @@ const NewTextPost: FC<Props> = ({ user, createPost, onExercise }) => {
   const handleSubmit = (values, { resetForm }) => {
     setErrorMessage("");
 
-    // TODO: how to upload file here...? Different redux actions per type?
     createPost(new NewTextPostInterface(values.text, values.image))
       .then(() => {
         if (values.image) {

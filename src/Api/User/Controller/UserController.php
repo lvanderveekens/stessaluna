@@ -2,10 +2,9 @@
 
 namespace Stessaluna\Api\User\Controller;
 
-use Exception;
 use Psr\Log\LoggerInterface;
 use Stessaluna\Api\User\Dto\UserDtoConverter;
-use Stessaluna\Infrastructure\FileUpload\FileUploader;
+use Stessaluna\Domain\Image\ImageStorage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,13 +16,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     private LoggerInterface $logger;
-
     private UserDtoConverter $userDtoConverter;
+    private ImageStorage $imageStorage;
 
-    public function __construct(LoggerInterface $logger, UserDtoConverter $userDtoConverter)
+    public function __construct(LoggerInterface $logger, UserDtoConverter $userDtoConverter, ImageStorage $imageStorage)
     {
         $this->logger = $logger;
         $this->userDtoConverter = $userDtoConverter;
+        $this->imageStorage = $imageStorage;
     }
 
     /**
@@ -38,7 +38,7 @@ class UserController extends AbstractController
      * @Route("/me", methods={"PUT"})
      */
     // TODO: move to ProfileController?
-    public function updateCurrentUser(Request $request, FileUploader $fileUploader): JsonResponse
+    public function updateCurrentUser(Request $request): JsonResponse
     {
         $user = $this->getUser();
 
@@ -46,27 +46,15 @@ class UserController extends AbstractController
 
         if ($resetAvatar) {
             if ($user->getAvatarFilename()) {
-                try {
-                    $imagesDir = $this->getParameter('images_directory');
-                    unlink($imagesDir . '/' . $user->getAvatarFilename());
-                } catch (Exception $e) {
-                    $this->logger->error($e);
-                }
+                $this->imageStorage->delete($user->getAvatarFilename());
             }
             $user->setAvatarFilename(null);
         } else if ($request->files->get("avatar")) {
-            // TODO: refactor
             if ($user->getAvatarFilename()) {
-                try {
-                    $imagesDir = $this->getParameter('images_directory');
-                    unlink($imagesDir . '/' . $user->getAvatarFilename());
-                } catch (Exception $e) {
-                    $this->logger->error($e);
-                }
+                $this->imageStorage->delete($user->getAvatarFilename());
             }
             $avatar = $request->files->get("avatar");
-            $imageFilename = $fileUploader->upload($avatar, $this->getParameter('images_directory'));
-            $user->setAvatarFilename($imageFilename);
+            $user->setAvatarFilename($this->imageStorage->store($avatar));
         }
 
         $em = $this->getDoctrine()->getManager();

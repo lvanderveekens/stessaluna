@@ -5,16 +5,19 @@ declare(strict_types=1);
 namespace Stessaluna\Api\Post\Controller;
 
 use Psr\Log\LoggerInterface;
-use Stessaluna\Api\Post\Dto\PostDtoConverter;
+use Stessaluna\Api\Post\Dto\PostToDtoConverter;
+use Stessaluna\Domain\Image\ImageStorage;
 use Stessaluna\Domain\Post\Entity\Post;
 use Stessaluna\Domain\Post\Exercise\Entity\ExercisePost;
 use Stessaluna\Domain\Post\Service\PostCreator;
+use Stessaluna\Domain\Post\Text\Entity\TextPost;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -22,17 +25,21 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PostController extends AbstractController
 {
-    private LoggerInterface $logger;
-
     private PostCreator $postCreator;
+    private PostToDtoConverter $postToDtoConverter;
+    private LoggerInterface $logger;
+    private ImageStorage $imageStorage;
 
-    private PostDtoConverter $postDtoConverter;
-
-    public function __construct(PostCreator $postCreator, PostDtoConverter $postDtoConverter, LoggerInterface $logger)
-    {
+    public function __construct(
+        PostCreator $postCreator,
+        PostToDtoConverter $postToDtoConverter,
+        LoggerInterface $logger,
+        ImageStorage $imageStorage
+    ) {
         $this->postCreator = $postCreator;
-        $this->postDtoConverter = $postDtoConverter;
+        $this->postToDtoConverter = $postToDtoConverter;
         $this->logger = $logger;
+        $this->imageStorage = $imageStorage;
     }
 
     /**
@@ -45,7 +52,7 @@ class PostController extends AbstractController
             ->findAll();
 
         return $this->json(array_map(function ($post) {
-            return $this->postDtoConverter->toDto($post, $this->getUser());
+            return $this->postToDtoConverter->toDto($post, $this->getUser());
         }, $posts));
     }
 
@@ -58,18 +65,28 @@ class PostController extends AbstractController
         $type = $request->get('type');
         switch ($type) {
             case 'text':
-                // TODO: create text post
+                $post = $this->createTextPost($request);
                 break;
             case 'exercise':
-                $post = $this->createExercisePost($request->get('exercise'));
+                $post = $this->createExercisePost($request);
                 break;
             default:
                 throw new BadRequestHttpException("Received unknown post type: $type");
         }
-        return $this->json($this->postDtoConverter->toDto($post, $this->getUser()));
+        return $this->json($this->postToDtoConverter->toDto($post, $this->getUser()));
     }
 
-    private function createExercisePost($exercise): ExercisePost {
+    private function createTextPost(Request $request): TextPost
+    {
+        return $this->postCreator->createTextPost(
+            $request->get('text'),
+            $request->files->get('image'),
+            $this->getUser()
+        );
+    }
+
+    private function createExercisePost(Request $request): ExercisePost {
+        $exercise = $request->get('exercise');
         $type = $exercise['type'];
         switch ($type) {
             case 'aorb':
@@ -86,23 +103,21 @@ class PostController extends AbstractController
      */
     public function deletePostById(int $id)
     {
+        // TODO: use post interface
+        // move this to domain?
         $em = $this->getDoctrine()->getManager();
-        // TODO: what if $id does not exist? return 404
         $post = $em->getRepository(Post::class)->find($id);
+        if (!$post) {
+            return new NotFoundHttpException();
+        }
 
         if ($this->getUser()->getId() != $post->getUser()->getId()) {
             throw new AccessDeniedHttpException("Only the author can delete this post");
         }
 
-        // TODO: reenable when fixing text posts
-        // if ($post->getImageFilename()) {
-        //     try {
-        //         $imagesDir = $this->getParameter('images_directory');
-        //         unlink($imagesDir . '/' . $post->getImageFilename());
-        //     } catch (Exception $e) {
-        //         $this->logger->error($e);
-        //     }
-        // }
+        if ($post->getImageFilename()) {
+            $this->imageStorage->delete($post->getImageFilename());
+        }
 
         $em->remove($post);
         $em->flush();

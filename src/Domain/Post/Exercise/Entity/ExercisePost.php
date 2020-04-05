@@ -13,11 +13,11 @@ class ExercisePost extends Post
 {
     /**
      * @ORM\OneToOne(targetEntity="Stessaluna\Domain\Exercise\Entity\Exercise", orphanRemoval=true, cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private Exercise $exercise;
 
-    public function getExercise(): ?Exercise
+    public function getExercise(): Exercise
     {
         return $this->exercise;
     }
