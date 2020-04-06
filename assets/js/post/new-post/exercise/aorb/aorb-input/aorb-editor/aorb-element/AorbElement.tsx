@@ -16,11 +16,9 @@ const AorbElement: FC<Props> = ({ attributes, children, element, value, onChange
 
   const aClassName = cx('a', {
     'correct': (value.choice && value.choice.correct === 'a'),
-    'incorrect': (value.choice && value.choice.correct === 'b')
   });
   const bClassName = cx('b', {
     'correct': (value.choice && value.choice.correct === 'b'),
-    'incorrect': (value.choice && value.choice.correct === 'a')
   });
 
   const handleClickOnA = () => {

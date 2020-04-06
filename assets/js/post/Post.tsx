@@ -22,7 +22,7 @@ interface Props {
   image?: string
   onDelete: () => void
   comments: any[]
-  user?: User,
+  user: User,
 };
 
 const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, comments, onDelete, user, children }) => {
@@ -45,9 +45,9 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
               <div>{author.username}</div>
               <span className={styles.timestamp}>{timestamp}</span>
             </div>
-            {user && user.id == author.id && (
+            {user.id == author.id && (
               <div className={styles.threeDotsMenu}>
-                <Dropdown>
+                <Dropdown alignRight={true}>
                   <Dropdown.Toggle as={CustomToggle} id="something">
                     <span className={styles.iconWrapper}>
                       <FontAwesomeIcon className={styles.icon} icon={faEllipsisV} />

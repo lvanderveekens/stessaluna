@@ -6,13 +6,15 @@ import styles from './CommentSection.scss?module';
 import CommentInterface from '../comment.interface';
 import Comment from '../Comment';
 import moment from 'moment';
+import User from '../../../user/user.interface';
+import { State } from '../../../store';
 
 interface Props {
   postId: number
   comments: CommentInterface[]
   addComment: (postId: number, text: string) => void
   deleteComment: (postId: number, commentId: number) => void
-  user: any
+  user: User
 }
 
 const CommentSection: FunctionComponent<Props> = ({ postId, comments, addComment, deleteComment, user }) => {
@@ -51,7 +53,7 @@ const actionCreators = {
   deleteComment,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: State) => ({
   user: state.auth.user
 })
 

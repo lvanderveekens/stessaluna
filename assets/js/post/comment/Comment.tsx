@@ -23,14 +23,14 @@ const Comment: FunctionComponent<Props> = ({ author, timestamp, text, user, onDe
       </div>
       <div className={styles.content}>
         <div className="d-flex">
-          <div className="mr-3">
+          <div className={styles.authorTextTimestamp}>
             <span className={styles.author}>{author.username}</span>
             <span className={styles.text}>{text}</span>
             <div className={styles.timestamp}>{timestamp}</div>
           </div>
           {user.id == author.id && (
             <div className={styles.threeDotsMenu}>
-              <Dropdown>
+              <Dropdown alignRight={true}>
                 <Dropdown.Toggle as={CustomToggle} id="something">
                   <span className={styles.iconWrapper}>
                     <FontAwesomeIcon className={styles.icon} icon={faEllipsisV} />

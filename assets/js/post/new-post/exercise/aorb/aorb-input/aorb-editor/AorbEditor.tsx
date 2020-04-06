@@ -34,7 +34,7 @@ const AorbEditor: FC<Props> = ({ editor, value, onChange }) => {
   });
 
   const handleEditorChange = (change: Node[]) => {
-    // only update state on actual change to avoid focus issues when switching between inputs
+    // only update state on actual change to avoid focus issues when switching between aorb editors
     if (JSON.stringify(editorValue) !== JSON.stringify(change)) {
       setEditorValue(change);
 

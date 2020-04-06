@@ -2,6 +2,8 @@ import React, { useState, FunctionComponent } from 'react';
 import styles from './NewCommentForm.scss?module';
 import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
   onSubmit: (comment: string) => void
@@ -24,7 +26,7 @@ const NewCommentForm: FunctionComponent<Props> = ({ onSubmit, avatar }) => {
   };
 
   return (
-    <form className={styles.newCommentForm} onSubmit={handleSubmit}>
+    <form className={styles.newCommentForm}>
       <div className="d-flex">
         <div className={styles.avatar}>
           <img src={avatar} />
@@ -40,6 +42,7 @@ const NewCommentForm: FunctionComponent<Props> = ({ onSubmit, avatar }) => {
             value={text}
           />
         </div>
+        <div className={styles.submitIcon} onClick={handleSubmit}><FontAwesomeIcon icon={faArrowCircleRight} /></div>
       </div>
     </form>
   );

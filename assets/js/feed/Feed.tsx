@@ -8,6 +8,7 @@ import PostInterface from '../post/post.interface';
 import AorbExercise from '../exercise/aorb/aorb-exercise';
 import ExercisePostInterface from '../post/exercise/exercise-post.interface';
 import TextContent from '../post/text/TextContent';
+import { State } from '../store';
 
 interface Props {
   loading: boolean
@@ -69,8 +70,8 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
   );
 };
 
-const mapStateToProps = state => ({
-  loading: state.post.loading,
+const mapStateToProps = (state: State) => ({
+  loading: state.post.loading || !state.auth.user,
   posts: state.post.items,
 });
 

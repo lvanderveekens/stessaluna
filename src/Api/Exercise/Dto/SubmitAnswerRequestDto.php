@@ -7,9 +7,3 @@ namespace Stessaluna\Api\Exercise\Dto;
 interface SubmitAnswerRequestDto
 {
 }
-
-class SubmitAorbAnswerRequestDto implements SubmitAnswerRequestDto
-{
-    /** @var string[] an array containing 'a' and 'b' characters */
-    public array $choices;
-}

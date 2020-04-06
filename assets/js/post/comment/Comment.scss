@@ -4,8 +4,13 @@
     display: flex;
     margin-top: 0.5rem;
 
+    .authorTextTimestamp {
+        margin-right: 1rem;
+        flex-grow: 1;
+    }
+
     .threeDotsMenu {
-        margin-left: auto;
+        margin: 0 0.4rem;
 
         .iconWrapper {
             cursor: pointer;

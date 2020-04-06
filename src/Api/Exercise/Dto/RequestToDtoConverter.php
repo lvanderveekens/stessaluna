@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Stessaluna\Api\Exercise\Dto;
 
+use Stessaluna\Api\Exercise\Aorb\Dto\SubmitAorbAnswerRequestDto;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
