@@ -62,10 +62,10 @@ export const fetchUser = () => {
   function error() { return { type: ActionTypes.FETCH_USER_ERROR }; };
 };
 
-export const updateProfile = (resetAvatar: boolean, avatar?: File) => {
+export const updateProfile = (firstName: string, lastName: string, resetAvatar: boolean, avatar?: File) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
-      axios.post('/api/profile', toFormData(resetAvatar, avatar))
+      axios.post('/api/profile', toFormData(firstName, lastName, resetAvatar, avatar))
         .then(res => {
           dispatch(success(res.data));
           resolve(res);
@@ -78,8 +78,10 @@ export const updateProfile = (resetAvatar: boolean, avatar?: File) => {
 
   function success(user) { return { type: ActionTypes.UPDATE_PROFILE_SUCCESS, payload: { user } }; };
 
-  function toFormData(resetAvatar: boolean, avatar?: File): FormData {
+  function toFormData(firstName: string, lastName: string, resetAvatar: boolean, avatar?: File): FormData {
     const formData = new FormData();
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
     formData.append('resetAvatar', resetAvatar.toString());
     if (avatar) {
       formData.append('avatar', avatar);

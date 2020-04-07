@@ -4,7 +4,7 @@ namespace Stessaluna\Api\User\Controller;
 
 use Psr\Log\LoggerInterface;
 use Stessaluna\Api\User\Dto\UserDtoConverter;
-use Stessaluna\Domain\User\Service\ProfileService;
+use Stessaluna\Domain\User\Profile\ProfileService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,10 +33,13 @@ class ProfileController extends AbstractController
      */
     public function updateProfile(Request $request)
     {
-        $resetAvatar = filter_var($request->get('resetAvatar'), FILTER_VALIDATE_BOOLEAN);
-        $avatarFile = $request->files->get('avatar');
-
-        $updatedUser = $this->profileService->updateProfile($this->getUser(), $resetAvatar, $avatarFile);
+        $updatedUser = $this->profileService->updateProfile(
+            $this->getUser(),
+            $request->get('firstName'),
+            $request->get('lastName'),
+            $request->get('resetAvatar') === 'true',
+            $request->files->get('avatar')
+        );
         return $this->json($this->userDtoConverter->toDto($updatedUser));
     }
 }

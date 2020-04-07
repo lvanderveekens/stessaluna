@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Stessaluna\Domain\User\Service;
+namespace Stessaluna\Domain\User\Profile;
 
 use Stessaluna\Domain\Image\ImageStorage;
 use Stessaluna\Domain\User\Entity\User;
@@ -18,8 +18,10 @@ class ProfileService
         $this->imageStorage = $imageStorage;
     }
 
-    public function updateProfile(User $user, bool $resetAvatar, ?UploadedFile $avatar): User
+    public function updateProfile(User $user, string $firstName, string $lastName, bool $resetAvatar, ?UploadedFile $avatar): User
     {
+        $user->setFirstName($firstName);
+        $user->setLastName($lastName);
         if ($resetAvatar) {
             $this->resetAvatar($user);
         } elseif ($avatar) {

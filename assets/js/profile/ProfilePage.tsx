@@ -10,7 +10,7 @@ import { faUpload, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
   user?: User
-  updateProfile: (resetAvatar: boolean, avatar?: File) => Promise<void>
+  updateProfile: (firstName: string, lastName: string, resetAvatar: boolean, avatar?: File) => Promise<void>
 }
 
 const ProfilePage: FC<Props> = ({ user, updateProfile }) => {
@@ -43,10 +43,10 @@ const ProfilePage: FC<Props> = ({ user, updateProfile }) => {
     }
   };
 
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = ({ firstName, lastName, avatar }, { resetForm }) => {
     setFeedbackMessage(null);
 
-    updateProfile(resetAvatar, values.avatar)
+    updateProfile(firstName, lastName, resetAvatar, avatar)
       .then(() => {
         setFeedbackMessage("Saved");
         resetForm();
@@ -57,12 +57,12 @@ const ProfilePage: FC<Props> = ({ user, updateProfile }) => {
   return (
     <Row>
       <Col />
-      <Col md={6}>
+      <Col md={4}>
         <h4 className="mb-3">Profile</h4>
         {user && (
           // TODO: move into separate form component
           <Formik
-            initialValues={{ username: '', avatar: null }}
+            initialValues={{ firstName: user.firstName, lastName: user.lastName, avatar: null }}
             enableReinitialize
             onSubmit={handleSubmit}
           >
@@ -70,6 +70,7 @@ const ProfilePage: FC<Props> = ({ user, updateProfile }) => {
               values,
               setFieldValue,
               handleSubmit,
+              handleChange,
             }) => (
                 <form className="mb-3" onSubmit={handleSubmit}>
                   <div className="form-group">
@@ -80,6 +81,26 @@ const ProfilePage: FC<Props> = ({ user, updateProfile }) => {
                       className="form-control"
                       value={user.username}
                       readOnly
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="firstName">First name</label>
+                    <input
+                      name="firstName"
+                      type="text"
+                      className="form-control"
+                      value={values.firstName}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="lastName">Last name</label>
+                    <input
+                      name="lastName"
+                      type="text"
+                      className="form-control"
+                      value={values.lastName}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="form-group">
@@ -98,7 +119,7 @@ const ProfilePage: FC<Props> = ({ user, updateProfile }) => {
                               )}
                             </Fragment>
                           ) : (
-                            <label htmlFor="avatar">
+                            <label className={styles.uploadIconWrapper} htmlFor="avatar">
                               <FontAwesomeIcon className={styles.uploadIcon} icon={faUpload} />
                             </label>
                           )}
