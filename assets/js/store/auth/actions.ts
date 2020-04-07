@@ -62,13 +62,10 @@ export const fetchUser = () => {
   function error() { return { type: ActionTypes.FETCH_USER_ERROR }; };
 };
 
-export const updateCurrentUser = (formData) => {
-  // Workaround for old PHP bug where formdata is not parsed when using PUT/PATCH 
-  formData.append('_method', 'PUT');
-
+export const updateProfile = (resetAvatar: boolean, avatar?: File) => {
   return dispatch => {
     return new Promise((resolve, reject) => {
-      axios.post('/api/users/me', formData)
+      axios.post('/api/profile', toFormData(resetAvatar, avatar))
         .then(res => {
           dispatch(success(res.data));
           resolve(res);
@@ -78,5 +75,15 @@ export const updateCurrentUser = (formData) => {
         });
     });
   };
-  function success(user) { return { type: ActionTypes.UPDATE_CURRENT_USER_SUCCESS, payload: { user } }; };
+
+  function success(user) { return { type: ActionTypes.UPDATE_PROFILE_SUCCESS, payload: { user } }; };
+
+  function toFormData(resetAvatar: boolean, avatar?: File): FormData {
+    const formData = new FormData();
+    formData.append('resetAvatar', resetAvatar.toString());
+    if (avatar) {
+      formData.append('avatar', avatar);
+    }
+    return formData;
+  }
 };

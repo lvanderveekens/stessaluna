@@ -33,6 +33,18 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
     setShowComments(!showComments);
   };
 
+  const renderUserName = () => {
+    if (user.firstName && user.lastName) {
+      return (
+        <span>
+          <span className={styles.fullName}>{user.firstName} {user.lastName}</span>
+          <span className={styles.usernameAfterFullName}>@{author.username}</span>
+        </span>
+      );
+    }
+    return <span>@{author.username}</span>
+  }
+
   return (
     <div className={styles.post}>
       <div className={styles.content}>
@@ -42,7 +54,7 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
               <img src={author.avatar} />
             </div>
             <div className={styles.usernameTimestampWrapper}>
-              <div>{author.username}</div>
+              <div>{renderUserName()}</div>
               <span className={styles.timestamp}>{timestamp}</span>
             </div>
             {user.id == author.id && (

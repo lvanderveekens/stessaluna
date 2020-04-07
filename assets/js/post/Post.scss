@@ -48,7 +48,17 @@
                     font-size: 0.7rem;
                     color: grey;
                 }
+
+                .fullName {
+                    margin-right: 0.3rem
+                }
+
+                .usernameAfterFullName {
+                    color: grey;
+                    font-size: 0.9rem;
+                }
             }
+
         }
 
         .deleteButton:hover {

@@ -5,6 +5,7 @@ namespace Stessaluna\Infrastructure\User\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Stessaluna\Domain\User\Entity\User;
+use Stessaluna\Domain\User\Repository\UserRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -15,11 +16,19 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class UserDoctrineRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
+    }
+
+    public function save(User $user): User
+    {
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
+        return $user;
     }
 
     /**

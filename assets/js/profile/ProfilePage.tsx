@@ -3,17 +3,17 @@ import { Row, Col, Button } from 'react-bootstrap';
 import User from '../user/user.interface';
 import { connect } from 'react-redux';
 import styles from './ProfilePage.scss?module';
-import { updateCurrentUser } from '../store/auth/actions';
+import { updateProfile } from '../store/auth/actions';
 import { Formik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
   user?: User
-  updateCurrentUser: (formData: FormData) => Promise<void>
+  updateProfile: (resetAvatar: boolean, avatar?: File) => Promise<void>
 }
 
-const ProfilePage: FC<Props> = ({ user, updateCurrentUser }) => {
+const ProfilePage: FC<Props> = ({ user, updateProfile }) => {
 
   const [resetAvatar, setResetAvatar] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState(null);
@@ -46,17 +46,7 @@ const ProfilePage: FC<Props> = ({ user, updateCurrentUser }) => {
   const handleSubmit = (values, { resetForm }) => {
     setFeedbackMessage(null);
 
-    const formData = new FormData();
-
-    if (resetAvatar) {
-      console.log("RESETTING AVATAR");
-      formData.append('resetAvatar', 'true');
-    } else if (values.avatar) {
-      console.log("SETTING NEW AVATAR");
-      formData.append('avatar', values.avatar);
-    }
-
-    updateCurrentUser(formData)
+    updateProfile(resetAvatar, values.avatar)
       .then(() => {
         setFeedbackMessage("Saved");
         resetForm();
@@ -72,7 +62,7 @@ const ProfilePage: FC<Props> = ({ user, updateCurrentUser }) => {
         {user && (
           // TODO: move into separate form component
           <Formik
-            initialValues={{ username: '', avatar: null}}
+            initialValues={{ username: '', avatar: null }}
             enableReinitialize
             onSubmit={handleSubmit}
           >
@@ -89,7 +79,7 @@ const ProfilePage: FC<Props> = ({ user, updateCurrentUser }) => {
                       type="text"
                       className="form-control"
                       value={user.username}
-                      readOnly 
+                      readOnly
                     />
                   </div>
                   <div className="form-group">
@@ -141,7 +131,7 @@ const mapStateToProps = (state) => ({
 });
 
 const actionCreators = ({
-  updateCurrentUser,
+  updateProfile,
 });
 
 export default connect(mapStateToProps, actionCreators)(ProfilePage);

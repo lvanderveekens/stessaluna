@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Stessaluna\Api\User\Dto;
 
@@ -28,7 +28,7 @@ class UserDtoConverter
 
         if ($user->getAvatarFilename()) {
             // TODO: move base upload path to a common place
-            $dto->setAvatar('/uploads/images/' .  $user->getAvatarFilename());
+            $dto->setAvatar('/uploads/images/'.$user->getAvatarFilename());
         } else {
             $dto->setAvatar($this->packages->getUrl('build/images/avatar-default.svg'));
         }

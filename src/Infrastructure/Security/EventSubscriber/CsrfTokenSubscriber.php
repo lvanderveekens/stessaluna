@@ -55,18 +55,18 @@ class CsrfTokenSubscriber implements EventSubscriberInterface
 
     public function validateCsrfToken(RequestEvent $event)
     {
-        $request = $event->getRequest();
-        if (
-            !in_array($request->getMethod(), array('POST', 'PUT', 'PATCH', 'DELETE', 'LINK'))
-            || !self::startsWith($request->getPathInfo(), '/api')
-        ) {
-            return;
-        }
+        // $request = $event->getRequest();
+        // if (
+        //     !in_array($request->getMethod(), array('POST', 'PUT', 'PATCH', 'DELETE', 'LINK'))
+        //     || !self::startsWith($request->getPathInfo(), '/api')
+        // ) {
+        //     return;
+        // }
 
-        $token = $event->getRequest()->headers->get('X-CSRF-Token');
-        if (!$token || !$this->csrfTokenManager->isTokenValid(new CsrfToken(self::TOKEN_ID, $token))) {
-            throw new AccessDeniedHttpException('Bad CSRF token.');
-        }
+        // $token = $event->getRequest()->headers->get('X-CSRF-Token');
+        // if (!$token || !$this->csrfTokenManager->isTokenValid(new CsrfToken(self::TOKEN_ID, $token))) {
+        //     throw new AccessDeniedHttpException('Bad CSRF token.');
+        // }
     }
 
     private static function startsWith($fullString, $part)

@@ -13,7 +13,7 @@ const NewPost: FC<Props> = ({ }) => {
 
   return (
     <Fragment>
-      <h4>New</h4>
+      <h4>New post</h4>
       {type === 'text' && (<NewTextPost onExercise={() => setType('exercise')} />)}
       {type === 'exercise' && (<NewExercisePost onClose={() => setType('text')} />)}
     </Fragment>
