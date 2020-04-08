@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect, createRef, useRef, Fragment } from 'react';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button, Container, Spinner } from 'react-bootstrap';
 import User from '../user/user.interface';
 import { connect } from 'react-redux';
 import styles from './ProfilePage.scss?module';
@@ -7,13 +7,16 @@ import { updateProfile } from '../store/auth/actions';
 import { Formik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faTimes } from '@fortawesome/free-solid-svg-icons';
+import NavBar from '../nav/NavBar';
+import { State } from '../store';
 
 interface Props {
+  loading: boolean
   user?: User
   updateProfile: (firstName: string, lastName: string, resetAvatar: boolean, avatar?: File) => Promise<void>
 }
 
-const ProfilePage: FC<Props> = ({ user, updateProfile }) => {
+const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
 
   const [resetAvatar, setResetAvatar] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState(null);
@@ -55,99 +58,106 @@ const ProfilePage: FC<Props> = ({ user, updateProfile }) => {
   }
 
   return (
-    <Row>
-      <Col />
-      <Col md={4}>
-        <h4 className="mb-3">Profile</h4>
-        {user && (
-          // TODO: move into separate form component
-          <Formik
-            initialValues={{ firstName: user.firstName, lastName: user.lastName, avatar: null }}
-            enableReinitialize
-            onSubmit={handleSubmit}
-          >
-            {({
-              values,
-              setFieldValue,
-              handleSubmit,
-              handleChange,
-            }) => (
-                <form className="mb-3" onSubmit={handleSubmit}>
-                  <div className="form-group">
-                    <label htmlFor="username">Username</label>
-                    <input
-                      name="username"
-                      type="text"
-                      className="form-control"
-                      value={user.username}
-                      readOnly
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="firstName">First name</label>
-                    <input
-                      name="firstName"
-                      type="text"
-                      className="form-control"
-                      value={values.firstName}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="lastName">Last name</label>
-                    <input
-                      name="lastName"
-                      type="text"
-                      className="form-control"
-                      value={values.lastName}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Avatar</label>
-                    <div className={styles.avatarContainer}>
-                      <div className={styles.aspectRatioBox}>
-                        {avatarUrl
-                          ? (
-                            <Fragment>
-                              <img src={avatarUrl} />
-                              {!avatarUrl.includes('avatar-default') && (
-                                <div className={styles.overlay}>
-                                  <FontAwesomeIcon className={styles.deleteIcon} icon={faTimes}
-                                    onClick={handleAvatarDelete(setFieldValue)} />
-                                </div>
-                              )}
-                            </Fragment>
-                          ) : (
-                            <label className={styles.uploadIconWrapper} htmlFor="avatar">
-                              <FontAwesomeIcon className={styles.uploadIcon} icon={faUpload} />
-                            </label>
-                          )}
+    <>
+      <NavBar />
+      <Container>
+        <Row className="justify-content-center">
+          <Col md={4}>
+            <h4 className="mb-3">Profile</h4>
+            {loading && (
+              <span style={{ padding: '0 0.5rem' }}><Spinner animation="border" variant="warning" /></span>
+            )}
+            {user && (
+              // TODO: move into separate form component
+              <Formik
+                initialValues={{ firstName: user.firstName, lastName: user.lastName, avatar: null }}
+                enableReinitialize
+                onSubmit={handleSubmit}
+              >
+                {({
+                  values,
+                  setFieldValue,
+                  handleSubmit,
+                  handleChange,
+                }) => (
+                    <form className="mb-3" onSubmit={handleSubmit}>
+                      <div className="form-group">
+                        <label htmlFor="username">Username</label>
+                        <input
+                          name="username"
+                          type="text"
+                          className="form-control"
+                          value={user.username}
+                          readOnly
+                        />
                       </div>
-                    </div>
-                    <input
-                      id="avatar"
-                      name="avatar"
-                      type="file"
-                      className="form-control d-none"
-                      onChange={handleAvatarChange(setFieldValue)}
-                    />
-                  </div>
-                  <Button className="btn btn-dark" type="submit">Save</Button>
-                </form>
-              )}
-          </Formik>
-        )}
-        {feedbackMessage && (
-          <div>{feedbackMessage}</div>
-        )}
-      </Col>
-      <Col />
-    </Row>
+                      <div className="form-group">
+                        <label htmlFor="firstName">First name</label>
+                        <input
+                          name="firstName"
+                          type="text"
+                          className="form-control"
+                          value={values.firstName}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="lastName">Last name</label>
+                        <input
+                          name="lastName"
+                          type="text"
+                          className="form-control"
+                          value={values.lastName}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label>Avatar</label>
+                        <div className={styles.avatarContainer}>
+                          <div className={styles.aspectRatioBox}>
+                            {avatarUrl
+                              ? (
+                                <Fragment>
+                                  <img src={avatarUrl} />
+                                  {!avatarUrl.includes('avatar-default') && (
+                                    <div className={styles.overlay}>
+                                      <FontAwesomeIcon className={styles.deleteIcon} icon={faTimes}
+                                        onClick={handleAvatarDelete(setFieldValue)} />
+                                    </div>
+                                  )}
+                                </Fragment>
+                              ) : (
+                                <label className={styles.uploadIconWrapper} htmlFor="avatar">
+                                  <FontAwesomeIcon className={styles.uploadIcon} icon={faUpload} />
+                                </label>
+                              )}
+                          </div>
+                        </div>
+                        <input
+                          id="avatar"
+                          name="avatar"
+                          type="file"
+                          className="form-control d-none"
+                          onChange={handleAvatarChange(setFieldValue)}
+                        />
+                      </div>
+                      <Button className="btn btn-dark" type="submit">Save</Button>
+                    </form>
+                  )}
+              </Formik>
+            )}
+            {feedbackMessage && (
+              <div>{feedbackMessage}</div>
+            )}
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: State) => ({
+  loading: state.auth.loading,
   user: state.auth.user,
 });
 

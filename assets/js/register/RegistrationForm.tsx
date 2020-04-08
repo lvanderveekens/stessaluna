@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import styles from './RegistrationForm.scss?module';
 
 interface Props {
   onSubmit: (values: FormValues) => void
@@ -29,11 +28,11 @@ const RegistrationForm: FunctionComponent<Props> = ({ onSubmit }) => {
     <Formik
       validationSchema={schema}
       onSubmit={onSubmit}
-      initialValues={{ username: '', password: '', confirmPassword: ''}}
+      initialValues={{ username: '', password: '', confirmPassword: '' }}
       validateOnChange={false}
     >
       {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
-        <Form noValidate className={styles.loginForm} onSubmit={handleSubmit}>
+        <Form noValidate onSubmit={handleSubmit}>
           <Form.Group>
             <Form.Label>Username</Form.Label>
             <Form.Control

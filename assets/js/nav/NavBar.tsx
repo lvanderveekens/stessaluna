@@ -22,7 +22,7 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, loading, logOut }) =
 
   const renderMenu = () => {
     if (loading) {
-      return <span style={{ padding: '0 0.5rem' }}> <Spinner animation="border" variant="warning" size="sm" /> </span> 
+      return <span style={{ padding: '0 0.5rem' }}> <Spinner animation="border" variant="warning" /> </span>
     }
     if (!loggedIn || !user) {
       return <Link className={styles.link} to="/login">Login</Link>;
@@ -65,11 +65,9 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, loading, logOut }) =
       </div>
     );
   }
-  
+
   return (
     <Navbar className={styles.nav}
-      bg="dark"
-      variant="dark"
       sticky="top"
       expand="lg"
       expanded={expanded}

@@ -36,17 +36,14 @@ const App: FunctionComponent<Props> = ({ loggedIn, fetchUser }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
       <Router history={history}>
-        <NavBar />
-        <Container>
-          <Switch>
-            <PrivateRoute exact path="/" component={HomePage} />
-            <PrivateRoute exact path="/profile" component={ProfilePage} />
-            <Route exact path="/login" component={LoginPage} />
-            <Route exact path="/register" component={RegistrationPage} />
+        <Switch>
+          <PrivateRoute exact path="/" component={HomePage} />
+          <PrivateRoute exact path="/profile" component={ProfilePage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/register" component={RegistrationPage} />
 
-            <Route component={NotFoundPage} />
-          </Switch>
-        </Container>
+          <Route component={NotFoundPage} />
+        </Switch>
       </Router>
     </Fragment>
   );

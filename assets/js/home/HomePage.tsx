@@ -1,10 +1,11 @@
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Container } from 'react-bootstrap';
 import Feed from '../feed/Feed';
 import { useState } from 'react';
 import NewPost from '../post/new-post/NewPost';
 import { useMediaQuery } from 'react-responsive';
 import classNames from 'classnames';
+import NavBar from '../nav/NavBar';
 
 const HomePage = () => {
 
@@ -21,16 +22,21 @@ const HomePage = () => {
   };
 
   return (
-    <Row className="justify-content-center">
-      <Col ref={refCallback} md={6} lg={5} className="mb-4">
-        <div className={newPostWrapperClass} style={newPostWrapperStyle}>
-          <NewPost />
-        </div>
-      </Col>
-      <Col md={6} lg={5} className="mb-4">
-        <Feed />
-      </Col>
-    </Row>
+    <>
+      <NavBar />
+      <Container>
+        <Row className="justify-content-center">
+          <Col ref={refCallback} md={6} lg={5} className="mb-4">
+            <div className={newPostWrapperClass} style={newPostWrapperStyle}>
+              <NewPost />
+            </div>
+          </Col>
+          <Col md={6} lg={5} className="mb-4">
+            <Feed />
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

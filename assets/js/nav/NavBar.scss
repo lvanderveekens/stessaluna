@@ -2,6 +2,7 @@
 
 .nav {
     color: white;
+    background-color: $stessaluna-brand-secondary;
     margin-bottom: 1.5rem;
     padding: 0;
 
@@ -28,7 +29,7 @@
             padding: 0.5rem 0.5rem;
             font-style: italic;
             a {
-                color: $stessaluna-brand-yellow;
+                color: $stessaluna-brand-primary;
             }
         }
     }
@@ -59,7 +60,7 @@
         }
 
         .userText {
-            color: $stessaluna-brand-yellow;
+            color: $stessaluna-brand-primary;
         }
     }
 
@@ -94,7 +95,7 @@
         }
 
         .userText {
-            color: $stessaluna-brand-yellow;
+            color: $stessaluna-brand-primary;
         }
     }
 
