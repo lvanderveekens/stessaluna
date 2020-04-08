@@ -1,5 +1,5 @@
 enum ExerciseType {
-    A_OR_B = "A_OR_B",
+    AORB = "AORB",
 }
 
 export default ExerciseType;

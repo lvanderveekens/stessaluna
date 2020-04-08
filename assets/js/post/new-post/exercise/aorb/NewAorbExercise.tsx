@@ -20,7 +20,7 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
   const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false);
 
   const [inputValues, setInputValues] = useState([
-    { id: 1, value: { textBefore: "hoe werkt ", choice: { a: "ja", b: "nee" }, textAfter: "?" } }
+    { id: 1, value: { textBefore: "" } }
   ] as { id: number, value: AorbInputValue }[]);
 
   const addSentence = () => {

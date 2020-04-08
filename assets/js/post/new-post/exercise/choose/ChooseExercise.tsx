@@ -17,7 +17,7 @@ const ChooseExercise: FC<Props> = ({ onChoice, onClose }) => {
         <span>Choose Exercise</span>
         <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={onClose} />
       </div>
-      <div className={styles.exerciseOption} onClick={() => onChoice(ExerciseType.A_OR_B)}>A or B</div>
+      <div className={styles.exerciseOption} onClick={() => onChoice(ExerciseType.AORB)}>A or B</div>
       <div className={styles.exerciseOption}>More</div>
     </div>
   );
