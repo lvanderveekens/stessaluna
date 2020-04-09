@@ -13,6 +13,7 @@ import AorbContent from '../exercise/aorb/aorb-exercise/AorbExercise';
 import { Dropdown } from 'react-bootstrap';
 import CustomToggle from '../dropdown/CustomToggle';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import ReactCountryFlag from "react-country-flag"
 
 interface Props {
   id: number
@@ -38,11 +39,17 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
       return (
         <span>
           <span className={styles.fullName}>{author.firstName} {author.lastName}</span>
+          <ReactCountryFlag style={{ marginRight: '0.3rem' }} countryCode={author.country} svg />
           <span className={styles.usernameAfterFullName}>@{author.username}</span>
         </span>
       );
     }
-    return <span>@{author.username}</span>
+    return (
+      <span>
+        <span style={{ marginRight: '0.3rem' }}>@{author.username}</span>
+        <ReactCountryFlag countryCode={author.country} svg />
+      </span>
+    )
   }
 
   return (
