@@ -27,7 +27,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route(methods={"POST"})
      */
-    public function register(Request $request) : Response
+    public function register(Request $request): Response
     {
         $json = json_decode($request->getContent(), true);
 
@@ -37,6 +37,7 @@ class RegistrationController extends AbstractController
         $password = $this->passwordEncoder->encodePassword($user, $json['password']);
         $user->setPassword($password);
 
+        $user->setCountry($request->get('country'));
         $user = $this->userRepository->save($user);
         return new Response();
     }

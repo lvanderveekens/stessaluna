@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { CountryDropdown } from 'react-country-region-selector';
 
 interface Props {
   onSubmit: (values: FormValues) => void
@@ -11,6 +12,7 @@ interface FormValues {
   username: string
   password: string
   confirmPassword: string
+  country: string
 }
 
 const RegistrationForm: FunctionComponent<Props> = ({ onSubmit }) => {
@@ -19,6 +21,7 @@ const RegistrationForm: FunctionComponent<Props> = ({ onSubmit }) => {
     username: yup.string().required("Please fill in your username."),
     password: yup.string().required("Please fill in your password."),
     confirmPassword: yup.string().required("Please fill in your password another time."),
+    country: yup.string().required("Please select your country."),
   });
 
   // TODO: onSubmit check if username already exists...
@@ -28,10 +31,10 @@ const RegistrationForm: FunctionComponent<Props> = ({ onSubmit }) => {
     <Formik
       validationSchema={schema}
       onSubmit={onSubmit}
-      initialValues={{ username: '', password: '', confirmPassword: '' }}
+      initialValues={{ username: '', password: '', confirmPassword: '', country: '' }}
       validateOnChange={false}
     >
-      {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
+      {({ handleSubmit, handleChange, handleBlur, values, errors, touched, setFieldValue }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group>
             <Form.Label>Username</Form.Label>
@@ -75,6 +78,20 @@ const RegistrationForm: FunctionComponent<Props> = ({ onSubmit }) => {
               <div className="invalid-feedback">{errors.confirmPassword}</div>
             )}
           </Form.Group>
+          <div className="form-group">
+            <label htmlFor="country">Country</label>
+            <CountryDropdown
+              classes={`form-control ${errors.country && touched.country ? 'is-invalid' : ''}`}
+              name="country"
+              valueType="short"
+              value={values.country}
+              onChange={(value) => setFieldValue('country', value)}
+              onBlur={handleBlur}
+            />
+            {errors.country && touched.country && (
+              <div className="invalid-feedback">{errors.country}</div>
+            )}
+          </div>
           <Button className="btn btn-dark" type="submit">Submit</Button>
         </Form>
       )}

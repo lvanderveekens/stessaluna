@@ -34,10 +34,10 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
   };
 
   const renderUserName = () => {
-    if (user.firstName && user.lastName) {
+    if (author.firstName && author.lastName) {
       return (
         <span>
-          <span className={styles.fullName}>{user.firstName} {user.lastName}</span>
+          <span className={styles.fullName}>{author.firstName} {author.lastName}</span>
           <span className={styles.usernameAfterFullName}>@{author.username}</span>
         </span>
       );

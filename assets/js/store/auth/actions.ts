@@ -29,9 +29,9 @@ export const logOut = () => {
   function success() { return { type: ActionTypes.LOGOUT_SUCCESS }; };
 };
 
-export const register = (username, password) => {
+export const register = (username: string, password: string, country: string) => {
   return dispatch => {
-    return axios.post('/api/register', { username, password })
+    return axios.post('/api/register', { username, password, country })
       .then(res => {
         dispatch(success());
       })

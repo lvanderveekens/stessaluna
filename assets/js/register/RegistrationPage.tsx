@@ -6,7 +6,7 @@ import { register } from '../store/auth/actions';
 import styles from './RegistrationPage.scss?module';
 
 interface Props {
-  register: (username: string, password: string) => void
+  register: (username: string, password: string, country: string) => void
 }
 
 const RegistrationPage = ({ register }) => {
@@ -16,7 +16,7 @@ const RegistrationPage = ({ register }) => {
       <Row>
         <Col className={styles.centered} sm={6} md={4} lg={4} xl={3}>
           <h4 className="mb-3">Register</h4>
-          <RegistrationForm onSubmit={({ username, password }) => { register(username, password) }} />
+          <RegistrationForm onSubmit={({ username, password, country }) => { register(username, password, country) }} />
         </Col>
       </Row>
     </Container>
