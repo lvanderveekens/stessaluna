@@ -44,6 +44,11 @@ class User implements UserInterface
     private $lastName;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $country;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $avatarFilename;
@@ -101,6 +106,17 @@ class User implements UserInterface
     {
         $this->password = $password;
 
+        return $this;
+    }
+
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): self
+    {
+        $this->country = $country;
         return $this;
     }
 

@@ -14,7 +14,7 @@ import { CountryDropdown } from 'react-country-region-selector';
 interface Props {
   loading: boolean
   user?: User
-  updateProfile: (firstName: string, lastName: string, resetAvatar: boolean, avatar?: File) => Promise<void>
+  updateProfile: (firstName: string, lastName: string, country: string, resetAvatar: boolean, avatar?: File) => Promise<void>
 }
 
 const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
@@ -48,10 +48,10 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
   };
 
   const handleSubmit = (values, { resetForm }) => {
-    const { firstName, lastName, avatar } = values;
+    const { firstName, lastName, country, avatar } = values;
     setFeedbackMessage(null);
 
-    updateProfile(firstName, lastName, resetAvatar, avatar)
+    updateProfile(firstName, lastName, country, resetAvatar, avatar)
       .then(() => {
         setFeedbackMessage("Saved");
         resetForm();
@@ -72,7 +72,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
             {user && (
               // TODO: move into separate form component
               <Formik
-                initialValues={{ firstName: user.firstName, lastName: user.lastName, country: '', avatar: null }}
+                initialValues={{ firstName: user.firstName, lastName: user.lastName, country: user.country, avatar: null }}
                 enableReinitialize
                 onSubmit={handleSubmit}
               >
@@ -118,10 +118,12 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
                           <div className="form-group">
                             <label htmlFor="country">Country</label>
                             <CountryDropdown
-                              classes={styles.countrySelect}
+                              classes="form-control"
                               name="country"
+                              valueType="short"
+                              showDefaultOption={false}
                               value={values.country}
-                              onChange={(value) => setFieldValue('country', value)}
+                              onChange={(value) => { console.log(value); setFieldValue('country', value) }}
                             />
                           </div>
                         </div>

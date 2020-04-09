@@ -37,6 +37,7 @@ class ProfileController extends AbstractController
             $this->getUser(),
             $request->get('firstName'),
             $request->get('lastName'),
+            $request->get('country'),
             $request->get('resetAvatar') === 'true',
             $request->files->get('avatar')
         );

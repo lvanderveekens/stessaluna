@@ -21,16 +21,17 @@ class UserDtoConverter
     public function toDto(User $user): UserDto
     {
         $dto = new UserDto();
-        $dto->setId($user->getId());
-        $dto->setUserName($user->getUsername());
-        $dto->setFirstName($user->getFirstName());
-        $dto->setLastName($user->getLastName());
+        $dto->id = $user->getId();
+        $dto->username = $user->getUsername();
+        $dto->firstName = $user->getFirstName();
+        $dto->lastName = $user->getLastName();
+        $dto->country = $user->getCountry();
 
         if ($user->getAvatarFilename()) {
             // TODO: move base upload path to a common place
-            $dto->setAvatar('/uploads/images/'.$user->getAvatarFilename());
+            $dto->avatar = '/uploads/images/'.$user->getAvatarFilename();
         } else {
-            $dto->setAvatar($this->packages->getUrl('build/images/avatar-default.svg'));
+            $dto->avatar = $this->packages->getUrl('build/images/avatar-default.svg');
         }
         return $dto;
     }

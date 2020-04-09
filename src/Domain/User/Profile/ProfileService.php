@@ -18,10 +18,17 @@ class ProfileService
         $this->imageStorage = $imageStorage;
     }
 
-    public function updateProfile(User $user, string $firstName, string $lastName, bool $resetAvatar, ?UploadedFile $avatar): User
-    {
+    public function updateProfile(
+        User $user,
+        string $firstName,
+        string $lastName,
+        string $country,
+        bool $resetAvatar,
+        ?UploadedFile $avatar
+    ): User {
         $user->setFirstName($firstName);
         $user->setLastName($lastName);
+        $user->setCountry($country);
         if ($resetAvatar) {
             $this->resetAvatar($user);
         } elseif ($avatar) {
