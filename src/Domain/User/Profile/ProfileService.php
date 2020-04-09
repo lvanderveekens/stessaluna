@@ -20,8 +20,8 @@ class ProfileService
 
     public function updateProfile(
         User $user,
-        string $firstName,
-        string $lastName,
+        ?string $firstName,
+        ?string $lastName,
         string $country,
         bool $resetAvatar,
         ?UploadedFile $avatar

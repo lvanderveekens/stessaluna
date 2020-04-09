@@ -80,8 +80,12 @@ export const updateProfile = (firstName: string, lastName: string, country: stri
 
   function toFormData(firstName: string, lastName: string, country: string, resetAvatar: boolean, avatar?: File): FormData {
     const formData = new FormData();
-    formData.append('firstName', firstName);
-    formData.append('lastName', lastName);
+    if (firstName) {
+      formData.append('firstName', firstName);
+    }
+    if (lastName) {
+      formData.append('lastName', lastName);
+    }
     formData.append('country', country);
     formData.append('resetAvatar', resetAvatar.toString());
     if (avatar) {

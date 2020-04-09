@@ -10,6 +10,8 @@ import { faUpload, faTimes } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../nav/NavBar';
 import { State } from '../store';
 import { CountryDropdown } from 'react-country-region-selector';
+import ReactCountryFlag from "react-country-flag"
+
 
 interface Props {
   loading: boolean
@@ -72,7 +74,12 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
             {user && (
               // TODO: move into separate form component
               <Formik
-                initialValues={{ firstName: user.firstName, lastName: user.lastName, country: user.country, avatar: null }}
+                initialValues={{
+                  firstName: user.firstName || '',
+                  lastName: user.lastName || '',
+                  country: user.country || '',
+                  avatar: null
+                }}
                 enableReinitialize
                 onSubmit={handleSubmit}
               >
@@ -117,14 +124,17 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
                           </div>
                           <div className="form-group">
                             <label htmlFor="country">Country</label>
-                            <CountryDropdown
-                              classes="form-control"
-                              name="country"
-                              valueType="short"
-                              showDefaultOption={false}
-                              value={values.country}
-                              onChange={(value) => { console.log(value); setFieldValue('country', value) }}
-                            />
+                            <div className="d-flex">
+                              <CountryDropdown
+                                classes="form-control mr-2"
+                                name="country"
+                                valueType="short"
+                                showDefaultOption={false}
+                                value={values.country}
+                                onChange={(value) => { console.log(value); setFieldValue('country', value) }}
+                              />
+                              <ReactCountryFlag style={{ width: '2rem', height: '2rem' }} countryCode={values.country} svg />
+                            </div>
                           </div>
                         </div>
                         <div>
