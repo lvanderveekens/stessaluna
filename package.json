@@ -38,6 +38,7 @@
         "react": "^16.12.0",
         "react-bootstrap": "^1.0.0-beta.16",
         "react-contenteditable": "^3.3.3",
+        "react-country-region-selector": "^2.1.0",
         "react-dom": "^16.12.0",
         "react-helmet": "^5.2.1",
         "react-input-autosize": "^2.2.2",

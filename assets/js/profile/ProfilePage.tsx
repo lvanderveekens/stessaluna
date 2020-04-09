@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload, faTimes } from '@fortawesome/free-solid-svg-icons';
 import NavBar from '../nav/NavBar';
 import { State } from '../store';
+import { CountryDropdown } from 'react-country-region-selector';
 
 interface Props {
   loading: boolean
@@ -46,7 +47,8 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
     }
   };
 
-  const handleSubmit = ({ firstName, lastName, avatar }, { resetForm }) => {
+  const handleSubmit = (values, { resetForm }) => {
+    const { firstName, lastName, avatar } = values;
     setFeedbackMessage(null);
 
     updateProfile(firstName, lastName, resetAvatar, avatar)
@@ -62,7 +64,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
       <NavBar />
       <Container>
         <Row className="justify-content-center">
-          <Col md={4}>
+          <Col className={styles.centered} sm={8} md={6} lg={5} xl={4}>
             <h4 className="mb-3">Profile</h4>
             {loading && (
               <span style={{ padding: '0 0.5rem' }}><Spinner animation="border" variant="warning" /></span>
@@ -70,7 +72,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
             {user && (
               // TODO: move into separate form component
               <Formik
-                initialValues={{ firstName: user.firstName, lastName: user.lastName, avatar: null }}
+                initialValues={{ firstName: user.firstName, lastName: user.lastName, country: '', avatar: null }}
                 enableReinitialize
                 onSubmit={handleSubmit}
               >
@@ -81,65 +83,80 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
                   handleChange,
                 }) => (
                     <form className="mb-3" onSubmit={handleSubmit}>
-                      <div className="form-group">
-                        <label htmlFor="username">Username</label>
-                        <input
-                          name="username"
-                          type="text"
-                          className="form-control"
-                          value={user.username}
-                          readOnly
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="firstName">First name</label>
-                        <input
-                          name="firstName"
-                          type="text"
-                          className="form-control"
-                          value={values.firstName}
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="lastName">Last name</label>
-                        <input
-                          name="lastName"
-                          type="text"
-                          className="form-control"
-                          value={values.lastName}
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label>Avatar</label>
-                        <div className={styles.avatarContainer}>
-                          <div className={styles.aspectRatioBox}>
-                            {avatarUrl
-                              ? (
-                                <Fragment>
-                                  <img src={avatarUrl} />
-                                  {!avatarUrl.includes('avatar-default') && (
-                                    <div className={styles.overlay}>
-                                      <FontAwesomeIcon className={styles.deleteIcon} icon={faTimes}
-                                        onClick={handleAvatarDelete(setFieldValue)} />
-                                    </div>
-                                  )}
-                                </Fragment>
-                              ) : (
-                                <label className={styles.uploadIconWrapper} htmlFor="avatar">
-                                  <FontAwesomeIcon className={styles.uploadIcon} icon={faUpload} />
-                                </label>
-                              )}
+                      <div className="d-flex">
+                        <div className="mr-5">
+                          <div className="form-group">
+                            <label htmlFor="username">Username</label>
+                            <input
+                              name="username"
+                              type="text"
+                              className="form-control"
+                              value={user.username}
+                              readOnly
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label htmlFor="firstName">First name</label>
+                            <input
+                              name="firstName"
+                              type="text"
+                              className="form-control"
+                              value={values.firstName}
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label htmlFor="lastName">Last name</label>
+                            <input
+                              name="lastName"
+                              type="text"
+                              className="form-control"
+                              value={values.lastName}
+                              onChange={handleChange}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label htmlFor="country">Country</label>
+                            <CountryDropdown
+                              classes={styles.countrySelect}
+                              name="country"
+                              value={values.country}
+                              onChange={(value) => setFieldValue('country', value)}
+                            />
                           </div>
                         </div>
-                        <input
-                          id="avatar"
-                          name="avatar"
-                          type="file"
-                          className="form-control d-none"
-                          onChange={handleAvatarChange(setFieldValue)}
-                        />
+                        <div>
+                          <div className="form-group">
+                            <label>Avatar</label>
+                            <div className={styles.avatarContainer}>
+                              <div className={styles.aspectRatioBox}>
+                                {avatarUrl
+                                  ? (
+                                    <Fragment>
+                                      <img src={avatarUrl} />
+                                      {!avatarUrl.includes('avatar-default') && (
+                                        <div className={styles.overlay}>
+                                          <FontAwesomeIcon className={styles.deleteIcon} icon={faTimes}
+                                            onClick={handleAvatarDelete(setFieldValue)} />
+                                        </div>
+                                      )}
+                                    </Fragment>
+                                  ) : (
+                                    <label className={styles.uploadIconWrapper} htmlFor="avatar">
+                                      <FontAwesomeIcon className={styles.uploadIcon} icon={faUpload} />
+                                    </label>
+                                  )}
+                              </div>
+                            </div>
+                            <input
+                              id="avatar"
+                              name="avatar"
+                              type="file"
+                              className="form-control d-none"
+                              onChange={handleAvatarChange(setFieldValue)}
+                            />
+                          </div>
+                        </div>
                       </div>
                       <Button className="btn btn-dark" type="submit">Save</Button>
                     </form>
