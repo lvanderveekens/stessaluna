@@ -1,0 +1,30 @@
+@import '../../../css/colors';
+
+.avatar {
+    position: relative;
+
+    .imageWrapper {
+
+        width: 100%;
+        height: 100%;
+
+        border-radius: 50%;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .flag {
+        position: absolute;
+        bottom: 3px;
+        right: -3px;
+
+        height: unset !important;
+
+        border: 1px solid white;
+    }
+}

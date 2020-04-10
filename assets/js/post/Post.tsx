@@ -5,15 +5,11 @@ import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
 import { connect } from 'react-redux';
 import { addComment } from '../store/post/actions';
 import CommentSection from './comment/comment-section/CommentSection';
-import Linkify from 'linkifyjs/react';
-import * as linkify from 'linkifyjs';
-import YouTubeVideo from './video/YouTubeVideo';
 import User from '../user/user.interface';
-import AorbContent from '../exercise/aorb/aorb-exercise/AorbExercise';
 import { Dropdown } from 'react-bootstrap';
 import CustomToggle from '../dropdown/CustomToggle';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
-import ReactCountryFlag from "react-country-flag"
+import Avatar from '../user/avatar/Avatar';
 
 interface Props {
   id: number
@@ -39,7 +35,6 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
       return (
         <span>
           <span className={styles.fullName}>{author.firstName} {author.lastName}</span>
-          <ReactCountryFlag style={{ marginRight: '0.3rem' }} countryCode={author.country} svg />
           <span className={styles.usernameAfterFullName}>@{author.username}</span>
         </span>
       );
@@ -47,7 +42,6 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
     return (
       <span>
         <span style={{ marginRight: '0.3rem' }}>@{author.username}</span>
-        <ReactCountryFlag countryCode={author.country} svg />
       </span>
     )
   }
@@ -57,8 +51,8 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
       <div className={styles.content}>
         <div className={styles.header}>
           <div className="d-flex w-100">
-            <div className={styles.avatar}>
-              <img src={author.avatar} />
+            <div className="mr-3">
+              <Avatar src={author.avatar} countryCode={author.country} />
             </div>
             <div className={styles.usernameTimestampWrapper}>
               <div>{renderUserName()}</div>

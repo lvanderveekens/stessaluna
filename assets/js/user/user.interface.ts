@@ -4,7 +4,7 @@ interface User {
     firstName?: string
     lastName?: string
     country: string
-    avatar?: string
+    avatar: string
 }
 
 export default User

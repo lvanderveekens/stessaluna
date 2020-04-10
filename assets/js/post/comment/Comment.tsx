@@ -5,6 +5,7 @@ import { Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import CustomToggle from '../../dropdown/CustomToggle';
+import Avatar from '../../user/avatar/Avatar';
 
 interface Props {
   author: User
@@ -18,8 +19,8 @@ const Comment: FunctionComponent<Props> = ({ author, timestamp, text, user, onDe
 
   return (
     <div className={styles.comment}>
-      <div className={styles.avatar}>
-        <img src={author.avatar} />
+      <div style={{ marginRight: '0.7rem' }}>
+        <Avatar src={author.avatar} countryCode={author.country} size='small' />
       </div>
       <div className={styles.content}>
         <div className="d-flex">
