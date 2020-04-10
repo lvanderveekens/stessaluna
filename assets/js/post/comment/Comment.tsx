@@ -20,7 +20,7 @@ const Comment: FunctionComponent<Props> = ({ author, timestamp, text, user, onDe
   return (
     <div className={styles.comment}>
       <div style={{ marginRight: '0.7rem' }}>
-        <Avatar src={author.avatar} countryCode={author.country} size='small' />
+        <Avatar src={author.avatar} countryCode={author.country} size='sm' />
       </div>
       <div className={styles.content}>
         <div className="d-flex">

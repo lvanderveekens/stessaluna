@@ -5,13 +5,25 @@ import ReactCountryFlag from "react-country-flag";
 interface Props {
   src: string
   countryCode?: string
-  size?: 'small' | 'normal'
+  size?: 'xs' | 'sm' | 'md'
 }
 
-const Avatar: FC<Props> = ({ src, countryCode, size = 'normal' }) => {
+const Avatar: FC<Props> = ({ src, countryCode, size = 'md' }) => {
 
-  const avatarWidth = size === 'normal' ? 50 : 40;
-  const flagWidth = size === 'normal' ? 1.3 : 1.0;
+  let avatarWidth, flagWidth;
+  switch (size) {
+    case 'xs':
+      avatarWidth = 30;
+      flagWidth = 0.7;
+      break;
+    case 'sm':
+      avatarWidth = 40;
+      flagWidth = 1.0;
+      break;
+    case 'md':
+      avatarWidth = 50;
+      flagWidth = 1.3;
+  }
 
   return (
     <div

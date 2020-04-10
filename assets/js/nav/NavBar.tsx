@@ -7,6 +7,7 @@ import { logOut } from '../store/auth/actions';
 import User from '../user/user.interface';
 import { useMediaQuery } from 'react-responsive'
 import { State } from '../store';
+import Avatar from '../user/avatar/Avatar';
 
 interface Props {
   loggedIn: boolean
@@ -35,8 +36,8 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, loading, logOut }) =
       <>
         <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ border: 'unset', padding: 'unset' }}>
           <div className={styles.accountWrapperSmall}>
-            <div className={styles.avatar}>
-              <img src={user.avatar} />
+            <div style={{ marginRight: '0.7rem' }}>
+              <Avatar src={user.avatar} size='xs' />
             </div>
             <span className={styles.userText}>{user.username}</span>
           </div>
@@ -55,8 +56,8 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, loading, logOut }) =
     return (
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div className={styles.accountWrapperLarge}>
-          <div className={styles.avatar}>
-            <img src={user.avatar} />
+          <div style={{ marginRight: '0.7rem' }}>
+            <Avatar src={user.avatar} size='xs' />
           </div>
           <span className={styles.userText}>{user.username}</span>
         </div>
