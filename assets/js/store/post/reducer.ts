@@ -1,6 +1,5 @@
 import ActionTypes from './actionTypes';
 import { PostState } from './state.interface';
-import { ExercisePost } from '../../post/exercise/exercise-post.interface';
 
 const initialState = {
   loading: false,
@@ -33,7 +32,7 @@ const postReducer = (state: PostState = initialState, action) => {
     case ActionTypes.DELETE_POST_SUCCESS:
       return {
         ...state,
-        items: state.items.filter(post => post.id !== action.payload.id) 
+        items: state.items.filter(post => post.id !== action.payload.id)
       };
     case ActionTypes.ADD_COMMENT_SUCCESS:
       return {
@@ -55,9 +54,8 @@ const postReducer = (state: PostState = initialState, action) => {
       };
     case ActionTypes.SUBMIT_ANSWER_SUCCESS:
       const exercisePost = state.items
-        .filter((p) => p.type === 'exercise')
-        .map((p) => <ExercisePost>p)
-        .find((ep) => ep.exercise.id === action.payload.exercise.id)
+        .filter((p) => p.exercise)
+        .find((p) => p.exercise.id === action.payload.exercise.id)
 
       return {
         ...state,

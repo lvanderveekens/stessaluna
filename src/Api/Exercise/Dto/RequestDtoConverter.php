@@ -8,7 +8,7 @@ use Stessaluna\Api\Exercise\Aorb\Dto\SubmitAorbAnswerRequestDto;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-class RequestToDtoConverter
+class RequestDtoConverter
 {
     public static function toSubmitAnswerRequestDto(Request $req): SubmitAnswerRequestDto
     {
@@ -16,7 +16,7 @@ class RequestToDtoConverter
         switch ($type) {
             case 'aorb':
                 $request = new SubmitAorbAnswerRequestDto();
-                $request->choices = $req->get("choices");
+                $request->choices = $req->get('choices');
                 break;
             default:
                 throw new BadRequestHttpException("Received unknown answer type: $type");

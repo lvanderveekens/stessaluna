@@ -2,36 +2,51 @@
 
 namespace Stessaluna\Domain\Post\Entity;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Stessaluna\Domain\Exercise\Entity\Exercise;
 use Stessaluna\Domain\User\Entity\User;
 
 /**
  * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"text" = "Stessaluna\Domain\Post\Text\Entity\TextPost", "exercise" = "Stessaluna\Domain\Post\Exercise\Entity\ExercisePost"})
  */
-abstract class Post
+class Post
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    protected $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $createdAt;
+    private DateTimeInterface $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="Stessaluna\Domain\User\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
-    protected $user;
+    private User $author;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $text;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $imageFilename;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Stessaluna\Domain\Exercise\Entity\Exercise", orphanRemoval=true, cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+     */
+    private ?Exercise $exercise;
 
     /**
      * @ORM\OneToMany(targetEntity="Stessaluna\Domain\Post\Comment\Entity\Comment", mappedBy="post")
@@ -43,12 +58,12 @@ abstract class Post
         $this->comments = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -60,15 +75,49 @@ abstract class Post
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getAuthor(): User
     {
-        return $this->user;
+        return $this->author;
     }
 
-    public function setUser(?User $user): self
+    public function setAuthor(User $author): self
     {
-        $this->user = $user;
+        $this->author = $author;
 
+        return $this;
+    }
+
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function setText(string $text): self
+    {
+        $this->text = $text;
+        return $this;
+    }
+
+    public function getImageFilename(): ?string
+    {
+        return $this->imageFilename;
+    }
+
+    public function setImageFilename(?string $imageFilename): self
+    {
+        $this->imageFilename = $imageFilename;
+
+        return $this;
+    }
+
+    public function getExercise(): ?Exercise
+    {
+        return $this->exercise;
+    }
+
+    public function setExercise(?Exercise $exercise): self
+    {
+        $this->exercise = $exercise;
         return $this;
     }
 

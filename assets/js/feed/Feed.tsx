@@ -5,9 +5,6 @@ import { fetchPosts, deletePost } from '../store/post/actions';
 import moment from 'moment';
 import { Spinner } from 'react-bootstrap';
 import PostInterface from '../post/post.interface';
-import AorbExercise from '../exercise/aorb/aorb-exercise';
-import ExercisePostInterface from '../post/exercise/exercise-post.interface';
-import TextContent from '../post/text/TextContent';
 import { State } from '../store';
 
 interface Props {
@@ -22,22 +19,6 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
   useEffect(() => {
     fetchPosts();
   }, []);
-
-  const renderPostContent = (post: PostInterface) => {
-    switch(post.type) {
-      case 'text':
-        return <TextContent text={post.text} imageSrc={post.imagePath} />;
-      case 'exercise':
-        return renderExercise(post);
-    }
-  }
-
-  const renderExercise = (post: ExercisePostInterface) => {
-    switch(post.exercise.type) {
-      case 'aorb':
-        return <AorbExercise id={post.exercise.id} sentences={post.exercise.sentences} />
-    }
-  }
 
   const byDateDescending = (post: PostInterface, other: PostInterface) => (
     new Date(other.createdAt).getTime() - new Date(post.createdAt).getTime()
@@ -57,13 +38,14 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
               <Post
                 key={post.id}
                 id={post.id}
-                author={post.author}
                 timestamp={moment(post.createdAt).fromNow()}
+                author={post.author}
+                text={post.text}
+                image={post.image}
+                exercise={post.exercise}
                 onDelete={() => deletePost(post.id)}
                 comments={post.comments}
-              >
-                {renderPostContent(post)}
-              </Post>
+              />
             )
         )}
     </Fragment>

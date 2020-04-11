@@ -16,18 +16,6 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Domain/Post/Entity'
                 prefix: 'Stessaluna\Domain\Post\Entity'
                 alias: Post
-            TextPost:
-                is_bundle: false
-                type: annotation
-                dir: '%kernel.project_dir%/src/Domain/Post/Text/Entity'
-                prefix: 'Stessaluna\Domain\Post\Text\Entity'
-                alias: TextPost
-            ExercisePost:
-                is_bundle: false
-                type: annotation
-                dir: '%kernel.project_dir%/src/Domain/Post/Exercise/Entity'
-                prefix: 'Stessaluna\Domain\Post\Exercise\Entity'
-                alias: ExercisePost
             Exercise:
                 is_bundle: false
                 type: annotation

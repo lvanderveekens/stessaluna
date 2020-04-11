@@ -1,15 +1,15 @@
 import User from "../user/user.interface";
 import Comment from './comment/comment.interface';
-import TextPost from "./text/text-post.interface";
-import ExercisePost from "./exercise/exercise-post.interface";
+import Exercise from "../exercise/exercise.interface";
 
-type Post = TextPost | ExercisePost;
-
-export interface AbstractPost {
+export interface Post {
     id: number
     type: string
     createdAt: Date
     author: User
+    text?: string
+    image?: string
+    exercise?: Exercise
     comments: Comment[]
 }
 

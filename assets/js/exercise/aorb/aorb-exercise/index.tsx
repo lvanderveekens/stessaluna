@@ -11,7 +11,7 @@ interface Props {
     submitAnswer: (exerciseId: number, request: SubmitAorbAnswerRequest) => void
 }
 
-const AorbExerciseContainer: FunctionComponent<Props> = ({ id, sentences, submitAnswer }) => { 
+const AorbExerciseContainer: FunctionComponent<Props> = ({ id, sentences, submitAnswer }) => {
 
     const [choices, setChoices] = useState(new Array(sentences.length).fill(null) as ('a' | 'b')[]);
 
@@ -27,8 +27,13 @@ const AorbExerciseContainer: FunctionComponent<Props> = ({ id, sentences, submit
     const submitDisabled = sentences.some(s => s.choice.answer !== null);
 
     return (
-        <AorbExercise sentences={sentences} choices={choices} onChoice={handleChoice} onSubmit={handleSubmit}
-            submitDisabled={submitDisabled} />
+        <AorbExercise
+            sentences={sentences}
+            choices={choices}
+            onChoice={handleChoice}
+            onSubmit={handleSubmit}
+            submitDisabled={submitDisabled}
+        />
     )
 }
 

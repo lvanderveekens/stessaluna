@@ -1,15 +1,14 @@
 import React, { useState, FunctionComponent } from 'react';
-import styles from './TextContent.scss?module';
+import styles from './Text.scss?module';
 import Linkify from 'linkifyjs/react';
-import YouTubeVideo from '../video/YouTubeVideo';
+import EmbeddedYouTubeVideo from '../embed/EmbeddedYouTubeVideo';
 var linkify = require('linkifyjs');
 
 interface Props {
   text: string
-  imageSrc: string
 };
 
-const TextContent: FunctionComponent<Props> = ({ text, imageSrc }) => {
+const Text: FunctionComponent<Props> = ({ text }) => {
 
   let youtubeVideoId
   if (text) {
@@ -31,10 +30,9 @@ const TextContent: FunctionComponent<Props> = ({ text, imageSrc }) => {
       <div className={styles.text}>
         <Linkify>{text}</Linkify>
       </div>
-      {imageSrc && (<img className={styles.image} src={imageSrc} />)}
-      {youtubeVideoId && (<YouTubeVideo id={youtubeVideoId} />)}
+      {youtubeVideoId && (<EmbeddedYouTubeVideo id={youtubeVideoId} />)}
     </div>
   );
 };
 
-export default TextContent;
+export default Text;

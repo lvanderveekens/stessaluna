@@ -3,28 +3,24 @@
 namespace Stessaluna\Api\Post\Dto;
 
 use DateTimeInterface;
+use Stessaluna\Api\Exercise\Dto\ExerciseDto;
 use Stessaluna\Api\Post\Comment\Dto\CommentDto;
 use Stessaluna\Api\User\Dto\UserDto;
 
-abstract class PostDto
+class PostDto
 {
     public int $id;
-
-    private string $type;
 
     public DateTimeInterface $createdAt;
 
     public UserDto $author;
 
+    public ?string $text = null;
+
+    public ?string $image = null;
+
+    public ?ExerciseDto $exercise = null;
+
     /** @var CommentDto[] */
     public array $comments;
-
-    public function __construct(string $type)
-    {
-        $this->type = $type;
-    }
-
-    public function getType(): string {
-        return $this->type;
-    }
 }

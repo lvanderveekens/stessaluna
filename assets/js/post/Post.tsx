@@ -10,6 +10,9 @@ import { Dropdown } from 'react-bootstrap';
 import CustomToggle from '../dropdown/CustomToggle';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import Avatar from '../user/avatar/Avatar';
+import Exercise from '../exercise/exercise.interface';
+import AorbExercise from '../exercise/aorb/aorb-exercise';
+import Text from './text/Text';
 
 interface Props {
   id: number
@@ -17,12 +20,13 @@ interface Props {
   timestamp: string
   text?: string
   image?: string
+  exercise?: Exercise
   onDelete: () => void
   comments: any[]
   user: User,
 };
 
-const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, comments, onDelete, user, children }) => {
+const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, exercise, comments, onDelete, user }) => {
 
   const [showComments, setShowComments] = useState(false);
 
@@ -74,7 +78,9 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, co
             )}
           </div>
         </div>
-        {children}
+        {text && (<Text text={text} />)}
+        {image && (<img className={styles.image} src={image} />)}
+        {exercise && exercise.type === 'aorb' && (<AorbExercise id={exercise.id} sentences={exercise.sentences} />)}
       </div>
       <div className={styles.activity}>
         {comments && comments.length > 0 && (

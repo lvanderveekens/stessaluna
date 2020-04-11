@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Stessaluna\Api\Post\Controller;
 
 use Psr\Log\LoggerInterface;
-use Stessaluna\Api\Post\Dto\PostToDtoConverter;
+use Stessaluna\Api\Post\Dto\PostDtoConverter;
 use Stessaluna\Domain\Image\ImageStorage;
 use Stessaluna\Domain\Post\Entity\Post;
 use Stessaluna\Domain\Post\Exercise\Entity\ExercisePost;
@@ -26,18 +26,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
     private PostCreator $postCreator;
-    private PostToDtoConverter $postToDtoConverter;
+    private PostDtoConverter $postDtoConverter;
     private LoggerInterface $logger;
     private ImageStorage $imageStorage;
 
     public function __construct(
         PostCreator $postCreator,
-        PostToDtoConverter $postToDtoConverter,
+        PostDtoConverter $postDtoConverter,
         LoggerInterface $logger,
         ImageStorage $imageStorage
     ) {
         $this->postCreator = $postCreator;
-        $this->postToDtoConverter = $postToDtoConverter;
+        $this->postDtoConverter = $postDtoConverter;
         $this->logger = $logger;
         $this->imageStorage = $imageStorage;
     }
@@ -52,7 +52,7 @@ class PostController extends AbstractController
             ->findAll();
 
         return $this->json(array_map(function ($post) {
-            return $this->postToDtoConverter->toDto($post, $this->getUser());
+            return $this->postDtoConverter->toDto($post, $this->getUser());
         }, $posts));
     }
 
@@ -73,7 +73,7 @@ class PostController extends AbstractController
             default:
                 throw new BadRequestHttpException("Received unknown post type: $type");
         }
-        return $this->json($this->postToDtoConverter->toDto($post, $this->getUser()));
+        return $this->json($this->postDtoConverter->toDto($post, $this->getUser()));
     }
 
     private function createTextPost(Request $request): TextPost

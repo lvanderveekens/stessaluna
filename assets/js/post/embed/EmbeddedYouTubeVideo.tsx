@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react';
-import styles from './YouTubeVideo.scss?module';
+import styles from './EmbeddedYouTubeVideo.scss?module';
 
 interface Props {
   id: string
 };
 
-const YouTubeVideo: FunctionComponent<Props> = ({ id }) => {
+const EmbeddedYouTubeVideo: FunctionComponent<Props> = ({ id }) => {
 
   return (
     <div className={styles.videoContainer}>
@@ -17,4 +17,4 @@ const YouTubeVideo: FunctionComponent<Props> = ({ id }) => {
   );
 }
 
-export default YouTubeVideo;
+export default EmbeddedYouTubeVideo;

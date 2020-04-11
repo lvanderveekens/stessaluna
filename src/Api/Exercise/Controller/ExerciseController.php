@@ -6,8 +6,8 @@ namespace Stessaluna\Api\Exercise\Controller;
 
 use Psr\Log\LoggerInterface;
 use Stessaluna\Api\Exercise\Aorb\Dto\SubmitAorbAnswerRequestDto;
-use Stessaluna\Api\Exercise\Dto\ExerciseToDtoConverter;
-use Stessaluna\Api\Exercise\Dto\RequestToDtoConverter;
+use Stessaluna\Api\Exercise\Dto\ExerciseDtoConverter;
+use Stessaluna\Api\Exercise\Dto\RequestDtoConverter;
 use Stessaluna\Domain\Exercise\Answer\Aorb\Entity\AorbAnswer;
 use Stessaluna\Domain\Exercise\Answer\Entity\Answer;
 use Stessaluna\Domain\Exercise\Aorb\Entity\AorbExercise;
@@ -32,17 +32,17 @@ class ExerciseController extends AbstractController
 
     private ExerciseRepository $exerciseRepository;
 
-    private ExerciseToDtoConverter $exerciseToDtoConverter;
+    private ExerciseDtoConverter $exerciseDtoConverter;
 
     public function __construct(
         LoggerInterface $logger,
         ExerciseRepository $exerciseRepository,
-        ExerciseToDtoConverter $exerciseToDtoConverter
+        ExerciseDtoConverter $exerciseDtoConverter
     )
     {
         $this->logger = $logger;
         $this->exerciseRepository = $exerciseRepository;
-        $this->exerciseToDtoConverter = $exerciseToDtoConverter;
+        $this->exerciseDtoConverter = $exerciseDtoConverter;
     }
 
     /**
@@ -50,7 +50,7 @@ class ExerciseController extends AbstractController
      */
     public function submitAnswer(int $id, Request $request): JsonResponse
     {
-        $request = RequestToDtoConverter::toSubmitAnswerRequestDto($request);
+        $request = RequestDtoConverter::toSubmitAnswerRequestDto($request);
         $exercise = $this->exerciseRepository->findById($id);
 
         $answers = $exercise->getAnswers()->toArray();
@@ -73,6 +73,6 @@ class ExerciseController extends AbstractController
 
         $exercise->addAnswer($answer);
         $exercise = $this->exerciseRepository->save($exercise);
-        return $this->json($this->exerciseToDtoConverter->toDto($exercise, $this->getUser()));
+        return $this->json($this->exerciseDtoConverter->toDto($exercise, $this->getUser()));
     }
 }
