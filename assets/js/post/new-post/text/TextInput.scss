@@ -45,10 +45,11 @@
             margin: 0 0.5rem;
             border: 1px solid #ced4da;
 
-            &:before{
+            &:before {
                 content: "";
                 display: block;
-                padding-top: 100%; 	/* ratio of 1:1*/
+                padding-top: 100%;
+                /* ratio of 1:1*/
             }
 
             img {
@@ -75,9 +76,9 @@
                 right: 0;
                 bottom: 0;
                 left: 0;
-        
+
                 opacity: 0;
-        
+
                 &:hover {
                     opacity: 1;
                     transition: 0.3s;
@@ -88,38 +89,13 @@
                     z-index: 1;
                     font-size: 1rem;
                     line-height: 1rem;
-        
+
                     cursor: pointer;
-        
+
                     position: absolute;
                     top: 4px;
                     right: 4px;
                 }
-            }
-        }
-    }
-
-    .actions {
-        width: 100%;
-        background-color: #f5f5f5;
-        border-top: 1px solid #ced4da;
-
-        label {
-            margin: 0;
-        }
-
-        span {
-            display: inline-block;
-            height: 100%;
-            padding: 0 0.75rem;
-
-            svg {
-                margin-right: 0.4rem;
-            }
-
-            &:hover {
-                background-color: #e0e0e0e0;
-                cursor: pointer;
             }
         }
     }

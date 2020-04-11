@@ -10,7 +10,7 @@ interface Props {
 
 const Avatar: FC<Props> = ({ src, countryCode, size = 'md' }) => {
 
-  let avatarWidth, flagWidth;
+  let avatarWidth: number, flagWidth: number;
   switch (size) {
     case 'xs':
       avatarWidth = 30;
@@ -33,12 +33,14 @@ const Avatar: FC<Props> = ({ src, countryCode, size = 'md' }) => {
       <div className={styles.imageWrapper}>
         <img src={src} />
       </div>
-      <ReactCountryFlag
-        className={styles.flag}
-        style={{ width: flagWidth + 'rem' }}
-        countryCode={countryCode}
-        svg
-      />
+      {countryCode && (
+        <ReactCountryFlag
+          className={styles.flag}
+          style={{ width: flagWidth + 'rem' }}
+          countryCode={countryCode}
+          svg
+        />
+      )}
     </div>
   )
 }

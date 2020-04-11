@@ -1,23 +1,31 @@
-import React, { Fragment, useState, FC } from 'react';
-import NewTextPost from './text/NewTextPost';
-import NewExercisePost from './exercise/NewExercisePost';
+import React, { FC, useState } from 'react';
+import NewPostForm from './new-post-form';
+import { useMediaQuery } from 'react-responsive';
+import classNames from 'classnames';
 
 interface Props {
 }
 
 const NewPost: FC<Props> = ({ }) => {
 
-  // TODO: change back to text later
-  const [type, setType] = useState('text');
-  // const [type, setType] = useState('exercise');
+  const [top, setTop] = useState(0);
+  const isMobile = useMediaQuery({ maxWidth: 480 });
+
+  const newPostWrapperStyle = isMobile ? {} : { top: top };
+  const newPostWrapperClass = classNames({ 'position-sticky': !isMobile });
+
+  const refCallback = element => {
+    if (element) {
+      setTop(element.getBoundingClientRect().top);
+    }
+  };
 
   return (
-    <Fragment>
+    <div ref={refCallback} className={newPostWrapperClass} style={newPostWrapperStyle}>
       <h4>New post</h4>
-      {type === 'text' && (<NewTextPost onExercise={() => setType('exercise')} />)}
-      {type === 'exercise' && (<NewExercisePost onClose={() => setType('text')} />)}
-    </Fragment>
-  );
-};
+      <NewPostForm />
+    </div>
+  )
+}
 
 export default NewPost;
