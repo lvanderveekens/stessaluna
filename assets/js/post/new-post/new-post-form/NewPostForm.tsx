@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 import Exercise from '../../../exercise/exercise.interface';
 import ImagePreview from './image-preview/ImagePreview';
+import NewAorbExercise from '../exercise/aorb/NewAorbExercise';
 
 interface Props {
   user: User
@@ -26,6 +27,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
   const fileInput = useRef(null);
   const [imageUrl, setImageUrl] = useState("");
   const [submitError, setSubmitError] = useState(false);
+  const [showExercise, setShowExercise] = useState(false);
 
   const handleChangeImage = (setFieldValue) => (e) => {
     const image = e.currentTarget.files[0];
@@ -46,6 +48,9 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
 
   const handleClickExercise = () => {
     console.log("CLICKED");
+    // TODO: later let the user choose via a dropdown, but for now insert the aorb exercise
+
+    setShowExercise(true);
   }
 
   const handleSubmit = ({ text, image, exercise }, resetForm) => {
@@ -95,16 +100,20 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
                 <ImagePreview src={imageUrl} onDelete={handleDeleteImage(setFieldValue)} />
               </div>
             )}
+            {showExercise && (
+              // TODO: rename to AorbExerciseInput ?
+              <NewAorbExercise />
+            )}
             <div className={styles.actions}>
-              <button className={styles.button} type="button" onClick={handleClickImage} disabled={values.image}>
+              <button className={styles.button} type="button" onClick={handleClickImage} disabled={values.image || showExercise}>
                 <FontAwesomeIcon icon={faImage} /> Image
               </button>
-              <button className={styles.button} type="button" onClick={handleClickExercise} disabled={values.image}>
+              <button className={styles.button} type="button" onClick={handleClickExercise} disabled={values.image || showExercise}>
                 <FontAwesomeIcon icon={faGraduationCap} /> Exercise
               </button>
+              <button className={styles.submitButton} type="submit">Create</button>
             </div>
           </div>
-          <Button className="btn btn-dark mb-2" type="submit">Create</Button>
           {submitError && (<div className="alert alert-danger">Something went wrong. Please try again later.</div>)}
         </Form>
       )}

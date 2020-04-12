@@ -1,3 +1,5 @@
+@import '../../../../css/colors';
+
 .newPostForm {
 
     .inputBox {
@@ -33,6 +35,10 @@
     }
 
     .actions {
+
+        display: flex;
+        align-items: center;
+
         width: 100%;
         background-color: #f5f5f5;
         border-top: 1px solid #ced4da;
@@ -42,10 +48,31 @@
             background: none;
             outline: none;
 
-            padding: 0 0.75rem;
+            margin-left: 0.75rem;
+            padding: 0.3rem 0rem;
 
             &:enabled:hover {
                 background-color: #e0e0e0e0;
+            }
+        }
+
+        .submitButton {
+            margin-top: 0.3rem;
+            margin-right: 0.3rem;
+            margin-bottom: 0.3rem;
+            margin-left: auto;
+
+            padding: 0.3rem 0.75rem;
+
+            color: $brand-primary;
+            background: $brand-secondary;
+
+            border: none;
+            border-radius: 0.5rem;
+            outline: none;
+
+            &:hover {
+                background-color: black;
             }
         }
     }

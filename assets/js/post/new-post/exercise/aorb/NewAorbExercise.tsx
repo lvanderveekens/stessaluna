@@ -10,11 +10,11 @@ import { AorbInputValue } from './aorb-input/aorb-input.interface';
 import { NewAorbPost } from './new-aorb-post.interface';
 
 interface Props {
-  onClose: () => void
-  createPost: (post: NewAorbPost) => Promise<void>
+  // onClose: () => void
+  // createPost: (post: NewAorbPost) => Promise<void>
 }
 
-const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
+const NewAorbExercise: FC<Props> = ({ }) => {
 
   // TODO: split into presentational and container components
   const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false);
@@ -46,8 +46,8 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
       textAfter: s.value.textAfter,
     } as AorbInputValue));
 
-    createPost(new NewAorbPost(sentences))
-      .then(resetInput);
+    // createPost(new NewAorbPost(sentences))
+    //   .then(resetInput);
   };
 
   const resetInput = () => {
@@ -80,7 +80,7 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
       <div>
         <div className={styles.header}>
           <span>A or B</span>
-          <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={onClose} />
+          <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={() => console.log("CLICKED")} />
         </div>
         <div className={styles.sentences}>
           {renderInputs()}
@@ -91,7 +91,6 @@ const NewAorbExercise: FC<Props> = ({ onClose, createPost }) => {
           </span>
         </div>
       </div>
-      <Button className="btn btn-dark mb-2" type="submit" onClick={onSubmit} disabled={!submitButtonEnabled}>Create</Button>
     </div>
   );
 };

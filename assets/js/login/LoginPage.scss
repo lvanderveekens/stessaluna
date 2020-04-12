@@ -1,6 +1,8 @@
 @import '../../css/colors';
 
-:export { stessalunaBrandSecondary: $stessaluna-brand-secondary; }
+:export {
+    stessalunaBrandSecondary: $brand-secondary;
+}
 
 .errorMessage {
     color: #dc3545
@@ -15,7 +17,8 @@
 
 .header {
     margin-bottom: 3rem;
-    text-align: center;;
+    text-align: center;
+    ;
 
-    color: $stessaluna-brand-primary;
+    color: $brand-primary;
 }

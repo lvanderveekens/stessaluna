@@ -2,7 +2,7 @@
 
 .nav {
     color: white;
-    background-color: $stessaluna-brand-secondary;
+    background-color: $brand-secondary;
     margin-bottom: 1.5rem;
     padding: 0;
 
@@ -30,7 +30,7 @@
             font-weight: bold;
 
             a {
-                color: $stessaluna-brand-primary;
+                color: $brand-primary;
             }
         }
     }
@@ -43,7 +43,7 @@
         padding: 0.3rem 0.5rem;
 
         .userText {
-            color: $stessaluna-brand-primary;
+            color: $brand-primary;
         }
     }
 
@@ -78,7 +78,7 @@
         }
 
         .userText {
-            color: $stessaluna-brand-primary;
+            color: $brand-primary;
         }
     }
 
@@ -90,6 +90,7 @@
             background-color: #424b52;
         }
     }
+
     .mobileNav {
         text-align: center;
     }
