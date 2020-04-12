@@ -1,4 +1,4 @@
-import React, { Fragment, useState, FC, useRef } from 'react';
+import React, { Fragment, useState, FC, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Formik } from 'formik';
@@ -13,7 +13,7 @@ import ImagePreview from './image-preview/ImagePreview';
 
 interface Props {
   user: User
-  onSubmit: (text?: string, image?: File, exercise?: Exercise) => void
+  onSubmit: (text?: string, image?: File, exercise?: Exercise) => boolean
 }
 
 const schema = yup.object({
@@ -26,6 +26,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
 
   const fileInput = useRef(null);
   const [imageUrl, setImageUrl] = useState("");
+  const [submitError, setSubmitError] = useState(null);
 
   const handleChangeImage = (setFieldValue) => (e) => {
     const image = e.currentTarget.files[0];
@@ -48,11 +49,21 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
     console.log("CLICKED");
   }
 
+  const handleSubmit = ({ text, image, exercise }, resetForm) => {
+    const success = onSubmit(text, image, exercise);
+    if (success) {
+      fileInput.current.value = null;
+      resetForm();
+    } else {
+      setSubmitError(true);
+    }
+  }
+
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={({ text, image, exercise }) => onSubmit(text, image, exercise)}
-      initialValues={{ text: '', image: null, exercise: null }}
+      onSubmit={({ text, image, exercise }, { resetForm }) => handleSubmit({ text, image, exercise }, resetForm)}
+      initialValues={{ text: null, image: null, exercise: null }}
       validateOnChange={false}
       validateOnBlur={false}
     >
@@ -63,7 +74,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
               className={`${styles.textInput} form-control`}
               type="text"
               name="text"
-              value={values.text}
+              value={values.text || ''}
               placeholder={user && `What's new, ${user.username}?`}
               onChange={handleChange}
             />
@@ -91,6 +102,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
             </div>
           </div>
           <Button className="btn btn-dark mb-2" type="submit">Create</Button>
+          {submitError && (<div className="alert alert-danger">Something went wrong. Please try again later.</div>)}
         </Form>
       )}
     </Formik>
