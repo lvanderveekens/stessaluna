@@ -96,10 +96,10 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
               </div>
             )}
             <div className={styles.actions}>
-              <button className={styles.button} type="button" onClick={handleClickImage}>
+              <button className={styles.button} type="button" onClick={handleClickImage} disabled={values.image}>
                 <FontAwesomeIcon icon={faImage} /> Image
               </button>
-              <button className={styles.button} type="button" onClick={handleClickExercise}>
+              <button className={styles.button} type="button" onClick={handleClickExercise} disabled={values.image}>
                 <FontAwesomeIcon icon={faGraduationCap} /> Exercise
               </button>
             </div>
