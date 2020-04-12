@@ -19,7 +19,7 @@ class Post
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private int $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="datetime")
@@ -35,18 +35,18 @@ class Post
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private ?string $text;
+    private ?string $text = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private ?string $imageFilename;
+    private ?string $imageFilename = null;
 
     /**
      * @ORM\OneToOne(targetEntity="Stessaluna\Domain\Exercise\Entity\Exercise", orphanRemoval=true, cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
-    private ?Exercise $exercise;
+    private ?Exercise $exercise = null;
 
     /**
      * @ORM\OneToMany(targetEntity="Stessaluna\Domain\Post\Comment\Entity\Comment", mappedBy="post")
@@ -58,7 +58,7 @@ class Post
         $this->comments = new ArrayCollection();
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

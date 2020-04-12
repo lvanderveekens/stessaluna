@@ -5,6 +5,7 @@ import User from '../../../user/user.interface';
 import { createPost } from '../../../store/post/actions';
 import { State } from '../../../store';
 import Exercise from '../../../exercise/exercise.interface';
+import { Spinner } from 'react-bootstrap';
 
 interface Props {
   user: User
@@ -16,17 +17,11 @@ const NewPostFormContainer: FC<Props> = ({ user, createPost }) => {
   const handleSubmit = (text?: string, image?: File, exercise?: Exercise) => {
     console.log("submitting...");
     console.log({ text, image, exercise });
+    return createPost(text, image, exercise)
+  }
 
-    let success: boolean
-    createPost(text, image, exercise)
-      .then(() => {
-        success = true;
-      })
-      .catch((error) => {
-        console.log(error);
-        success = false;
-      });
-    return success;
+  if (!user) {
+    return <Spinner animation="border" variant="warning" />
   }
 
   return (

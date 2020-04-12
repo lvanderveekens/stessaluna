@@ -1,5 +1,4 @@
-import React, { Fragment, useState, FC, useRef, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, FC, useRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Formik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
@@ -7,13 +6,13 @@ import styles from './NewPostForm.scss?module';
 import * as yup from 'yup';
 import User from '../../../user/user.interface';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage, faGraduationCap, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 import Exercise from '../../../exercise/exercise.interface';
 import ImagePreview from './image-preview/ImagePreview';
 
 interface Props {
   user: User
-  onSubmit: (text?: string, image?: File, exercise?: Exercise) => boolean
+  onSubmit: (text?: string, image?: File, exercise?: Exercise) => Promise<void>
 }
 
 const schema = yup.object({
@@ -26,7 +25,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
 
   const fileInput = useRef(null);
   const [imageUrl, setImageUrl] = useState("");
-  const [submitError, setSubmitError] = useState(null);
+  const [submitError, setSubmitError] = useState(false);
 
   const handleChangeImage = (setFieldValue) => (e) => {
     const image = e.currentTarget.files[0];
@@ -50,13 +49,17 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
   }
 
   const handleSubmit = ({ text, image, exercise }, resetForm) => {
-    const success = onSubmit(text, image, exercise);
-    if (success) {
-      fileInput.current.value = null;
-      resetForm();
-    } else {
-      setSubmitError(true);
-    }
+    setSubmitError(false);
+
+    onSubmit(text, image, exercise).
+      then(() => {
+        fileInput.current.value = null;
+        resetForm();
+      })
+      .catch((e) => {
+        console.log(e);
+        setSubmitError(true);
+      })
   }
 
   return (

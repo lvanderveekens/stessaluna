@@ -24,9 +24,20 @@ export const fetchPosts = () => {
   function error() { return { type: ActionTypes.FETCH_POSTS_ERROR }; };
 };
 
-export const createPost = (post: NewPost) => {
+export const createPost = (text?: string, image?: File, exercise?: Exercise) => {
   return dispatch => {
-    return axios.post('/api/posts', toRequest(post))
+    const data = new FormData();
+    if (text) {
+      data.append('text', text);
+    }
+    if (image) {
+      data.append('image', image);
+    }
+    // if (exercise) {
+    //   data.append('exercise', exercise);
+    // }
+
+    return axios.post('/api/posts', data)
       .then(res => {
         console.log(res.data);
         dispatch(success(res.data));
@@ -37,17 +48,6 @@ export const createPost = (post: NewPost) => {
   };
 
   function success(post) { return { type: ActionTypes.CREATE_POST_SUCCESS, payload: { post } }; };
-
-  function toRequest(post: NewPost) {
-    let data: any = post;
-    if (post instanceof NewTextPost) {
-      data = new FormData();
-      data.append('type', post.type);
-      data.append('text', post.text);
-      data.append('image', post.image);
-    }
-    return data;
-  }
 };
 
 export const deletePost = (id) => {

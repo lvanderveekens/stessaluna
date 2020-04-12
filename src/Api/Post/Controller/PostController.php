@@ -10,7 +10,6 @@ use Stessaluna\Domain\Image\ImageStorage;
 use Stessaluna\Domain\Post\Entity\Post;
 use Stessaluna\Domain\Post\Exercise\Entity\ExercisePost;
 use Stessaluna\Domain\Post\Service\PostCreator;
-use Stessaluna\Domain\Post\Text\Entity\TextPost;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,42 +60,28 @@ class PostController extends AbstractController
      */
     public function createPost(Request $request): JsonResponse
     {
-        // TODO: parse request object instead of separate parameters?
-        $type = $request->get('type');
-        switch ($type) {
-            case 'text':
-                $post = $this->createTextPost($request);
-                break;
-            case 'exercise':
-                $post = $this->createExercisePost($request);
-                break;
-            default:
-                throw new BadRequestHttpException("Received unknown post type: $type");
-        }
-        return $this->json($this->postDtoConverter->toDto($post, $this->getUser()));
-    }
-
-    private function createTextPost(Request $request): TextPost
-    {
-        return $this->postCreator->createTextPost(
+        $post = $this->postCreator->createPost(
             $request->get('text'),
             $request->files->get('image'),
             $this->getUser()
         );
+
+        return $this->json($this->postDtoConverter->toDto($post, $this->getUser()));
     }
 
-    private function createExercisePost(Request $request): ExercisePost {
-        $exercise = $request->get('exercise');
-        $type = $exercise['type'];
-        switch ($type) {
-            case 'aorb':
-                $post = $this->postCreator->createAorbExercisePost($exercise['sentences'], $this->getUser());
-                break;
-            default:
-                throw new BadRequestHttpException("Received unknown post type: $type");
-        }
-        return $post;
-    }
+    // private function createExercisePost(Request $request): ExercisePost
+    // {
+    //     $exercise = $request->get('exercise');
+    //     $type = $exercise['type'];
+    //     switch ($type) {
+    //         case 'aorb':
+    //             $post = $this->postCreator->createAorbExercisePost($exercise['sentences'], $this->getUser());
+    //             break;
+    //         default:
+    //             throw new BadRequestHttpException("Received unknown post type: $type");
+    //     }
+    //     return $post;
+    // }
 
     /**
      * @Route("/{id}", methods={"DELETE"})
@@ -107,12 +92,12 @@ class PostController extends AbstractController
         // move this to domain?
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository(Post::class)->find($id);
-        if (!$post) {
+        if (! $post) {
             return new NotFoundHttpException();
         }
 
-        if ($this->getUser()->getId() != $post->getUser()->getId()) {
-            throw new AccessDeniedHttpException("Only the author can delete this post");
+        if ($this->getUser()->getId() != $post->getAuthor()->getId()) {
+            throw new AccessDeniedHttpException('Only the author can delete this post');
         }
 
         if ($post->getImageFilename()) {
@@ -122,6 +107,6 @@ class PostController extends AbstractController
         $em->remove($post);
         $em->flush();
 
-        return new Response('Deleted post with id ' . $id);
+        return new Response('Deleted post with id '.$id);
     }
 }
