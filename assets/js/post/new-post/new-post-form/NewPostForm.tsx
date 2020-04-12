@@ -9,6 +9,7 @@ import User from '../../../user/user.interface';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faGraduationCap, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Exercise from '../../../exercise/exercise.interface';
+import ImagePreview from './image-preview/ImagePreview';
 
 interface Props {
   user: User
@@ -26,7 +27,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
   const fileInput = useRef(null);
   const [imageUrl, setImageUrl] = useState("");
 
-  const handleImageChange = (setFieldValue) => (e) => {
+  const handleChangeImage = (setFieldValue) => (e) => {
     const image = e.currentTarget.files[0];
     if (image) {
       setFieldValue("image", image);
@@ -34,10 +35,18 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
     }
   };
 
-  const handleDeleteImageClick = (setFieldValue) => (e) => {
+  const handleDeleteImage = (setFieldValue) => () => {
     setFieldValue("image", null);
     fileInput.current.value = null;
   };
+
+  const handleClickImage = () => {
+    fileInput.current.click();
+  }
+
+  const handleClickExercise = () => {
+    console.log("CLICKED");
+  }
 
   return (
     <Formik
@@ -63,27 +72,22 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
               id="image"
               name="image"
               type="file"
-              onChange={handleImageChange(setFieldValue)}
+              onChange={handleChangeImage(setFieldValue)}
               accept=".jpg,.png"
               ref={fileInput}
             />
             {values.image && (
               <div className={styles.images}>
-                <div className={styles.imageContainer}>
-                  <img src={imageUrl} />
-                  <div className={styles.imageOverlay}>
-                    <FontAwesomeIcon className={styles.removeIcon} icon={faTimes} onClick={handleDeleteImageClick(setFieldValue)} />
-                  </div>
-                </div>
+                <ImagePreview src={imageUrl} onDelete={handleDeleteImage(setFieldValue)} />
               </div>
             )}
             <div className={styles.actions}>
-              <Form.Label htmlFor="image">
-                <span><FontAwesomeIcon icon={faImage} />Image</span>
-              </Form.Label>
-              <span onClick={() => console.log("CLICKED")}>
-                <FontAwesomeIcon icon={faGraduationCap} />Exercise
-              </span>
+              <button className={styles.button} type="button" onClick={handleClickImage}>
+                <FontAwesomeIcon icon={faImage} /> Image
+              </button>
+              <button className={styles.button} type="button" onClick={handleClickExercise}>
+                <FontAwesomeIcon icon={faGraduationCap} /> Exercise
+              </button>
             </div>
           </div>
           <Button className="btn btn-dark mb-2" type="submit">Create</Button>
