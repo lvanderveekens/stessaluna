@@ -3,18 +3,15 @@ import styles from './NewAorbExercise.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 import AorbInput from './aorb-input/AorbInput';
-import { Button } from 'react-bootstrap';
 import { createPost } from '../../../../store/post/actions';
 import { connect } from 'react-redux';
 import { AorbInputValue } from './aorb-input/aorb-input.interface';
-import { NewAorbPost } from './new-aorb-post.interface';
 
 interface Props {
-  // onClose: () => void
-  // createPost: (post: NewAorbPost) => Promise<void>
+  onClose: () => void
 }
 
-const NewAorbExercise: FC<Props> = ({ }) => {
+const NewAorbExercise: FC<Props> = ({ onClose }) => {
 
   // TODO: split into presentational and container components
   const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false);
@@ -80,7 +77,7 @@ const NewAorbExercise: FC<Props> = ({ }) => {
       <div>
         <div className={styles.header}>
           <span>A or B</span>
-          <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={() => console.log("CLICKED")} />
+          <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={onClose} />
         </div>
         <div className={styles.sentences}>
           {renderInputs()}
@@ -95,8 +92,4 @@ const NewAorbExercise: FC<Props> = ({ }) => {
   );
 };
 
-const actionCreators = {
-  createPost,
-};
-
-export default connect(null, actionCreators)(NewAorbExercise);
+export default NewAorbExercise;

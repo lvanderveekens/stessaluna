@@ -2,42 +2,57 @@
 
 .newPostForm {
 
-    .inputBox {
-        border: 1px solid #ced4da;
+    border: 1px solid #ced4da;
 
-        border-radius: 0.5rem;
-        margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
 
-        overflow: hidden;
+    overflow: hidden;
 
-        .textInput {
-            border: none;
-            resize: none;
-            margin-bottom: 0.8rem;
+    .textInput {
+        border: none;
+        resize: none;
+        padding: 0;
+        margin: 1rem;
+        width: calc(100% - 2rem);
 
-            &:focus {
-                box-shadow: none;
-            }
-        }
-
-        .imageInput {
-            width: 0.1px;
-            height: 0.1px;
-            opacity: 0;
-            overflow: hidden;
-            position: absolute;
-            z-index: -1;
+        &:focus {
+            box-shadow: none;
         }
     }
 
+    .imageInput {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+
     .images {
-        margin-bottom: 0.4rem;
+        display: flex;
+        justify-content: space-between;
+
+        margin: 0 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .exercise {
+
+        margin: 0 1rem;
+        margin-bottom: 1rem;
+        padding: 1rem;
+
+        border: 1px solid #ced4da;
+        border-radius: 0.5rem;
     }
 
     .actions {
 
         display: flex;
-        align-items: center;
+
+        padding: 0 1rem;
 
         width: 100%;
         background-color: #f5f5f5;
@@ -48,7 +63,7 @@
             background: none;
             outline: none;
 
-            margin-left: 0.75rem;
+            margin-right: 0.75rem;
             padding: 0.3rem 0rem;
 
             &:enabled:hover {
@@ -57,12 +72,10 @@
         }
 
         .submitButton {
-            margin-top: 0.3rem;
-            margin-right: 0.3rem;
-            margin-bottom: 0.3rem;
+            margin: 0.3rem 0;
             margin-left: auto;
 
-            padding: 0.3rem 0.75rem;
+            padding: 0.3rem 0.7rem;
 
             color: $brand-primary;
             background: $brand-secondary;

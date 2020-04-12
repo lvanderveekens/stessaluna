@@ -1,9 +1,7 @@
 import ActionTypes from "./actionTypes";
 import axios from '../../http/client';
-import { NewPost } from "../../post/new-post/new-post.interface";
 import Exercise from "../../exercise/exercise.interface";
 import { SubmitAnswerRequest } from "../../exercise/submit-answer/request.interface";
-import { NewTextPost } from "../../post/new-post/text/new-text-post.interface";
 
 export const fetchPosts = () => {
   return dispatch => {
