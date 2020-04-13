@@ -1,25 +1,25 @@
 import React, { FC, useState } from 'react';
-import styles from './AorbForm.scss?module';
-import { AorbInputChoice } from '../aorb-input.interface';
+import styles from './AorbChoiceForm.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { AorbChoiceInput } from '../aorb-sentence-input.model';
 
 interface Props {
-  choice?: AorbInputChoice,
-  onSubmit: (a: string, b: string) => void;
+  choice?: AorbChoiceInput,
+  onSubmit: (value: AorbChoiceInput) => void;
 }
 
-const AorbForm: FC<Props> = ({ choice, onSubmit }) => {
+const AorbChoiceForm: FC<Props> = ({ choice, onSubmit }) => {
 
-  const [aInput, setAInput] = useState('');
-  const [bInput, setBInput] = useState('');
+  const [a, setA] = useState('');
+  const [b, setB] = useState('');
 
   const handleSubmit = (e) => {
-    onSubmit(aInput, bInput);
+    onSubmit({ a, b });
 
     // reset form
-    setAInput('');
-    setBInput('');
+    setA('');
+    setB('');
   }
 
   return (
@@ -32,8 +32,8 @@ const AorbForm: FC<Props> = ({ choice, onSubmit }) => {
               <input
                 name="a"
                 type="text"
-                value={aInput}
-                onChange={(e) => setAInput(e.target.value)}
+                value={a}
+                onChange={(e) => setA(e.target.value)}
               />
             </div>
             <div className={styles.bInputGroup}>
@@ -41,8 +41,8 @@ const AorbForm: FC<Props> = ({ choice, onSubmit }) => {
               <input
                 name="b"
                 type="text"
-                value={bInput}
-                onChange={(e) => setBInput(e.target.value)}
+                value={b}
+                onChange={(e) => setB(e.target.value)}
               />
             </div>
           </div>
@@ -51,6 +51,7 @@ const AorbForm: FC<Props> = ({ choice, onSubmit }) => {
           </button>
         </div>
       )}
+      {/* TODO: probably not the right place for this..., because why can choice be null... */}
       {choice && !choice.correct && (
         <span className={styles.markAsCorrectHint}>Click on A or B to mark it as correct.</span>
       )}
@@ -58,4 +59,4 @@ const AorbForm: FC<Props> = ({ choice, onSubmit }) => {
   )
 };
 
-export default AorbForm;
+export default AorbChoiceForm;

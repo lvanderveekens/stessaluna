@@ -1,21 +1,21 @@
 import React, { FC, useCallback, useState } from 'react';
-import styles from './AorbEditor.scss?module';
+import styles from './AorbSentenceEditor.scss?module';
 import { Slate, Editable, ReactEditor } from 'slate-react';
 import Element from './element/Element';
 import Leaf from './leaf/Leaf';
 import { Node } from 'slate';
-import { AorbInputValue } from '../aorb-input.interface';
+import { AorbSentenceInput } from '../aorb-sentence-input.model';
 
 interface Props {
   editor: ReactEditor
-  value: AorbInputValue,
-  onChange: (value: AorbInputValue) => void;
+  value: AorbSentenceInput,
+  onChange: (change: AorbSentenceInput) => void;
 }
 
-const AorbEditor: FC<Props> = ({ editor, value, onChange }) => {
+const AorbSentenceEditor: FC<Props> = ({ editor, value, onChange }) => {
 
   const renderElement = props => <Element {...props} value={value} onChange={onChange} />;
-  const renderLeaf = useCallback(props => { return <Leaf {...props} /> }, []) 
+  const renderLeaf = useCallback(props => { return <Leaf {...props} /> }, [])
 
   const [editorValue, setEditorValue] = useState(() => {
     if (value.choice) {
@@ -28,7 +28,7 @@ const AorbEditor: FC<Props> = ({ editor, value, onChange }) => {
       }] as any
     } else {
       return [{
-        children: [{ text: value.textBefore }]
+        children: [{ text: value.textBefore || '' }]
       }] as any
     }
   });
@@ -51,7 +51,7 @@ const AorbEditor: FC<Props> = ({ editor, value, onChange }) => {
         choice = { ...value.choice, a: elements[1].a, b: elements[1].b };
         textAfter = elements[2].text;
       }
-      const realChange = { textBefore, choice, textAfter };
+      const realChange = { ...value, textBefore, choice, textAfter };
       onChange(realChange);
     }
   };
@@ -73,4 +73,4 @@ const AorbEditor: FC<Props> = ({ editor, value, onChange }) => {
   )
 }
 
-export default AorbEditor;
+export default AorbSentenceEditor;

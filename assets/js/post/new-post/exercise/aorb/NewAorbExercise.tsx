@@ -1,75 +1,56 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import styles from './NewAorbExercise.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
-import AorbInput from './aorb-input/AorbInput';
-import { createPost } from '../../../../store/post/actions';
-import { connect } from 'react-redux';
-import { AorbInputValue } from './aorb-input/aorb-input.interface';
+import AorbSentenceInput from './aorb-sentence-input/AorbSentenceInput';
+import AorbExercise, { AorbSentence } from '../../../../exercise/aorb/aorb-exercise.model';
+import AorbSentenceInputValue from './aorb-sentence-input/aorb-sentence-input.model';
+import { NewAorbExercise as NewAorbExerciseModel } from './new-aorb-exercise.model';
 
 interface Props {
+  onChange: (change: NewAorbExerciseModel) => void
   onClose: () => void
 }
 
-const NewAorbExercise: FC<Props> = ({ onClose }) => {
+const NewAorbExercise: FC<Props> = ({ onChange, onClose }) => {
 
   // TODO: split into presentational and container components
-  const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false);
+  // const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false);
 
-  const [inputValues, setInputValues] = useState([
-    { id: 1, value: { textBefore: "" } }
-  ] as { id: number, value: AorbInputValue }[]);
+  const nextId = () => aorbSentences && aorbSentences.length ? (aorbSentences[aorbSentences.length - 1].id + 1) : 1
+
+  const [aorbSentences, setAorbSentences] = useState([{ id: nextId() }] as AorbSentenceInputValue[]);
+
+  useEffect(() => {
+    // const sentences = inputValues.map((value) => value as AorbSentence);
+    // const exercise = new NewAorbExerciseModel(sentences);
+    // onChange(exercise);
+  }, [aorbSentences]);
 
   const addSentence = () => {
-    const nextId = inputValues.length ? (inputValues[inputValues.length - 1].id + 1) : 1
-    const newInputValue = { id: nextId, value: { textBefore: "" } };
-    const newInputValues = [...inputValues, newInputValue]
-    setSubmitButtonEnabled(false);
-    setInputValues(newInputValues);
+    const newInputValue = { id: nextId() };
+    const newInputValues = [...aorbSentences, newInputValue]
+    // setSubmitButtonEnabled(false);
+    setAorbSentences(newInputValues);
   }
 
   const deleteInput = (index: number) => () => {
-    const newInputValues = [...inputValues];
+    const newInputValues = [...aorbSentences];
     newInputValues.splice(index, 1);
-    setSubmitButtonEnabled(newInputValues.every(({ value }) => value.choice && value.choice.correct));
-    setInputValues(newInputValues);
+    // setSubmitButtonEnabled(newInputValues.every(({ value }) => value.choice && value.choice.correct));
+    setAorbSentences(newInputValues);
   }
-
-  const onSubmit = () => {
-    // TODO: validate or disable create button until everything's all and well
-    const sentences = inputValues.map((s) => ({
-      textBefore: s.value.textBefore,
-      choice: { a: s.value.choice.a, b: s.value.choice.b, correct: s.value.choice.correct },
-      textAfter: s.value.textAfter,
-    } as AorbInputValue));
-
-    // createPost(new NewAorbPost(sentences))
-    //   .then(resetInput);
-  };
 
   const resetInput = () => {
-    const nextId = inputValues.length ? (inputValues[inputValues.length - 1].id + 1) : 1
-    setInputValues([{ id: nextId, value: { textBefore: "" } }]);
-    setSubmitButtonEnabled(false);
+    setAorbSentences([{ id: nextId(), textBefore: "" }]);
+    // setSubmitButtonEnabled(false);
   }
 
-  const handleChange = (index: number) => (change: AorbInputValue) => {
-    const newInputValues = [...inputValues];
-    newInputValues[index].value = change;
-    setSubmitButtonEnabled(newInputValues.every(({ value }) => value.choice && value.choice.correct));
-    setInputValues(newInputValues);
-  }
-
-  const renderInputs = () => {
-    return inputValues.map((inputValue, i) => (
-      <div key={inputValue.id} className={styles.inputRow}>
-        <div className={styles.inputIndex}>{i + 1}.</div>
-        <AorbInput value={inputValue.value} onChange={handleChange(i)} />
-        <div className={styles.deleteInput} onClick={deleteInput(i)}>
-          <FontAwesomeIcon icon={faTimes} />
-        </div>
-      </div>
-    ))
+  const handleChange = (index: number) => (change: AorbSentenceInputValue) => {
+    const newInputValues = [...aorbSentences];
+    newInputValues[index] = { ...newInputValues[index], ...change };
+    // setSubmitButtonEnabled(newInputValues.every(({ value }) => value.choice && value.choice.correct));
+    setAorbSentences(newInputValues);
   }
 
   return (
@@ -80,7 +61,15 @@ const NewAorbExercise: FC<Props> = ({ onClose }) => {
           <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={onClose} />
         </div>
         <div className={styles.sentences}>
-          {renderInputs()}
+          {aorbSentences.map((sentence, i) => (
+            <div key={sentence.id} className={styles.inputRow}>
+              <div className={styles.inputIndex}>{i + 1}.</div>
+              <AorbSentenceInput value={sentence} onChange={handleChange(i)} />
+              <div className={styles.deleteInput} onClick={deleteInput(i)}>
+                <FontAwesomeIcon icon={faTimes} />
+              </div>
+            </div>
+          ))}
         </div>
         <div className={styles.addSentence}>
           <span className={styles.addIcon} onClick={addSentence}>

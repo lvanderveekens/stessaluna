@@ -10,7 +10,7 @@ import { Dropdown } from 'react-bootstrap';
 import CustomToggle from '../dropdown/CustomToggle';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import Avatar from '../user/avatar/Avatar';
-import Exercise from '../exercise/exercise.interface';
+import Exercise from '../exercise/exercise.model';
 import AorbExercise from '../exercise/aorb/aorb-exercise';
 import Text from './text/Text';
 

@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from "react";
-import { AorbSentence as AorbSentenceInterface } from '../aorb-exercise.interface'
+import { AorbSentence as AorbSentenceInterface } from '../aorb-exercise.model';
 import AorbExercise from "./AorbExercise";
 import { connect } from 'react-redux';
 import { submitAnswer } from '../../../store/post/actions';

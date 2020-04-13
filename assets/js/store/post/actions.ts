@@ -1,6 +1,6 @@
 import ActionTypes from "./actionTypes";
 import axios from '../../http/client';
-import Exercise from "../../exercise/exercise.interface";
+import Exercise from "../../exercise/exercise.model";
 import { SubmitAnswerRequest } from "../../exercise/submit-answer/request.interface";
 
 export const fetchPosts = () => {
@@ -31,9 +31,9 @@ export const createPost = (text?: string, image?: File, exercise?: Exercise) => 
     if (image) {
       data.append('image', image);
     }
-    // if (exercise) {
-    //   data.append('exercise', exercise);
-    // }
+    if (exercise) {
+      data.append('exercise', JSON.stringify(exercise));
+    }
 
     return axios.post('/api/posts', data)
       .then(res => {

@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
 import styles from './AorbElement.scss?module';
-import { AorbInputValue } from '../../aorb-input.interface';
 import classNames from 'classnames/bind';
+import { AorbSentenceInput } from '../../aorb-sentence-input.model';
 let cx = classNames.bind(styles);
 
 interface Props {
   attributes,
   children,
   element,
-  value: AorbInputValue,
-  onChange: (value: AorbInputValue) => void
+  value: AorbSentenceInput,
+  onChange: (value: AorbSentenceInput) => void
 }
 
 const AorbElement: FC<Props> = ({ attributes, children, element, value, onChange }) => {

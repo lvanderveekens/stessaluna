@@ -7,9 +7,10 @@ import * as yup from 'yup';
 import User from '../../../user/user.interface';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
-import Exercise from '../../../exercise/exercise.interface';
 import ImagePreview from './image-preview/ImagePreview';
 import NewAorbExercise from '../exercise/aorb/NewAorbExercise';
+import Exercise from '../../../exercise/exercise.model';
+import AorbExercise from '../../../exercise/aorb/aorb-exercise.model';
 
 interface Props {
   user: User
@@ -71,7 +72,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
     <Formik
       validationSchema={schema}
       onSubmit={({ text, image, exercise }, { resetForm }) => handleSubmit({ text, image, exercise }, resetForm)}
-      initialValues={{ text: null, image: null, exercise: null }}
+      initialValues={{ text: null, image: null, exercise: null } as { text?: string, image?: File, exercise?: Exercise }}
       validateOnChange={false}
       validateOnBlur={false}
     >
@@ -101,14 +102,17 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
           )}
           {showExercise && (
             <div className={styles.exercise}>
-              <NewAorbExercise onClose={() => setShowExercise(false)} />
+              <NewAorbExercise
+                onChange={(change) => console.log(change)}
+                onClose={() => setShowExercise(false)}
+              />
             </div>
           )}
           <div className={styles.actions}>
-            <button className={styles.button} type="button" onClick={handleClickImage} disabled={values.image || showExercise}>
+            <button className={styles.button} type="button" onClick={handleClickImage} disabled={!!values.image || showExercise}>
               <FontAwesomeIcon icon={faImage} /> Image
               </button>
-            <button className={styles.button} type="button" onClick={handleClickExercise} disabled={values.image || showExercise}>
+            <button className={styles.button} type="button" onClick={handleClickExercise} disabled={!!values.image || showExercise}>
               <FontAwesomeIcon icon={faGraduationCap} /> Exercise
               </button>
             <button className={styles.submitButton} type="submit">Create</button>

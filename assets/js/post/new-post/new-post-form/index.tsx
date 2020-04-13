@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import User from '../../../user/user.interface';
 import { createPost } from '../../../store/post/actions';
 import { State } from '../../../store';
-import Exercise from '../../../exercise/exercise.interface';
 import { Spinner } from 'react-bootstrap';
+import Exercise from '../../../exercise/exercise.model';
 
 interface Props {
   user: User

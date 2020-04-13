@@ -1,6 +1,6 @@
 import User from "../user/user.interface";
 import Comment from './comment/comment.interface';
-import Exercise from "../exercise/exercise.interface";
+import Exercise from "../exercise/exercise.model";
 
 export interface Post {
     id: number
