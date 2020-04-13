@@ -17,40 +17,38 @@ const NewAorbExercise: FC<Props> = ({ onChange, onClose }) => {
   // TODO: split into presentational and container components
   // const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false);
 
-  const nextId = () => aorbSentences && aorbSentences.length ? (aorbSentences[aorbSentences.length - 1].id + 1) : 1
+  const nextId = () => sentences && sentences.length ? (sentences[sentences.length - 1].id + 1) : 1
 
-  const [aorbSentences, setAorbSentences] = useState([{ id: nextId() }] as AorbSentenceInputValue[]);
+  const [sentences, setSentences] = useState([{ id: nextId() }] as AorbSentenceInputValue[]);
 
   useEffect(() => {
-    // const sentences = inputValues.map((value) => value as AorbSentence);
-    // const exercise = new NewAorbExerciseModel(sentences);
-    // onChange(exercise);
-  }, [aorbSentences]);
+    onChange(new NewAorbExerciseModel(sentences));
+  }, [sentences]);
 
   const addSentence = () => {
     const newInputValue = { id: nextId() };
-    const newInputValues = [...aorbSentences, newInputValue]
+    const newInputValues = [...sentences, newInputValue]
     // setSubmitButtonEnabled(false);
-    setAorbSentences(newInputValues);
+    setSentences(newInputValues);
   }
 
   const deleteInput = (index: number) => () => {
-    const newInputValues = [...aorbSentences];
+    const newInputValues = [...sentences];
     newInputValues.splice(index, 1);
     // setSubmitButtonEnabled(newInputValues.every(({ value }) => value.choice && value.choice.correct));
-    setAorbSentences(newInputValues);
+    setSentences(newInputValues);
   }
 
   const resetInput = () => {
-    setAorbSentences([{ id: nextId(), textBefore: "" }]);
+    setSentences([{ id: nextId(), textBefore: "" }]);
     // setSubmitButtonEnabled(false);
   }
 
   const handleChange = (index: number) => (change: AorbSentenceInputValue) => {
-    const newInputValues = [...aorbSentences];
+    const newInputValues = [...sentences];
     newInputValues[index] = { ...newInputValues[index], ...change };
     // setSubmitButtonEnabled(newInputValues.every(({ value }) => value.choice && value.choice.correct));
-    setAorbSentences(newInputValues);
+    setSentences(newInputValues);
   }
 
   return (
@@ -61,7 +59,7 @@ const NewAorbExercise: FC<Props> = ({ onChange, onClose }) => {
           <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={onClose} />
         </div>
         <div className={styles.sentences}>
-          {aorbSentences.map((sentence, i) => (
+          {sentences.map((sentence, i) => (
             <div key={sentence.id} className={styles.inputRow}>
               <div className={styles.inputIndex}>{i + 1}.</div>
               <AorbSentenceInput value={sentence} onChange={handleChange(i)} />

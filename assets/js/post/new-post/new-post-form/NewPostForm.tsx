@@ -11,6 +11,7 @@ import ImagePreview from './image-preview/ImagePreview';
 import NewAorbExercise from '../exercise/aorb/NewAorbExercise';
 import Exercise from '../../../exercise/exercise.model';
 import AorbExercise from '../../../exercise/aorb/aorb-exercise.model';
+import NewExercise from '../exercise/new-exercise.model';
 
 interface Props {
   user: User
@@ -36,6 +37,10 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
       setFieldValue("image", image);
       setImageUrl(URL.createObjectURL(image));
     }
+  };
+
+  const handleChangeExercise = (setFieldValue) => (change: NewExercise) => {
+    setFieldValue("exercise", change);
   };
 
   const handleDeleteImage = (setFieldValue) => () => {
@@ -103,7 +108,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
           {showExercise && (
             <div className={styles.exercise}>
               <NewAorbExercise
-                onChange={(change) => console.log(change)}
+                onChange={handleChangeExercise(setFieldValue)}
                 onClose={() => setShowExercise(false)}
               />
             </div>
