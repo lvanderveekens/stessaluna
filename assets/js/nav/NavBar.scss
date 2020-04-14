@@ -42,6 +42,10 @@
 
         padding: 0.3rem 0.5rem;
 
+        &:hover {
+            cursor: pointer;
+        }
+
         .userText {
             color: $brand-primary;
         }
@@ -79,15 +83,6 @@
 
         .userText {
             color: $brand-primary;
-        }
-    }
-
-    .link {
-        padding: 0.3rem 0.5rem;
-
-        &:hover {
-            cursor: pointer;
-            background-color: #424b52;
         }
     }
 

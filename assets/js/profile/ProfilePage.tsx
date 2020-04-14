@@ -66,7 +66,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
       <NavBar />
       <Container>
         <Row className="justify-content-center">
-          <Col className={styles.centered} sm={8} md={6} lg={5} xl={4}>
+          <Col className={styles.centered} sm={8} md={6} lg={5} xl={5}>
             <h4 className="mb-3">Profile</h4>
             {loading && (
               <span style={{ padding: '0 0.5rem' }}><Spinner animation="border" variant="warning" /></span>

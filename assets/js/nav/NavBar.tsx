@@ -1,13 +1,13 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Navbar, Container, Spinner, Nav } from "react-bootstrap";
+import { Navbar, Container, Spinner, Nav, Dropdown } from "react-bootstrap";
 import styles from './NavBar.scss?module';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logOut } from '../store/auth/actions';
 import User from '../user/user.interface';
-import { useMediaQuery } from 'react-responsive'
 import { State } from '../store';
 import Avatar from '../user/avatar/Avatar';
+import CustomToggle from '../dropdown/CustomToggle';
 
 interface Props {
   loggedIn: boolean
@@ -18,7 +18,6 @@ interface Props {
 
 const NavBar: FunctionComponent<Props> = ({ loggedIn, user, loading, logOut }) => {
 
-  const isMobile = useMediaQuery({ maxWidth: 480 });
   const [expanded, setExpanded] = useState(false);
 
   const renderMenu = () => {
@@ -28,42 +27,21 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, loading, logOut }) =
     if (!loggedIn || !user) {
       return <Link className={styles.link} to="/login">Login</Link>;
     }
-    return isMobile ? renderMobileMenu() : renderDesktopMenu();
-  }
-
-  const renderMobileMenu = () => {
     return (
-      <>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ border: 'unset', padding: 'unset' }}>
-          <div className={styles.accountWrapperSmall}>
+      <Dropdown className={styles.dropDown} alignRight={true}>
+        <Dropdown.Toggle as={CustomToggle} id="something">
+          <div className={styles.accountWrapperLarge}>
             <div style={{ marginRight: '0.7rem' }}>
               <Avatar src={user.avatar} size='xs' />
             </div>
             <span className={styles.userText}>{user.username}</span>
           </div>
-        </Navbar.Toggle>
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className={styles.mobileNav} onSelect={() => setExpanded(false)}>
-            <Link className={styles.link} to="/profile" onClick={() => setExpanded(false)}>Profile</Link>
-            <Link className={styles.link} to="/login" onClick={() => { setExpanded(false); logOut(); }}>Logout</Link>
-          </Nav>
-        </Navbar.Collapse>
-      </>
-    );
-  };
-
-  const renderDesktopMenu = () => {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div className={styles.accountWrapperLarge}>
-          <div style={{ marginRight: '0.7rem' }}>
-            <Avatar src={user.avatar} size='xs' />
-          </div>
-          <span className={styles.userText}>{user.username}</span>
-        </div>
-        <Link className={styles.link} to="/profile">Profile</Link>
-        <Link className={styles.link} to="/login" onClick={() => logOut()}>Logout</Link>
-      </div>
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item><Link to="/profile">Profile</Link></Dropdown.Item>
+          <Dropdown.Item><Link to="/login" onClick={() => logOut()}>Logout</Link></Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     );
   }
 
