@@ -94,7 +94,7 @@ return PhpCsFixer\Config::create()
         'indentation_type' => true,
         'no_spaces_after_function_name' => true,
         'no_spaces_inside_parenthesis' => true,
-        'not_operator_with_successor_space' => true,
+        // 'not_operator_with_successor_space' => true,
     ])
     //->setIndent("\t")
     ->setLineEnding("\n");

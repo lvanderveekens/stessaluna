@@ -1,18 +1,18 @@
 import React, { FC, useState, useEffect } from 'react'
-import styles from './NewAorbExercise.scss?module';
+import styles from './AorbExerciseInput.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 import AorbSentenceInput from './aorb-sentence-input/AorbSentenceInput';
 import AorbExercise, { AorbSentence } from '../../../../exercise/aorb/aorb-exercise.model';
 import AorbSentenceInputValue from './aorb-sentence-input/aorb-sentence-input.model';
-import { NewAorbExercise as NewAorbExerciseModel } from './new-aorb-exercise.model';
+import AorbExerciseInputValue from './aorb-exercise-input.model';
 
 interface Props {
-  onChange: (change: NewAorbExerciseModel) => void
+  onChange: (change: AorbExerciseInputValue) => void
   onClose: () => void
 }
 
-const NewAorbExercise: FC<Props> = ({ onChange, onClose }) => {
+const AorbExerciseInput: FC<Props> = ({ onChange, onClose }) => {
 
   // TODO: split into presentational and container components
   // const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false);
@@ -22,7 +22,7 @@ const NewAorbExercise: FC<Props> = ({ onChange, onClose }) => {
   const [sentences, setSentences] = useState([{ id: nextId() }] as AorbSentenceInputValue[]);
 
   useEffect(() => {
-    onChange(new NewAorbExerciseModel(sentences));
+    onChange(new AorbExerciseInputValue(sentences));
   }, [sentences]);
 
   const addSentence = () => {
@@ -79,4 +79,4 @@ const NewAorbExercise: FC<Props> = ({ onChange, onClose }) => {
   );
 };
 
-export default NewAorbExercise;
+export default AorbExerciseInput;

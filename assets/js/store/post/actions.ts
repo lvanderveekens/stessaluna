@@ -2,6 +2,7 @@ import ActionTypes from "./actionTypes";
 import axios from '../../http/client';
 import Exercise from "../../exercise/exercise.model";
 import { SubmitAnswerRequest } from "../../exercise/submit-answer/request.interface";
+import ExerciseInputValue from "../../post/new-post/exercise/exercise-input.model";
 
 export const fetchPosts = () => {
   return dispatch => {
@@ -22,7 +23,7 @@ export const fetchPosts = () => {
   function error() { return { type: ActionTypes.FETCH_POSTS_ERROR }; };
 };
 
-export const createPost = (text?: string, image?: File, exercise?: Exercise) => {
+export const createPost = (text?: string, image?: File, exercise?: ExerciseInputValue) => {
   return dispatch => {
     const data = new FormData();
     if (text) {

@@ -1,11 +1,13 @@
-import NewExercise from "../new-exercise.model";
+import ExerciseInputValue from "../exercise-input.model";
 import { AorbSentenceInput } from "./aorb-sentence-input/aorb-sentence-input.model";
 
-export class NewAorbExercise implements NewExercise {
-    type: 'aorb'
+export class AorbExerciseInputValue extends ExerciseInputValue {
     sentences: AorbSentenceInput[]
 
     constructor(sentences: AorbSentenceInput[]) {
+        super('aorb');
         this.sentences = sentences
     }
 }
+
+export default AorbExerciseInputValue;
