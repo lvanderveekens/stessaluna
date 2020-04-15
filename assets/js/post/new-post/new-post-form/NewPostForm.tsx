@@ -3,7 +3,6 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { Formik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import styles from './NewPostForm.scss?module';
-import * as yup from 'yup';
 import User from '../../../user/user.interface';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
@@ -11,17 +10,12 @@ import ImagePreview from './image-preview/ImagePreview';
 import Exercise from '../../../exercise/exercise.model';
 import ExerciseInputValue from '../exercise/exercise-input.model';
 import AorbExerciseInput from '../exercise/aorb-exercise-input/AorbExerciseInput';
+import { newPostSchema } from './schema';
 
 interface Props {
   user: User
   onSubmit: (text?: string, image?: File, exercise?: ExerciseInputValue) => Promise<void>
 }
-
-const schema = yup.object({
-  text: yup.mixed(),
-  image: yup.mixed(),
-  exercise: yup.mixed(),
-});
 
 const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
 
@@ -75,13 +69,13 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
 
   return (
     <Formik
-      validationSchema={schema}
+      validationSchema={newPostSchema}
       onSubmit={({ text, image, exercise }, { resetForm }) => handleSubmit({ text, image, exercise }, resetForm)}
-      initialValues={{ text: null, image: null, exercise: null } as { text?: string, image?: File, exercise?: Exercise }}
+      initialValues={{ text: null, image: null, exercise: null } as { text?: string, image?: File, exercise?: ExerciseInputValue }}
       validateOnChange={false}
       validateOnBlur={false}
     >
-      {({ handleSubmit, handleChange, setFieldValue, values }) => (
+      {({ handleSubmit, handleChange, setFieldValue, values, touched, errors }) => (
         <Form className={styles.newPostForm} noValidate onSubmit={handleSubmit}>
           <div className={styles.wrapper}>
             <TextareaAutosize
@@ -92,6 +86,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
               placeholder={user && `What's new, ${user.username}?`}
               onChange={handleChange}
             />
+            {touched.text && errors.text && (<div>{errors.text}</div>)}
             <Form.Control
               className={styles.imageInput}
               id="image"
@@ -114,6 +109,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
                 />
               </div>
             )}
+            {touched.exercise && errors.exercise && (<div>{JSON.stringify(errors.exercise)}</div>)}
             <div className={styles.actions}>
               <button className={styles.button} type="button" onClick={handleClickImage} disabled={!!values.image || showExercise}>
                 <FontAwesomeIcon icon={faImage} /> Image
@@ -121,6 +117,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
               <button className={styles.button} type="button" onClick={handleClickExercise} disabled={!!values.image || showExercise}>
                 <FontAwesomeIcon icon={faGraduationCap} /> Exercise
               </button>
+              {/* TODO: block submit if while all form values are still null */}
               <button className={styles.submitButton} type="submit">Create</button>
             </div>
           </div>

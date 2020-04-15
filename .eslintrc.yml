@@ -1,7 +1,8 @@
 env:
+  # jest: true
   browser: true
   es6: true
-extends: 'plugin:react/recommended'
+extends: "plugin:react/recommended"
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
@@ -13,10 +14,11 @@ parserOptions:
 plugins:
   - react
   - unused-imports
-rules: {
-  "no-unused-vars": "off",
-  "no-undef": 2,
-  "unused-imports/no-unused-imports": 2,
-  "unused-imports/no-unused-vars": 1,
-  "semi": [2, "always"],
-}
+rules:
+  {
+    "no-unused-vars": "off",
+    "no-undef": 2,
+    "unused-imports/no-unused-imports": 2,
+    "unused-imports/no-unused-vars": 1,
+    "semi": [2, "always"],
+  }
