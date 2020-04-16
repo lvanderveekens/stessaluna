@@ -1,7 +1,7 @@
 import React, { useState, FC, useRef, ChangeEvent } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Formik } from 'formik';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Dropdown } from 'react-bootstrap';
 import styles from './NewPostForm.scss?module';
 import User from '../../../user/user.interface';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +10,7 @@ import ImagePreview from './image-preview/ImagePreview';
 import ExerciseInputValue from '../exercise/exercise-input.model';
 import AorbExerciseInput from '../exercise/aorb-exercise-input/AorbExerciseInput';
 import { schema } from './schema';
+import CustomToggle from '../../../dropdown/CustomToggle';
 
 interface Props {
   user: User
@@ -125,12 +126,19 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
               </div>
             )}
             <div className={styles.actions}>
-              <button className={styles.button} type="button" onClick={handleClickImage} disabled={!!values.image || showExercise}>
+              <button className={styles.button} type="button" onClick={handleClickImage} disabled={!!values.image || !!values.exercise}>
                 <FontAwesomeIcon icon={faImage} /> Image
               </button>
-              <button className={styles.button} type="button" onClick={handleClickExercise} disabled={!!values.image || showExercise}>
-                <FontAwesomeIcon icon={faGraduationCap} /> Exercise
-              </button>
+              <Dropdown className={styles.exerciseDropdown}>
+                <Dropdown.Toggle as={CustomToggle} id="something">
+                  <button className={styles.button} type="button" disabled={!!values.image || !!values.exercise}>
+                    <FontAwesomeIcon icon={faGraduationCap} /> Exercise
+                  </button>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => console.log("CLICKED")}>A or B</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
               {/* TODO: block submit if while all form values are still null */}
               <button className={styles.submitButton} type="submit" disabled={allNull(values) || !isValid}>Create</button>
             </div>
