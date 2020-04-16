@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-export const newPostFormSchema = yup.object().shape({
+export const schema = yup.object().shape({
   text: yup.string().nullable(),
   image: yup.mixed(),
   exercise: yup.lazy(value => {

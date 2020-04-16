@@ -10,7 +10,7 @@ import ImagePreview from './image-preview/ImagePreview';
 import Exercise from '../../../exercise/exercise.model';
 import ExerciseInputValue from '../exercise/exercise-input.model';
 import AorbExerciseInput from '../exercise/aorb-exercise-input/AorbExerciseInput';
-import { newPostSchema } from './schema';
+import { schema } from './schema';
 
 interface Props {
   user: User
@@ -69,7 +69,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
 
   return (
     <Formik
-      validationSchema={newPostSchema}
+      validationSchema={schema}
       onSubmit={({ text, image, exercise }, { resetForm }) => handleSubmit({ text, image, exercise }, resetForm)}
       initialValues={{ text: null, image: null, exercise: null } as { text?: string, image?: File, exercise?: ExerciseInputValue }}
       validateOnChange={false}

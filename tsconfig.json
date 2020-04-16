@@ -3,5 +3,8 @@
         "sourceMap": true,
         "jsx": "react",
         "esModuleInterop": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ],
     }
 }
