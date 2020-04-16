@@ -31,7 +31,7 @@ const AorbExercise: FunctionComponent<Props> = ({ sentences, choices, onChoice, 
           </div>
         ))}
       </div>
-      <div><Button className="btn btn-dark" type="submit" onClick={onSubmit} disabled={submitDisabled}>Check</Button></div>
+      <div><Button className="btn btn-dark ml-auto d-block" type="submit" onClick={onSubmit} disabled={submitDisabled}>Check</Button></div>
     </div>
   );
 };

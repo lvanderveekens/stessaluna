@@ -16,7 +16,7 @@ export const schema = yup.object().shape({
                 b: yup.string().required(),
                 correct: yup.string().required()
               }),
-              textAfter: yup.string().required(),
+              textAfter: yup.string().nullable(),
             })
           )
         });

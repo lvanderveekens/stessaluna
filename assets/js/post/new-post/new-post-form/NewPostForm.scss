@@ -84,8 +84,12 @@
             border-radius: 0.5rem;
             outline: none;
 
-            &:hover {
+            &:enabled:hover {
                 background-color: black;
+            }
+
+            &:disabled {
+                opacity: .65;
             }
         }
     }

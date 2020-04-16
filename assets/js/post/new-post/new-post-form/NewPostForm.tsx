@@ -1,4 +1,4 @@
-import React, { useState, FC, useRef } from 'react';
+import React, { useState, FC, useRef, ChangeEvent } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Formik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
@@ -7,7 +7,6 @@ import User from '../../../user/user.interface';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 import ImagePreview from './image-preview/ImagePreview';
-import Exercise from '../../../exercise/exercise.model';
 import ExerciseInputValue from '../exercise/exercise-input.model';
 import AorbExerciseInput from '../exercise/aorb-exercise-input/AorbExerciseInput';
 import { schema } from './schema';
@@ -17,6 +16,12 @@ interface Props {
   onSubmit: (text?: string, image?: File, exercise?: ExerciseInputValue) => Promise<void>
 }
 
+interface Values {
+  text?: string
+  image?: File
+  exercise?: ExerciseInputValue
+}
+
 const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
 
   const fileInput = useRef(null);
@@ -24,13 +29,18 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
   const [submitError, setSubmitError] = useState(false);
   const [showExercise, setShowExercise] = useState(false);
 
-  const handleChangeImage = (setFieldValue) => (e) => {
+  const handleChangeImage = (setFieldValue) => (e: ChangeEvent<HTMLInputElement>) => {
     const image = e.currentTarget.files[0];
     if (image) {
       setFieldValue("image", image);
       setImageUrl(URL.createObjectURL(image));
     }
   };
+
+  const handleChangeText = (setFieldValue) => (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setFieldValue("text", value || null)
+  }
 
   const handleChangeExercise = (setFieldValue) => (change: ExerciseInputValue) => {
     setFieldValue("exercise", change);
@@ -48,11 +58,15 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
   const handleClickExercise = () => {
     console.log("CLICKED");
     // TODO: later let the user choose via a dropdown, but for now insert the aorb exercise
-
     setShowExercise(true);
   }
 
-  const handleSubmit = ({ text, image, exercise }, resetForm) => {
+  const handleCloseExercise = (setFieldValue) => () => {
+    setShowExercise(false);
+    setFieldValue("exercise", null)
+  }
+
+  const handleSubmit = ({ text, image, exercise }: Values, resetForm) => {
     setSubmitError(false);
 
     onSubmit(text, image, exercise).
@@ -67,15 +81,17 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
       })
   }
 
+  const allNull = ({ text, image, exercise }: Values) => {
+    return text === null && image === null && exercise === null
+  }
+
   return (
     <Formik
       validationSchema={schema}
       onSubmit={({ text, image, exercise }, { resetForm }) => handleSubmit({ text, image, exercise }, resetForm)}
-      initialValues={{ text: null, image: null, exercise: null } as { text?: string, image?: File, exercise?: ExerciseInputValue }}
-      validateOnChange={false}
-      validateOnBlur={false}
+      initialValues={{ text: null, image: null, exercise: null } as Values}
     >
-      {({ handleSubmit, handleChange, setFieldValue, values, touched, errors }) => (
+      {({ handleSubmit, setFieldValue, values, isValid }) => (
         <Form className={styles.newPostForm} noValidate onSubmit={handleSubmit}>
           <div className={styles.wrapper}>
             <TextareaAutosize
@@ -84,9 +100,8 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
               name="text"
               value={values.text || ''}
               placeholder={user && `What's new, ${user.username}?`}
-              onChange={handleChange}
+              onChange={handleChangeText(setFieldValue)}
             />
-            {touched.text && errors.text && (<div>{errors.text}</div>)}
             <Form.Control
               className={styles.imageInput}
               id="image"
@@ -105,11 +120,10 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
               <div className={styles.exercise}>
                 <AorbExerciseInput
                   onChange={handleChangeExercise(setFieldValue)}
-                  onClose={() => setShowExercise(false)}
+                  onClose={handleCloseExercise(setFieldValue)}
                 />
               </div>
             )}
-            {touched.exercise && errors.exercise && (<div>{JSON.stringify(errors.exercise)}</div>)}
             <div className={styles.actions}>
               <button className={styles.button} type="button" onClick={handleClickImage} disabled={!!values.image || showExercise}>
                 <FontAwesomeIcon icon={faImage} /> Image
@@ -118,7 +132,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
                 <FontAwesomeIcon icon={faGraduationCap} /> Exercise
               </button>
               {/* TODO: block submit if while all form values are still null */}
-              <button className={styles.submitButton} type="submit">Create</button>
+              <button className={styles.submitButton} type="submit" disabled={allNull(values) || !isValid}>Create</button>
             </div>
           </div>
           {submitError && (<div className="alert alert-danger">Something went wrong. Please try again later.</div>)}

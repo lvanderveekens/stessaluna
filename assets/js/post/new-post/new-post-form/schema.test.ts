@@ -1,32 +1,38 @@
 import { validateYupSchema } from "formik";
 import { schema } from "./schema";
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { ValidationError } from 'yup';
 
-test('all fields are null', async () => {
-  const value = { text: null, image: null, exercise: null };
 
-  const resultPromise = validateYupSchema(value, schema)
+describe('aorb exercise', function () {
 
-  await expect(resultPromise).resolves.not.toBeNull();
-});
+  it('requires sentences', async () => {
+    const value = { text: null, image: null, exercise: { type: 'aorb' } };
 
-test('aorb exercise misses sentences', async () => {
-  const value = { text: null, image: null, exercise: { type: 'aorb' } };
+    const resultPromise = validateYupSchema(value, schema)
 
-  const resultPromise = validateYupSchema(value, schema)
+    await expect(resultPromise).rejects.toThrow('exercise.sentences is a required field');
+  });
 
-  await expect(resultPromise).rejects.toThrow('exercise.sentences is a required field');
-});
+  it('requires the correct choice', async () => {
+    const value = {
+      text: null,
+      image: null,
+      exercise: { type: 'aorb', sentences: [{ textBefore: 'How ', choice: { a: 'is', b: 'are' }, textAfter: ' you?' }] }
+    };
 
-test('aorb choice misses correct option', async () => {
-  const value = {
-    text: null,
-    image: null,
-    exercise: { type: 'aorb', sentences: [{ textBefore: 'How ', choice: { a: 'is', b: 'are' }, textAfter: ' you?' }] }
-  };
+    const resultPromise = validateYupSchema(value, schema)
 
-  const resultPromise = validateYupSchema(value, schema)
+    await expect(resultPromise).rejects.toThrow('exercise.sentences[0].choice.correct is a required field');
+  });
 
-  await expect(resultPromise).rejects.toThrow('exercise.sentences[0].choice.correct is a required field');
+  it('does not require text after the choice', async () => {
+    const value = {
+      text: null,
+      image: null,
+      exercise: { type: 'aorb', sentences: [{ textBefore: 'How ', choice: { a: 'is', b: 'are', correct: 'a' } }] }
+    };
+
+    const resultPromise = validateYupSchema(value, schema)
+
+    await expect(resultPromise).resolves.not.toBeNull();
+  });
 });
