@@ -11,6 +11,7 @@ import ExerciseInputValue from '../exercise/exercise-input.model';
 import AorbExerciseInput from '../exercise/aorb-exercise-input/AorbExerciseInput';
 import { schema } from './schema';
 import CustomToggle from '../../../dropdown/CustomToggle';
+import { ExerciseType } from '../../../exercise/exercise.model';
 
 interface Props {
   user: User
@@ -28,7 +29,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
   const fileInput = useRef(null);
   const [imageUrl, setImageUrl] = useState("");
   const [submitError, setSubmitError] = useState(false);
-  const [showExercise, setShowExercise] = useState(false);
+  const [exerciseType, setExerciseType] = useState<ExerciseType>(null);
 
   const handleChangeImage = (setFieldValue) => (e: ChangeEvent<HTMLInputElement>) => {
     const image = e.currentTarget.files[0];
@@ -56,14 +57,8 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
     fileInput.current.click();
   }
 
-  const handleClickExercise = () => {
-    console.log("CLICKED");
-    // TODO: later let the user choose via a dropdown, but for now insert the aorb exercise
-    setShowExercise(true);
-  }
-
   const handleCloseExercise = (setFieldValue) => () => {
-    setShowExercise(false);
+    setExerciseType(null);
     setFieldValue("exercise", null)
   }
 
@@ -74,7 +69,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
       then(() => {
         fileInput.current.value = null;
         resetForm();
-        setShowExercise(false);
+        setExerciseType(null);
       })
       .catch((e) => {
         console.log(e);
@@ -84,6 +79,20 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
 
   const allNull = ({ text, image, exercise }: Values) => {
     return text === null && image === null && exercise === null
+  }
+
+  const renderExerciseInput = (setFieldValue) => {
+    switch (exerciseType) {
+      case ExerciseType.AORB:
+        return (
+          <AorbExerciseInput
+            onChange={handleChangeExercise(setFieldValue)}
+            onClose={handleCloseExercise(setFieldValue)}
+          />
+        )
+      default:
+        break;
+    }
   }
 
   return (
@@ -117,12 +126,9 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
                 <ImagePreview src={imageUrl} onDelete={handleDeleteImage(setFieldValue)} />
               </div>
             )}
-            {showExercise && (
+            {exerciseType && (
               <div className={styles.exercise}>
-                <AorbExerciseInput
-                  onChange={handleChangeExercise(setFieldValue)}
-                  onClose={handleCloseExercise(setFieldValue)}
-                />
+                {renderExerciseInput(setFieldValue)}
               </div>
             )}
             <div className={styles.actions}>
@@ -136,17 +142,17 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
                   </button>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => console.log("CLICKED")}>A or B</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setExerciseType(ExerciseType.AORB)}>A or B</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              {/* TODO: block submit if while all form values are still null */}
               <button className={styles.submitButton} type="submit" disabled={allNull(values) || !isValid}>Create</button>
             </div>
           </div>
           {submitError && (<div className="alert alert-danger">Something went wrong. Please try again later.</div>)}
         </Form>
-      )}
-    </Formik>
+      )
+      }
+    </Formik >
   );
 };
 

@@ -3,7 +3,7 @@ import styles from './AorbExerciseInput.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 import AorbSentenceInput from './aorb-sentence-input/AorbSentenceInput';
-import AorbExercise, { AorbSentence } from '../../../../exercise/aorb/aorb-exercise.model';
+import AorbExercise, { AorbSentence } from '../../../../exercise/aorb/aorb.model';
 import AorbSentenceInputValue from './aorb-sentence-input/aorb-sentence-input.model';
 import AorbExerciseInputValue from './aorb-exercise-input.model';
 
