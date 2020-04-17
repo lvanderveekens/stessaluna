@@ -1,7 +1,7 @@
 import { AbstractExercise, ExerciseType } from "../exercise.model";
 
 export interface AorbExercise extends AbstractExercise {
-    type: ExerciseType.AORB
+    type: ExerciseType.A_OR_B
     sentences: AorbSentence[]
 }
 

@@ -7,11 +7,12 @@ import User from '../../../user/user.interface';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 import ImagePreview from './image-preview/ImagePreview';
-import ExerciseInputValue from '../exercise/exercise-input.model';
-import AorbExerciseInput from '../exercise/aorb-exercise-input/AorbExerciseInput';
+import ExerciseInputValue from '../exercise-input/exercise-input.model';
+import AorbExerciseInput from '../exercise-input/aorb-exercise-input/AorbExerciseInput';
 import { schema } from './schema';
 import CustomToggle from '../../../dropdown/CustomToggle';
 import { ExerciseType } from '../../../exercise/exercise.model';
+import WhatdoyouseeExerciseInput from '../exercise-input/whatdoyousee-exercise-input/WhatdoyouseeExerciseInput';
 
 interface Props {
   user: User
@@ -27,9 +28,11 @@ interface Values {
 const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
 
   const fileInput = useRef(null);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(null);
   const [submitError, setSubmitError] = useState(false);
   const [exerciseType, setExerciseType] = useState<ExerciseType>(null);
+
+  const actionsDisabled = (fileInput.current && fileInput.current.value) || exerciseType != null
 
   const handleChangeImage = (setFieldValue) => (e: ChangeEvent<HTMLInputElement>) => {
     const image = e.currentTarget.files[0];
@@ -50,12 +53,11 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
 
   const handleDeleteImage = (setFieldValue) => () => {
     setFieldValue("image", null);
+    setImageUrl(null);
     fileInput.current.value = null;
   };
 
-  const handleClickImage = () => {
-    fileInput.current.click();
-  }
+  const handleClickImage = () => fileInput.current.click();
 
   const handleCloseExercise = (setFieldValue) => () => {
     setExerciseType(null);
@@ -82,16 +84,15 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
   }
 
   const renderExerciseInput = (setFieldValue) => {
+    const props = { onChange: handleChangeExercise(setFieldValue), onClose: handleCloseExercise(setFieldValue) }
     switch (exerciseType) {
-      case ExerciseType.AORB:
-        return (
-          <AorbExerciseInput
-            onChange={handleChangeExercise(setFieldValue)}
-            onClose={handleCloseExercise(setFieldValue)}
-          />
-        )
-      default:
+      case ExerciseType.A_OR_B:
+        return <AorbExerciseInput {...props} />
+      case ExerciseType.WHAT_DO_YOU_SEE:
+        return <WhatdoyouseeExerciseInput {...props} />
         break;
+      default:
+        throw new Error(`Cannot render unsupported exercise type: ${exerciseType}`);
     }
   }
 
@@ -132,17 +133,18 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
               </div>
             )}
             <div className={styles.actions}>
-              <button className={styles.button} type="button" onClick={handleClickImage} disabled={!!values.image || !!values.exercise}>
+              <button className={styles.button} type="button" onClick={handleClickImage} disabled={actionsDisabled}>
                 <FontAwesomeIcon icon={faImage} /> Image
               </button>
               <Dropdown className={styles.exerciseDropdown}>
                 <Dropdown.Toggle as={CustomToggle} id="something">
-                  <button className={styles.button} type="button" disabled={!!values.image || !!values.exercise}>
+                  <button className={styles.button} type="button" disabled={actionsDisabled}>
                     <FontAwesomeIcon icon={faGraduationCap} /> Exercise
                   </button>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => setExerciseType(ExerciseType.AORB)}>A or B</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setExerciseType(ExerciseType.A_OR_B)}>A or B</Dropdown.Item>
+                  <Dropdown.Item onClick={() => setExerciseType(ExerciseType.WHAT_DO_YOU_SEE)}>What Do You See</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               <button className={styles.submitButton} type="submit" disabled={allNull(values) || !isValid}>Create</button>

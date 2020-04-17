@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import styles from './AorbSentence.scss?module';
 import classNames from 'classnames/bind';
-import { AorbChoice } from './aorb.model';
+import { AorbChoice } from './aorb-exercise.model';
 let cx = classNames.bind(styles);
 
 interface Props {

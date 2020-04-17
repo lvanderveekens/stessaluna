@@ -2,7 +2,7 @@ import ActionTypes from "./actionTypes";
 import axios from '../../http/client';
 import Exercise from "../../exercise/exercise.model";
 import { SubmitAnswerRequest } from "../../exercise/submit-answer/request.interface";
-import ExerciseInputValue from "../../post/new-post/exercise/exercise-input.model";
+import ExerciseInputValue from "../../post/new-post/exercise-input/exercise-input.model";
 
 export const fetchPosts = () => {
   return dispatch => {

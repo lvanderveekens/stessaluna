@@ -1,4 +1,4 @@
-import AorbExercise from "./aorb/aorb.model";
+import AorbExercise from "./aorb/aorb-exercise.model";
 
 type Exercise = AorbExercise
 
@@ -8,7 +8,8 @@ export interface AbstractExercise {
 }
 
 export enum ExerciseType {
-    AORB = 'aorb'
+    A_OR_B = 'aorb',
+    WHAT_DO_YOU_SEE = 'whatdoyousee',
 }
 
 export default Exercise;
