@@ -54,7 +54,7 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, ex
     <div className={styles.post}>
       <div className={styles.content}>
         <div className={styles.header}>
-          <div className="d-flex w-100">
+          <div className="d-flex w-100 align-items-center">
             <div className="mr-3">
               <Avatar src={author.avatar} countryCode={author.country} />
             </div>

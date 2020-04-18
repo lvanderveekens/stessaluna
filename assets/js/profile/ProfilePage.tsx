@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, createRef, useRef, Fragment } from 'react';
+import React, { FC, useState, useEffect, createRef, useRef, Fragment, ChangeEvent } from 'react';
 import { Row, Col, Button, Container, Spinner } from 'react-bootstrap';
 import User from '../user/user.interface';
 import { connect } from 'react-redux';
@@ -11,6 +11,7 @@ import NavBar from '../nav/NavBar';
 import { State } from '../store';
 import { CountryDropdown } from 'react-country-region-selector';
 import ReactCountryFlag from "react-country-flag"
+import ImageInput from '../image/image-input/ImageInput';
 
 
 interface Props {
@@ -22,30 +23,31 @@ interface Props {
 const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
 
   const [resetAvatar, setResetAvatar] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState(null);
+  const [avatarImage, setAvatarImage] = useState<File>(null);
   const [feedbackMessage, setFeedbackMessage] = useState(null);
 
   useEffect(() => {
     if (user && !user.avatar.includes("avatar-default")) {
-      setAvatarUrl(user.avatar);
+      fetch(user.avatar)
+        .then(res => res.blob())
+        .then(blob => {
+          const filename = user.avatar.substring(user.avatar.lastIndexOf('/') + 1);
+          setAvatarImage(new File([blob], filename, { type: "image/png" }));
+        });
     }
   }, [user]);
 
-  const handleAvatarChange = (setFieldValue) => (event) => {
-    const image = event.currentTarget.files[0];
+  const handleAvatarChange = (setFieldValue) => (image: File | null) => {
     if (image) {
+      setAvatarImage(image);
       setFieldValue("avatar", image);
-      setAvatarUrl(URL.createObjectURL(image))
       setResetAvatar(false);
-    }
-  };
-
-  const handleAvatarDelete = (setFieldValue) => () => {
-    setFieldValue("avatar", null);
-    setAvatarUrl(null);
-
-    if (!user.avatar.includes('avatar-default')) {
-      setResetAvatar(true);
+    } else {
+      setAvatarImage(null);
+      setFieldValue("avatar", null);
+      if (!user.avatar.includes('avatar-default')) {
+        setResetAvatar(true);
+      }
     }
   };
 
@@ -140,32 +142,10 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
                         <div>
                           <div className="form-group">
                             <label>Avatar</label>
-                            <div className={styles.avatarContainer}>
-                              <div className={styles.aspectRatioBox}>
-                                {avatarUrl
-                                  ? (
-                                    <Fragment>
-                                      <img src={avatarUrl} />
-                                      {!avatarUrl.includes('avatar-default') && (
-                                        <div className={styles.overlay}>
-                                          <FontAwesomeIcon className={styles.deleteIcon} icon={faTimes}
-                                            onClick={handleAvatarDelete(setFieldValue)} />
-                                        </div>
-                                      )}
-                                    </Fragment>
-                                  ) : (
-                                    <label className={styles.uploadIconWrapper} htmlFor="avatar">
-                                      <FontAwesomeIcon className={styles.uploadIcon} icon={faUpload} />
-                                    </label>
-                                  )}
-                              </div>
-                            </div>
-                            <input
-                              id="avatar"
-                              name="avatar"
-                              type="file"
-                              className="form-control d-none"
+                            <ImageInput
+                              value={avatarImage}
                               onChange={handleAvatarChange(setFieldValue)}
+                              overlayDisabled={avatarImage && avatarImage.name.includes('avatar-default')}
                             />
                           </div>
                         </div>

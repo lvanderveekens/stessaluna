@@ -2,6 +2,8 @@
 
 .sentence {
 
+    hyphens: auto;
+
     .choiceA,
     .choiceB {
         display: inline-block;
@@ -32,7 +34,7 @@
         padding-right: 1px;
         margin-left: 1px;
     }
-    
+
     .choiceB {
         border-bottom-right-radius: 0.5rem;
         border-top-right-radius: 0.5rem;
