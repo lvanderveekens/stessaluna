@@ -1,7 +1,14 @@
-.aorbEditor {
+.aorbSentenceEditor {
+    hyphens: auto;
 
     border: 1px solid #ced4da;
+    border-radius: 0.5rem;
+
+    padding: 0.2rem;
+
     cursor: text;
+
+    line-height: 1.8rem;
 
     span {
         outline: none;

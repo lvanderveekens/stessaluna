@@ -30,7 +30,7 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, loading, logOut }) =
     return (
       <Dropdown className={styles.dropDown} alignRight={true}>
         <Dropdown.Toggle as={CustomToggle} id="something">
-          <div className={styles.accountWrapperLarge}>
+          <div className={styles.accountWrapper}>
             <div style={{ marginRight: '0.7rem' }}>
               <Avatar src={user.avatar} size='xs' />
             </div>
@@ -38,8 +38,8 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, loading, logOut }) =
           </div>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item><Link to="/profile">Profile</Link></Dropdown.Item>
-          <Dropdown.Item><Link to="/login" onClick={() => logOut()}>Logout</Link></Dropdown.Item>
+          <Dropdown.Item href="/profile">Profile</Dropdown.Item>
+          <Dropdown.Item href="/login" onClick={() => logOut()}>Logout</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     );

@@ -57,7 +57,7 @@ const AorbSentenceEditor: FC<Props> = ({ editor, value, onChange }) => {
   };
 
   return (
-    <div className={styles.aorbEditor}>
+    <div className={styles.aorbSentenceEditor}>
       <Slate
         editor={editor}
         value={editorValue}

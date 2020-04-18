@@ -23,7 +23,7 @@ const AorbChoiceForm: FC<Props> = ({ choice, onSubmit }) => {
   }
 
   return (
-    <div className={styles.actions}>
+    <div className={styles.aorbChoiceForm}>
       {!choice && (
         <div className={styles.aorbForm}>
           <div className={styles.inputs}>

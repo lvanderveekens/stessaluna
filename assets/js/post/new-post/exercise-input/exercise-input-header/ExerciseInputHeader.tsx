@@ -1,0 +1,21 @@
+import React, { FC } from 'react';
+import styles from './ExerciseInputHeader.scss?module';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
+interface Props {
+  title: string
+  onClose: () => void
+}
+
+const ExerciseInputHeader: FC<Props> = ({ title, onClose }) => {
+
+  return (
+    <div className={styles.exerciseInputHeader}>
+      <span>{title}</span>
+      <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={onClose} />
+    </div>
+  )
+}
+
+export default ExerciseInputHeader;

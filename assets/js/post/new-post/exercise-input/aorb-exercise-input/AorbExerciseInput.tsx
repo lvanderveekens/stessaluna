@@ -6,6 +6,7 @@ import AorbSentenceInput from './aorb-sentence-input/AorbSentenceInput';
 import AorbExercise, { AorbSentence } from '../../../../exercise/aorb/aorb-exercise.model';
 import AorbSentenceInputValue from './aorb-sentence-input/aorb-sentence-input.model';
 import AorbExerciseInputValue from './aorb-exercise-input.model';
+import ExerciseInputHeader from '../exercise-input-header/ExerciseInputHeader';
 
 interface Props {
   onChange: (change: AorbExerciseInputValue) => void
@@ -52,12 +53,9 @@ const AorbExerciseInput: FC<Props> = ({ onChange, onClose }) => {
   }
 
   return (
-    <div className={styles.newAorbExercise}>
+    <div className={styles.aorbExerciseInput}>
       <div>
-        <div className={styles.header}>
-          <span>A or B</span>
-          <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={onClose} />
-        </div>
+        <ExerciseInputHeader title="A or B" onClose={onClose} />
         <div className={styles.sentences}>
           {sentences.map((sentence, i) => (
             <div key={sentence.id} className={styles.inputRow}>

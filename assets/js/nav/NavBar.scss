@@ -12,14 +12,13 @@
     }
 
     .dropDown {
+
         a {
             color: #424b52;
         }
     }
 
     .container {
-
-        // padding: 0.3rem 0;
 
         &>a {
             color: white;
@@ -35,7 +34,7 @@
         }
     }
 
-    .accountWrapperLarge {
+    .accountWrapper {
 
         display: flex;
         align-items: center;
@@ -44,41 +43,7 @@
 
         &:hover {
             cursor: pointer;
-        }
-
-        .userText {
-            color: $brand-primary;
-        }
-    }
-
-    // TODO: is this one equal (or almost) to .accountWrapperLarge? 
-    .accountWrapperSmall {
-
-        display: flex;
-        align-items: center;
-
-        padding: 0.3rem 0.5rem;
-
-        &:hover {
-            cursor: pointer;
-        }
-
-        .avatar {
-            width: 30px;
-            height: 30px;
-
-            border: solid 2px white;
-            border-radius: 50%;
-            overflow: hidden;
-
-            margin-right: 0.5rem;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: block;
-            }
+            background-color: #565656;
         }
 
         .userText {

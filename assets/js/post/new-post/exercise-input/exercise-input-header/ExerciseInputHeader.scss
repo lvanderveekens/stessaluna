@@ -1,0 +1,24 @@
+.exerciseInputHeader {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    margin-bottom: 0.5rem;
+
+    overflow: hidden;
+
+    font-weight: bold;
+
+    .closeButton {
+        position: absolute;
+        height: 100%;
+        top: 0;
+        right: 0;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

@@ -1,4 +1,4 @@
-.newAorbExercise {
+.aorbExerciseInput {
 
     // .wrapper {
     //     border: 1px solid #ced4da;
@@ -6,31 +6,6 @@
     //     padding: 1rem;
     //     margin-bottom: 1rem;
     // }
-
-    .header {
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-
-        margin-bottom: 0.5rem;
-
-        overflow: hidden;
-
-        font-weight: bold;
-
-        .closeButton {
-            position: absolute;
-            height: 100%;
-            top: 0;
-            right: 0;
-
-            &:hover {
-                cursor: pointer;
-            }
-        }
-    }
 
     .sentences {
         // margin-bottom: 0.5rem;
@@ -56,6 +31,9 @@
 }
 
 .inputIndex {
+    line-height: 1.8rem;
+    padding: 0.2rem 0;
+
     margin-right: 0.5rem;
     font-family: sans-serif;
     color: grey;
@@ -66,6 +44,9 @@
 }
 
 .deleteInput {
+    line-height: 1.8rem;
+    padding: 0.2rem 0;
+
     color: grey;
     cursor: pointer;
 }
