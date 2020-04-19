@@ -6,6 +6,7 @@ import moment from 'moment';
 import { Spinner } from 'react-bootstrap';
 import PostInterface from '../post/post.interface';
 import { State } from '../store';
+import FeedPlaceholder from './placeholder/FeedPlaceholder';
 
 interface Props {
   loading: boolean
@@ -25,28 +26,27 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
   );
 
   return (
-    <Fragment>
-      {loading
-        ? <Spinner animation="border" variant="warning" />
-        : (posts.length == 0
-          ? (<div>No posts found!</div>)
-          : posts
-            .sort(byDateDescending)
-            .map((post) =>
-              <Post
-                key={post.id}
-                id={post.id}
-                timestamp={moment(post.createdAt).fromNow()}
-                author={post.author}
-                text={post.text}
-                image={post.image}
-                exercise={post.exercise}
-                onDelete={() => deletePost(post.id)}
-                comments={post.comments}
-              />
-            )
-        )}
-    </Fragment>
+
+    <div>
+      {loading && <FeedPlaceholder />}
+      {!loading && (
+        posts
+          .sort(byDateDescending)
+          .map((post) =>
+            <Post
+              key={post.id}
+              id={post.id}
+              timestamp={moment(post.createdAt).fromNow()}
+              author={post.author}
+              text={post.text}
+              image={post.image}
+              exercise={post.exercise}
+              onDelete={() => deletePost(post.id)}
+              comments={post.comments}
+            />
+          )
+      )}
+    </div>
   );
 };
 
