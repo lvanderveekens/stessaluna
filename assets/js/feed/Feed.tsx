@@ -26,8 +26,6 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
 
   return (
     <Fragment>
-      <h4>Feed</h4>
-
       {loading
         ? <Spinner animation="border" variant="warning" />
         : (posts.length == 0

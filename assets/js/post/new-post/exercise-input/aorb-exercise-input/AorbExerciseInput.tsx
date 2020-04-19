@@ -3,10 +3,10 @@ import styles from './AorbExerciseInput.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 import AorbSentenceInput from './aorb-sentence-input/AorbSentenceInput';
-import AorbExercise, { AorbSentence } from '../../../../exercise/aorb/aorb-exercise.model';
 import AorbSentenceInputValue from './aorb-sentence-input/aorb-sentence-input.model';
 import AorbExerciseInputValue from './aorb-exercise-input.model';
 import ExerciseInputHeader from '../exercise-input-header/ExerciseInputHeader';
+import { nextId } from '../../../../util/id-generator';
 
 interface Props {
   onChange: (change: AorbExerciseInputValue) => void
@@ -16,11 +16,7 @@ interface Props {
 const AorbExerciseInput: FC<Props> = ({ onChange, onClose }) => {
 
   // TODO: split into presentational and container components
-  // const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false);
-
-  const nextId = () => sentences && sentences.length ? (sentences[sentences.length - 1].id + 1) : 1
-
-  const [sentences, setSentences] = useState([{ id: nextId() }] as AorbSentenceInputValue[]);
+  const [sentences, setSentences] = useState<AorbSentenceInputValue[]>(() => [{ id: nextId() }]);
 
   useEffect(() => {
     onChange(new AorbExerciseInputValue(sentences));
@@ -29,26 +25,18 @@ const AorbExerciseInput: FC<Props> = ({ onChange, onClose }) => {
   const addSentence = () => {
     const newInputValue = { id: nextId() };
     const newInputValues = [...sentences, newInputValue]
-    // setSubmitButtonEnabled(false);
     setSentences(newInputValues);
   }
 
   const deleteInput = (index: number) => () => {
     const newInputValues = [...sentences];
     newInputValues.splice(index, 1);
-    // setSubmitButtonEnabled(newInputValues.every(({ value }) => value.choice && value.choice.correct));
     setSentences(newInputValues);
-  }
-
-  const resetInput = () => {
-    setSentences([{ id: nextId(), textBefore: "" }]);
-    // setSubmitButtonEnabled(false);
   }
 
   const handleChange = (index: number) => (change: AorbSentenceInputValue) => {
     const newInputValues = [...sentences];
     newInputValues[index] = { ...newInputValues[index], ...change };
-    // setSubmitButtonEnabled(newInputValues.every(({ value }) => value.choice && value.choice.correct));
     setSentences(newInputValues);
   }
 

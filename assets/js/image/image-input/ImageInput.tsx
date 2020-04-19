@@ -2,6 +2,7 @@ import React, { FC, useState, ChangeEvent, useRef, useEffect } from 'react';
 import styles from './ImageInput.scss?module';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { nextId } from '../../util/id-generator';
 
 interface Props {
   value?: File
@@ -12,6 +13,7 @@ interface Props {
 const ImageInput: FC<Props> = ({ value, onChange, overlayDisabled = false }) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const [inputId] = useState<string>(() => `input${nextId()}`);
   const [src, setSrc] = useState(null);
 
   useEffect(() => {
@@ -43,7 +45,7 @@ const ImageInput: FC<Props> = ({ value, onChange, overlayDisabled = false }) => 
                 )}
               </>
             ) : (
-              <label className={styles.uploadIconWrapper} htmlFor="image">
+              <label className={styles.uploadIconWrapper} htmlFor={inputId}>
                 <FontAwesomeIcon className={styles.uploadIcon} icon={faUpload} />
               </label>
             )}
@@ -51,7 +53,7 @@ const ImageInput: FC<Props> = ({ value, onChange, overlayDisabled = false }) => 
       </div>
       <input
         ref={inputRef}
-        id="image"
+        id={inputId}
         name="image"
         type="file"
         className="form-control d-none"

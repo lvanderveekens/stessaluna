@@ -115,7 +115,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
             />
             <Form.Control
               className={styles.imageInput}
-              id="image"
+              // id="image"
               name="image"
               type="file"
               onChange={handleChangeImage(setFieldValue)}

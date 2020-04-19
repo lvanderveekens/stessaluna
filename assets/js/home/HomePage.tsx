@@ -3,7 +3,7 @@ import { Col, Row, Container } from 'react-bootstrap';
 import Feed from '../feed/Feed';
 import { useState } from 'react';
 import NavBar from '../nav/NavBar';
-import NewPost from '../post/new-post/NewPost';
+import NewPostForm from '../post/new-post/new-post-form';
 
 const HomePage = () => {
 
@@ -12,11 +12,14 @@ const HomePage = () => {
       <NavBar />
       <Container>
         <Row className="justify-content-center">
-          <Col md={6} lg={5} className="mb-4">
-            <NewPost />
-          </Col>
-          <Col md={6} lg={5} className="mb-4">
-            <Feed />
+          <Col md={6} lg={5}>
+            <h4 className="mb-4">Home</h4>
+            <div className="mb-4">
+              <NewPostForm />
+            </div>
+            <div>
+              <Feed />
+            </div>
           </Col>
         </Row>
       </Container>
