@@ -5,12 +5,13 @@ import { faTimes, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { nextId } from '../../util/id-generator';
 
 interface Props {
+  className?: string
   value?: File
   onChange: (image?: File) => void
   overlayDisabled?: boolean
 }
 
-const ImageInput: FC<Props> = ({ value, onChange, overlayDisabled = false }) => {
+const ImageInput: FC<Props> = ({ className, value, onChange, overlayDisabled = false }) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputId] = useState<string>(() => `input${nextId()}`);
@@ -31,26 +32,22 @@ const ImageInput: FC<Props> = ({ value, onChange, overlayDisabled = false }) => 
   }
 
   return (
-    <div>
-      <div className={styles.imageInput}>
-        <div className={styles.aspectRatioBox}>
-          {src
-            ? (
-              <>
-                <img src={src} />
-                {!overlayDisabled && (
-                  <div className={styles.overlay}>
-                    <FontAwesomeIcon className={styles.deleteIcon} icon={faTimes} onClick={handleDelete} />
-                  </div>
-                )}
-              </>
-            ) : (
-              <label className={styles.uploadIconWrapper} htmlFor={inputId}>
-                <FontAwesomeIcon className={styles.uploadIcon} icon={faUpload} />
-              </label>
+    <div className={`${styles.imageInput} ${className}`}>
+      {src
+        ? (
+          <div className={styles.imagePreview}>
+            <img src={src} />
+            {!overlayDisabled && (
+              <div className={styles.overlay}>
+                <FontAwesomeIcon className={styles.deleteIcon} icon={faTimes} onClick={handleDelete} />
+              </div>
             )}
-        </div>
-      </div>
+          </div>
+        ) : (
+          <label className={styles.uploadIconWrapper} htmlFor={inputId}>
+            <FontAwesomeIcon className={styles.uploadIcon} icon={faUpload} />
+          </label>
+        )}
       <input
         ref={inputRef}
         id={inputId}
