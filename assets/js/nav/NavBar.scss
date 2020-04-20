@@ -11,13 +11,6 @@
         text-decoration: none;
     }
 
-    .dropDown {
-
-        a {
-            color: #424b52;
-        }
-    }
-
     .container {
 
         &>a {
@@ -31,23 +24,6 @@
             a {
                 color: $brand-primary;
             }
-        }
-    }
-
-    .accountWrapper {
-
-        display: flex;
-        align-items: center;
-
-        padding: 0.3rem 0.5rem;
-
-        &:hover {
-            cursor: pointer;
-            background-color: #565656;
-        }
-
-        .userText {
-            color: $brand-primary;
         }
     }
 

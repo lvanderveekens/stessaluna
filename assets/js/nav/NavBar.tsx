@@ -6,44 +6,18 @@ import { connect } from 'react-redux';
 import { logOut } from '../store/auth/actions';
 import User from '../user/user.interface';
 import { State } from '../store';
-import Avatar from '../user/avatar/Avatar';
-import CustomToggle from '../dropdown/CustomToggle';
+import UserDropdown from './user-dropdown/UserDropdown';
+import UserDropdownPlaceholder from './user-dropdown/placeholder/UserDropdownPlaceholder';
 
 interface Props {
-  loggedIn: boolean
   user?: User
   loading: boolean
   logOut: () => void
 }
 
-const NavBar: FunctionComponent<Props> = ({ loggedIn, user, loading, logOut }) => {
+const NavBar: FunctionComponent<Props> = ({ user, loading, logOut }) => {
 
   const [expanded, setExpanded] = useState(false);
-
-  const renderMenu = () => {
-    if (loading) {
-      return <span style={{ padding: '0 0.5rem' }}> <Spinner animation="border" variant="warning" /> </span>
-    }
-    if (!loggedIn || !user) {
-      return <Link className={styles.link} to="/login">Login</Link>;
-    }
-    return (
-      <Dropdown className={styles.dropDown} alignRight={true}>
-        <Dropdown.Toggle as={CustomToggle} id="something">
-          <div className={styles.accountWrapper}>
-            <div style={{ marginRight: '0.7rem' }}>
-              <Avatar src={user.avatar} size='xs' />
-            </div>
-            <span className={styles.userText}>{user.username}</span>
-          </div>
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Item href="/profile">Profile</Dropdown.Item>
-          <Dropdown.Item href="/login" onClick={() => logOut()}>Logout</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    );
-  }
 
   return (
     <Navbar className={styles.nav}
@@ -54,14 +28,14 @@ const NavBar: FunctionComponent<Props> = ({ loggedIn, user, loading, logOut }) =
     >
       <Container className={styles.container}>
         <Navbar.Brand className={styles.brand}><Link to="/">Stessaluna</Link></Navbar.Brand>
-        {renderMenu()}
+        {loading && (<UserDropdownPlaceholder />)}
+        {user && (<UserDropdown user={user} logOut={logOut} />)}
       </Container>
     </Navbar>
   );
 };
 
 const mapStateToProps = (state: State) => ({
-  loggedIn: state.auth.loggedIn,
   user: state.auth.user,
   loading: state.auth.loading,
 });

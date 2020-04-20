@@ -15,10 +15,10 @@ interface Props {
 const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
 
   const [image, setImage] = useState<File>(null);
-  const [option1, setOption1] = useState<string>(null);
-  const [option2, setOption2] = useState<string>(null);
-  const [option3, setOption3] = useState<string>(null);
-  const [option4, setOption4] = useState<string>(null);
+  const [option1, setOption1] = useState<string>('');
+  const [option2, setOption2] = useState<string>('');
+  const [option3, setOption3] = useState<string>('');
+  const [option4, setOption4] = useState<string>('');
 
   return (
     <div className={styles.whatdoyouseeExerciseInput}>

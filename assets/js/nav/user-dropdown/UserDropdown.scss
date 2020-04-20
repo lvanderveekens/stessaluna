@@ -1,0 +1,26 @@
+@import '../../../css/colors';
+
+.userDropdown {
+
+    a {
+        color: #424b52;
+    }
+
+    .toggle {
+
+        display: flex;
+        align-items: center;
+
+        padding: 0.3rem 0.5rem;
+
+        &:hover {
+            cursor: pointer;
+            background-color: #565656;
+        }
+
+        .username {
+            color: $brand-primary;
+            font-weight: bold;
+        }
+    }
+}
