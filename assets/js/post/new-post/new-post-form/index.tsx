@@ -10,11 +10,7 @@ import NewPostFormPlaceholder from "./placeholder/NewPostFormPlaceholder";
 interface Props {
   loading: boolean;
   user: User;
-  createPost: (
-    text?: string,
-    image?: File,
-    exercise?: Exercise
-  ) => Promise<void>;
+  createPost: (text?: string, image?: File, exercise?: Exercise) => Promise<void>;
 }
 
 const NewPostFormContainer: FC<Props> = ({ loading, user, createPost }) => {
@@ -27,11 +23,9 @@ const NewPostFormContainer: FC<Props> = ({ loading, user, createPost }) => {
   if (loading) {
     return <NewPostFormPlaceholder />;
   }
-
   if (!user) {
     return null;
   }
-
   return <NewPostForm user={user} onSubmit={handleSubmit} />;
 };
 
