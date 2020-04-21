@@ -14,12 +14,8 @@ const HomePage = () => {
         <Row className="justify-content-center">
           <Col md={6} lg={5}>
             <h4 className="mb-4">Home</h4>
-            <div className="mb-4">
-              <NewPostForm />
-            </div>
-            <div>
-              <Feed />
-            </div>
+            <NewPostForm />
+            <Feed />
           </Col>
         </Row>
       </Container>

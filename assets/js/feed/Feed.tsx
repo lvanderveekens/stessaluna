@@ -3,10 +3,10 @@ import Post from '../post/Post';
 import { connect } from 'react-redux';
 import { fetchPosts, deletePost } from '../store/post/actions';
 import moment from 'moment';
-import { Spinner } from 'react-bootstrap';
 import PostInterface from '../post/post.interface';
 import { State } from '../store';
 import FeedPlaceholder from './placeholder/FeedPlaceholder';
+import FadeIn from 'react-fade-in';
 
 interface Props {
   loading: boolean
@@ -27,24 +27,26 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
 
   return (
 
-    <div>
+    <div id="feed">
       {loading && <FeedPlaceholder />}
       {!loading && (
-        posts
-          .sort(byDateDescending)
-          .map((post) =>
-            <Post
-              key={post.id}
-              id={post.id}
-              timestamp={moment(post.createdAt).fromNow()}
-              author={post.author}
-              text={post.text}
-              image={post.image}
-              exercise={post.exercise}
-              onDelete={() => deletePost(post.id)}
-              comments={post.comments}
-            />
-          )
+        <FadeIn delay={200} transitionDuration={400}>
+          {posts
+            .sort(byDateDescending)
+            .map((post) =>
+              <Post
+                key={post.id}
+                id={post.id}
+                timestamp={moment(post.createdAt).fromNow()}
+                author={post.author}
+                text={post.text}
+                image={post.image}
+                exercise={post.exercise}
+                onDelete={() => deletePost(post.id)}
+                comments={post.comments}
+              />
+            )}
+        </FadeIn>
       )}
     </div>
   );

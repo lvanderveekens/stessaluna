@@ -1,16 +1,29 @@
 import React, { FC } from 'react';
 import CustomToggle from '../../dropdown/CustomToggle';
+import { logOut } from '../../store/auth/actions';
 import { Dropdown } from 'react-bootstrap';
 import styles from './UserDropdown.scss?module';
 import User from '../../user/user.interface';
 import Avatar from '../../user/avatar/Avatar';
+import UserDropdownPlaceholder from './placeholder/UserDropdownPlaceholder';
+import { State } from '../../store';
+import { connect } from 'react-redux';
 
 interface Props {
-  user: User
+  user?: User
+  loading: boolean
   logOut: () => void
 }
 
-const UserDropdown: FC<Props> = ({ user, logOut }) => {
+const UserDropdown: FC<Props> = ({ user, loading, logOut }) => {
+
+  if (loading) {
+    return <UserDropdownPlaceholder />;
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <Dropdown className={styles.userDropdown} alignRight={true}>
@@ -30,4 +43,13 @@ const UserDropdown: FC<Props> = ({ user, logOut }) => {
   )
 }
 
-export default UserDropdown;
+const mapStateToProps = (state: State) => ({
+  user: state.auth.user,
+  loading: state.auth.loading,
+});
+
+const actionCreators = {
+  logOut
+};
+
+export default connect(mapStateToProps, actionCreators)(UserDropdown);
