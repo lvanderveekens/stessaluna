@@ -1,35 +1,32 @@
-import React, { FC, useState, useEffect, ChangeEvent } from 'react'
-import styles from './WhatdoyouseeExerciseInput.scss?module';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
-import WhatdoyouseeExerciseInputValue from './whatdoyousee-exercise-input.model';
-import ExerciseInputHeader from '../exercise-input-header/ExerciseInputHeader';
-import ImageInput from '../../../../image/image-input/ImageInput';
-import { Row, Col } from 'react-bootstrap';
+import React, { FC, useState, useEffect } from "react";
+import styles from "./WhatdoyouseeExerciseInput.scss?module";
+
+import WhatdoyouseeExerciseInputValue from "./whatdoyousee-exercise-input.model";
+import ExerciseInputHeader from "../exercise-input-header/ExerciseInputHeader";
+import ImageInput from "../../../../image/image-input/ImageInput";
 
 interface Props {
-  onChange: (change: WhatdoyouseeExerciseInputValue) => void
-  onClose: () => void
+  onChange: (change: WhatdoyouseeExerciseInputValue) => void;
+  onClose: () => void;
 }
 
 const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
-
   const [image, setImage] = useState<File>(null);
-  const [option1, setOption1] = useState<string>('');
-  const [option2, setOption2] = useState<string>('');
-  const [option3, setOption3] = useState<string>('');
-  const [option4, setOption4] = useState<string>('');
+  const [option1, setOption1] = useState<string>("");
+  const [option2, setOption2] = useState<string>("");
+  const [option3, setOption3] = useState<string>("");
+  const [option4, setOption4] = useState<string>("");
+
+  useEffect(() => {
+    onChange(new WhatdoyouseeExerciseInputValue(image, option1, option2, option3, option4));
+  }, [image, option1, option2, option3, option4]);
 
   return (
     <div className={styles.whatdoyouseeExerciseInput}>
       <ExerciseInputHeader title="What Do You See" onClose={onClose} />
       <div className={styles.image}>
         <div className={styles.aspectRatioBox}>
-          <ImageInput
-            className={styles.imageInput}
-            value={image}
-            onChange={setImage}
-          />
+          <ImageInput className={styles.imageInput} value={image} onChange={setImage} />
         </div>
       </div>
       <div>
@@ -74,7 +71,7 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 

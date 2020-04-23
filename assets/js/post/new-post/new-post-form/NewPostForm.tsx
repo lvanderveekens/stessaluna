@@ -29,8 +29,8 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
   const fileInput = useRef(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [submitError, setSubmitError] = useState(false);
-  const [exerciseType, setExerciseType] = useState<ExerciseType>(null);
-  // const [exerciseType, setExerciseType] = useState<ExerciseType>(ExerciseType.WHAT_DO_YOU_SEE);
+  // const [exerciseType, setExerciseType] = useState<ExerciseType>(null);
+  const [exerciseType, setExerciseType] = useState<ExerciseType>(ExerciseType.WHAT_DO_YOU_SEE);
 
   const actionsDisabled = (fileInput.current && fileInput.current.value) || exerciseType != null;
 

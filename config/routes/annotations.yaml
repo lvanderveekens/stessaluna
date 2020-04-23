@@ -1,23 +1,23 @@
 default_controller:
-    resource: ../../src/Api/Controller/
-    type: annotation
+  resource: ../../src/DefaultController.php
+  type: annotation
 
-security_controller:
-    resource: ../../src/Api/Security/Controller/
-    type: annotation
+auth_controller:
+  resource: ../../src/Auth/Controller/
+  type: annotation
 
 user_controller:
-    resource: ../../src/Api/User/Controller/
-    type: annotation
+  resource: ../../src/User/Controller/
+  type: annotation
 
 post_controller:
-    resource: ../../src/Api/Post/Controller/
-    type: annotation
+  resource: ../../src/Post/Controller/
+  type: annotation
 
 comment_controller:
-    resource: ../../src/Api/Post/Comment/Controller/
-    type: annotation
+  resource: ../../src/Post/Comment/Controller/
+  type: annotation
 
 exercise_controller:
-    resource: ../../src/Api/Exercise/Controller/
-    type: annotation
+  resource: ../../src/Exercise/Controller/
+  type: annotation

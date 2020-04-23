@@ -1,39 +1,39 @@
 security:
-    encoders:
-        Stessaluna\Domain\User\Entity\User:
-            algorithm: auto
+  encoders:
+    Stessaluna\User\Entity\User:
+      algorithm: auto
 
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-    providers:
-        # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
-            entity:
-                class: Stessaluna\Domain\User\Entity\User
-                property: username
-    firewalls:
-        token:
-            pattern: ^/api/token
-            anonymous: true
-            stateless: true
-            json_login:
-                check_path:      /api/token
-                success_handler: lexik_jwt_authentication.handler.authentication_success
-                failure_handler: lexik_jwt_authentication.handler.authentication_failure
-        register:
-            pattern: ^/api/register
-            anonymous: true 
-            stateless: true
-        api:
-            pattern: ^/api
-            anonymous: false 
-            stateless: true
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+  # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+  providers:
+    # used to reload user from session & other features (e.g. switch_user)
+    app_user_provider:
+      entity:
+        class: Stessaluna\User\Entity\User
+        property: username
+  firewalls:
+    token:
+      pattern: ^/api/token
+      anonymous: true
+      stateless: true
+      json_login:
+        check_path: /api/token
+        success_handler: lexik_jwt_authentication.handler.authentication_success
+        failure_handler: lexik_jwt_authentication.handler.authentication_failure
+    register:
+      pattern: ^/api/register
+      anonymous: true
+      stateless: true
+    api:
+      pattern: ^/api
+      anonymous: false
+      stateless: true
+      guard:
+        authenticators:
+          - lexik_jwt_authentication.jwt_token_authenticator
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
-    access_control:
-        - { path: ^/api/token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+  # Easy way to control access for large sections of your site
+  # Note: Only the *first* access control that matches will be used
+  access_control:
+    - { path: ^/api/token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
