@@ -27,12 +27,12 @@ doctrine:
         dir: "%kernel.project_dir%/src/Exercise/Aorb/Entity"
         prefix: 'Stessaluna\Exercise\Aorb\Entity'
         alias: AorbExercise
-      #   WhatdoyouseeExercise:
-      #     is_bundle: false
-      #     type: annotation
-      #     dir: "%kernel.project_dir%/src/Exercise/Whatdoyousee/Entity"
-      #     prefix: 'Stessaluna\Exercise\Whatdoyousee\Entity'
-      #     alias: WhatdoyouseeExercise
+      WhatdoyouseeExercise:
+        is_bundle: false
+        type: annotation
+        dir: "%kernel.project_dir%/src/Exercise/Whatdoyousee/Entity"
+        prefix: 'Stessaluna\Exercise\Whatdoyousee\Entity'
+        alias: WhatdoyouseeExercise
       Answer:
         is_bundle: false
         type: annotation

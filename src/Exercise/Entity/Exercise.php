@@ -14,7 +14,8 @@ use Stessaluna\Exercise\Answer\Entity\Answer;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
- *     "aorb" = "Stessaluna\Exercise\Aorb\Entity\AorbExercise"
+ *     "aorb" = "Stessaluna\Exercise\Aorb\Entity\AorbExercise",
+ *     "whatdoyousee" = "Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise"
  * })
  */
 abstract class Exercise

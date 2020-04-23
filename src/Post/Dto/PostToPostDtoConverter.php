@@ -10,7 +10,7 @@ use Stessaluna\Image\ImageStorage;
 use Stessaluna\Post\Entity\Post;
 use Stessaluna\User\Entity\User;
 
-class PostDtoConverter
+class PostToPostDtoConverter
 {
     private LoggerInterface $logger;
     private UserDtoConverter $userDtoConverter;

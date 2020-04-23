@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Stessaluna\Post\Controller;
 
 use DateTime;
-use Stessaluna\Post\Dto\PostDtoConverter;
 use Stessaluna\Exercise\Aorb\Entity\AorbChoice;
 use Stessaluna\Exercise\Aorb\Entity\AorbExercise;
 use Stessaluna\Exercise\Aorb\Entity\AorbSentence;
+use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
 use Stessaluna\Image\ImageStorage;
+use Stessaluna\Post\Dto\PostToPostDtoConverter;
 use Stessaluna\Post\Entity\Post;
 use Stessaluna\Post\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,16 +26,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PostController extends AbstractController
 {
-    private PostDtoConverter $postDtoConverter;
+    private PostToPostDtoConverter $postToPostDtoConverter;
     private ImageStorage $imageStorage;
     private PostRepository $postRepository;
 
     public function __construct(
-        PostDtoConverter $postDtoConverter,
+        PostToPostDtoConverter $postToPostDtoConverter,
         ImageStorage $imageStorage,
         PostRepository $postRepository
     ) {
-        $this->postDtoConverter = $postDtoConverter;
+        $this->postToPostDtoConverter = $postToPostDtoConverter;
         $this->imageStorage = $imageStorage;
         $this->postRepository = $postRepository;
     }
@@ -49,7 +50,7 @@ class PostController extends AbstractController
             ->findAll();
 
         return $this->json(array_map(function ($post) {
-            return $this->postDtoConverter->toDto($post, $this->getUser());
+            return $this->postToPostDtoConverter->toDto($post, $this->getUser());
         }, $posts));
     }
 
@@ -58,58 +59,83 @@ class PostController extends AbstractController
      */
     public function createPost(Request $request): JsonResponse
     {
-        $request = [
-            'text' => $request->get('text'),
-            'image' => $request->files->get('image'),
+        $createPostRequest = array(
+            'text'     => $request->get('text'),
+            'image'    => $request->files->get('image'),
             'exercise' => $request->get('exercise')
-        ];
+        );
 
         $post = new Post();
         $post->setAuthor($this->getUser());
         $post->setCreatedAt(new DateTime('now'));
-        $post->setText($request['text']);
+        $post->setText($createPostRequest['text']);
 
-        if ($request['image']) {
-            $filename = $this->imageStorage->store($request['image']);
+        if ($createPostRequest['image']) {
+            $filename = $this->imageStorage->store($createPostRequest['image']);
             $post->setImageFilename($filename);
         }
 
-        if ($request['exercise']) {
+        if ($createPostRequest['exercise']) {
             $exercise = null;
 
-            $type = $request['exercise']['type'];
+            $type = $createPostRequest['exercise']['type'];
             if ($type === 'aorb') {
-                $exercise = $this->createAorbExercise($request['exercise']['sentences']);
+                $aorbExerciseRequest = array(
+                    'sentences' => $createPostRequest['exercise']['sentences']
+                );
+                $exercise = $this->createAorbExercise($aorbExerciseRequest);
             } elseif ($type === 'whatdoyousee') {
+                $whatdoyouseeExerciseRequest = array(
+                    'image'   => $request->files->get('exercise')['image'],
+                    'option1' => $createPostRequest['exercise']['option1'],
+                    'option2' => $createPostRequest['exercise']['option2'],
+                    'option3' => $createPostRequest['exercise']['option3'],
+                    'option4' => $createPostRequest['exercise']['option4'],
+                );
+                $exercise = $this->createWhatdoyouseeExercise($whatdoyouseeExerciseRequest);
             }
 
             $post->setExercise($exercise);
         }
 
         $post = $this->postRepository->save($post);
-        return $this->json($this->postDtoConverter->toDto($post, $this->getUser()));
+        return $this->json($this->postToPostDtoConverter->toDto($post, $this->getUser()));
     }
 
-    public function createAorbExercise(array $requestSentences): AorbExercise
+    public function createAorbExercise(array $aorbExerciseRequest): AorbExercise
     {
         $exercise = new AorbExercise();
 
-        $sentences = [];
-        foreach ($requestSentences as $requestSentence) {
+        $sentences = array();
+        foreach ($aorbExerciseRequest['sentences'] as $sentenceJson) {
             $sentence = new AorbSentence();
-            $sentence->textBefore = $requestSentence['textBefore'];
+            $sentence->textBefore = $sentenceJson['textBefore'];
 
             $choice = new AorbChoice();
-            $choice->a = $requestSentence['choice']['a'];
-            $choice->b = $requestSentence['choice']['b'];
-            $choice->correct = $requestSentence['choice']['correct'];
+            $choice->a = $sentenceJson['choice']['a'];
+            $choice->b = $sentenceJson['choice']['b'];
+            $choice->correct = $sentenceJson['choice']['correct'];
             $sentence->choice = $choice;
 
-            $sentence->textAfter = $requestSentence['textAfter'];
+            $sentence->textAfter = $sentenceJson['textAfter'];
             array_push($sentences, $sentence);
         }
 
         $exercise->setSentences($sentences);
+        return $exercise;
+    }
+
+    public function createWhatdoyouseeExercise(array $whatdoyouseeExerciseRequest): WhatdoyouseeExercise
+    {
+        $exercise = new WhatdoyouseeExercise();
+
+        $exercise->setImageFilename($this->imageStorage->store($whatdoyouseeExerciseRequest['image']));
+        $exercise->setOption1($whatdoyouseeExerciseRequest['option1']);
+        $exercise->setOption2($whatdoyouseeExerciseRequest['option2']);
+        $exercise->setOption3($whatdoyouseeExerciseRequest['option3']);
+        $exercise->setOption4($whatdoyouseeExerciseRequest['option4']);
+        $exercise->setCorrect();
+
         return $exercise;
     }
 

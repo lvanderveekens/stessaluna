@@ -1,26 +1,26 @@
 <?php
 
 return PhpCsFixer\Config::create()
-    ->setRules([
+    ->setRules(array(
         '@PSR2' => true,
         'array_indentation' => true,
-        'array_syntax' => ['syntax' => 'short'],
+        'array_syntax' => array('syntax' => 'long'),
         'combine_consecutive_unsets' => true,
         'method_separation' => true,
         'no_multiline_whitespace_before_semicolons' => true,
         'single_quote' => true,
-        'binary_operator_spaces' => [
-            'align_double_arrow' => false,
+        'binary_operator_spaces' => array(
+            'align_double_arrow' => true,
             'align_equals' => false,
-        ],
+        ),
         // 'blank_line_after_opening_tag' => true,
         // 'blank_line_before_return' => true,
-        'braces' => [
+        'braces' => array(
             'allow_single_line_closure' => true,
-        ],
+        ),
         // 'cast_spaces' => true,
         // 'class_definition' => array('singleLine' => true),
-        'concat_space' => ['spacing' => 'none'],
+        'concat_space' => array('spacing' => 'none'),
         'declare_equal_normalize' => true,
         'function_typehint_space' => true,
         'hash_to_slash_comment' => true,
@@ -33,14 +33,14 @@ return PhpCsFixer\Config::create()
         // 'no_empty_comment' => true,
         // 'no_empty_phpdoc' => true,
         // 'no_empty_statement' => true,
-        'no_extra_consecutive_blank_lines' => [
+        'no_extra_consecutive_blank_lines' => array(
             'curly_brace_block',
             'extra',
             'parenthesis_brace_block',
             'square_brace_block',
             'throw',
             'use',
-        ],
+        ),
         // 'no_leading_import_slash' => true,
         // 'no_leading_namespace_whitespace' => true,
         // 'no_mixed_echo_print' => array('use' => 'echo'),
@@ -52,7 +52,7 @@ return PhpCsFixer\Config::create()
         // 'no_trailing_comma_in_singleline_array' => true,
         // 'no_unneeded_control_parentheses' => true,
         'no_unused_imports' => true,
-        'ordered_imports' => ['sort_algorithm' => 'alpha'],
+        'ordered_imports' => array('sort_algorithm' => 'alpha'),
         'no_whitespace_before_comma_in_array' => true,
         'no_whitespace_in_blank_line' => true,
         // 'normalize_index_brace' => true,
@@ -60,7 +60,7 @@ return PhpCsFixer\Config::create()
         // 'php_unit_fqcn_annotation' => true,
         //'phpdoc_align' => true,
         // 'phpdoc_annotation_without_dot' => true,
-        // 'phpdoc_indent' => true,
+        'phpdoc_indent' => true,
         // 'phpdoc_inline_tag' => true,
         // 'phpdoc_no_access' => true,
         // 'phpdoc_no_alias_tag' => true,
@@ -78,7 +78,7 @@ return PhpCsFixer\Config::create()
         // 'phpdoc_types' => true,
         // 'phpdoc_var_without_name' => true,
         // 'pre_increment' => true,
-        'return_type_declaration' => ['space_before' => 'none'],
+        'return_type_declaration' => array('space_before' => 'none'),
         // 'self_accessor' => true,
         // 'short_scalar_cast' => true,
         'single_blank_line_before_namespace' => true,
@@ -95,6 +95,6 @@ return PhpCsFixer\Config::create()
         'no_spaces_after_function_name' => true,
         'no_spaces_inside_parenthesis' => true,
         // 'not_operator_with_successor_space' => true,
-    ])
+    ))
     //->setIndent("\t")
     ->setLineEnding("\n");
