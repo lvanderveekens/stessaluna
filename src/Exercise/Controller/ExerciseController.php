@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Stessaluna\Exercise\Controller;
 
 use function Functional\some;
-use Psr\Log\LoggerInterface;
-use Stessaluna\Exercise\Aorb\Dto\SubmitAorbAnswerRequestDto;
-use Stessaluna\Exercise\Dto\ExerciseDtoConverter;
-use Stessaluna\Exercise\Dto\RequestDtoConverter;
 use Stessaluna\Exercise\Answer\Aorb\Entity\AorbAnswer;
 use Stessaluna\Exercise\Answer\Entity\Answer;
+use Stessaluna\Exercise\Aorb\Dto\SubmitAorbAnswerRequestDto;
 use Stessaluna\Exercise\Aorb\Entity\AorbExercise;
+use Stessaluna\Exercise\Dto\ExerciseToExerciseDtoConverter;
+use Stessaluna\Exercise\Dto\RequestDtoConverter;
 use Stessaluna\Exercise\Repository\ExerciseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,24 +23,20 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ExerciseController extends AbstractController
 {
-    private static array $supportedRequestTypeByExercise = [
+    private static array $supportedRequestTypeByExercise = array(
         AorbExercise::class => SubmitAorbAnswerRequestDto::class
-    ];
-
-    private LoggerInterface $logger;
+    );
 
     private ExerciseRepository $exerciseRepository;
 
-    private ExerciseDtoConverter $exerciseDtoConverter;
+    private ExerciseToExerciseDtoConverter $exerciseToExerciseDtoConverter;
 
     public function __construct(
-        LoggerInterface $logger,
         ExerciseRepository $exerciseRepository,
-        ExerciseDtoConverter $exerciseDtoConverter
+        ExerciseToExerciseDtoConverter $exerciseToExerciseDtoConverter
     ) {
-        $this->logger = $logger;
         $this->exerciseRepository = $exerciseRepository;
-        $this->exerciseDtoConverter = $exerciseDtoConverter;
+        $this->exerciseToExerciseDtoConverter = $exerciseToExerciseDtoConverter;
     }
 
     /**
@@ -72,6 +67,6 @@ class ExerciseController extends AbstractController
 
         $exercise->addAnswer($answer);
         $exercise = $this->exerciseRepository->save($exercise);
-        return $this->json($this->exerciseDtoConverter->toDto($exercise, $this->getUser()));
+        return $this->json($this->exerciseToExerciseDtoConverter->convert($exercise, $this->getUser()));
     }
 }

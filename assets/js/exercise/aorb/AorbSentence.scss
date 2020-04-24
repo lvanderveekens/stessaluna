@@ -7,9 +7,9 @@
     .choiceA,
     .choiceB {
         display: inline-block;
-        color: $stessaluna-aorb-default;
-        background: $stessaluna-aorb-default-bg;
-        border: 1px solid $stessaluna-aorb-default;
+        color: $stessaluna-exercise-default;
+        background: $stessaluna-exercise-default-bg;
+        border: 1px solid $stessaluna-exercise-default;
 
         user-select: none;
 
@@ -20,7 +20,7 @@
         }
 
         .text {
-            color: $stessaluna-aorb-default-text;
+            color: $stessaluna-exercise-default-text;
             padding-right: 0.4rem;
         }
     }
@@ -46,27 +46,27 @@
     }
 
     .selected {
-        color: $stessaluna-aorb-selected;
-        border: 2px solid $stessaluna-aorb-selected;
-        background: $stessaluna-aorb-selected-bg;
+        color: $stessaluna-exercise-selected;
+        border: 2px solid $stessaluna-exercise-selected;
+        background: $stessaluna-exercise-selected-bg;
 
         margin: 0;
         padding: 0;
     }
 
     .correct {
-        color: $stessaluna-aorb-correct;
-        border: 2px solid $stessaluna-aorb-correct;
-        background: $stessaluna-aorb-correct-bg;
+        color: $stessaluna-exercise-correct;
+        border: 2px solid $stessaluna-exercise-correct;
+        background: $stessaluna-exercise-correct-bg;
 
         margin: 0;
         padding: 0;
     }
 
     .incorrect {
-        color: $stessaluna-aorb-incorrect;
-        border: 2px solid $stessaluna-aorb-incorrect;
-        background: $stessaluna-aorb-incorrect-bg;
+        color: $stessaluna-exercise-incorrect;
+        border: 2px solid $stessaluna-exercise-incorrect;
+        background: $stessaluna-exercise-incorrect-bg;
 
         margin: 0;
         padding: 0;

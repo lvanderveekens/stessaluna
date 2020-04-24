@@ -24,11 +24,17 @@ class ImageStorage
         $this->logger = $logger;
     }
 
-    public function getRelativeUrl(string $filename): string
+    /**
+     * @return string the relative path to the image.
+     */
+    public function getRelativePath(string $filename): string
     {
         return self::$PUBLIC_PATH.'/'.$filename;
     }
 
+    /**
+     * @return string the filename of the stored image.
+     */
     public function store(UploadedFile $image): string
     {
         $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);

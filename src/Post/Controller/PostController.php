@@ -91,6 +91,7 @@ class PostController extends AbstractController
                     'option2' => $createPostRequest['exercise']['option2'],
                     'option3' => $createPostRequest['exercise']['option3'],
                     'option4' => $createPostRequest['exercise']['option4'],
+                    'correct' => (int) $createPostRequest['exercise']['correct'],
                 );
                 $exercise = $this->createWhatdoyouseeExercise($whatdoyouseeExerciseRequest);
             }
@@ -134,7 +135,7 @@ class PostController extends AbstractController
         $exercise->setOption2($whatdoyouseeExerciseRequest['option2']);
         $exercise->setOption3($whatdoyouseeExerciseRequest['option3']);
         $exercise->setOption4($whatdoyouseeExerciseRequest['option4']);
-        $exercise->setCorrect();
+        $exercise->setCorrect($whatdoyouseeExerciseRequest['correct']);
 
         return $exercise;
     }

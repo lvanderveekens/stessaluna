@@ -2,33 +2,32 @@
 
 namespace Stessaluna\Post\Dto;
 
-use Psr\Log\LoggerInterface;
-use Stessaluna\Exercise\Dto\ExerciseDtoConverter;
-use Stessaluna\Post\Comment\Dto\CommentDtoConverter;
-use Stessaluna\User\Dto\UserDtoConverter;
+use Stessaluna\Exercise\Dto\ExerciseToExerciseDtoConverter;
 use Stessaluna\Image\ImageStorage;
+use Stessaluna\Post\Comment\Dto\CommentDtoConverter;
 use Stessaluna\Post\Entity\Post;
+use Stessaluna\User\Dto\UserDtoConverter;
 use Stessaluna\User\Entity\User;
 
 class PostToPostDtoConverter
 {
-    private LoggerInterface $logger;
     private UserDtoConverter $userDtoConverter;
+
     private CommentDtoConverter $commentDtoConverter;
-    private ExerciseDtoConverter $exerciseDtoConverter;
+
+    private ExerciseToExerciseDtoConverter $exerciseToExerciseDtoConverter;
+
     private ImageStorage $imageStorage;
 
     public function __construct(
-        LoggerInterface $logger,
         UserDtoConverter $userDtoConverter,
         CommentDtoConverter $commentDtoConverter,
-        ExerciseDtoConverter $exerciseDtoConverter,
+        ExerciseToExerciseDtoConverter $exerciseToExerciseDtoConverter,
         ImageStorage $imageStorage
     ) {
-        $this->logger = $logger;
         $this->userDtoConverter = $userDtoConverter;
         $this->commentDtoConverter = $commentDtoConverter;
-        $this->exerciseDtoConverter = $exerciseDtoConverter;
+        $this->exerciseToExerciseDtoConverter = $exerciseToExerciseDtoConverter;
         $this->imageStorage = $imageStorage;
     }
 
@@ -41,11 +40,11 @@ class PostToPostDtoConverter
 
         $dto->text = $post->getText();
         if ($post->getImageFilename()) {
-            $dto->image = $this->imageStorage->getRelativeUrl($post->getImageFilename());
+            $dto->image = $this->imageStorage->getRelativePath($post->getImageFilename());
         }
 
         if ($post->getExercise()) {
-            $dto->exercise = $this->exerciseDtoConverter->toDto($post->getExercise(), $user);
+            $dto->exercise = $this->exerciseToExerciseDtoConverter->convert($post->getExercise(), $user);
         }
 
         $dto->comments = array_map(function ($comment) {

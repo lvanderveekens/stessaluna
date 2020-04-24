@@ -9,8 +9,8 @@
     .a,
     .b {
         display: inline-block;
-        border: 1px solid $stessaluna-aorb-default;
-        background: $stessaluna-aorb-default-bg;
+        border: 1px solid $stessaluna-exercise-default;
+        background: $stessaluna-exercise-default-bg;
 
         // i hope this does not break anything in slatejs
         user-select: none;
@@ -18,29 +18,29 @@
         cursor: pointer;
 
         &.correct {
-            // border: 1px solid $stessaluna-aorb-correct;
-            // background: $stessaluna-aorb-correct-bg;
+            // border: 1px solid $stessaluna-exercise-correct;
+            // background: $stessaluna-exercise-correct-bg;
 
-            border: 2px solid $stessaluna-aorb-correct;
-            background: $stessaluna-aorb-correct-bg;
+            border: 2px solid $stessaluna-exercise-correct;
+            background: $stessaluna-exercise-correct-bg;
 
             margin: 0;
             padding: 0;
 
             .label {
-                color: $stessaluna-aorb-correct;
+                color: $stessaluna-exercise-correct;
             }
         }
 
         .label {
-            color: $stessaluna-aorb-default;
+            color: $stessaluna-exercise-default;
             padding: 0 0.4rem;
         }
 
         .content {
             display: inline-block;
             padding-right: 0.4rem;
-            color: $stessaluna-aorb-default-text;
+            color: $stessaluna-exercise-default-text;
         }
     }
 

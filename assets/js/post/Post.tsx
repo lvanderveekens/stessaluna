@@ -1,18 +1,19 @@
-import React, { useState, FunctionComponent } from 'react';
-import styles from './Post.scss?module';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
-import { connect } from 'react-redux';
-import { addComment } from '../store/post/actions';
-import CommentSection from './comment/comment-section/CommentSection';
-import User from '../user/user.interface';
-import { Dropdown } from 'react-bootstrap';
-import CustomToggle from '../dropdown/CustomToggle';
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
-import Avatar from '../user/avatar/Avatar';
-import Exercise from '../exercise/exercise.model';
-import AorbExercise from '../exercise/aorb/aorb-exercise';
-import Text from './text/Text';
+import React, { useState, FunctionComponent } from "react"
+import styles from "./Post.scss?module"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCommentAlt } from "@fortawesome/free-regular-svg-icons"
+import { connect } from "react-redux"
+import { addComment } from "../store/post/actions"
+import CommentSection from "./comment/comment-section/CommentSection"
+import User from "../user/user.interface"
+import { Dropdown } from "react-bootstrap"
+import CustomToggle from "../dropdown/CustomToggle"
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons"
+import Avatar from "../user/avatar/Avatar"
+import Exercise from "../exercise/exercise.model"
+import AorbExercise from "../exercise/aorb/aorb-exercise"
+import Text from "./text/Text"
+import WhatdoyouseeExercise from "../exercise/whatdoyousee/whatdoyousee-exercise/WhatdoyouseeExercise"
 
 interface Props {
   id: number
@@ -23,31 +24,52 @@ interface Props {
   exercise?: Exercise
   onDelete: () => void
   comments: any[]
-  user: User,
-};
+  user: User
+}
 
 const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, exercise, comments, onDelete, user }) => {
-
-  const [showComments, setShowComments] = useState(false);
+  const [showComments, setShowComments] = useState(false)
 
   const toggleComments = () => {
-    setShowComments(!showComments);
-  };
+    setShowComments(!showComments)
+  }
 
   const renderUserName = () => {
     if (author.firstName && author.lastName) {
       return (
         <span>
-          <span className={styles.fullName}>{author.firstName} {author.lastName}</span>
+          <span className={styles.fullName}>
+            {author.firstName} {author.lastName}
+          </span>
           <span className={styles.usernameAfterFullName}>@{author.username}</span>
         </span>
-      );
+      )
     }
     return (
       <span>
-        <span style={{ marginRight: '0.3rem' }}>@{author.username}</span>
+        <span style={{ marginRight: "0.3rem" }}>@{author.username}</span>
       </span>
     )
+  }
+
+  const renderExercise = () => {
+    switch (exercise.type) {
+      case "aorb":
+        return <AorbExercise id={exercise.id} sentences={exercise.sentences} />
+      case "whatdoyousee":
+        return (
+          <WhatdoyouseeExercise
+            id={exercise.id}
+            image={exercise.image}
+            option1={exercise.option1}
+            option2={exercise.option2}
+            option3={exercise.option3}
+            option4={exercise.option4}
+            correct={exercise.correct}
+            answer={exercise.answer}
+          />
+        )
+    }
   }
 
   return (
@@ -78,32 +100,36 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, ex
             )}
           </div>
         </div>
-        {text && (<Text text={text} />)}
-        {image && (<img className={styles.image} src={image} />)}
-        {exercise && exercise.type === 'aorb' && (<AorbExercise id={exercise.id} sentences={exercise.sentences} />)}
+        {text && <Text text={text} />}
+        {image && <img className={styles.image} src={image} />}
+        {exercise && renderExercise()}
       </div>
       <div className={styles.activity}>
         {comments && comments.length > 0 && (
-          <div className={styles.numberOfComments} onClick={toggleComments}>Comments: {comments.length}</div>
+          <div className={styles.numberOfComments} onClick={toggleComments}>
+            Comments: {comments.length}
+          </div>
         )}
       </div>
       <div className={styles.actions}>
         <div className={styles.addComment} onClick={() => setShowComments(true)}>
-          <span className={styles.commentIcon}><FontAwesomeIcon icon={faCommentAlt} /></span>
+          <span className={styles.commentIcon}>
+            <FontAwesomeIcon icon={faCommentAlt} />
+          </span>
           Add comment
         </div>
       </div>
-      {showComments && (<CommentSection postId={id} comments={comments} />)}
+      {showComments && <CommentSection postId={id} comments={comments} />}
     </div>
-  );
-};
+  )
+}
 
-const mapStateToProps = state => ({
-  user: state.auth.user
-});
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+})
 
 const actionCreators = {
   addComment,
-};
+}
 
-export default connect(mapStateToProps, actionCreators)(Post);
+export default connect(mapStateToProps, actionCreators)(Post)

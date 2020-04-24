@@ -1,99 +1,99 @@
-import React, { useState, FC, useRef, ChangeEvent } from "react";
-import TextareaAutosize from "react-textarea-autosize";
-import { Formik } from "formik";
-import { Form, Dropdown } from "react-bootstrap";
-import styles from "./NewPostForm.scss?module";
-import User from "../../../user/user.interface";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage, faGraduationCap } from "@fortawesome/free-solid-svg-icons";
-import ImagePreview from "./image-preview/ImagePreview";
-import ExerciseInputValue from "../exercise-input/exercise-input.model";
-import AorbExerciseInput from "../exercise-input/aorb-exercise-input/AorbExerciseInput";
-import { schema } from "./schema";
-import CustomToggle from "../../../dropdown/CustomToggle";
-import { ExerciseType } from "../../../exercise/exercise.model";
-import WhatdoyouseeExerciseInput from "../exercise-input/whatdoyousee-exercise-input/WhatdoyouseeExerciseInput";
+import React, { useState, FC, useRef, ChangeEvent } from "react"
+import TextareaAutosize from "react-textarea-autosize"
+import { Formik } from "formik"
+import { Form, Dropdown } from "react-bootstrap"
+import styles from "./NewPostForm.scss?module"
+import User from "../../../user/user.interface"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faImage, faGraduationCap } from "@fortawesome/free-solid-svg-icons"
+import ImagePreview from "./image-preview/ImagePreview"
+import ExerciseInputValue from "../exercise-input/exercise-input.model"
+import AorbExerciseInput from "../exercise-input/aorb-exercise-input/AorbExerciseInput"
+import { schema } from "./schema"
+import CustomToggle from "../../../dropdown/CustomToggle"
+import { ExerciseType } from "../../../exercise/exercise.model"
+import WhatdoyouseeExerciseInput from "../exercise-input/whatdoyousee-exercise-input/WhatdoyouseeExerciseInput"
 
 interface Props {
-  user: User;
-  onSubmit: (text?: string, image?: File, exercise?: ExerciseInputValue) => Promise<void>;
+  user: User
+  onSubmit: (text?: string, image?: File, exercise?: ExerciseInputValue) => Promise<void>
 }
 
 interface Values {
-  text?: string;
-  image?: File;
-  exercise?: ExerciseInputValue;
+  text?: string
+  image?: File
+  exercise?: ExerciseInputValue
 }
 
 const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
-  const fileInput = useRef(null);
-  const [imageUrl, setImageUrl] = useState(null);
-  const [submitError, setSubmitError] = useState(false);
+  const fileInput = useRef(null)
+  const [imageUrl, setImageUrl] = useState(null)
+  const [submitError, setSubmitError] = useState(false)
   // const [exerciseType, setExerciseType] = useState<ExerciseType>(null);
-  const [exerciseType, setExerciseType] = useState<ExerciseType>(ExerciseType.WHAT_DO_YOU_SEE);
+  const [exerciseType, setExerciseType] = useState<ExerciseType>(ExerciseType.WHAT_DO_YOU_SEE)
 
-  const actionsDisabled = (fileInput.current && fileInput.current.value) || exerciseType != null;
+  const actionsDisabled = (fileInput.current && fileInput.current.value) || exerciseType != null
 
   const handleChangeImage = (setFieldValue) => (e: ChangeEvent<HTMLInputElement>) => {
-    const image = e.currentTarget.files[0];
+    const image = e.currentTarget.files[0]
     if (image) {
-      setFieldValue("image", image);
-      setImageUrl(URL.createObjectURL(image));
+      setFieldValue("image", image)
+      setImageUrl(URL.createObjectURL(image))
     }
-  };
+  }
 
   const handleChangeText = (setFieldValue) => (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setFieldValue("text", value || null);
-  };
+    const value = e.target.value
+    setFieldValue("text", value || null)
+  }
 
   const handleChangeExercise = (setFieldValue) => (change: ExerciseInputValue) => {
-    setFieldValue("exercise", change);
-  };
+    setFieldValue("exercise", change)
+  }
 
   const handleDeleteImage = (setFieldValue) => () => {
-    setFieldValue("image", null);
-    setImageUrl(null);
-    fileInput.current.value = null;
-  };
+    setFieldValue("image", null)
+    setImageUrl(null)
+    fileInput.current.value = null
+  }
 
-  const handleClickImage = () => fileInput.current.click();
+  const handleClickImage = () => fileInput.current.click()
 
   const handleCloseExercise = (setFieldValue) => () => {
-    setExerciseType(null);
-    setFieldValue("exercise", null);
-  };
+    setExerciseType(null)
+    setFieldValue("exercise", null)
+  }
 
   const handleSubmit = ({ text, image, exercise }: Values, resetForm) => {
-    setSubmitError(false);
+    setSubmitError(false)
 
     onSubmit(text, image, exercise)
       .then(() => {
-        fileInput.current.value = null;
-        resetForm();
-        setExerciseType(null);
+        fileInput.current.value = null
+        resetForm()
+        setExerciseType(null)
       })
       .catch((e) => {
-        console.log(e);
-        setSubmitError(true);
-      });
-  };
+        console.log(e)
+        setSubmitError(true)
+      })
+  }
 
   const allNull = ({ text, image, exercise }: Values) => {
-    return text === null && image === null && exercise === null;
-  };
+    return text === null && image === null && exercise === null
+  }
 
   const renderExerciseInput = (setFieldValue) => {
-    const props = { onChange: handleChangeExercise(setFieldValue), onClose: handleCloseExercise(setFieldValue) };
+    const props = { onChange: handleChangeExercise(setFieldValue), onClose: handleCloseExercise(setFieldValue) }
     switch (exerciseType) {
       case ExerciseType.A_OR_B:
-        return <AorbExerciseInput {...props} />;
+        return <AorbExerciseInput {...props} />
       case ExerciseType.WHAT_DO_YOU_SEE:
-        return <WhatdoyouseeExerciseInput {...props} />;
+        return <WhatdoyouseeExerciseInput {...props} />
       default:
-        throw new Error(`Cannot render unsupported exercise type: ${exerciseType}`);
+        throw new Error(`Cannot render unsupported exercise type: ${exerciseType}`)
     }
-  };
+  }
 
   return (
     <Formik
@@ -152,7 +152,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
         </Form>
       )}
     </Formik>
-  );
-};
+  )
+}
 
-export default NewPostForm;
+export default NewPostForm

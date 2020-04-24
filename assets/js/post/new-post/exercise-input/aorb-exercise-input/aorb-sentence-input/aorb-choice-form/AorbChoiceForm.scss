@@ -33,13 +33,13 @@
 
         .aInputGroup,
         .bInputGroup {
-            color: $stessaluna-aorb-default;
-            border: 1px solid $stessaluna-aorb-default;
-            background: $stessaluna-aorb-default-bg;
+            color: $stessaluna-exercise-default;
+            border: 1px solid $stessaluna-exercise-default;
+            background: $stessaluna-exercise-default-bg;
 
             input {
                 padding: 0;
-                color: $stessaluna-aorb-default-text;
+                color: $stessaluna-exercise-default-text;
                 background: unset;
 
                 &:focus {
