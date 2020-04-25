@@ -6,6 +6,7 @@ type Exercise = AorbExercise | WhatdoyouseeExercise
 export interface AbstractExercise {
   id?: number
   type: ExerciseType
+  submitting?: boolean
 }
 
 export enum ExerciseType {

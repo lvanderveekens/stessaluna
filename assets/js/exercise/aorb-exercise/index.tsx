@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react"
+import React, { FC, useState, useEffect } from "react"
 import { AorbSentence as AorbSentenceInterface } from "./aorb-exercise.model"
 import AorbExercise from "./AorbExercise"
 import { connect } from "react-redux"
@@ -9,30 +9,25 @@ interface Props {
   id: number
   sentences: AorbSentenceInterface[]
   submitAnswer: (exerciseId: number, answer: AorbAnswer) => void
+  submitting: boolean
 }
 
-const AorbExerciseContainer: FC<Props> = ({ id, sentences, submitAnswer }) => {
+const AorbExerciseContainer: FC<Props> = ({ id, sentences, submitAnswer, submitting }) => {
   const [choices, setChoices] = useState(new Array(sentences.length).fill(null) as ("a" | "b")[])
 
+  useEffect(() => {
+    if (choices.every((c) => c !== null)) {
+      submitAnswer(id, new AorbAnswer(choices))
+    }
+  }, [choices])
+
   const handleChoice = (index: number) => (choice: "a" | "b") => {
-    setChoices(choices.map((c, i) => (i == index ? choice : c)))
+    const updatedChoices = [...choices]
+    updatedChoices[index] = choice
+    setChoices(updatedChoices)
   }
 
-  const handleSubmit = () => {
-    submitAnswer(id, new AorbAnswer(choices))
-  }
-
-  const submitDisabled = sentences.some((s) => s.choice.answer !== null)
-
-  return (
-    <AorbExercise
-      sentences={sentences}
-      choices={choices}
-      onChoice={handleChoice}
-      onSubmit={handleSubmit}
-      submitDisabled={submitDisabled}
-    />
-  )
+  return <AorbExercise sentences={sentences} choices={choices} onChoice={handleChoice} submitting={submitting} />
 }
 
 const actionCreators = {

@@ -18,4 +18,5 @@ rules:
     "react/prop-types": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/member-delimiter-style": "off",
+    "@typescript-eslint/no-use-before-define": "off",
   }

@@ -55,7 +55,7 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, ex
   const renderExercise = () => {
     switch (exercise.type) {
       case "aorb":
-        return <AorbExercise id={exercise.id} sentences={exercise.sentences} />
+        return <AorbExercise id={exercise.id} sentences={exercise.sentences} submitting={exercise.submitting} />
       case "whatdoyousee":
         return (
           <WhatdoyouseeExercise

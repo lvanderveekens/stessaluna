@@ -4,8 +4,8 @@
 
     hyphens: auto;
 
-    .choiceA,
-    .choiceB {
+    .a,
+    .b {
         display: inline-block;
         color: $stessaluna-exercise-default;
         background: $stessaluna-exercise-default-bg;
@@ -14,6 +14,10 @@
         user-select: none;
 
         cursor: pointer;
+
+        &.answered {
+            cursor: unset;
+        }
 
         .label {
             padding: 0 0.4rem;
@@ -25,7 +29,7 @@
         }
     }
 
-    .choiceA {
+    .a {
         border-bottom-left-radius: 0.5rem;
         border-top-left-radius: 0.5rem;
 
@@ -35,7 +39,7 @@
         margin-left: 1px;
     }
 
-    .choiceB {
+    .b {
         border-bottom-right-radius: 0.5rem;
         border-top-right-radius: 0.5rem;
 
