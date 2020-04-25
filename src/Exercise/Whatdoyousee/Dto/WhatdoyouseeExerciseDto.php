@@ -3,6 +3,7 @@
 namespace Stessaluna\Exercise\Whatdoyousee\Dto;
 
 use Stessaluna\Exercise\Dto\ExerciseDto;
+use Stessaluna\Exercise\ExerciseType;
 
 class WhatdoyouseeExerciseDto extends ExerciseDto {
 
@@ -18,8 +19,10 @@ class WhatdoyouseeExerciseDto extends ExerciseDto {
 
     public int $correct;
 
+    public ?int $answer;
+
     public function __construct()
     {
-        parent::__construct('whatdoyousee');
+        parent::__construct(ExerciseType::WHAT_DO_YOU_SEE);
     }
 }

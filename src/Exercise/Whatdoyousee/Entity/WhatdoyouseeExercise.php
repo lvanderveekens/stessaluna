@@ -6,6 +6,7 @@ namespace Stessaluna\Exercise\Whatdoyousee\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Stessaluna\Exercise\Entity\Exercise;
+use Stessaluna\Exercise\ExerciseType;
 
 /**
  * @ORM\Entity
@@ -117,5 +118,10 @@ class WhatdoyouseeExercise extends Exercise
         $this->correct = $correct;
 
         return $this;
+    }
+
+    public function getType(): string
+    {
+        return ExerciseType::WHAT_DO_YOU_SEE;
     }
 }

@@ -12,7 +12,10 @@ use Stessaluna\User\Entity\User;
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"aorb" = "Stessaluna\Exercise\Answer\Aorb\Entity\AorbAnswer"})
+ * @ORM\DiscriminatorMap({
+ *     "aorb" = "AorbAnswer",
+ *     "whatdoyousee" = "WhatdoyouseeAnswer",
+ * })
  */
 abstract class Answer
 {
@@ -34,6 +37,11 @@ abstract class Answer
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private Exercise $exercise;
+
+    /**
+     * @ORM\Column(name="value", type="json")
+     */
+    protected $value;
 
     public function getId(): ?int
     {

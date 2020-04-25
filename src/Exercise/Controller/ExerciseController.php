@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Stessaluna\Exercise\Controller;
 
 use function Functional\some;
-use Stessaluna\Exercise\Answer\Aorb\Entity\AorbAnswer;
+use RuntimeException;
+use Stessaluna\Exercise\Answer\Dto\AorbAnswerDto;
+use Stessaluna\Exercise\Answer\Dto\WhatdoyouseeAnswerDto;
 use Stessaluna\Exercise\Answer\Entity\Answer;
-use Stessaluna\Exercise\Aorb\Dto\SubmitAorbAnswerRequestDto;
-use Stessaluna\Exercise\Aorb\Entity\AorbExercise;
+use Stessaluna\Exercise\Answer\Entity\AorbAnswer ;
+use Stessaluna\Exercise\Answer\Entity\WhatdoyouseeAnswer;
 use Stessaluna\Exercise\Dto\ExerciseToExerciseDtoConverter;
-use Stessaluna\Exercise\Dto\RequestDtoConverter;
+use Stessaluna\Exercise\Dto\RequestToAnswerDtoConverter;
 use Stessaluna\Exercise\Repository\ExerciseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,10 +25,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ExerciseController extends AbstractController
 {
-    private static array $supportedRequestTypeByExercise = array(
-        AorbExercise::class => SubmitAorbAnswerRequestDto::class
-    );
-
     private ExerciseRepository $exerciseRepository;
 
     private ExerciseToExerciseDtoConverter $exerciseToExerciseDtoConverter;
@@ -44,7 +42,7 @@ class ExerciseController extends AbstractController
      */
     public function submitAnswer(int $id, Request $request): JsonResponse
     {
-        $request = RequestDtoConverter::toSubmitAnswerRequestDto($request);
+        $answerDto = RequestToAnswerDtoConverter::convert($request);
         $exercise = $this->exerciseRepository->findById($id);
 
         $answers = $exercise->getAnswers()->toArray();
@@ -53,17 +51,24 @@ class ExerciseController extends AbstractController
             throw new BadRequestHttpException('User already submitted an answer for this exercise');
         }
 
-        if (self::$supportedRequestTypeByExercise[get_class($exercise)] !== get_class($request)) {
+        if ($exercise->getType() !== $answerDto->type) {
             throw new BadRequestHttpException('Answer type does not match exercise');
         }
 
         switch (true) {
-            case $request instanceof SubmitAorbAnswerRequestDto:
+            case $answerDto instanceof AorbAnswerDto:
                 $answer = new AorbAnswer();
-                $answer->setUser($this->getUser());
-                $answer->setChoices($request->choices);
+                $answer->setChoices($answerDto->choices);
                 break;
+            case $answerDto instanceof WhatdoyouseeAnswerDto:
+                $answer = new WhatdoyouseeAnswer();
+                $answer->setOption($answerDto->option);
+                break;
+            default:
+                throw new RuntimeException('Failed to create an answer entity for type: '.$answerDto->type);
         }
+
+        $answer->setUser($this->getUser());
 
         $exercise->addAnswer($answer);
         $exercise = $this->exerciseRepository->save($exercise);

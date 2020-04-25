@@ -6,6 +6,7 @@ namespace Stessaluna\Exercise\Aorb\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Stessaluna\Exercise\Entity\Exercise;
+use Stessaluna\Exercise\ExerciseType;
 
 /**
  * @ORM\Entity
@@ -20,7 +21,7 @@ class AorbExercise extends Exercise
     public function __construct()
     {
         parent::__construct();
-        $this->sentences = [];
+        $this->sentences = array();
     }
 
     /**
@@ -51,5 +52,10 @@ class AorbExercise extends Exercise
         $this->sentences = json_decode(json_encode($sentences), true);
 
         return $this;
+    }
+
+    public function getType(): string
+    {
+        return ExerciseType::A_OR_B;
     }
 }

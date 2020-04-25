@@ -1,0 +1,61 @@
+@import '../../../css/colors';
+
+.whatdoyouseeExercise {
+
+    // TODO: same as AorbExercise? Apply DRY principle?
+    .header {
+        text-align: center;
+        margin-bottom: 1rem;
+        font-weight: bold;
+        font-size: larger;
+    }
+
+    .imageWrapper {
+
+        margin-bottom: 1rem;
+
+        img {
+            width: 100%;
+            display: block;
+            margin-right: auto;
+            margin-left: auto;
+        }
+    }
+
+    .option {
+        width: 100%;
+        text-align: center;
+        line-height: 2.15;
+
+        border: 1px solid $stessaluna-exercise-default;
+        border-radius: 0.5rem;
+        // The +1px is to compensate for the border increase later on.
+        margin: calc(0rem + 1px) calc(0.5rem + 1px);
+
+        background-color: $stessaluna-exercise-default-bg;
+
+        overflow: hidden;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &.correct {
+            color: $stessaluna-exercise-correct;
+            border: 2px solid $stessaluna-exercise-correct;
+            background: $stessaluna-exercise-correct-bg;
+
+            // Remove the +1px from earlier
+            margin: 0 0.5rem;
+        }
+
+        &.incorrect {
+            color: $stessaluna-exercise-incorrect;
+            border: 2px solid $stessaluna-exercise-incorrect;
+            background: $stessaluna-exercise-incorrect-bg;
+
+            // Remove the +1px from earlier
+            margin: 0 0.5rem;
+        }
+    }
+}

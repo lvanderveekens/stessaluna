@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Stessaluna\Exercise\Dto;
+namespace Stessaluna\Exercise\Answer\Dto;
 
-abstract class ExerciseDto
+abstract class AnswerDto
 {
-    public int $id;
-
     public string $type;
 
     protected function __construct(string $type)

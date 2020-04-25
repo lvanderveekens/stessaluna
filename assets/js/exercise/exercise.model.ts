@@ -1,5 +1,5 @@
-import AorbExercise from "./aorb/aorb-exercise.model"
-import WhatdoyouseeExercise from "./whatdoyousee/whatdoyousee-exercise.model"
+import AorbExercise from "./aorb-exercise/aorb-exercise.model"
+import WhatdoyouseeExercise from "./whatdoyousee-exercise/whatdoyousee-exercise.model"
 
 type Exercise = AorbExercise | WhatdoyouseeExercise
 

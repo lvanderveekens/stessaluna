@@ -1,22 +1,23 @@
-import React, { FunctionComponent, useState } from 'react';
-import styles from './AorbExercise.scss?module';
-import { Button } from 'react-bootstrap';
-import { AorbSentence as AorbSentenceInterface } from '../aorb-exercise.model';
-import AorbSentence from '../AorbSentence';
+import React, { FunctionComponent, useState } from "react"
+import styles from "./AorbExercise.scss?module"
+import { Button } from "react-bootstrap"
+import { AorbSentence as AorbSentenceInterface } from "./aorb-exercise.model"
+import AorbSentence from "./aorb-sentence/AorbSentence"
 
 interface Props {
   sentences: AorbSentenceInterface[]
-  choices: ('a' | 'b')[]
-  onChoice: (index: number) => (choice: 'a' | 'b') => void
+  choices: ("a" | "b")[]
+  onChoice: (index: number) => (choice: "a" | "b") => void
   onSubmit: () => void
   submitDisabled: boolean
-};
+}
 
 const AorbExercise: FunctionComponent<Props> = ({ sentences, choices, onChoice, onSubmit, submitDisabled }) => {
-
   return (
     <div className={styles.exercise}>
-      <div className={styles.header}><span>A or B</span></div>
+      <div className={styles.header}>
+        <span>A or B?</span>
+      </div>
       <div className={styles.sentences}>
         {sentences.map((sentence, i) => (
           <div key={i} className={styles.sentenceWrapper}>
@@ -31,9 +32,13 @@ const AorbExercise: FunctionComponent<Props> = ({ sentences, choices, onChoice, 
           </div>
         ))}
       </div>
-      <div><Button className="btn btn-dark ml-auto d-block" type="submit" onClick={onSubmit} disabled={submitDisabled}>Check</Button></div>
+      <div>
+        <Button className="btn btn-dark ml-auto d-block" type="submit" onClick={onSubmit} disabled={submitDisabled}>
+          Check
+        </Button>
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default AorbExercise;
+export default AorbExercise

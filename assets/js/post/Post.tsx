@@ -11,9 +11,9 @@ import CustomToggle from "../dropdown/CustomToggle"
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons"
 import Avatar from "../user/avatar/Avatar"
 import Exercise from "../exercise/exercise.model"
-import AorbExercise from "../exercise/aorb/aorb-exercise"
+import AorbExercise from "../exercise/aorb-exercise"
 import Text from "./text/Text"
-import WhatdoyouseeExercise from "../exercise/whatdoyousee/whatdoyousee-exercise/WhatdoyouseeExercise"
+import WhatdoyouseeExercise from "../exercise/whatdoyousee-exercise"
 
 interface Props {
   id: number

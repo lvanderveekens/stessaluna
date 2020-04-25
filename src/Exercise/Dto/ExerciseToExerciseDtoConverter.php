@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Stessaluna\Exercise\Dto;
 
-use Stessaluna\Exercise\Answer\Aorb\Entity\AorbAnswer;
 use Stessaluna\Exercise\Answer\Entity\Answer;
 use Stessaluna\Exercise\Aorb\Dto\AorbChoiceDto;
 use Stessaluna\Exercise\Aorb\Dto\AorbExerciseDto;
@@ -30,18 +29,18 @@ class ExerciseToExerciseDtoConverter
     {
         $dto = null;
 
+        $answer = null;
+        // TODO: use functional find?
+        $answersFromUser = array_filter($exercise->getAnswers()->toArray(), function (Answer $answer) use ($user) {
+            return $answer->getUser() == $user;
+        });
+
+        if (count($answersFromUser) > 0) {
+            $answer = $answersFromUser[0];
+        }
+
         if ($exercise instanceof AorbExercise) {
             $dto = new AorbExerciseDto();
-
-            $answersFromUser = array_filter($exercise->getAnswers()->toArray(), function (Answer $answer) use ($user) {
-                return $answer->getUser() == $user;
-            });
-
-            /** @var AorbAnswer */
-            $answer = null;
-            if (count($answersFromUser) > 0) {
-                $answer = $answersFromUser[0];
-            }
 
             $sentences = $exercise->getSentences();
             $sentenceDtos = array_map(function (int $i, AorbSentence $sentence) use ($answer) {
@@ -71,7 +70,11 @@ class ExerciseToExerciseDtoConverter
             $dto->option2 = $exercise->getOption2();
             $dto->option3 = $exercise->getOption3();
             $dto->option4 = $exercise->getOption4();
-            $dto->correct = $exercise->getCorrect();
+
+            if (isset($answer)) {
+                $dto->correct = $exercise->getCorrect();
+                $dto->answer = $answer->getOption();
+            }
         }
 
         $dto->id = $exercise->getId();

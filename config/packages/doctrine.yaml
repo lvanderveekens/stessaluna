@@ -39,12 +39,6 @@ doctrine:
         dir: "%kernel.project_dir%/src/Exercise/Answer/Entity"
         prefix: 'Stessaluna\Exercise\Answer\Entity'
         alias: Answer
-      AorbAnswer:
-        is_bundle: false
-        type: annotation
-        dir: "%kernel.project_dir%/src/Exercise/Answer/Aorb/Entity"
-        prefix: 'Stessaluna\Exercise\Answer\Aorb\Entity'
-        alias: AorbAnswer
       User:
         is_bundle: false
         type: annotation

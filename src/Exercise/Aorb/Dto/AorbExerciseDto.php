@@ -3,6 +3,7 @@
 namespace Stessaluna\Exercise\Aorb\Dto;
 
 use Stessaluna\Exercise\Dto\ExerciseDto;
+use Stessaluna\Exercise\ExerciseType;
 
 class AorbExerciseDto extends ExerciseDto {
 
@@ -11,6 +12,6 @@ class AorbExerciseDto extends ExerciseDto {
 
     public function __construct()
     {
-        parent::__construct('aorb');
+        parent::__construct(ExerciseType::A_OR_B);
     }
 }

@@ -1,32 +1,32 @@
-import React, { FC, useState, useEffect } from "react";
-import styles from "./WhatdoyouseeExerciseInput.scss?module";
-import WhatdoyouseeExerciseInputValue from "./whatdoyousee-exercise-input.model";
-import ExerciseInputHeader from "../exercise-input-header/ExerciseInputHeader";
-import ImageInput from "../../../../image/image-input/ImageInput";
-import classNames from "classnames/bind";
-const cx = classNames.bind(styles);
+import React, { FC, useState, useEffect } from "react"
+import styles from "./WhatdoyouseeExerciseInput.scss?module"
+import WhatdoyouseeExerciseInputValue from "./whatdoyousee-exercise-input.model"
+import ExerciseInputHeader from "../exercise-input-header/ExerciseInputHeader"
+import ImageInput from "../../../../image/image-input/ImageInput"
+import classNames from "classnames/bind"
+const cx = classNames.bind(styles)
 
 interface Props {
-  onChange: (change: WhatdoyouseeExerciseInputValue) => void;
-  onClose: () => void;
+  onChange: (change: WhatdoyouseeExerciseInputValue) => void
+  onClose: () => void
 }
 
 const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
-  const [image, setImage] = useState<File>(null);
-  const [option1, setOption1] = useState<string>("");
-  const [option2, setOption2] = useState<string>("");
-  const [option3, setOption3] = useState<string>("");
-  const [option4, setOption4] = useState<string>("");
-  const [correct, setCorrect] = useState<number>(null);
+  const [image, setImage] = useState<File>(null)
+  const [option1, setOption1] = useState<string>("")
+  const [option2, setOption2] = useState<string>("")
+  const [option3, setOption3] = useState<string>("")
+  const [option4, setOption4] = useState<string>("")
+  const [correct, setCorrect] = useState<number>(null)
 
   useEffect(() => {
-    onChange(new WhatdoyouseeExerciseInputValue(image, option1, option2, option3, option4, correct));
-  }, [image, option1, option2, option3, option4, correct]);
+    onChange(new WhatdoyouseeExerciseInputValue(image, option1, option2, option3, option4, correct))
+  }, [image, option1, option2, option3, option4, correct])
 
-  const option1ClassName = cx("option", { correct: correct === 1 });
-  const option2ClassName = cx("option", { correct: correct === 2 });
-  const option3ClassName = cx("option", { correct: correct === 3 });
-  const option4ClassName = cx("option", { correct: correct === 4 });
+  const option1ClassName = cx("option", { correct: correct === 1 })
+  const option2ClassName = cx("option", { correct: correct === 2 })
+  const option3ClassName = cx("option", { correct: correct === 3 })
+  const option4ClassName = cx("option", { correct: correct === 4 })
 
   return (
     <div className={styles.whatdoyouseeExerciseInput}>
@@ -37,7 +37,7 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
         </div>
       </div>
       <div>
-        <div className="d-flex">
+        <div className="d-flex mb-3">
           <div className={option1ClassName}>
             <label onClick={() => setCorrect(1)}>1</label>
             <input name="option1" type="text" value={option1} onChange={(e) => setOption1(e.currentTarget.value)} />
@@ -47,7 +47,7 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
             <input name="option2" type="text" value={option2} onChange={(e) => setOption2(e.currentTarget.value)} />
           </div>
         </div>
-        <div className="d-flex">
+        <div className="d-flex mb-3">
           <div className={option3ClassName}>
             <label onClick={() => setCorrect(3)}>3</label>
             <input name="option3" type="text" value={option3} onChange={(e) => setOption3(e.currentTarget.value)} />
@@ -58,9 +58,9 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
           </div>
         </div>
       </div>
-      {!correct && <div className={styles.hint}>Click on the index to mark an option as correct.</div>}
+      {!correct && <div className={styles.hint}>Mark the correct option by clicking on the index.</div>}
     </div>
-  );
-};
+  )
+}
 
-export default WhatdoyouseeExerciseInput;
+export default WhatdoyouseeExerciseInput

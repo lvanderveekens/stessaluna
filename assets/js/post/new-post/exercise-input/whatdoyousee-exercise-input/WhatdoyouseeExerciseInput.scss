@@ -33,12 +33,14 @@
 
         border: 1px solid $stessaluna-exercise-default;
         border-radius: 0.5rem;
+        // The +1px is to compensate for the border increase later on.
+        margin: calc(0rem + 1px) calc(0.5rem + 1px);
 
         background-color: $stessaluna-exercise-default-bg;
 
         overflow: hidden;
 
-        margin: 0 0.5rem 1rem 0.5rem;
+        $offset: 1px;
 
         label {
             margin-bottom: unset;
@@ -69,8 +71,11 @@
         }
 
         &.correct {
-            border-color: $stessaluna-exercise-correct;
+            border: 2px solid $stessaluna-exercise-correct;
             background-color: $stessaluna-exercise-correct-bg;
+
+            // Remove the +1px from earlier
+            margin: 0 0.5rem;
 
             label {
                 color: $stessaluna-exercise-correct;
