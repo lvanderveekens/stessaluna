@@ -41,7 +41,7 @@ const WhatdoyouseeExercise: FC<Props> = ({
       right: option % 2 === 0,
       selected: option === selected,
       answered,
-      correct: option === answer && option === correct,
+      correct: option === correct,
       incorrect: option === answer && option !== correct,
     })
 
