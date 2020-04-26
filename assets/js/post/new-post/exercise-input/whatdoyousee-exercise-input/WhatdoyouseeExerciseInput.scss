@@ -53,10 +53,13 @@
 
         label {
             margin-bottom: unset;
-            font-family: sans-serif;
             color: $stessaluna-exercise-default;
             text-align: center;
-            padding: 0 0.5rem;
+
+            min-width: 1.5rem;
+            max-width: 1.5rem;
+
+            line-height: 1.8rem;
 
             &:hover {
                 cursor: pointer;

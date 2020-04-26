@@ -43,21 +43,45 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
         <div className="d-flex mb-3">
           <div className={optionClassName(1)}>
             <label onClick={() => setCorrect(1)}>1</label>
-            <input name="option1" type="text" value={option1} onChange={(e) => setOption1(e.currentTarget.value)} />
+            <input
+              name="option1"
+              type="text"
+              value={option1}
+              placeholder="Option"
+              onChange={(e) => setOption1(e.currentTarget.value)}
+            />
           </div>
           <div className={optionClassName(2)}>
             <label onClick={() => setCorrect(2)}>2</label>
-            <input name="option2" type="text" value={option2} onChange={(e) => setOption2(e.currentTarget.value)} />
+            <input
+              name="option2"
+              type="text"
+              value={option2}
+              placeholder="Option"
+              onChange={(e) => setOption2(e.currentTarget.value)}
+            />
           </div>
         </div>
         <div className="d-flex mb-3">
           <div className={optionClassName(3)}>
             <label onClick={() => setCorrect(3)}>3</label>
-            <input name="option3" type="text" value={option3} onChange={(e) => setOption3(e.currentTarget.value)} />
+            <input
+              name="option3"
+              type="text"
+              value={option3}
+              placeholder="Option"
+              onChange={(e) => setOption3(e.currentTarget.value)}
+            />
           </div>
           <div className={optionClassName(4)}>
             <label onClick={() => setCorrect(4)}>4</label>
-            <input name="option4" type="text" value={option4} onChange={(e) => setOption4(e.currentTarget.value)} />
+            <input
+              name="option4"
+              type="text"
+              value={option4}
+              placeholder="Option"
+              onChange={(e) => setOption4(e.currentTarget.value)}
+            />
           </div>
         </div>
       </div>
