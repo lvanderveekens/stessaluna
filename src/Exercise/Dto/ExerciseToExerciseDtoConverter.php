@@ -31,9 +31,10 @@ class ExerciseToExerciseDtoConverter
 
         $answer = null;
         // TODO: use functional find?
-        $answersFromUser = array_filter($exercise->getAnswers()->toArray(), function (Answer $answer) use ($user) {
-            return $answer->getUser() == $user;
-        });
+        $answersFromUser = array_values(array_filter(
+            $exercise->getAnswers()->toArray(),
+            function (Answer $answer) use ($user) { return $answer->getUser() == $user; }
+        ));
 
         if (count($answersFromUser) > 0) {
             $answer = $answersFromUser[0];

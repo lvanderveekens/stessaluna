@@ -138,7 +138,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => setExerciseType(ExerciseType.A_OR_B)}>A or B</Dropdown.Item>
                   <Dropdown.Item onClick={() => setExerciseType(ExerciseType.WHAT_DO_YOU_SEE)}>
-                    What Do You See
+                    What do you see
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

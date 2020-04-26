@@ -14,6 +14,7 @@ interface Props {
   correct: number
   answer?: number
   submitAnswer: (exerciseId: number, answer: WhatdoyouseeAnswer) => void
+  submitting: boolean
 }
 
 const WhatdoyouseeExerciseContainer: FC<Props> = ({
@@ -26,6 +27,7 @@ const WhatdoyouseeExerciseContainer: FC<Props> = ({
   correct,
   answer,
   submitAnswer,
+  submitting,
 }) => {
   const submitAnswerWrapper = (answer: number) => {
     submitAnswer(id, new WhatdoyouseeAnswer(answer))
@@ -41,6 +43,7 @@ const WhatdoyouseeExerciseContainer: FC<Props> = ({
       correct={correct}
       answer={answer}
       submitAnswer={submitAnswerWrapper}
+      submitting={submitting}
     />
   )
 }

@@ -12,6 +12,7 @@
 
     .imageWrapper {
 
+        margin: 0 1px;
         margin-bottom: 1rem;
 
         img {
@@ -29,24 +30,38 @@
 
         border: 1px solid $stessaluna-exercise-default;
         border-radius: 0.5rem;
-        // The +1px is to compensate for the border increase later on.
-        margin: calc(0rem + 1px) calc(0.5rem + 1px);
 
         background-color: $stessaluna-exercise-default-bg;
 
         overflow: hidden;
 
-        &:hover {
-            cursor: pointer;
+        &:not(.answered) {
+            &:hover {
+                cursor: pointer;
+                background-color: $stessaluna-exercise-selected-bg;
+            }
+        }
+
+        &.left {
+            // The +1px is to compensate for the border increase later on.
+            margin: 1px calc(1px + 0.5rem) 1px 1px;
+        }
+
+        &.right {
+            // The +1px is to compensate for the border increase later on.
+            margin: 1px 1px 1px calc(1px + 0.5rem);
+        }
+
+        &.selected {
+            color: $stessaluna-exercise-selected;
+            border: 2px solid $stessaluna-exercise-selected;
+            background: $stessaluna-exercise-selected-bg;
         }
 
         &.correct {
             color: $stessaluna-exercise-correct;
             border: 2px solid $stessaluna-exercise-correct;
             background: $stessaluna-exercise-correct-bg;
-
-            // Remove the +1px from earlier
-            margin: 0 0.5rem;
         }
 
         &.incorrect {
@@ -54,8 +69,20 @@
             border: 2px solid $stessaluna-exercise-incorrect;
             background: $stessaluna-exercise-incorrect-bg;
 
+        }
+
+        &.selected,
+        &.correct,
+        &.incorrect {
+
             // Remove the +1px from earlier
-            margin: 0 0.5rem;
+            &.left {
+                margin: 0 0.5rem 0 0;
+            }
+
+            &.right {
+                margin: 0 0 0 0.5rem;
+            }
         }
     }
 }

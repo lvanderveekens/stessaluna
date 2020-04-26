@@ -5,8 +5,8 @@ namespace Stessaluna\Exercise\Whatdoyousee\Dto;
 use Stessaluna\Exercise\Dto\ExerciseDto;
 use Stessaluna\Exercise\ExerciseType;
 
-class WhatdoyouseeExerciseDto extends ExerciseDto {
-
+class WhatdoyouseeExerciseDto extends ExerciseDto
+{
     public string $image;
 
     public string $option1;
@@ -17,9 +17,9 @@ class WhatdoyouseeExerciseDto extends ExerciseDto {
 
     public string $option4;
 
-    public int $correct;
+    public ?int $correct = null;
 
-    public ?int $answer;
+    public ?int $answer = null;
 
     public function __construct()
     {

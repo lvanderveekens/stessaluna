@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { FC, useState, useEffect } from "react"
 import styles from "./WhatdoyouseeExercise.scss?module"
 import classNames from "classnames/bind"
 const cx = classNames.bind(styles)
@@ -12,6 +12,7 @@ interface Props {
   correct: number
   answer?: number
   submitAnswer: (answer: number) => void
+  submitting: boolean
 }
 
 const WhatdoyouseeExercise: FC<Props> = ({
@@ -23,46 +24,56 @@ const WhatdoyouseeExercise: FC<Props> = ({
   correct,
   answer,
   submitAnswer,
+  submitting,
 }) => {
-  const option1ClassName = cx("option", {
-    correct: answer === 1 && correct === 1,
-    incorrect: answer === 1 && correct !== 1,
-  })
-  const option2ClassName = cx("option", {
-    correct: answer === 2 && correct === 2,
-    incorrect: answer === 2 && correct !== 2,
-  })
-  const option3ClassName = cx("option", {
-    correct: answer === 3 && correct === 3,
-    incorrect: answer === 3 && correct !== 3,
-  })
-  const option4ClassName = cx("option", {
-    correct: answer === 4 && correct === 4,
-    incorrect: answer === 4 && correct !== 4,
-  })
+  const answered = answer || submitting
+  const [selected, setSelected] = useState(0)
+
+  useEffect(() => {
+    if (answer) {
+      setSelected(0)
+    }
+  }, [answer])
+
+  const optionClassName = (option: number) =>
+    cx(styles.option, {
+      left: option % 2 !== 0,
+      right: option % 2 === 0,
+      selected: option === selected,
+      answered,
+      correct: option === answer && option === correct,
+      incorrect: option === answer && option !== correct,
+    })
+
+  const handleClickOption = (option: number) => () => {
+    if (!answered) {
+      setSelected(option)
+      submitAnswer(option)
+    }
+  }
 
   return (
     <div className={styles.whatdoyouseeExercise}>
       <div className={styles.header}>
-        <span>What do you see?</span>
+        <span>What do you see</span>
       </div>
       <div className={styles.imageWrapper}>
         <img src={image} />
       </div>
       <div>
         <div className="d-flex mb-3">
-          <div className={option1ClassName} onClick={() => submitAnswer(1)}>
+          <div className={optionClassName(1)} onClick={handleClickOption(1)}>
             {option1}
           </div>
-          <div className={option2ClassName} onClick={() => submitAnswer(2)}>
+          <div className={optionClassName(2)} onClick={handleClickOption(2)}>
             {option2}
           </div>
         </div>
         <div className="d-flex mb-3">
-          <div className={option3ClassName} onClick={() => submitAnswer(3)}>
+          <div className={optionClassName(3)} onClick={handleClickOption(3)}>
             {option3}
           </div>
-          <div className={option4ClassName} onClick={() => submitAnswer(4)}>
+          <div className={optionClassName(4)} onClick={handleClickOption(4)}>
             {option4}
           </div>
         </div>

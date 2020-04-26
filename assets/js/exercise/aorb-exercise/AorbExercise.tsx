@@ -14,7 +14,7 @@ const AorbExercise: FC<Props> = ({ sentences, choices, onChoice, submitting }) =
   return (
     <div className={styles.exercise}>
       <div className={styles.header}>
-        <span>A or B?</span>
+        <span>A or B</span>
       </div>
       <div className={styles.sentences}>
         {sentences.map((sentence, i) => (

@@ -23,10 +23,13 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
     onChange(new WhatdoyouseeExerciseInputValue(image, option1, option2, option3, option4, correct))
   }, [image, option1, option2, option3, option4, correct])
 
-  const option1ClassName = cx("option", { correct: correct === 1 })
-  const option2ClassName = cx("option", { correct: correct === 2 })
-  const option3ClassName = cx("option", { correct: correct === 3 })
-  const option4ClassName = cx("option", { correct: correct === 4 })
+  const optionClassName = (option: number) => {
+    return cx(styles.option, {
+      left: option % 2 !== 0,
+      right: option % 2 === 0,
+      correct: correct === option,
+    })
+  }
 
   return (
     <div className={styles.whatdoyouseeExerciseInput}>
@@ -38,21 +41,21 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
       </div>
       <div>
         <div className="d-flex mb-3">
-          <div className={option1ClassName}>
+          <div className={optionClassName(1)}>
             <label onClick={() => setCorrect(1)}>1</label>
             <input name="option1" type="text" value={option1} onChange={(e) => setOption1(e.currentTarget.value)} />
           </div>
-          <div className={option2ClassName}>
+          <div className={optionClassName(2)}>
             <label onClick={() => setCorrect(2)}>2</label>
             <input name="option2" type="text" value={option2} onChange={(e) => setOption2(e.currentTarget.value)} />
           </div>
         </div>
         <div className="d-flex mb-3">
-          <div className={option3ClassName}>
+          <div className={optionClassName(3)}>
             <label onClick={() => setCorrect(3)}>3</label>
             <input name="option3" type="text" value={option3} onChange={(e) => setOption3(e.currentTarget.value)} />
           </div>
-          <div className={option4ClassName}>
+          <div className={optionClassName(4)}>
             <label onClick={() => setCorrect(4)}>4</label>
             <input name="option4" type="text" value={option4} onChange={(e) => setOption4(e.currentTarget.value)} />
           </div>
