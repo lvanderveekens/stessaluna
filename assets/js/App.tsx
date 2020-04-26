@@ -1,33 +1,16 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { Fragment, useEffect, FunctionComponent } from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
-import HomePage from './home/HomePage';
-import LoginPage from './login/LoginPage';
-import { connect } from 'react-redux';
-import PrivateRoute from './route/PrivateRoute';
-import NotFoundPage from './not-found/NotFoundPage';
-import Helmet from 'react-helmet';
-import history from './history/history';
-import { fetchUser } from './store/auth/actions';
-import RegistrationPage from './register/RegistrationPage';
-import NavBar from './nav/NavBar';
-import { Container } from 'react-bootstrap';
-import ProfilePage from './profile/ProfilePage';
-import { State } from './store';
+import "bootstrap/dist/css/bootstrap.min.css"
+import React, { FC, Fragment } from "react"
+import Helmet from "react-helmet"
+import { Route, Router, Switch } from "react-router-dom"
+import history from "./history/history"
+import HomePage from "./home/HomePage"
+import LoginPage from "./login/LoginPage"
+import NotFoundPage from "./not-found/NotFoundPage"
+import ProfilePage from "./profile/ProfilePage"
+import RegistrationPage from "./register/RegistrationPage"
+import PrivateRoute from "./route/PrivateRoute"
 
-interface Props {
-  loggedIn: boolean
-  fetchUser: () => void
-}
-
-const App: FunctionComponent<Props> = ({ loggedIn, fetchUser }) => {
-
-  useEffect(() => {
-    if (loggedIn) {
-      fetchUser();
-    };
-  }, []);
-
+const App: FC = () => {
   return (
     <Fragment>
       <Helmet>
@@ -46,15 +29,7 @@ const App: FunctionComponent<Props> = ({ loggedIn, fetchUser }) => {
         </Switch>
       </Router>
     </Fragment>
-  );
-};
+  )
+}
 
-const mapStateToProps = (state: State) => ({
-  loggedIn: state.auth.loggedIn,
-});
-
-const actionCreators = {
-  fetchUser,
-};
-
-export default connect(mapStateToProps, actionCreators)(App);
+export default App

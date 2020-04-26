@@ -3,7 +3,7 @@ import NewPostForm from "./NewPostForm"
 import { connect } from "react-redux"
 import User from "../../../user/user.interface"
 import { createPost } from "../../../store/post/actions"
-import { State } from "../../../store"
+import { State } from "../../../store/configureStore"
 import Exercise from "../../../exercise/exercise.model"
 import NewPostFormPlaceholder from "./placeholder/NewPostFormPlaceholder"
 

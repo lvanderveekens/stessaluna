@@ -1,13 +1,13 @@
-import React, { FunctionComponent } from 'react';
-import { connect } from 'react-redux';
-import { addComment, deleteComment } from '../../../store/post/actions';
-import NewCommentForm from '../new-comment/NewCommentForm';
-import styles from './CommentSection.scss?module';
-import CommentInterface from '../comment.interface';
-import Comment from '../Comment';
-import moment from 'moment';
-import User from '../../../user/user.interface';
-import { State } from '../../../store';
+import React, { FunctionComponent } from "react"
+import { connect } from "react-redux"
+import { addComment, deleteComment } from "../../../store/post/actions"
+import NewCommentForm from "../new-comment/NewCommentForm"
+import styles from "./CommentSection.scss?module"
+import CommentInterface from "../comment.interface"
+import Comment from "../Comment"
+import moment from "moment"
+import User from "../../../user/user.interface"
+import { State } from "../../../store/configureStore"
 
 interface Props {
   postId: number
@@ -18,22 +18,21 @@ interface Props {
 }
 
 const CommentSection: FunctionComponent<Props> = ({ postId, comments, addComment, deleteComment, user }) => {
-
   const handleSubmitComment = (text: string) => {
-    addComment(postId, text);
-  };
+    addComment(postId, text)
+  }
 
   const handleDeleteComment = (commentId: number) => () => {
-    deleteComment(postId, commentId);
-  };
+    deleteComment(postId, commentId)
+  }
 
   return (
     <div className={styles.comments}>
       <NewCommentForm onSubmit={handleSubmitComment} avatar={user.avatar} />
-      {comments && (
+      {comments &&
         comments
           .sort((comment, other) => new Date(other.createdAt).getTime() - new Date(comment.createdAt).getTime())
-          .map((comment) =>
+          .map((comment) => (
             <Comment
               key={comment.id}
               timestamp={moment(comment.createdAt).fromNow()}
@@ -42,19 +41,18 @@ const CommentSection: FunctionComponent<Props> = ({ postId, comments, addComment
               text={comment.text}
               onDelete={handleDeleteComment(comment.id)}
             />
-          )
-      )}
+          ))}
     </div>
-  );
-};
+  )
+}
 
 const actionCreators = {
   addComment,
   deleteComment,
-};
+}
 
 const mapStateToProps = (state: State) => ({
-  user: state.auth.user
+  user: state.auth.user,
 })
 
-export default connect(mapStateToProps, actionCreators)(CommentSection);
+export default connect(mapStateToProps, actionCreators)(CommentSection)
