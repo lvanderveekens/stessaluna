@@ -12,6 +12,7 @@ export interface AbstractExercise {
 export enum ExerciseType {
   A_OR_B = "aorb",
   WHAT_DO_YOU_SEE = "whatdoyousee",
+  MISSING_WORD = "missingword",
 }
 
 export default Exercise

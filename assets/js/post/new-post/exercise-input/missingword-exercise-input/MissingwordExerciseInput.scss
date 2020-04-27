@@ -1,0 +1,125 @@
+@import '../../../../../css/colors';
+
+.missingwordExerciseInput {
+
+    .sentenceWrapper {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+        .sentence {
+            width: 100%;
+            text-align: center;
+
+            .textBefore,
+            .textAfter {
+
+                max-width: 100%;
+
+                input {
+                    // overflow: hidden;
+                    border: 1px solid #ced4da;
+                    border-radius: 0.5rem;
+                    padding: 0.2rem;
+                    // border: none;
+                    outline: none;
+
+                    text-overflow: ellipsis;
+                    max-width: 100%;
+                }
+            }
+        }
+
+
+    }
+
+    .missingWord {
+        font-weight: bold;
+        padding: 0.2rem;
+    }
+
+    .option {
+        display: flex;
+        align-items: center;
+
+        border: 1px solid $stessaluna-exercise-default;
+        border-radius: 0.5rem;
+
+        background-color: $stessaluna-exercise-default-bg;
+
+        overflow: hidden;
+
+        $offset: 1px;
+
+        &.left {
+            // The +1px is to compensate for the border increase later on.
+            margin: 1px calc(1px + 0.5rem) 1px 1px;
+        }
+
+        &.right {
+            // The +1px is to compensate for the border increase later on.
+            margin: 1px 1px 1px calc(1px + 0.5rem);
+        }
+
+        label {
+            margin-bottom: unset;
+            color: $stessaluna-exercise-default;
+            text-align: center;
+
+            min-width: 1.5rem;
+            max-width: 1.5rem;
+
+            line-height: 1.8rem;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        input {
+            border: none;
+            outline: none;
+            background-color: inherit;
+
+            // override the browser's default 'min-width: auto' on input 
+            // elements because their default size outgrows my flex container..
+            min-width: 0;
+
+            width: 100%;
+            padding: 0.2rem;
+
+            cursor: text;
+            line-height: 1.8rem;
+        }
+
+        &.correct {
+            border: 2px solid $stessaluna-exercise-correct;
+            background-color: $stessaluna-exercise-correct-bg;
+
+            // Remove the +1px from earlier
+            margin: 0 0.5rem;
+
+            label {
+                color: $stessaluna-exercise-correct;
+            }
+        }
+
+        &.correct {
+
+            // Remove the +1px from earlier
+            &.left {
+                margin: 0 0.5rem 0 0;
+            }
+
+            &.right {
+                margin: 0 0 0 0.5rem;
+            }
+        }
+    }
+
+    .hint {
+        text-align: center;
+        font-style: italic;
+        font-size: 0.85rem;
+    }
+}

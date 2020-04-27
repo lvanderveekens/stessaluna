@@ -13,6 +13,7 @@ import { schema } from "./new-post-form.schema"
 import CustomToggle from "../../../dropdown/CustomToggle"
 import { ExerciseType } from "../../../exercise/exercise.model"
 import WhatdoyouseeExerciseInput from "../exercise-input/whatdoyousee-exercise-input/WhatdoyouseeExerciseInput"
+import MissingwordExerciseInput from "../exercise-input/missingword-exercise-input/MissingwordExerciseInput"
 
 interface Props {
   user: User
@@ -29,7 +30,8 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
   const fileInput = useRef(null)
   const [imageUrl, setImageUrl] = useState(null)
   const [submitError, setSubmitError] = useState(false)
-  const [exerciseType, setExerciseType] = useState<ExerciseType>(null)
+  // const [exerciseType, setExerciseType] = useState<ExerciseType>(null)
+  const [exerciseType, setExerciseType] = useState<ExerciseType>(ExerciseType.MISSING_WORD)
 
   const actionsDisabled = (fileInput.current && fileInput.current.value) || exerciseType != null
 
@@ -89,6 +91,8 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
         return <AorbExerciseInput {...props} />
       case ExerciseType.WHAT_DO_YOU_SEE:
         return <WhatdoyouseeExerciseInput {...props} />
+      case ExerciseType.MISSING_WORD:
+        return <MissingwordExerciseInput {...props} />
       default:
         throw new Error(`Cannot render unsupported exercise type: ${exerciseType}`)
     }
@@ -140,6 +144,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
                   <Dropdown.Item onClick={() => setExerciseType(ExerciseType.WHAT_DO_YOU_SEE)}>
                     What do you see
                   </Dropdown.Item>
+                  <Dropdown.Item onClick={() => setExerciseType(ExerciseType.MISSING_WORD)}>Missing word</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               <button className={styles.submitButton} type="submit" disabled={allNull(values) || !isValid}>
