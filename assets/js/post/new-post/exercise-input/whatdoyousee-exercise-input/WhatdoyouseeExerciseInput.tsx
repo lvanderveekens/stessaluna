@@ -33,7 +33,7 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
 
   return (
     <div className={styles.whatdoyouseeExerciseInput}>
-      <ExerciseInputHeader title="What Do You See" onClose={onClose} />
+      <ExerciseInputHeader title="What do you see" onClose={onClose} />
       <div className={styles.image}>
         <div className={styles.aspectRatioBox}>
           <ImageInput className={styles.imageInput} value={image} onChange={setImage} />

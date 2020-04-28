@@ -46,6 +46,7 @@
         "object-to-formdata": "^3.0.6",
         "prop-types": "^15.7.2",
         "react": "^16.12.0",
+        "react-autosize-textarea": "^7.0.0",
         "react-bootstrap": "^1.0.0-beta.16",
         "react-content-loader": "^5.0.4",
         "react-contenteditable": "^3.3.3",
