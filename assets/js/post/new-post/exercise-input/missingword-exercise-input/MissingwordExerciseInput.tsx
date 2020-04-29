@@ -31,14 +31,6 @@ const MissingwordExerciseInput: FC<Props> = ({ onChange, onClose }) => {
     // onChange(new MissingwordExerciseInputValue(image, option1, option2, option3, option4, correct))
   }, [/* todo */ option1, option2, option3, option4, correct])
 
-  const handleChecked = (option: number) => (checked: boolean) => {
-    if (checked) {
-      setCorrect(option)
-    } else {
-      setCorrect(null)
-    }
-  }
-
   return (
     <div className={styles.missingwordExerciseInput}>
       <ExerciseInputHeader title="Missing word" onClose={onClose} />
@@ -66,7 +58,7 @@ const MissingwordExerciseInput: FC<Props> = ({ onChange, onClose }) => {
             value={option1}
             onChange={setOption1}
             checked={correct === 1}
-            onChecked={handleChecked(1)}
+            onChecked={(checked) => setCorrect(checked ? 1 : null)}
           />
           <OptionInput
             className="ml-2"
@@ -75,7 +67,7 @@ const MissingwordExerciseInput: FC<Props> = ({ onChange, onClose }) => {
             value={option2}
             onChange={setOption2}
             checked={correct === 2}
-            onChecked={handleChecked(2)}
+            onChecked={(checked) => setCorrect(checked ? 2 : null)}
           />
         </div>
         <div className="d-flex mb-3">
@@ -86,7 +78,7 @@ const MissingwordExerciseInput: FC<Props> = ({ onChange, onClose }) => {
             value={option3}
             onChange={setOption3}
             checked={correct === 3}
-            onChecked={handleChecked(3)}
+            onChecked={(checked) => setCorrect(checked ? 3 : null)}
           />
           <OptionInput
             className="ml-2"
@@ -95,7 +87,7 @@ const MissingwordExerciseInput: FC<Props> = ({ onChange, onClose }) => {
             value={option4}
             onChange={setOption4}
             checked={correct === 4}
-            onChecked={handleChecked(4)}
+            onChecked={(checked) => setCorrect(checked ? 4 : null)}
           />
         </div>
       </div>

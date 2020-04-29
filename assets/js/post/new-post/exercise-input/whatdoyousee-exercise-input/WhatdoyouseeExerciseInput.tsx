@@ -4,6 +4,9 @@ import WhatdoyouseeExerciseInputValue from "./whatdoyousee-exercise-input.model"
 import ExerciseInputHeader from "../exercise-input-header/ExerciseInputHeader"
 import ImageInput from "../../../../image/image-input/ImageInput"
 import classNames from "classnames/bind"
+import OptionInput from "../option-input/OptionInput"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faLightbulb } from "@fortawesome/free-regular-svg-icons"
 const cx = classNames.bind(styles)
 
 interface Props {
@@ -41,51 +44,51 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
       </div>
       <div>
         <div className="d-flex mb-3">
-          <div className={optionClassName(1)}>
-            <label onClick={() => setCorrect(1)}>1</label>
-            <input
-              name="option1"
-              type="text"
-              value={option1}
-              placeholder="Option"
-              onChange={(e) => setOption1(e.currentTarget.value)}
-            />
-          </div>
-          <div className={optionClassName(2)}>
-            <label onClick={() => setCorrect(2)}>2</label>
-            <input
-              name="option2"
-              type="text"
-              value={option2}
-              placeholder="Option"
-              onChange={(e) => setOption2(e.currentTarget.value)}
-            />
-          </div>
+          <OptionInput
+            className="mr-1"
+            name="option1"
+            placeholder="Option 1"
+            value={option1}
+            onChange={setOption1}
+            checked={correct === 1}
+            onChecked={(checked) => setCorrect(checked ? 1 : null)}
+          />
+          <OptionInput
+            className="ml-2"
+            name="option2"
+            placeholder="Option 2"
+            value={option2}
+            onChange={setOption2}
+            checked={correct === 2}
+            onChecked={(checked) => setCorrect(checked ? 2 : null)}
+          />
         </div>
         <div className="d-flex mb-3">
-          <div className={optionClassName(3)}>
-            <label onClick={() => setCorrect(3)}>3</label>
-            <input
-              name="option3"
-              type="text"
-              value={option3}
-              placeholder="Option"
-              onChange={(e) => setOption3(e.currentTarget.value)}
-            />
-          </div>
-          <div className={optionClassName(4)}>
-            <label onClick={() => setCorrect(4)}>4</label>
-            <input
-              name="option4"
-              type="text"
-              value={option4}
-              placeholder="Option"
-              onChange={(e) => setOption4(e.currentTarget.value)}
-            />
-          </div>
+          <OptionInput
+            className="mr-2"
+            name="option3"
+            placeholder="Option 3"
+            value={option3}
+            onChange={setOption3}
+            checked={correct === 3}
+            onChecked={(checked) => setCorrect(checked ? 3 : null)}
+          />
+          <OptionInput
+            className="ml-2"
+            name="option4"
+            placeholder="Option 4"
+            value={option4}
+            onChange={setOption4}
+            checked={correct === 4}
+            onChecked={(checked) => setCorrect(checked ? 4 : null)}
+          />
         </div>
       </div>
-      {!correct && <div className={styles.hint}>Mark the correct option by clicking on the index.</div>}
+      {!correct && (
+        <div className={styles.hint}>
+          <FontAwesomeIcon icon={faLightbulb} /> Tick one of the boxes to mark the correct option.
+        </div>
+      )}
     </div>
   )
 }
