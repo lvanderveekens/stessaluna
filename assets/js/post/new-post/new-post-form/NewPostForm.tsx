@@ -31,7 +31,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
   const [imageUrl, setImageUrl] = useState(null)
   const [submitError, setSubmitError] = useState(false)
   // const [exerciseType, setExerciseType] = useState<ExerciseType>(null)
-  const [exerciseType, setExerciseType] = useState<ExerciseType>(ExerciseType.WHAT_DO_YOU_SEE)
+  const [exerciseType, setExerciseType] = useState<ExerciseType>(ExerciseType.MISSING_WORD)
 
   const actionsDisabled = (fileInput.current && fileInput.current.value) || exerciseType != null
 
@@ -104,7 +104,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
       onSubmit={({ text, image, exercise }, { resetForm }) => handleSubmit({ text, image, exercise }, resetForm)}
       initialValues={{ text: null, image: null, exercise: null } as Values}
     >
-      {({ handleSubmit, setFieldValue, values, isValid }) => (
+      {({ handleSubmit, setFieldValue, values, isValid, errors }) => (
         <Form className={styles.newPostForm} noValidate onSubmit={handleSubmit}>
           <div className={styles.wrapper}>
             <TextareaAutosize
@@ -153,6 +153,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
             </div>
           </div>
           {submitError && <div className="alert alert-danger">Something went wrong. Please try again later.</div>}
+          {/* <div>{JSON.stringify(errors)}</div> */}
         </Form>
       )}
     </Formik>

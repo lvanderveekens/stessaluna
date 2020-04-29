@@ -1,13 +1,11 @@
-import React, { FC, useEffect, useState, useRef } from "react"
-import AutosizeInput from "react-input-autosize"
-import ExerciseInputHeader from "../exercise-input-header/ExerciseInputHeader"
-import { MissingwordExerciseInputValue } from "./missingword-exercise-input.model"
-import ContentEditable from "react-contenteditable"
-import TextareaAutosize from "react-autosize-textarea"
-import styles from "./MissingwordExerciseInput.scss?module"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLightbulb } from "@fortawesome/free-regular-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import React, { FC, useEffect, useState } from "react"
+import TextareaAutosize from "react-autosize-textarea"
+import ExerciseInputHeader from "../exercise-input-header/ExerciseInputHeader"
 import OptionInput from "../option-input/OptionInput"
+import { MissingwordExerciseInputValue } from "./missingword-exercise-input.model"
+import styles from "./MissingwordExerciseInput.scss?module"
 
 interface Props {
   onChange: (change: MissingwordExerciseInputValue) => void
@@ -16,9 +14,6 @@ interface Props {
 
 const MissingwordExerciseInput: FC<Props> = ({ onChange, onClose }) => {
   const [textBefore, setTextBefore] = useState<string>("")
-
-  const textBeforeRef = useRef("")
-
   const [textAfter, setTextAfter] = useState<string>("")
 
   const [option1, setOption1] = useState<string>("")
@@ -28,8 +23,8 @@ const MissingwordExerciseInput: FC<Props> = ({ onChange, onClose }) => {
   const [correct, setCorrect] = useState<number>(null)
 
   useEffect(() => {
-    // onChange(new MissingwordExerciseInputValue(image, option1, option2, option3, option4, correct))
-  }, [/* todo */ option1, option2, option3, option4, correct])
+    onChange(new MissingwordExerciseInputValue(textBefore, textAfter, option1, option2, option3, option4, correct))
+  }, [textBefore, textAfter, option1, option2, option3, option4, correct])
 
   return (
     <div className={styles.missingwordExerciseInput}>

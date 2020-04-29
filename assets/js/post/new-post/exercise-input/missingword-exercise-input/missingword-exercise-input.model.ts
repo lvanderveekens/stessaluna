@@ -2,17 +2,26 @@ import ExerciseInputValue from "../exercise-input.model"
 import { ExerciseType } from "../../../../exercise/exercise.model"
 
 export class MissingwordExerciseInputValue extends ExerciseInputValue {
-  image?: File
-
+  textBefore?: string
+  textAfter?: string
   option1?: string
   option2?: string
   option3?: string
   option4?: string
   correct?: number
 
-  constructor(image?: File, option1?: string, option2?: string, option3?: string, option4?: string, correct?: number) {
-    super(ExerciseType.WHAT_DO_YOU_SEE)
-    this.image = image
+  constructor(
+    textBefore?: string,
+    textAfter?: string,
+    option1?: string,
+    option2?: string,
+    option3?: string,
+    option4?: string,
+    correct?: number
+  ) {
+    super(ExerciseType.MISSING_WORD)
+    this.textBefore = textBefore
+    this.textAfter = textAfter
     this.option1 = option1
     this.option2 = option2
     this.option3 = option3
@@ -21,4 +30,4 @@ export class MissingwordExerciseInputValue extends ExerciseInputValue {
   }
 }
 
-export default WhatdoyouseeExerciseInputValue
+export default MissingwordExerciseInputValue
