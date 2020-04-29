@@ -14,6 +14,7 @@ import Exercise from "../exercise/exercise.model"
 import AorbExercise from "../exercise/aorb-exercise"
 import Text from "./text/Text"
 import WhatdoyouseeExercise from "../exercise/whatdoyousee-exercise"
+import MissingwordExercise from "../exercise/missingword-exercise/MissingwordExercise"
 
 interface Props {
   id: number
@@ -72,6 +73,8 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, ex
             submitting={exercise.submitting || false}
           />
         )
+      case "missingword":
+        return <MissingwordExercise />
     }
   }
 

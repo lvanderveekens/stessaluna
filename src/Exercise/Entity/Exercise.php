@@ -8,15 +8,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Stessaluna\Exercise\Answer\Entity\Answer;
-use Stessaluna\Exercise\ExerciseType;
 
 /**
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
- *     "aorb" = "Stessaluna\Exercise\Aorb\Entity\AorbExercise",
- *     "whatdoyousee" = "Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise"
+ *     "aorb"         = "Stessaluna\Exercise\Aorb\Entity\AorbExercise",
+ *     "whatdoyousee" = "Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise",
+ *     "missingword"  = "Stessaluna\Exercise\Missingword\Entity\MissingwordExercise",
  * })
  */
 abstract class Exercise

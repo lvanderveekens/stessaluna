@@ -1,7 +1,8 @@
 import AorbExercise from "./aorb-exercise/aorb-exercise.model"
 import WhatdoyouseeExercise from "./whatdoyousee-exercise/whatdoyousee-exercise.model"
+import MissingwordExercise from "./missingword-exercise/missingword-exercise.model"
 
-type Exercise = AorbExercise | WhatdoyouseeExercise
+type Exercise = AorbExercise | WhatdoyouseeExercise | MissingwordExercise
 
 export interface AbstractExercise {
   id?: number

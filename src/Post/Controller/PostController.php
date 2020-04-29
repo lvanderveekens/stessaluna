@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Stessaluna\Post\Controller;
 
 use DateTime;
+use RuntimeException;
 use Stessaluna\Exercise\Aorb\Entity\AorbChoice;
 use Stessaluna\Exercise\Aorb\Entity\AorbExercise;
 use Stessaluna\Exercise\Aorb\Entity\AorbSentence;
+use Stessaluna\Exercise\Missingword\Entity\MissingwordExercise;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
 use Stessaluna\Image\ImageStorage;
 use Stessaluna\Post\Dto\PostToPostDtoConverter;
@@ -94,6 +96,19 @@ class PostController extends AbstractController
                     'correct' => (int) $createPostRequest['exercise']['correct'],
                 );
                 $exercise = $this->createWhatdoyouseeExercise($whatdoyouseeExerciseRequest);
+            } elseif ($type === 'missingword') {
+                $missingwordExerciseRequest = array(
+                    'textBefore'   => $createPostRequest['exercise']['textBefore'],
+                    'textAfter'    => $createPostRequest['exercise']['textAfter'],
+                    'option1'      => $createPostRequest['exercise']['option1'],
+                    'option2'      => $createPostRequest['exercise']['option2'],
+                    'option3'      => $createPostRequest['exercise']['option3'],
+                    'option4'      => $createPostRequest['exercise']['option4'],
+                    'correct'      => (int) $createPostRequest['exercise']['correct'],
+                );
+                $exercise = $this->createMissingwordExercise($missingwordExerciseRequest);
+            } else {
+                throw new RuntimeException('Exercise type not supported: '.$type);
             }
 
             $post->setExercise($exercise);
@@ -136,6 +151,21 @@ class PostController extends AbstractController
         $exercise->setOption3($whatdoyouseeExerciseRequest['option3']);
         $exercise->setOption4($whatdoyouseeExerciseRequest['option4']);
         $exercise->setCorrect($whatdoyouseeExerciseRequest['correct']);
+
+        return $exercise;
+    }
+
+    public function createMissingwordExercise(array $missingwordExerciseRequest): MissingwordExercise
+    {
+        $exercise = new MissingwordExercise();
+
+        $exercise->setTextBefore($missingwordExerciseRequest['textBefore']);
+        $exercise->setTextAfter($missingwordExerciseRequest['textAfter']);
+        $exercise->setOption1($missingwordExerciseRequest['option1']);
+        $exercise->setOption2($missingwordExerciseRequest['option2']);
+        $exercise->setOption3($missingwordExerciseRequest['option3']);
+        $exercise->setOption4($missingwordExerciseRequest['option4']);
+        $exercise->setCorrect($missingwordExerciseRequest['correct']);
 
         return $exercise;
     }

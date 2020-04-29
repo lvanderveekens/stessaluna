@@ -33,6 +33,12 @@ doctrine:
         dir: "%kernel.project_dir%/src/Exercise/Whatdoyousee/Entity"
         prefix: 'Stessaluna\Exercise\Whatdoyousee\Entity'
         alias: WhatdoyouseeExercise
+      MissingwordExercise:
+        is_bundle: false
+        type: annotation
+        dir: "%kernel.project_dir%/src/Exercise/Missingword/Entity"
+        prefix: 'Stessaluna\Exercise\Missingword\Entity'
+        alias: MissingwordExercise
       Answer:
         is_bundle: false
         type: annotation

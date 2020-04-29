@@ -13,8 +13,9 @@ use Stessaluna\User\Entity\User;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({
- *     "aorb" = "AorbAnswer",
+ *     "aorb"         = "AorbAnswer",
  *     "whatdoyousee" = "WhatdoyouseeAnswer",
+ *     "missingword"  = "MissingwordAnswer",
  * })
  */
 abstract class Answer
