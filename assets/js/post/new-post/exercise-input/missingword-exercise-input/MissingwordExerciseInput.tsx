@@ -1,4 +1,3 @@
-import classNames from "classnames/bind"
 import React, { FC, useEffect, useState, useRef } from "react"
 import AutosizeInput from "react-input-autosize"
 import ExerciseInputHeader from "../exercise-input-header/ExerciseInputHeader"
@@ -8,7 +7,7 @@ import TextareaAutosize from "react-autosize-textarea"
 import styles from "./MissingwordExerciseInput.scss?module"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLightbulb } from "@fortawesome/free-regular-svg-icons"
-const cx = classNames.bind(styles)
+import OptionInput from "../option-input/OptionInput"
 
 interface Props {
   onChange: (change: MissingwordExerciseInputValue) => void
@@ -32,16 +31,12 @@ const MissingwordExerciseInput: FC<Props> = ({ onChange, onClose }) => {
     // onChange(new MissingwordExerciseInputValue(image, option1, option2, option3, option4, correct))
   }, [/* todo */ option1, option2, option3, option4, correct])
 
-  const optionClassName = (option: number) => {
-    return cx(styles.option, {
-      left: option % 2 !== 0,
-      right: option % 2 === 0,
-      correct: correct === option,
-    })
-  }
-
-  const handleCheckboxChange = (option: number) => (e) => {
-    return e.currentTarget.checked ? setCorrect(option) : setCorrect(null)
+  const handleChecked = (option: number) => (checked: boolean) => {
+    if (checked) {
+      setCorrect(option)
+    } else {
+      setCorrect(null)
+    }
   }
 
   return (
@@ -64,60 +59,44 @@ const MissingwordExerciseInput: FC<Props> = ({ onChange, onClose }) => {
       </div>
       <div>
         <div className="d-flex mb-3">
-          <div className={optionClassName(1)}>
-            <label className={styles.checkbox}>
-              <input type="checkbox" checked={correct === 1} onChange={handleCheckboxChange(1)} />
-              <span className={styles.checkmark} />
-            </label>
-            <input
-              name="option1"
-              type="text"
-              value={option1}
-              placeholder="Option 1"
-              onChange={(e) => setOption1(e.currentTarget.value)}
-            />
-          </div>
-          <div className={optionClassName(2)}>
-            <label className={styles.checkbox}>
-              <input type="checkbox" checked={correct === 2} onChange={handleCheckboxChange(2)} />
-              <span className={styles.checkmark} />
-            </label>
-            <input
-              name="option2"
-              type="text"
-              value={option2}
-              placeholder="Option 2"
-              onChange={(e) => setOption2(e.currentTarget.value)}
-            />
-          </div>
+          <OptionInput
+            className="mr-2"
+            name="option1"
+            placeholder="Option 1"
+            value={option1}
+            onChange={setOption1}
+            checked={correct === 1}
+            onChecked={handleChecked(1)}
+          />
+          <OptionInput
+            className="ml-2"
+            name="option2"
+            placeholder="Option 2"
+            value={option2}
+            onChange={setOption2}
+            checked={correct === 2}
+            onChecked={handleChecked(2)}
+          />
         </div>
         <div className="d-flex mb-3">
-          <div className={optionClassName(3)}>
-            <label className={styles.checkbox}>
-              <input type="checkbox" checked={correct === 3} onChange={handleCheckboxChange(3)} />
-              <span className={styles.checkmark} />
-            </label>
-            <input
-              name="option3"
-              type="text"
-              value={option3}
-              placeholder="Option 3"
-              onChange={(e) => setOption3(e.currentTarget.value)}
-            />
-          </div>
-          <div className={optionClassName(4)}>
-            <label className={styles.checkbox}>
-              <input type="checkbox" checked={correct === 4} onChange={handleCheckboxChange(4)} />
-              <span className={styles.checkmark} />
-            </label>
-            <input
-              name="option4"
-              type="text"
-              value={option4}
-              placeholder="Option 4"
-              onChange={(e) => setOption4(e.currentTarget.value)}
-            />
-          </div>
+          <OptionInput
+            className="mr-2"
+            name="option3"
+            placeholder="Option 3"
+            value={option3}
+            onChange={setOption3}
+            checked={correct === 3}
+            onChecked={handleChecked(3)}
+          />
+          <OptionInput
+            className="ml-2"
+            name="option4"
+            placeholder="Option 4"
+            value={option4}
+            onChange={setOption4}
+            checked={correct === 4}
+            onChecked={handleChecked(4)}
+          />
         </div>
       </div>
       {!correct && (

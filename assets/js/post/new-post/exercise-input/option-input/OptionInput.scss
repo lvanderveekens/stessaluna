@@ -1,0 +1,118 @@
+@import '../../../../../css/colors';
+
+.optionInput {
+
+    .wrapper {
+
+        display: flex;
+        align-items: center;
+        position: relative;
+        border: 1px solid $stessaluna-exercise-default;
+        border-radius: 0.5rem;
+
+        // to compensate for the 2px border later on
+        margin: 1px;
+
+        overflow: hidden;
+
+        background-color: $stessaluna-exercise-default-bg;
+
+        &.checked {
+            border: 2px solid $stessaluna-exercise-correct;
+            background-color: $stessaluna-exercise-correct-bg;
+
+            // reset the margin to keep the overall size the same after increasing the border
+            margin: 0px;
+
+            label {
+                color: $stessaluna-exercise-correct;
+            }
+
+            input[type="text"]::placeholder {
+                color: $stessaluna-exercise-correct;
+            }
+        }
+
+        .checkbox {
+            position: relative;
+            display: block;
+            margin: 0 0.4rem;
+            min-width: 1rem;
+            min-height: 1rem;
+
+            input[type="checkbox"] {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+
+            &:hover input~.checkmark {
+                background-color: $stessaluna-exercise-default;
+            }
+
+            input[type="checkbox"]:checked~.checkmark {
+                border: 1px solid $stessaluna-exercise-correct;
+                background-color: $stessaluna-exercise-correct;
+            }
+
+            .checkmark {
+                border: 1px solid $stessaluna-exercise-default;
+                border-radius: 0.3rem;
+
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                background-color: white;
+
+                &:after {
+                    content: "";
+                    position: absolute;
+                    display: none;
+
+                    top: 2px;
+                    left: 5px;
+
+                    width: 5px;
+                    height: 10px;
+
+                    border: solid white;
+                    border-width: 0 3px 3px 0;
+                    -webkit-transform: rotate(40deg);
+                    -ms-transform: rotate(40deg);
+                    transform: rotate(40deg);
+                }
+            }
+
+            input:checked~.checkmark:after {
+                display: block;
+            }
+        }
+
+        input[type="text"] {
+            border: none;
+            outline: none;
+            background-color: inherit;
+
+            // override the browser's default 'min-width: auto' on input
+            // elements because their default size outgrows my flex container..
+            min-width: 0;
+
+            width: 100%;
+            padding: 0.2rem;
+            padding-left: 0;
+
+            cursor: text;
+            line-height: 1.8rem;
+
+            &::placeholder {
+                color: $stessaluna-exercise-default;
+            }
+
+        }
+    }
+
+}
