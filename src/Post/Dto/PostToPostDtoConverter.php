@@ -5,6 +5,7 @@ namespace Stessaluna\Post\Dto;
 use Stessaluna\Exercise\Dto\ExerciseToExerciseDtoConverter;
 use Stessaluna\Image\ImageStorage;
 use Stessaluna\Post\Comment\Dto\CommentDtoConverter;
+use Stessaluna\Post\Dto\PostDto;
 use Stessaluna\Post\Entity\Post;
 use Stessaluna\User\Dto\UserDtoConverter;
 use Stessaluna\User\Entity\User;
@@ -31,7 +32,7 @@ class PostToPostDtoConverter
         $this->imageStorage = $imageStorage;
     }
 
-    public function toDto(Post $post, User $user): PostDto
+    public function convert(Post $post, User $user): PostDto
     {
         $dto = new PostDto();
         $dto->id = $post->getId();

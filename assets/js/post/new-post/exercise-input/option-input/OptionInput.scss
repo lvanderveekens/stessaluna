@@ -52,6 +52,8 @@
                 background-color: $stessaluna-exercise-default;
             }
 
+            // TODO: do something with outline when tabbing to checkbox..
+
             input[type="checkbox"]:checked~.checkmark {
                 border: 1px solid $stessaluna-exercise-correct;
                 background-color: $stessaluna-exercise-correct;
