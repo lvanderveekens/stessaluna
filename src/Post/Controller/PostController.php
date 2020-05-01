@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Stessaluna\Post\Controller;
 
-use Stessaluna\Post\Dto\CreatePostRequestToPostConverter;
+use Stessaluna\Post\Dto\CreatePostToPostConverter;
 use Stessaluna\Post\Dto\PostToPostDtoConverter;
-use Stessaluna\Post\Dto\RequestToCreatePostRequestConverter;
+use Stessaluna\Post\Dto\RequestToCreatePostConverter;
 use Stessaluna\Post\Service\PostService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,16 +19,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PostController extends AbstractController
 {
-    private CreatePostRequestToPostConverter $createPostRequestToPostConverter;
+    private CreatePostToPostConverter $createPostToPostConverter;
     private PostToPostDtoConverter $postToPostDtoConverter;
     private PostService $postService;
 
     public function __construct(
-        CreatePostRequestToPostConverter $createPostRequestToPostConverter,
+        CreatePostToPostConverter $createPostToPostConverter,
         PostToPostDtoConverter $postToPostDtoConverter,
         PostService $postService
     ) {
-        $this->createPostRequestToPostConverter = $createPostRequestToPostConverter;
+        $this->createPostToPostConverter = $createPostToPostConverter;
         $this->postToPostDtoConverter = $postToPostDtoConverter;
         $this->postService = $postService;
     }
@@ -50,9 +50,9 @@ class PostController extends AbstractController
      */
     public function createPost(Request $request): JsonResponse
     {
-        $request = RequestToCreatePostRequestConverter::convert($request);
+        $createPost = RequestToCreatePostConverter::convert($request);
 
-        $post = $this->createPostRequestToPostConverter->convert($request, $this->getUser());
+        $post = $this->createPostToPostConverter->convert($createPost, $this->getUser());
         $createdPost = $this->postService->createPost($post);
 
         return $this->json($this->postToPostDtoConverter->convert($createdPost, $this->getUser()));

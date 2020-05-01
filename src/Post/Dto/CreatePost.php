@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Stessaluna\Post\Dto;
 
-use Stessaluna\Exercise\Dto\CreateExerciseRequest;
+use Stessaluna\Exercise\Dto\CreateExercise;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class CreatePostRequest
+class CreatePost
 {
     public ?string $text;
 
     public ?UploadedFile $image;
 
-    public ?CreateExerciseRequest $exercise;
+    public ?CreateExercise $exercise;
 }
