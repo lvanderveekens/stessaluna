@@ -7,6 +7,7 @@ namespace Stessaluna\Exception\EventSubscriber;
 use Stessaluna\Exception\NotAuthorException;
 use Stessaluna\Exception\NotFoundException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
@@ -24,9 +25,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
     public function onExceptionEvent(ExceptionEvent $event)
     {
         $exception = $event->getThrowable();
-
-        $response = new Response();
-        $response->setContent($exception->getMessage());
+        $response = new JsonResponse();
 
         if ($exception instanceof HttpExceptionInterface) {
             $response->setStatusCode($exception->getStatusCode());
@@ -38,6 +37,11 @@ class ExceptionSubscriber implements EventSubscriberInterface
         } else {
             $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+
+        $response->setJson(json_encode(array(
+            'status'    => $response->getStatusCode(),
+            'message'   => $exception->getMessage()
+        ))) ;
 
         $event->setResponse($response);
     }

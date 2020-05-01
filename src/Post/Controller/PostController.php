@@ -61,10 +61,9 @@ class PostController extends AbstractController
     /**
      * @Route("/{id}", methods={"DELETE"})
      */
-    public function deletePostById(int $id)
+    public function deletePostById(int $id): Response
     {
         $this->postService->deletePostById($id, $this->getUser());
-
-        return new Response('Deleted post with id '.$id);
+        return new Response();
     }
 }

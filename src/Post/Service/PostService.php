@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Stessaluna\Post\Service;
 
 use Stessaluna\Exception\NotAuthorException;
-use Stessaluna\Exception\NotFoundException;
 use Stessaluna\Post\Entity\Post;
+use Stessaluna\Post\Exception\PostNotFoundException;
 use Stessaluna\Post\Repository\PostRepository;
 use Stessaluna\User\Entity\User;
 
@@ -24,7 +24,9 @@ class PostService
      */
     public function getPosts(): array
     {
-        return $this->postRepository->findAll();
+        $posts = $this->postRepository->findAll();
+        usort($posts, function (Post $a, Post $b) { return $a->getCreatedAt() < $b->getCreatedAt(); });
+        return $posts;
     }
 
     public function createPost(Post $post): Post
@@ -36,11 +38,11 @@ class PostService
     {
         $post = $this->postRepository->find($id);
         if (!$post) {
-            return new NotFoundException('Post not found: '.$id);
+            throw new PostNotFoundException($id);
         }
 
         if ($user->getId() != $post->getAuthor()->getId()) {
-            return new NotAuthorException('Not the author of post: '.$id);
+            throw new NotAuthorException('Not the author of post: '.$id);
         }
 
         if ($post->getImageFilename()) {
