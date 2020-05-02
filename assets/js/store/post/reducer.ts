@@ -50,30 +50,12 @@ const postReducer = (state: PostState = initialState, action) => {
             : post
         ),
       }
-    case ActionTypes.SUBMIT_ANSWER_PENDING: {
-      const exercisePost = findPostByExerciseId(action.payload.exerciseId, state)
-      return {
-        ...state,
-        items: state.items.map((post) =>
-          post.id === exercisePost.id ? { ...post, exercise: { ...exercisePost.exercise, submitting: true } } : post
-        ),
-      }
-    }
     case ActionTypes.SUBMIT_ANSWER_SUCCESS: {
       const exercisePost = findPostByExerciseId(action.payload.exercise.id, state)
       return {
         ...state,
         items: state.items.map((post) =>
-          post.id === exercisePost.id ? { ...post, exercise: { ...action.payload.exercise, submitting: false } } : post
-        ),
-      }
-    }
-    case ActionTypes.SUBMIT_ANSWER_ERROR: {
-      const exercisePost = findPostByExerciseId(action.payload.exerciseId, state)
-      return {
-        ...state,
-        items: state.items.map((post) =>
-          post.id === exercisePost.id ? { ...post, exercise: { ...exercisePost.exercise, submitting: false } } : post
+          post.id === exercisePost.id ? { ...post, exercise: { ...action.payload.exercise } } : post
         ),
       }
     }

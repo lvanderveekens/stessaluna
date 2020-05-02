@@ -14,7 +14,7 @@ import Exercise from "../exercise/exercise.model"
 import AorbExercise from "../exercise/aorb-exercise"
 import Text from "./text/Text"
 import WhatdoyouseeExercise from "../exercise/whatdoyousee-exercise"
-import MissingwordExercise from "../exercise/missingword-exercise/MissingwordExercise"
+import MissingwordExercise from "../exercise/missingword-exercise"
 
 interface Props {
   id: number
@@ -56,9 +56,7 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, ex
   const renderExercise = () => {
     switch (exercise.type) {
       case "aorb":
-        return (
-          <AorbExercise id={exercise.id} sentences={exercise.sentences} submitting={exercise.submitting || false} />
-        )
+        return <AorbExercise id={exercise.id} sentences={exercise.sentences} />
       case "whatdoyousee":
         return (
           <WhatdoyouseeExercise
@@ -70,11 +68,22 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, ex
             option4={exercise.option4}
             correct={exercise.correct}
             answer={exercise.answer}
-            submitting={exercise.submitting || false}
           />
         )
       case "missingword":
-        return <MissingwordExercise />
+        return (
+          <MissingwordExercise
+            id={exercise.id}
+            textBefore={exercise.textBefore}
+            textAfter={exercise.textAfter}
+            option1={exercise.option1}
+            option2={exercise.option2}
+            option3={exercise.option3}
+            option4={exercise.option4}
+            correct={exercise.correct}
+            answer={exercise.answer}
+          />
+        )
     }
   }
 

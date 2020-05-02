@@ -6,7 +6,7 @@ namespace Stessaluna\Exercise\Answer\Dto;
 
 use Stessaluna\Exercise\ExerciseType;
 
-class AorbAnswerDto extends AnswerDto
+class SubmitAorbAnswer extends SubmitAnswer
 {
     /** @var string[] an array containing 'a' and 'b' characters */
     public array $choices;

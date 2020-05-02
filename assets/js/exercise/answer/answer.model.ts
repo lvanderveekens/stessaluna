@@ -21,3 +21,12 @@ export class WhatdoyouseeAnswer implements Answer {
     this.option = option
   }
 }
+
+export class MissingwordAnswer implements Answer {
+  type = ExerciseType.MISSING_WORD
+  option: number
+
+  constructor(option: number) {
+    this.option = option
+  }
+}

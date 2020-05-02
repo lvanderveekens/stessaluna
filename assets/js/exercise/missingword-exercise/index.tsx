@@ -1,26 +1,26 @@
 import React, { FC, useEffect, useState } from "react"
-import WhatdoyouseeExercise from "./WhatdoyouseeExercise"
-import { submitAnswer } from "../../store/post/actions"
 import { connect } from "react-redux"
-import { WhatdoyouseeAnswer } from "../answer/answer.model"
-import { State } from "../../store/configureStore"
-import { setNestedObjectValues } from "formik"
+import { submitAnswer } from "../../store/post/actions"
+import { MissingwordAnswer } from "../answer/answer.model"
+import MissingwordExercise from "./MissingwordExercise"
 
 interface Props {
   id: number
-  image: string
+  textBefore?: string
+  textAfter?: string
   option1: string
   option2: string
   option3: string
   option4: string
   correct: number
   answer?: number
-  submitAnswer: (exerciseId: number, answer: WhatdoyouseeAnswer) => Promise<void>
+  submitAnswer: (exerciseId: number, answer: MissingwordAnswer) => Promise<void>
 }
 
-const WhatdoyouseeExerciseContainer: FC<Props> = ({
+const MissingwordExerciseContainer: FC<Props> = ({
   id,
-  image,
+  textBefore,
+  textAfter,
   option1,
   option2,
   option3,
@@ -39,14 +39,15 @@ const WhatdoyouseeExerciseContainer: FC<Props> = ({
 
   const handleSubmit = (option: number) => {
     setSelected(option)
-    submitAnswer(id, new WhatdoyouseeAnswer(option))
+    submitAnswer(id, new MissingwordAnswer(option))
       .then(() => setSelected(0))
       .catch(() => setSelected(0))
   }
 
   return (
-    <WhatdoyouseeExercise
-      image={image}
+    <MissingwordExercise
+      textBefore={textBefore}
+      textAfter={textAfter}
       option1={option1}
       option2={option2}
       option3={option3}
@@ -63,4 +64,4 @@ const actionCreators = {
   submitAnswer,
 }
 
-export default connect(null, actionCreators)(WhatdoyouseeExerciseContainer)
+export default connect(null, actionCreators)(MissingwordExerciseContainer)

@@ -139,6 +139,6 @@ class MissingwordExercise extends Exercise
 
     public function getType(): string
     {
-        return ExerciseType::WHAT_DO_YOU_SEE;
+        return ExerciseType::MISSING_WORD;
     }
 }

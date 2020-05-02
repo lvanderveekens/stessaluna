@@ -4,7 +4,7 @@ import WhatdoyouseeExerciseInputValue from "./whatdoyousee-exercise-input.model"
 import ExerciseInputHeader from "../exercise-input-header/ExerciseInputHeader"
 import ImageInput from "../../../../image/image-input/ImageInput"
 import classNames from "classnames/bind"
-import OptionInput from "../option-input/OptionInput"
+import ExerciseOptionInput from "../exercise-option-input/ExerciseOptionInput"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLightbulb } from "@fortawesome/free-regular-svg-icons"
 const cx = classNames.bind(styles)
@@ -44,7 +44,7 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
       </div>
       <div>
         <div className="d-flex mb-3">
-          <OptionInput
+          <ExerciseOptionInput
             className="mr-1"
             name="option1"
             placeholder="Option 1"
@@ -53,7 +53,7 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
             checked={correct === 1}
             onChecked={(checked) => setCorrect(checked ? 1 : null)}
           />
-          <OptionInput
+          <ExerciseOptionInput
             className="ml-2"
             name="option2"
             placeholder="Option 2"
@@ -64,7 +64,7 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
           />
         </div>
         <div className="d-flex mb-3">
-          <OptionInput
+          <ExerciseOptionInput
             className="mr-2"
             name="option3"
             placeholder="Option 3"
@@ -73,7 +73,7 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
             checked={correct === 3}
             onChecked={(checked) => setCorrect(checked ? 3 : null)}
           />
-          <OptionInput
+          <ExerciseOptionInput
             className="ml-2"
             name="option4"
             placeholder="Option 4"

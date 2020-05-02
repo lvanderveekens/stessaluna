@@ -6,7 +6,7 @@ namespace Stessaluna\Exercise\Answer\Dto;
 
 use Stessaluna\Exercise\ExerciseType;
 
-class MissingwordAnswerDto extends AnswerDto
+class SubmitMissingwordAnswer extends SubmitAnswer
 {
     public int $option;
 

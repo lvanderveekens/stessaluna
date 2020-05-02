@@ -8,16 +8,19 @@ import { AorbAnswer } from "../answer/answer.model"
 interface Props {
   id: number
   sentences: AorbSentenceInterface[]
-  submitAnswer: (exerciseId: number, answer: AorbAnswer) => void
-  submitting: boolean
+  submitAnswer: (exerciseId: number, answer: AorbAnswer) => Promise<void>
 }
 
-const AorbExerciseContainer: FC<Props> = ({ id, sentences, submitAnswer, submitting }) => {
+const AorbExerciseContainer: FC<Props> = ({ id, sentences, submitAnswer }) => {
   const [choices, setChoices] = useState(new Array(sentences.length).fill(null) as ("a" | "b")[])
+  const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
     if (choices.every((c) => c !== null)) {
+      setSubmitting(true)
       submitAnswer(id, new AorbAnswer(choices))
+        .then(() => setSubmitting(false))
+        .catch(() => setSubmitting(false))
     }
   }, [choices])
 

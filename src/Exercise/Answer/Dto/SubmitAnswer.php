@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stessaluna\Exercise\Answer\Dto;
 
-abstract class AnswerDto
+abstract class SubmitAnswer
 {
     public string $type;
 

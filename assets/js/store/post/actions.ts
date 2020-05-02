@@ -99,21 +99,19 @@ export const deleteComment = (postId, commentId) => {
 }
 
 export const submitAnswer = (exerciseId: number, answer: Answer) => {
-  const pending = () => ({ type: ActionTypes.SUBMIT_ANSWER_PENDING, payload: { exerciseId } })
   const success = (exercise: Exercise) => ({ type: ActionTypes.SUBMIT_ANSWER_SUCCESS, payload: { exercise } })
-  const error = () => ({ type: ActionTypes.SUBMIT_ANSWER_ERROR, payload: { exerciseId } })
 
   return (dispatch) => {
-    dispatch(pending())
-    axios
+    return axios
       .post(`/api/exercises/${exerciseId}/answers`, answer)
       .then((res) => {
         console.log(res.data)
         dispatch(success(res.data))
+        return Promise.resolve(res.data)
       })
       .catch((e) => {
         console.log(e)
-        dispatch(error())
+        return Promise.reject(e)
       })
   }
 }

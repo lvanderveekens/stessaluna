@@ -6,7 +6,7 @@ namespace Stessaluna\Exercise\Answer\Dto;
 
 use Stessaluna\Exercise\ExerciseType;
 
-class WhatdoyouseeAnswerDto extends AnswerDto
+class SubmitWhatdoyouseeAnswer extends SubmitAnswer
 {
     public int $option;
 

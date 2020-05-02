@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import styles from "./OptionInput.scss?module"
+import styles from "./ExerciseOptionInput.scss?module"
 import classNames from "classnames/bind"
 const cx = classNames.bind(styles)
 
@@ -13,7 +13,7 @@ interface Props {
   onChecked: (checked: boolean) => void
 }
 
-const OptionInput: FC<Props> = ({ className, name, placeholder, value, onChange, checked, onChecked }) => {
+const ExerciseOptionInput: FC<Props> = ({ className, name, placeholder, value, onChange, checked, onChecked }) => {
   return (
     <div className={`${styles.optionInput} ${className}`}>
       <div className={cx(styles.wrapper, { checked })}>
@@ -33,4 +33,4 @@ const OptionInput: FC<Props> = ({ className, name, placeholder, value, onChange,
   )
 }
 
-export default OptionInput
+export default ExerciseOptionInput
