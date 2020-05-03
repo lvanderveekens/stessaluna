@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Stessaluna\Image;
 
 use Exception;
+use Intervention\Image\ImageManagerStatic as Image;
 use Psr\Log\LoggerInterface;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -46,11 +48,9 @@ class ImageStorage
         $filename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
 
         try {
-            $newFile = $image->move($this->directory, $filename);
-            $optimizerChain = OptimizerChainFactory::create();
-            $optimizerChain
-                ->useLogger($this->logger)
-                ->optimize($newFile->getPathname());
+            $imageFile = $image->move($this->directory, $filename);
+            $this->fixOrientation($imageFile);
+            $this->optimize($imageFile);
         } catch (FileException $e) {
             $this->logger->error($e);
         }
@@ -64,5 +64,20 @@ class ImageStorage
         } catch (Exception $e) {
             $this->logger->error($e);
         }
+    }
+
+    private function fixOrientation(File $imageFile)
+    {
+        $image = Image::make($imageFile->getPathname());
+        $image->orientate();
+        $image->save($imageFile->getPathname());
+    }
+
+    private function optimize(File $imageFile)
+    {
+        $optimizerChain = OptimizerChainFactory::create();
+        $optimizerChain
+                ->useLogger($this->logger)
+                ->optimize($imageFile->getPathname());
     }
 }
