@@ -5,18 +5,10 @@ import thunk from "redux-thunk"
 import postReducer from "./post/reducer"
 import { AuthState } from "./auth/state.interface"
 import { PostState } from "./post/state.interface"
-import storage from "redux-persist/lib/storage" // defaults to localStorage for web
-import { persistStore, persistReducer } from "redux-persist"
 
 export interface State {
   auth: AuthState
   post: PostState
-}
-
-const persistConfig = {
-  key: "root",
-  storage,
-  whitelist: ["auth"],
 }
 
 const rootReducer = combineReducers({
@@ -24,9 +16,13 @@ const rootReducer = combineReducers({
   post: postReducer,
 })
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
-const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(thunk)))
-const persistor = persistStore(store)
-
-export { store, persistor }
+store.subscribe(() => {
+  const loggedIn = store.getState().auth.loggedIn
+  if (loggedIn != null) {
+    localStorage.setItem("logged-in", loggedIn.toString())
+  } else {
+    localStorage.removeItem("logged-in")
+  }
+})

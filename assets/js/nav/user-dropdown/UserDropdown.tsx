@@ -1,13 +1,14 @@
 import React, { FC } from "react"
+import { Dropdown } from "react-bootstrap"
+import { connect } from "react-redux"
+import { Link } from "react-router-dom"
 import CustomToggle from "../../dropdown/CustomToggle"
 import { logOut } from "../../store/auth/actions"
-import { Dropdown } from "react-bootstrap"
-import styles from "./UserDropdown.scss?module"
-import User from "../../user/user.interface"
-import Avatar from "../../user/avatar/Avatar"
-import UserDropdownPlaceholder from "./placeholder/UserDropdownPlaceholder"
 import { State } from "../../store/configureStore"
-import { connect } from "react-redux"
+import Avatar from "../../user/avatar/Avatar"
+import User from "../../user/user.interface"
+import UserDropdownPlaceholder from "./placeholder/UserDropdownPlaceholder"
+import styles from "./UserDropdown.scss?module"
 
 interface Props {
   user?: User
@@ -35,8 +36,10 @@ const UserDropdown: FC<Props> = ({ user, loading, logOut }) => {
         </div>
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        <Dropdown.Item href="/profile">Profile</Dropdown.Item>
-        <Dropdown.Item href="/login" onClick={() => logOut()}>
+        <Dropdown.Item as={Link} to="/profile">
+          Profile
+        </Dropdown.Item>
+        <Dropdown.Item as={Link} to="/login" onClick={() => logOut()}>
           Log out
         </Dropdown.Item>
       </Dropdown.Menu>

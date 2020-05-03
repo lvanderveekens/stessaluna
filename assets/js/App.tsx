@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css"
-import React, { FC, Fragment } from "react"
+import React, { FC, Fragment, useEffect } from "react"
 import Helmet from "react-helmet"
 import { Route, Router, Switch } from "react-router-dom"
 import history from "./history/history"
@@ -9,8 +9,22 @@ import NotFoundPage from "./not-found/NotFoundPage"
 import ProfilePage from "./profile/ProfilePage"
 import RegistrationPage from "./register/RegistrationPage"
 import PrivateRoute from "./route/PrivateRoute"
+import { fetchUser } from "./store/auth/actions"
+import { State } from "./store/configureStore"
+import { connect } from "react-redux"
 
-const App: FC = () => {
+interface Props {
+  loggedIn: boolean
+  fetchUser: () => void
+}
+
+const App: FC<Props> = ({ loggedIn, fetchUser }) => {
+  useEffect(() => {
+    if (loggedIn) {
+      fetchUser()
+    }
+  }, [])
+
   return (
     <Fragment>
       <Helmet>
@@ -32,4 +46,12 @@ const App: FC = () => {
   )
 }
 
-export default App
+const mapStateToProps = (state: State) => ({
+  loggedIn: state.auth.loggedIn,
+})
+
+const actionCreators = {
+  fetchUser,
+}
+
+export default connect(mapStateToProps, actionCreators)(App)
