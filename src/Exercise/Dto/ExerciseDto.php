@@ -10,6 +10,8 @@ abstract class ExerciseDto
 
     public string $type;
 
+    public int $answerCount;
+
     protected function __construct(string $type)
     {
         $this->type = $type;

@@ -32,7 +32,8 @@ class ExerciseToExerciseDtoConverter
 
     public function convert(Exercise $exercise, User $user): ExerciseDto
     {
-        $answer = $this->getAnswerFromUser($exercise, $user);
+        $answers = $exercise->getAnswers()->toArray();
+        $answer = $this->findAnswerFromUser($answers, $user);
 
         $dto = null;
         if ($exercise instanceof AorbExercise) {
@@ -44,6 +45,7 @@ class ExerciseToExerciseDtoConverter
         }
 
         $dto->id = $exercise->getId();
+        $dto->answerCount = count($answers);
         return $dto;
     }
 
@@ -111,12 +113,12 @@ class ExerciseToExerciseDtoConverter
         return $dto;
     }
 
-    private function getAnswerFromUser(Exercise $exercise, User $user): ?Answer
+    private function findAnswerFromUser(array $answers, User $user): ?Answer
     {
         $answer = null;
         // TODO: use functional find?
         $answersFromUser = array_values(array_filter(
-            $exercise->getAnswers()->toArray(),
+            $answers,
             function (Answer $answer) use ($user) { return $answer->getUser() == $user; }
         ));
 

@@ -7,6 +7,7 @@ type Exercise = AorbExercise | WhatdoyouseeExercise | MissingwordExercise
 export interface AbstractExercise {
   id?: number
   type: ExerciseType
+  answerCount: number
 }
 
 export enum ExerciseType {

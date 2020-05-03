@@ -120,6 +120,7 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, ex
         {exercise && renderExercise()}
       </div>
       <div className={styles.activity}>
+        {exercise && exercise.answerCount > 0 && <div>Answers: {exercise.answerCount}</div>}
         {comments && comments.length > 0 && (
           <div className={styles.numberOfComments} onClick={toggleComments}>
             Comments: {comments.length}

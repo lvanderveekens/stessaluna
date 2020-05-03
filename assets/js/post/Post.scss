@@ -64,7 +64,13 @@
         display: flex;
         justify-content: flex-end;
 
-        padding: 0.5rem 1rem;
+        padding: 0 1rem 0.5rem 1rem;
+
+        &>div {
+            margin-left: 0.8rem;
+            // font-size: 0.7rem;
+            color: grey;
+        }
 
         .numberOfComments {
             cursor: pointer;

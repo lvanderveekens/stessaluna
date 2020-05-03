@@ -58,7 +58,7 @@ const MissingwordExercise: FC<Props> = ({
             disabled={!!answer || !!selected}
           />
         </div>
-        <div className="d-flex mb-3">
+        <div className="d-flex">
           <ExerciseOption
             className="mr-2"
             value={option3}

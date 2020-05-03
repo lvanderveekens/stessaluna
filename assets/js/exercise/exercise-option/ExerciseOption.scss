@@ -27,16 +27,6 @@
 
         }
 
-        // &.left {
-        //     // The +1px is to compensate for the border increase later on.
-        //     margin: 1px calc(1px + 0.5rem) 1px 1px;
-        // }
-
-        // &.right {
-        //     // The +1px is to compensate for the border increase later on.
-        //     margin: 1px 1px 1px calc(1px + 0.5rem);
-        // }
-
         &.selected {
             color: $stessaluna-exercise-selected;
             border: 2px solid $stessaluna-exercise-selected;
@@ -60,14 +50,6 @@
         &.correct,
         &.incorrect {
             margin: 0;
-            // Remove the +1px from earlier
-            // &.left {
-            //     margin: 0 0.5rem 0 0;
-            // }
-
-            // &.right {
-            //     margin: 0 0 0 0.5rem;
-            // }
         }
     }
 }
