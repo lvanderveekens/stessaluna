@@ -53,6 +53,11 @@
             }
 
             // TODO: do something with outline when tabbing to checkbox..
+            input[type="checkbox"]:focus~.checkmark {
+                border: 2px solid $stessaluna-exercise-default;
+                // // reset the margin to keep the overall size the same after increasing the border
+                // margin: 0px;
+            }
 
             input[type="checkbox"]:checked~.checkmark {
                 border: 1px solid $stessaluna-exercise-correct;

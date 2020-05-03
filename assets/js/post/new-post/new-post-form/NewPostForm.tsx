@@ -130,12 +130,18 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
             {exerciseType && <div className={styles.exercise}>{renderExerciseInput(setFieldValue)}</div>}
             <div className={styles.actions}>
               <button className={styles.button} type="button" onClick={handleClickImage} disabled={actionsDisabled}>
-                <FontAwesomeIcon icon={faImage} /> Image
+                <span className="mr-2">
+                  <FontAwesomeIcon icon={faImage} />
+                </span>
+                Image
               </button>
               <Dropdown className={styles.exerciseDropdown}>
                 <Dropdown.Toggle as={CustomToggle} id="something">
                   <button className={styles.button} type="button" disabled={actionsDisabled}>
-                    <FontAwesomeIcon icon={faGraduationCap} /> Exercise
+                    <span className="mr-2">
+                      <FontAwesomeIcon icon={faGraduationCap} />
+                    </span>
+                    Exercise
                   </button>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
