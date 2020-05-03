@@ -1,7 +1,17 @@
 @import '../../../css/colors';
 
-.userDropdown {
 
+.loader {
+    transform: translateX(-30px) translateY(3px);
+
+    div {
+        border-color: $brand-primary !important;
+        border-top-color: transparent !important;
+        border-bottom-color: transparent !important;
+    }
+}
+
+.userDropdown {
     a {
         color: #424b52;
     }

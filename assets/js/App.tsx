@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css"
+import "loaders.css/loaders.min.css"
 import React, { FC, Fragment, useEffect } from "react"
 import Helmet from "react-helmet"
 import { Route, Router, Switch } from "react-router-dom"

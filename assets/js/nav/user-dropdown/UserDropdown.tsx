@@ -7,22 +7,17 @@ import { logOut } from "../../store/auth/actions"
 import { State } from "../../store/configureStore"
 import Avatar from "../../user/avatar/Avatar"
 import User from "../../user/user.interface"
-import UserDropdownPlaceholder from "./placeholder/UserDropdownPlaceholder"
 import styles from "./UserDropdown.scss?module"
+const Loader = require("react-loaders").Loader
 
 interface Props {
   user?: User
-  loading: boolean
   logOut: () => void
 }
 
-const UserDropdown: FC<Props> = ({ user, loading, logOut }) => {
-  if (loading) {
-    return <UserDropdownPlaceholder />
-  }
-
+const UserDropdown: FC<Props> = ({ user, logOut }) => {
   if (!user) {
-    return null
+    return <Loader className={styles.loader} type="ball-clip-rotate-multiple" active />
   }
 
   return (
@@ -49,7 +44,6 @@ const UserDropdown: FC<Props> = ({ user, loading, logOut }) => {
 
 const mapStateToProps = (state: State) => ({
   user: state.auth.user,
-  loading: state.auth.loading,
 })
 
 const actionCreators = {
