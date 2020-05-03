@@ -28,10 +28,9 @@ const CommentSection: FunctionComponent<Props> = ({ postId, comments, addComment
 
   return (
     <div className={styles.comments}>
-      <NewCommentForm onSubmit={handleSubmitComment} avatar={user.avatar} />
       {comments &&
         comments
-          .sort((comment, other) => new Date(other.createdAt).getTime() - new Date(comment.createdAt).getTime())
+          .sort((comment, other) => new Date(comment.createdAt).getTime() - new Date(other.createdAt).getTime())
           .map((comment) => (
             <Comment
               key={comment.id}
@@ -42,6 +41,7 @@ const CommentSection: FunctionComponent<Props> = ({ postId, comments, addComment
               onDelete={handleDeleteComment(comment.id)}
             />
           ))}
+      <NewCommentForm onSubmit={handleSubmitComment} avatar={user.avatar} />
     </div>
   )
 }
