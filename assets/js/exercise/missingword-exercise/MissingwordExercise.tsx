@@ -32,9 +32,10 @@ const MissingwordExercise: FC<Props> = ({
       <div className={styles.header}>
         <span>Missing word</span>
       </div>
-      <div>
-        <div>{textBefore}</div>
-        <div>{textAfter}</div>
+      <div className={styles.sentence}>
+        {textBefore && <div>{textBefore}</div>}
+        <div className={styles.missingWord}>[ ... ]</div>
+        {textAfter && <div>{textAfter}</div>}
       </div>
       <div>
         <div className="d-flex mb-3">

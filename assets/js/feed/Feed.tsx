@@ -27,7 +27,7 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
     <div id="feed">
       {loading && <FeedPlaceholder />}
       {!loading && (
-        <FadeIn delay={200} transitionDuration={400}>
+        <FadeIn delay={100} transitionDuration={200}>
           {posts.sort(byDateDescending).map((post) => (
             <Post
               key={post.id}
