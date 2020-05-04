@@ -1,3 +1,5 @@
+@import "../../css/colors";
+
 .post {
 
     border: 1px solid #ced4da;
@@ -73,20 +75,26 @@
         }
 
         .numberOfComments {
-            cursor: pointer;
+            &:hover {
+                cursor: pointer;
+                color: black;
+            }
         }
     }
 
     .actions {
         border-top: 1px solid #ced4da;
-        padding-top: 0.3rem;
-        padding-bottom: 0.3rem;
 
         display: flex;
         justify-content: space-evenly;
 
         .addComment {
-            cursor: pointer;
+            padding: 0.3rem 0.9rem;
+
+            &:hover {
+                cursor: pointer;
+                background-color: $stessaluna-grey;
+            }
 
             .commentIcon {
                 margin-right: 0.4rem;

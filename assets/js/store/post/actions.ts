@@ -68,7 +68,7 @@ export const deletePost = (id) => {
 
 export const addComment = (postId, text) => {
   return (dispatch) => {
-    axios
+    return axios
       .post(`/api/posts/${postId}/comments`, { text })
       .then((res) => {
         console.log(res.data)

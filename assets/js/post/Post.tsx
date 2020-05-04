@@ -1,10 +1,10 @@
-import React, { useState, FunctionComponent } from "react"
+import React, { useState, FunctionComponent, useEffect } from "react"
 import styles from "./Post.scss?module"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCommentAlt } from "@fortawesome/free-regular-svg-icons"
 import { connect } from "react-redux"
 import { addComment } from "../store/post/actions"
-import CommentSection from "./comment/comment-section/CommentSection"
+import CommentSection from "./comment/comment-section"
 import User from "../user/user.interface"
 import { Dropdown } from "react-bootstrap"
 import CustomToggle from "../dropdown/CustomToggle"
@@ -30,6 +30,15 @@ interface Props {
 
 const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, exercise, comments, onDelete, user }) => {
   const [showComments, setShowComments] = useState(false)
+  // TODO: this is here in order to keep state when comment section is unmounted... is there a better way?
+  const [showAllComments, setShowAllComments] = useState(false)
+  const [numberOfPreviewComments, setNumberOfPreviewComments] = useState(1)
+
+  useEffect(() => {
+    if (comments.length > 0) {
+      setShowComments(true)
+    }
+  }, [])
 
   const toggleComments = () => {
     setShowComments(!showComments)
@@ -135,7 +144,16 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, ex
           Add comment
         </div>
       </div>
-      {showComments && <CommentSection postId={id} comments={comments} />}
+      {showComments && (
+        <CommentSection
+          postId={id}
+          comments={comments}
+          showAll={showAllComments}
+          setShowAll={setShowAllComments}
+          numberOfPreviewComments={numberOfPreviewComments}
+          setNumberOfPreviewComments={setNumberOfPreviewComments}
+        />
+      )}
     </div>
   )
 }
