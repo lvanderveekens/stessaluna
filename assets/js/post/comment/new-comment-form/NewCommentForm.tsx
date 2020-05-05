@@ -1,9 +1,9 @@
-import React, { useState, FunctionComponent } from 'react';
-import styles from './NewCommentForm.scss?module';
-import PropTypes from 'prop-types';
-import TextareaAutosize from 'react-textarea-autosize';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, FunctionComponent } from "react"
+import styles from "./NewCommentForm.scss?module"
+import PropTypes from "prop-types"
+import TextareaAutosize from "react-textarea-autosize"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faArrowCircleRight } from "@fortawesome/free-solid-svg-icons"
 
 interface Props {
   onSubmit: (comment: string) => void
@@ -11,22 +11,21 @@ interface Props {
 }
 
 const NewCommentForm: FunctionComponent<Props> = ({ onSubmit, avatar }) => {
-
-  const [text, setText] = useState("");
+  const [text, setText] = useState("")
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleSubmit();
+    if (e.key === "Enter") {
+      e.preventDefault()
+      handleSubmit()
     }
   }
   const handleSubmit = () => {
-    onSubmit(text);
-    setText("");
-  };
+    onSubmit(text)
+    setText("")
+  }
 
   return (
-    <form className={styles.newCommentForm}>
+    <form className={styles.newCommentForm} onSubmit={handleSubmit}>
       <div className="d-flex">
         <div className={styles.avatar}>
           <img src={avatar} />
@@ -42,14 +41,18 @@ const NewCommentForm: FunctionComponent<Props> = ({ onSubmit, avatar }) => {
             value={text}
           />
         </div>
-        <div className={styles.submitIcon} onClick={handleSubmit}><FontAwesomeIcon icon={faArrowCircleRight} /></div>
+        <div className={styles.submit} onClick={handleSubmit}>
+          <button type="submit">
+            <FontAwesomeIcon icon={faArrowCircleRight} />
+          </button>
+        </div>
       </div>
     </form>
-  );
-};
+  )
+}
 
 NewCommentForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
-};
+  onSubmit: PropTypes.func.isRequired,
+}
 
-export default NewCommentForm;
+export default NewCommentForm

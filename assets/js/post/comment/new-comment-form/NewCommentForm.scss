@@ -36,9 +36,15 @@
         }
     }
 
-    .submitIcon {
+    .submit {
+
         font-size: 1.5rem;
         align-self: center;
         cursor: pointer;
+
+        button {
+            border: none;
+            padding: 0;
+        }
     }
 }

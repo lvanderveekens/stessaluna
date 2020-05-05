@@ -15,7 +15,7 @@ interface Props {
   setNumberOfPreviewComments: (count: number) => void
   user: User
   addComment: (postId: number, text: string) => Promise<void>
-  deleteComment: (postId: number, commentId: number) => void
+  deleteComment: (postId: number, commentId: number) => Promise<void>
 }
 
 const CommentSectionContainer: FC<Props> = ({
@@ -33,14 +33,14 @@ const CommentSectionContainer: FC<Props> = ({
     if (comments.length == numberOfPreviewComments) {
       setShowAll(true)
     }
-  }, [])
+  }, [comments])
 
   const handleAddComment = (text: string) => {
     addComment(postId, text).then(() => setNumberOfPreviewComments(numberOfPreviewComments + 1))
   }
 
   const handleDeleteComment = (commentId: number) => {
-    deleteComment(postId, commentId)
+    deleteComment(postId, commentId).then(() => setNumberOfPreviewComments(Math.max(numberOfPreviewComments - 1, 1)))
   }
 
   return (
