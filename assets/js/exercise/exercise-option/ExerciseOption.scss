@@ -27,6 +27,10 @@
 
         }
 
+        &.disabled {
+            opacity: 0.6;
+        }
+
         &.selected {
             color: $stessaluna-exercise-selected;
             border: 2px solid $stessaluna-exercise-selected;
@@ -50,6 +54,7 @@
         &.correct,
         &.incorrect {
             margin: 0;
+            opacity: 1;
         }
     }
 }

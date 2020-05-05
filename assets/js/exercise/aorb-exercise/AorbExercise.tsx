@@ -8,9 +8,10 @@ interface Props {
   choices: ("a" | "b")[]
   onChoice: (index: number) => (choice: "a" | "b") => void
   submitting: boolean
+  disabled: boolean
 }
 
-const AorbExercise: FC<Props> = ({ sentences, choices, onChoice, submitting }) => {
+const AorbExercise: FC<Props> = ({ sentences, choices, onChoice, submitting, disabled }) => {
   return (
     <div className={styles.exercise}>
       <div className={styles.header}>
@@ -26,7 +27,7 @@ const AorbExercise: FC<Props> = ({ sentences, choices, onChoice, submitting }) =
               textAfter={sentence.textAfter}
               onChoice={onChoice(i)}
               selected={choices[i]}
-              submitting={submitting}
+              disabled={disabled || !!sentence.choice.answer || submitting}
             />
           </div>
         ))}

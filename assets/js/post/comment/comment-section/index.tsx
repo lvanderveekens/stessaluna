@@ -1,10 +1,10 @@
-import React, { FC, useState, useEffect } from "react"
+import React, { FC, useEffect } from "react"
+import { connect } from "react-redux"
+import { State } from "../../../store/configureStore"
+import { addComment, deleteComment } from "../../../store/post/actions"
+import User from "../../../user/user.interface"
 import CommentInterface from "../comment.interface"
 import CommentSection from "./CommentSection"
-import { addComment, deleteComment } from "../../../store/post/actions"
-import { State } from "../../../store/configureStore"
-import { connect } from "react-redux"
-import User from "../../../user/user.interface"
 
 interface Props {
   postId: number
@@ -16,6 +16,7 @@ interface Props {
   user: User
   addComment: (postId: number, text: string) => Promise<void>
   deleteComment: (postId: number, commentId: number) => Promise<void>
+  locked: boolean
 }
 
 const CommentSectionContainer: FC<Props> = ({
@@ -28,6 +29,7 @@ const CommentSectionContainer: FC<Props> = ({
   user,
   addComment,
   deleteComment,
+  locked,
 }) => {
   useEffect(() => {
     if (comments.length == numberOfPreviewComments) {
@@ -52,6 +54,7 @@ const CommentSectionContainer: FC<Props> = ({
       user={user}
       addComment={handleAddComment}
       deleteComment={handleDeleteComment}
+      locked={locked}
     />
   )
 }

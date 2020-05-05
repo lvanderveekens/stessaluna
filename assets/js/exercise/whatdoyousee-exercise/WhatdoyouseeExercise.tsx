@@ -13,6 +13,7 @@ interface Props {
   correct?: number
   answer?: number
   selected?: number
+  disabled: boolean
   onSubmit: (answer: number) => void
 }
 
@@ -26,6 +27,7 @@ const WhatdoyouseeExercise: FC<Props> = ({
   answer,
   selected,
   onSubmit,
+  disabled,
 }) => {
   return (
     <div className={styles.whatdoyouseeExercise}>
@@ -44,7 +46,7 @@ const WhatdoyouseeExercise: FC<Props> = ({
             selected={selected === 1}
             correct={correct === 1}
             answer={answer === 1}
-            disabled={!!answer || !!selected}
+            disabled={disabled || !!answer || !!selected}
           />
           <ExerciseOption
             className="ml-2"
@@ -53,7 +55,7 @@ const WhatdoyouseeExercise: FC<Props> = ({
             selected={selected === 2}
             correct={correct === 2}
             answer={answer === 2}
-            disabled={!!answer || !!selected}
+            disabled={disabled || !!answer || !!selected}
           />
         </div>
         <div className="d-flex mb-3">
@@ -64,7 +66,7 @@ const WhatdoyouseeExercise: FC<Props> = ({
             selected={selected === 3}
             correct={correct === 3}
             answer={answer === 3}
-            disabled={!!answer || !!selected}
+            disabled={disabled || !!answer || !!selected}
           />
           <ExerciseOption
             className="ml-2"
@@ -73,7 +75,7 @@ const WhatdoyouseeExercise: FC<Props> = ({
             selected={selected === 4}
             correct={correct === 4}
             answer={answer === 4}
-            disabled={!!answer || !!selected}
+            disabled={disabled || !!answer || !!selected}
           />
         </div>
       </div>

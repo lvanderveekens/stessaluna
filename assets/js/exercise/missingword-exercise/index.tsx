@@ -14,6 +14,7 @@ interface Props {
   option4: string
   correct: number
   answer?: number
+  disabled: boolean
   submitAnswer: (exerciseId: number, answer: MissingwordAnswer) => Promise<void>
 }
 
@@ -27,6 +28,7 @@ const MissingwordExerciseContainer: FC<Props> = ({
   option4,
   correct,
   answer,
+  disabled,
   submitAnswer,
 }) => {
   const [selected, setSelected] = useState(0)
@@ -53,8 +55,9 @@ const MissingwordExerciseContainer: FC<Props> = ({
       option3={option3}
       option4={option4}
       correct={correct}
-      selected={selected}
       answer={answer}
+      selected={selected}
+      disabled={disabled}
       onSubmit={handleSubmit}
     />
   )

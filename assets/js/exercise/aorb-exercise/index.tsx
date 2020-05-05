@@ -8,10 +8,11 @@ import { AorbAnswer } from "../answer/answer.model"
 interface Props {
   id: number
   sentences: AorbSentenceInterface[]
+  disabled: boolean
   submitAnswer: (exerciseId: number, answer: AorbAnswer) => Promise<void>
 }
 
-const AorbExerciseContainer: FC<Props> = ({ id, sentences, submitAnswer }) => {
+const AorbExerciseContainer: FC<Props> = ({ id, sentences, disabled, submitAnswer }) => {
   const [choices, setChoices] = useState(new Array(sentences.length).fill(null) as ("a" | "b")[])
   const [submitting, setSubmitting] = useState(false)
 
@@ -30,7 +31,15 @@ const AorbExerciseContainer: FC<Props> = ({ id, sentences, submitAnswer }) => {
     setChoices(updatedChoices)
   }
 
-  return <AorbExercise sentences={sentences} choices={choices} onChoice={handleChoice} submitting={submitting} />
+  return (
+    <AorbExercise
+      sentences={sentences}
+      choices={choices}
+      onChoice={handleChoice}
+      submitting={submitting}
+      disabled={disabled}
+    />
+  )
 }
 
 const actionCreators = {

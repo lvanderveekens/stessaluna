@@ -4,31 +4,6 @@
 
     hyphens: auto;
 
-    .a,
-    .b {
-        display: inline-block;
-        color: $stessaluna-exercise-default;
-        background: $stessaluna-exercise-default-bg;
-        border: 1px solid $stessaluna-exercise-default;
-
-        user-select: none;
-
-        cursor: pointer;
-
-        &.answered {
-            cursor: unset;
-        }
-
-        .label {
-            padding: 0 0.4rem;
-        }
-
-        .text {
-            color: $stessaluna-exercise-default-text;
-            padding-right: 0.4rem;
-        }
-    }
-
     .a {
         border-bottom-left-radius: 0.5rem;
         border-top-left-radius: 0.5rem;
@@ -49,30 +24,71 @@
         padding-left: 1px;
     }
 
-    .selected {
-        color: $stessaluna-exercise-selected;
-        border: 2px solid $stessaluna-exercise-selected;
-        background: $stessaluna-exercise-selected-bg;
+    .a,
+    .b {
+        display: inline-block;
+        color: $stessaluna-exercise-default;
+        background: $stessaluna-exercise-default-bg;
+        border: 1px solid $stessaluna-exercise-default;
 
-        margin: 0;
-        padding: 0;
-    }
+        user-select: none;
 
-    .correct {
-        color: $stessaluna-exercise-correct;
-        border: 2px solid $stessaluna-exercise-correct;
-        background: $stessaluna-exercise-correct-bg;
+        &:not(.disabled) {
+            &:hover {
+                cursor: pointer;
+                background-color: $stessaluna-exercise-selected-bg;
+            }
+        }
 
-        margin: 0;
-        padding: 0;
-    }
+        &.disabled {
+            opacity: 0.6;
+        }
 
-    .incorrect {
-        color: $stessaluna-exercise-incorrect;
-        border: 2px solid $stessaluna-exercise-incorrect;
-        background: $stessaluna-exercise-incorrect-bg;
+        .label {
+            padding: 0 0.4rem;
+        }
 
-        margin: 0;
-        padding: 0;
+        .text {
+            color: $stessaluna-exercise-default-text;
+            padding-right: 0.4rem;
+        }
+
+        &.selected {
+            color: $stessaluna-exercise-selected;
+            border: 2px solid $stessaluna-exercise-selected;
+            background: $stessaluna-exercise-selected-bg;
+
+            .text {
+                color: $stessaluna-exercise-selected;
+            }
+        }
+
+        &.correct {
+            color: $stessaluna-exercise-correct;
+            border: 2px solid $stessaluna-exercise-correct;
+            background: $stessaluna-exercise-correct-bg;
+
+            .text {
+                color: $stessaluna-exercise-correct;
+            }
+        }
+
+        &.incorrect {
+            color: $stessaluna-exercise-incorrect;
+            border: 2px solid $stessaluna-exercise-incorrect;
+            background: $stessaluna-exercise-incorrect-bg;
+
+            .text {
+                color: $stessaluna-exercise-incorrect;
+            }
+        }
+
+        &.selected,
+        &.correct,
+        &.incorrect {
+            margin: 0;
+            padding: 0;
+            opacity: 1;
+        }
     }
 }

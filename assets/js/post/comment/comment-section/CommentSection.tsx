@@ -14,6 +14,7 @@ interface Props {
   user: User
   addComment: (text: string) => Promise<void>
   deleteComment: (id: number) => void
+  locked: boolean
 }
 
 const CommentSection: FunctionComponent<Props> = ({
@@ -24,7 +25,11 @@ const CommentSection: FunctionComponent<Props> = ({
   user,
   addComment,
   deleteComment,
+  locked,
 }) => {
+  if (locked) {
+    return <div className={styles.commentSection}>Locked!!!</div>
+  }
   return (
     <div className={styles.commentSection}>
       {!showAll && (

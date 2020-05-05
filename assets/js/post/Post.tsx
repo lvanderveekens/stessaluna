@@ -10,11 +10,12 @@ import { Dropdown } from "react-bootstrap"
 import CustomToggle from "../dropdown/CustomToggle"
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons"
 import Avatar from "../user/avatar/Avatar"
-import Exercise from "../exercise/exercise.model"
+import Exercise, { ExerciseType } from "../exercise/exercise.model"
 import AorbExercise from "../exercise/aorb-exercise"
 import Text from "./text/Text"
 import WhatdoyouseeExercise from "../exercise/whatdoyousee-exercise"
 import MissingwordExercise from "../exercise/missingword-exercise"
+import { isAnswered } from "../exercise/exercise.helper"
 
 interface Props {
   id: number
@@ -63,36 +64,18 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, ex
   }
 
   const renderExercise = () => {
+    const props = {
+      ...exercise,
+      disabled: user.id == author.id,
+    }
+
     switch (exercise.type) {
-      case "aorb":
-        return <AorbExercise id={exercise.id} sentences={exercise.sentences} />
-      case "whatdoyousee":
-        return (
-          <WhatdoyouseeExercise
-            id={exercise.id}
-            image={exercise.image}
-            option1={exercise.option1}
-            option2={exercise.option2}
-            option3={exercise.option3}
-            option4={exercise.option4}
-            correct={exercise.correct}
-            answer={exercise.answer}
-          />
-        )
-      case "missingword":
-        return (
-          <MissingwordExercise
-            id={exercise.id}
-            textBefore={exercise.textBefore}
-            textAfter={exercise.textAfter}
-            option1={exercise.option1}
-            option2={exercise.option2}
-            option3={exercise.option3}
-            option4={exercise.option4}
-            correct={exercise.correct}
-            answer={exercise.answer}
-          />
-        )
+      case ExerciseType.A_OR_B:
+        return <AorbExercise {...props} />
+      case ExerciseType.WHAT_DO_YOU_SEE:
+        return <WhatdoyouseeExercise {...props} />
+      case ExerciseType.MISSING_WORD:
+        return <MissingwordExercise {...props} />
     }
   }
 
@@ -152,6 +135,7 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, ex
           setShowAll={setShowAllComments}
           numberOfPreviewComments={numberOfPreviewComments}
           setNumberOfPreviewComments={setNumberOfPreviewComments}
+          locked={exercise && !isAnswered(exercise) && user.id != author.id}
         />
       )}
     </div>
