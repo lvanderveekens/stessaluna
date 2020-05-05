@@ -5,6 +5,8 @@ import Comment from "../Comment"
 import CommentInterface from "../comment.interface"
 import NewCommentForm from "../new-comment-form/NewCommentForm"
 import styles from "./CommentSection.scss?module"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faLock } from "@fortawesome/free-solid-svg-icons"
 
 interface Props {
   comments: CommentInterface[]
@@ -27,32 +29,41 @@ const CommentSection: FunctionComponent<Props> = ({
   deleteComment,
   locked,
 }) => {
-  if (locked) {
-    return <div className={styles.commentSection}>Locked!!!</div>
-  }
   return (
     <div className={styles.commentSection}>
-      {!showAll && (
-        <div className={styles.showAll}>
-          <div className={styles.button} onClick={() => setShowAll(true)}>
-            Show all
-          </div>
+      {locked && (
+        <div className={styles.locked}>
+          <span className={styles.icon}>
+            <FontAwesomeIcon icon={faLock} />
+          </span>
+          Locked until answered
         </div>
       )}
-      {comments
-        .sort((comment, other) => new Date(comment.createdAt).getTime() - new Date(other.createdAt).getTime())
-        .slice(showAll ? 0 : comments.length - numberOfPreviewComments)
-        .map((comment) => (
-          <Comment
-            key={comment.id}
-            timestamp={moment(comment.createdAt).fromNow()}
-            author={comment.user}
-            user={user}
-            text={comment.text}
-            onDelete={() => deleteComment(comment.id)}
-          />
-        ))}
-      <NewCommentForm onSubmit={addComment} avatar={user.avatar} />
+      {!locked && (
+        <>
+          {!showAll && (
+            <div className={styles.showAll}>
+              <div className={styles.button} onClick={() => setShowAll(true)}>
+                Show all
+              </div>
+            </div>
+          )}
+          {comments
+            .sort((comment, other) => new Date(comment.createdAt).getTime() - new Date(other.createdAt).getTime())
+            .slice(showAll ? 0 : comments.length - numberOfPreviewComments)
+            .map((comment) => (
+              <Comment
+                key={comment.id}
+                timestamp={moment(comment.createdAt).fromNow()}
+                author={comment.user}
+                user={user}
+                text={comment.text}
+                onDelete={() => deleteComment(comment.id)}
+              />
+            ))}
+          <NewCommentForm onSubmit={addComment} avatar={user.avatar} />
+        </>
+      )}
     </div>
   )
 }

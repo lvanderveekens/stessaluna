@@ -1,8 +1,18 @@
 @import "../../../../css/colors";
 
+
 .commentSection {
     border-top: 1px solid #ced4da;
     padding: 1rem;
+
+    .locked {
+        text-align: center;
+        color: grey;
+
+        .icon {
+            margin-right: 0.5rem;
+        }
+    }
 
     .showAll {
         display: flex;

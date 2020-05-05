@@ -57,30 +57,18 @@
             color: $stessaluna-exercise-selected;
             border: 2px solid $stessaluna-exercise-selected;
             background: $stessaluna-exercise-selected-bg;
-
-            .text {
-                color: $stessaluna-exercise-selected;
-            }
         }
 
         &.correct {
             color: $stessaluna-exercise-correct;
             border: 2px solid $stessaluna-exercise-correct;
             background: $stessaluna-exercise-correct-bg;
-
-            .text {
-                color: $stessaluna-exercise-correct;
-            }
         }
 
         &.incorrect {
             color: $stessaluna-exercise-incorrect;
             border: 2px solid $stessaluna-exercise-incorrect;
             background: $stessaluna-exercise-incorrect-bg;
-
-            .text {
-                color: $stessaluna-exercise-incorrect;
-            }
         }
 
         &.selected,
