@@ -103,7 +103,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
       onSubmit={({ text, image, exercise }, { resetForm }) => handleSubmit({ text, image, exercise }, resetForm)}
       initialValues={{ text: null, image: null, exercise: null } as Values}
     >
-      {({ handleSubmit, setFieldValue, values, isValid, errors }) => (
+      {({ handleSubmit, setFieldValue, values, isValid, isSubmitting, errors }) => (
         <Form className={styles.newPostForm} noValidate onSubmit={handleSubmit}>
           <div className={styles.wrapper}>
             <TextareaAutosize
@@ -152,7 +152,11 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
                   <Dropdown.Item onClick={() => setExerciseType(ExerciseType.MISSING_WORD)}>Missing word</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <button className={styles.submitButton} type="submit" disabled={allNull(values) || !isValid}>
+              <button
+                className={styles.submitButton}
+                type="submit"
+                disabled={allNull(values) || !isValid || isSubmitting}
+              >
                 Create
               </button>
             </div>

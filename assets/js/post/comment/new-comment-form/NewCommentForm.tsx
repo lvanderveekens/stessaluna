@@ -13,10 +13,12 @@ interface Props {
 }
 
 const NewCommentForm: FunctionComponent<Props> = ({ onSubmit, avatar }) => {
-  const handleKeyDown = (submit: () => void) => (e) => {
+  const handleKeyDown = (isSubmitting: boolean, handleSubmit: () => void) => (e) => {
     if (e.key === "Enter") {
       e.preventDefault()
-      submit()
+      if (!isSubmitting) {
+        handleSubmit()
+      }
     }
   }
 
@@ -47,12 +49,12 @@ const NewCommentForm: FunctionComponent<Props> = ({ onSubmit, avatar }) => {
             name="comment"
             value={formik.values.text}
             onChange={formik.handleChange("text")}
-            onKeyDown={handleKeyDown(formik.handleSubmit)}
+            onKeyDown={handleKeyDown(formik.isSubmitting, formik.handleSubmit)}
             placeholder="Write a comment..."
           />
         </div>
         <div className={styles.submit}>
-          <button type="submit" disabled={!formik.isValid}>
+          <button type="submit" disabled={!formik.isValid || formik.isSubmitting}>
             <FontAwesomeIcon icon={faArrowCircleRight} />
           </button>
         </div>

@@ -32,7 +32,7 @@ const CommentSectionContainer: FC<Props> = ({
   locked,
 }) => {
   useEffect(() => {
-    if (comments.length == numberOfPreviewComments) {
+    if (comments.length <= numberOfPreviewComments) {
       setShowAll(true)
     }
   }, [comments])
