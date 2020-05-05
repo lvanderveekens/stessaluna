@@ -12,7 +12,7 @@ interface Props {
   showAll: boolean
   setShowAll: (showAll: boolean) => void
   user: User
-  addComment: (text: string) => void
+  addComment: (text: string) => Promise<void>
   deleteComment: (id: number) => void
 }
 
