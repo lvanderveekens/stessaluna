@@ -21,8 +21,14 @@
             padding: 0.5rem 0.5rem;
             font-weight: bold;
 
+            .logo {
+                width: 40px;
+                height: 40px;
+            }
+
             a {
                 color: $brand-primary;
+                vertical-align: middle;
             }
         }
     }
