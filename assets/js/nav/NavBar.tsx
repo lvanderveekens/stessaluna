@@ -1,8 +1,10 @@
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import React, { FC, useState } from "react"
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock"
+import React, { FC, useEffect, useState, useRef } from "react"
 import { Nav as BootstrapNav, Navbar as BootstrapNavbar } from "react-bootstrap"
 import { connect } from "react-redux"
+import MediaQuery from "react-responsive"
 import { Link } from "react-router-dom"
 import logoPath from "../../images/logo.svg"
 import CustomToggle from "../dropdown/CustomToggle"
@@ -10,7 +12,6 @@ import { logOut } from "../store/auth/actions"
 import { State } from "../store/configureStore"
 import User from "../user/user.interface"
 import styles from "./Navbar.scss?module"
-import MediaQuery from "react-responsive"
 
 interface Props {
   page: string
@@ -20,14 +21,24 @@ interface Props {
 
 const Navbar: FC<Props> = ({ page, user, logOut }) => {
   const [expanded, setExpanded] = useState(false)
+  const navRef = useRef(null)
 
   // if (!user) {
   //   return <Loader className={styles.loader} type="ball-clip-rotate-multiple" active />
   // }
 
+  useEffect(() => {
+    if (expanded) {
+      disableBodyScroll(navRef.current)
+    } else {
+      enableBodyScroll(navRef.current)
+    }
+  }, [expanded])
+
   return (
     <BootstrapNavbar
       className={styles.nav}
+      ref={navRef}
       fixed="top"
       expand="lg"
       expanded={expanded}
