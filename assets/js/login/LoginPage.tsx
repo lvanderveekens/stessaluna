@@ -1,12 +1,11 @@
-import React, { Fragment, useState, FunctionComponent } from 'react';
-import LoginForm from './LoginForm';
-import { Row, Col, Container } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { logIn } from '../store/auth/actions';
-import NavBar from '../nav/NavBar';
-import styles from './LoginPage.scss?module';
-import { Link } from 'react-router-dom';
-import Helmet from 'react-helmet';
+import React, { FunctionComponent, useState } from "react"
+import { Col, Container, Row } from "react-bootstrap"
+import Helmet from "react-helmet"
+import { connect } from "react-redux"
+import { Link } from "react-router-dom"
+import { logIn } from "../store/auth/actions"
+import LoginForm from "./LoginForm"
+import styles from "./LoginPage.scss?module"
 
 interface Props {
   history: any
@@ -14,19 +13,18 @@ interface Props {
 }
 
 const LoginPage: FunctionComponent<Props> = ({ history, logIn }) => {
-
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("")
 
   const handleSubmit = ({ username, password }) => {
-    setErrorMessage("");
+    setErrorMessage("")
     logIn(username, password)
       .then(() => {
-        history.push('/');
+        history.push("/")
       })
       .catch((error) => {
-        setErrorMessage(error.response.data.message);
-      });
-  };
+        setErrorMessage(error.response.data.message)
+      })
+  }
 
   return (
     <>
@@ -41,19 +39,19 @@ const LoginPage: FunctionComponent<Props> = ({ history, logIn }) => {
               <h1>Stessaluna</h1>
             </div>
             <LoginForm onSubmit={handleSubmit} />
-            {errorMessage && (
-              <div className={styles.errorMessage}>{errorMessage}</div>
-            )}
-            <p className="text-white">Or <Link to="/register">click here</Link> to create a new account.</p>
+            {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
+            <p className="text-white">
+              Or <Link to="/register">click here</Link> to create a new account.
+            </p>
           </Col>
         </Row>
       </Container>
     </>
-  );
-};
+  )
+}
 
 const actionCreators = {
   logIn,
-};
+}
 
-export default connect(null, actionCreators)(LoginPage);
+export default connect(null, actionCreators)(LoginPage)

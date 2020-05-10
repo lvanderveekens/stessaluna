@@ -1,23 +1,24 @@
-import React, { FC } from 'react';
+import React from "react"
 
 interface Props {
-  children: any,
+  className?: string
+  children: any
   onClick?: Function
 }
 
-const CustomToggle = React.forwardRef(({ children, onClick }: Props, ref: React.Ref<HTMLSpanElement>) => {
-
+const CustomToggle = React.forwardRef(({ className, children, onClick }: Props, ref: React.Ref<HTMLSpanElement>) => {
   return (
     <span
       ref={ref}
-      onClick={e => {
-        e.preventDefault();
-        onClick(e);
+      className={className}
+      onClick={(e) => {
+        e.preventDefault()
+        onClick(e)
       }}
     >
       {children}
     </span>
-  );
-});
+  )
+})
 
-export default CustomToggle;
+export default CustomToggle

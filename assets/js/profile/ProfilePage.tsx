@@ -1,17 +1,15 @@
-import React, { FC, useState, useEffect, createRef, useRef, Fragment, ChangeEvent } from "react"
-import { Row, Col, Button, Container, Spinner } from "react-bootstrap"
-import User from "../user/user.interface"
-import { connect } from "react-redux"
-import styles from "./ProfilePage.scss?module"
-import { updateProfile } from "../store/auth/actions"
 import { Formik } from "formik"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUpload, faTimes } from "@fortawesome/free-solid-svg-icons"
-import NavBar from "../nav/NavBar"
-import { State } from "../store/configureStore"
-import { CountryDropdown } from "react-country-region-selector"
+import React, { FC, useEffect, useState } from "react"
+import { Button, Col, Container, Row, Spinner } from "react-bootstrap"
 import ReactCountryFlag from "react-country-flag"
+import { CountryDropdown } from "react-country-region-selector"
+import { connect } from "react-redux"
 import ImageInput from "../image/image-input/ImageInput"
+import Navbar from "../nav/Navbar"
+import { updateProfile } from "../store/auth/actions"
+import { State } from "../store/configureStore"
+import User from "../user/user.interface"
+import styles from "./ProfilePage.scss?module"
 
 interface Props {
   loading: boolean
@@ -69,7 +67,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
 
   return (
     <>
-      <NavBar />
+      <Navbar page="Profile" />
       <Container>
         <Row className="justify-content-center">
           <Col className={styles.centered} sm={8} md={6} lg={5} xl={5}>
