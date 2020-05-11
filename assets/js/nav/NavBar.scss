@@ -1,45 +1,105 @@
-@import '../../css/colors';
+@import "../../css/colors";
 
 .nav {
-    color: white;
-    background-color: $brand-secondary;
-    padding: 0;
+  color: white;
+  background-color: $brand-secondary;
+  padding: 0;
+
+  .topBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .brand {
+    padding: 0.25rem 0.5rem;
+    margin: 0;
+
+    font-weight: bold;
 
     a {
-        color: white !important;
+      color: $brand-primary;
+      display: flex;
+      align-items: center;
+
+      &:hover {
         text-decoration: none;
+      }
 
-        &:hover {
-            color: rgba(255, 255, 255, .5) !important;
-        }
+      .logo {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+
+  .toggle {
+    color: white;
+  }
+
+  :global(.navbar-nav) {
+
+    :global(.nav-link) {
+      padding-left: 1rem;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+
+      color: white !important;
+      text-decoration: none;
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.5) !important;
+      }
     }
 
-    .brand {
-        padding: 0.25rem 0.5rem;
+    &.expanded {
+      :global(.nav-link) {
+        &:first-child {
+          margin-top: 1rem;
+        }
+
+        &:last-child {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
+    .icon {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin: 3px 0; // to get to a default height of 24px
+      margin-right: 0.5rem;
+
+      svg {
+        width: 100%;
+        height: 100%;
+        vertical-align: top;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 1rem;
+        vertical-align: top;
+      }
+    }
+
+    .profileLink {
+      .loader {
+        width: 100%;
+        height: 100%;
         margin: 0;
-
-        font-weight: bold;
-
-        .logo {
-            width: 40px;
-            height: 40px;
-        }
-
-        a {
-            color: $brand-primary;
-            vertical-align: middle;
-        }
+        border-width: 4px;
+        border-color: rgba(255, 255, 255, 0.2);
+        border-left-color: white;
+      }
     }
+  }
 
-    .toggle {
-        color: white;
-    }
-
-    :global(.navbar-nav) {
-        height: 100vh;
-    }
-
-    :global(.collapsing) {
-        transition: height 0.2s ease;
-    }
+  :global(.collapsing) {
+    transition: height 0.2s ease;
+  }
 }

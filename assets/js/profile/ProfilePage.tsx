@@ -66,12 +66,11 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
   }
 
   return (
-    <>
+    <div className={styles.profilePage}>
       <Navbar page="Profile" />
-      <Container>
+      <Container className={styles.content}>
         <Row className="justify-content-center">
           <Col className={styles.centered} sm={8} md={6} lg={5} xl={5}>
-            <h4 className="mb-3">Profile</h4>
             {loading && (
               <span style={{ padding: "0 0.5rem" }}>
                 <Spinner animation="border" variant="warning" />
@@ -91,63 +90,55 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
               >
                 {({ values, setFieldValue, handleSubmit, handleChange }) => (
                   <form className="mb-3" onSubmit={handleSubmit}>
-                    <div className="d-flex">
-                      <div className="mr-5">
-                        <div className="form-group">
-                          <label htmlFor="username">Username</label>
-                          <input name="username" type="text" className="form-control" value={user.username} readOnly />
-                        </div>
-                        <div className="form-group">
-                          <label htmlFor="firstName">First name</label>
-                          <input
-                            name="firstName"
-                            type="text"
-                            className="form-control"
-                            value={values.firstName}
-                            onChange={handleChange}
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label htmlFor="lastName">Last name</label>
-                          <input
-                            name="lastName"
-                            type="text"
-                            className="form-control"
-                            value={values.lastName}
-                            onChange={handleChange}
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label htmlFor="country">Country</label>
-                          <div className="d-flex">
-                            <CountryDropdown
-                              classes="form-control mr-2"
-                              name="country"
-                              valueType="short"
-                              showDefaultOption={false}
-                              value={values.country}
-                              onChange={(value) => {
-                                console.log(value)
-                                setFieldValue("country", value)
-                              }}
-                            />
-                            <ReactCountryFlag
-                              style={{ width: "2rem", height: "2rem" }}
-                              countryCode={values.country}
-                              svg
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="form-group">
-                          <label>Avatar</label>
-                          <ImageInput
-                            value={avatarImage}
-                            onChange={handleAvatarChange(setFieldValue)}
-                            overlayDisabled={avatarImage && avatarImage.name.includes("avatar-default")}
-                          />
-                        </div>
+                    <div className="form-group">
+                      <label>Avatar</label>
+                      <ImageInput
+                        value={avatarImage}
+                        onChange={handleAvatarChange(setFieldValue)}
+                        overlayDisabled={avatarImage && avatarImage.name.includes("avatar-default")}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="username">Username</label>
+                      <input name="username" type="text" className="form-control" value={user.username} readOnly />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="firstName">First name</label>
+                      <input
+                        name="firstName"
+                        type="text"
+                        className="form-control"
+                        value={values.firstName}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="lastName">Last name</label>
+                      <input
+                        name="lastName"
+                        type="text"
+                        className="form-control"
+                        value={values.lastName}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="country">Country</label>
+                      <div className="d-flex align-items-center">
+                        <ReactCountryFlag
+                          className="mr-2"
+                          style={{ width: "2rem", height: "2rem" }}
+                          countryCode={values.country}
+                          svg
+                        />
+                        <CountryDropdown
+                          classes="form-control"
+                          name="country"
+                          valueType="short"
+                          showDefaultOption={false}
+                          value={values.country}
+                          onChange={(value) => setFieldValue("country", value)}
+                        />
                       </div>
                     </div>
                     <Button className="btn btn-dark" type="submit">
@@ -161,7 +152,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
           </Col>
         </Row>
       </Container>
-    </>
+    </div>
   )
 }
 

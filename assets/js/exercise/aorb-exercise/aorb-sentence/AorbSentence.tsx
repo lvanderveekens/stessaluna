@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react"
 import styles from "./AorbSentence.scss?module"
-import classNames from "classnames/bind"
 import { AorbChoice } from "../aorb-exercise.model"
+import classNames from "classnames/bind"
 const cx = classNames.bind(styles)
 
 interface Props {

@@ -1,7 +1,7 @@
-import { faBars } from "@fortawesome/free-solid-svg-icons"
+import { faBars, faTimes, faHome } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock"
-import React, { FC, useEffect, useState, useRef } from "react"
+import React, { FC, useEffect, useRef, useState } from "react"
 import { Nav as BootstrapNav, Navbar as BootstrapNavbar } from "react-bootstrap"
 import { connect } from "react-redux"
 import MediaQuery from "react-responsive"
@@ -12,6 +12,9 @@ import { logOut } from "../store/auth/actions"
 import { State } from "../store/configureStore"
 import User from "../user/user.interface"
 import styles from "./Navbar.scss?module"
+import { RotateSpinLoader } from "react-css-loaders"
+import classNames from "classnames/bind"
+const cx = classNames.bind(styles)
 
 interface Props {
   page: string
@@ -22,10 +25,7 @@ interface Props {
 const Navbar: FC<Props> = ({ page, user, logOut }) => {
   const [expanded, setExpanded] = useState(false)
   const navRef = useRef(null)
-
-  // if (!user) {
-  //   return <Loader className={styles.loader} type="ball-clip-rotate-multiple" active />
-  // }
+  const topBarRef = useRef(null)
 
   useEffect(() => {
     if (expanded) {
@@ -43,35 +43,52 @@ const Navbar: FC<Props> = ({ page, user, logOut }) => {
       expand="lg"
       expanded={expanded}
       onToggle={(expanded) => setExpanded(expanded)}
+      onClick={(e) => console.log()}
     >
-      <div className="d-flex align-items-center">
-        <BootstrapNavbar.Brand className={styles.brand}>
-          <Link to="/">
-            <img className={styles.logo} src={logoPath} alt="Logo" />
-            <MediaQuery query="(min-width: 768px)">
-              <span>Stessaluna</span>
-            </MediaQuery>
-          </Link>
-        </BootstrapNavbar.Brand>
-        <span className={styles.page}>{page}</span>
+      <div className={styles.topBar} ref={topBarRef}>
+        <div className="d-flex align-items-center">
+          <BootstrapNavbar.Brand className={styles.brand}>
+            <Link to="/">
+              <img className={styles.logo} src={logoPath} alt="Logo" />
+              <MediaQuery query="(min-width: 992px)">
+                <span>Stessaluna</span>
+              </MediaQuery>
+            </Link>
+          </BootstrapNavbar.Brand>
+          <span className={styles.page}>{page}</span>
+        </div>
+        <BootstrapNavbar.Toggle
+          className={styles.toggle}
+          as={CustomToggle}
+          onClick={() => console.log("CLICKED")}
+          aria-controls="responsive-navbar-nav"
+        >
+          {expanded ? (
+            <FontAwesomeIcon style={{ fontSize: "1.5rem" }} icon={faTimes} />
+          ) : (
+            <FontAwesomeIcon icon={faBars} />
+          )}
+        </BootstrapNavbar.Toggle>
       </div>
-      <BootstrapNavbar.Toggle
-        className={styles.toggle}
-        as={CustomToggle}
-        onClick={() => console.log("CLICKED")}
-        aria-controls="responsive-navbar-nav"
-      >
-        <FontAwesomeIcon icon={faBars} />
-      </BootstrapNavbar.Toggle>
       <BootstrapNavbar.Collapse id="responsive-navbar-nav">
-        <BootstrapNav className="mr-auto">
+        <BootstrapNav
+          className={cx("mr-auto", { expanded })}
+          style={expanded ? { height: `${window.innerHeight - topBarRef.current.clientHeight}px` } : {}}
+        >
           <BootstrapNav.Link as={Link} to="/">
+            <span className={styles.icon}>
+              <FontAwesomeIcon icon={faHome} />
+            </span>
             Home
           </BootstrapNav.Link>
-          <BootstrapNav.Link as={Link} to="/profile">
-            Profile
+          <BootstrapNav.Link className={styles.profileLink} as={Link} to="/profile">
+            <span className={styles.icon}>
+              {!user && <RotateSpinLoader className={styles.loader} />}
+              {user && <img className={styles.avatar} src={user.avatar} />}
+            </span>
+            {user && user.username}
           </BootstrapNav.Link>
-          <BootstrapNav.Link as={Link} to="/login" onClick={() => logOut()}>
+          <BootstrapNav.Link className="mt-auto" as={Link} to="/login" onClick={() => logOut()}>
             Log out
           </BootstrapNav.Link>
         </BootstrapNav>
