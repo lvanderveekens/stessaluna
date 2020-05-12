@@ -37,9 +37,19 @@
     }
   }
 
+  .newPostLink {
+    color: white;
+    padding: 0;
+
+    span {
+      font-size: 1.2rem;
+    }
+  }
+
   .toggle {
     color: white;
     padding: 0.25rem 1rem;
+    border: none;
 
     &:hover {
       cursor: pointer;
@@ -71,6 +81,13 @@
         &:last-child {
           margin-bottom: 1rem;
         }
+      }
+
+      .logOutLink {
+        margin-top: auto;
+        margin-right: auto;
+        margin-left: auto;
+        padding: 0;
       }
     }
 
@@ -106,12 +123,6 @@
       }
     }
 
-    .logOutLink {
-      margin-top: auto;
-      margin-right: auto;
-      margin-left: auto;
-      padding: 0;
-    }
   }
 
   :global(.collapsing) {

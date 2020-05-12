@@ -1,4 +1,4 @@
-import { faBars, faTimes, faHome } from "@fortawesome/free-solid-svg-icons"
+import { faBars, faTimes, faHome, faEdit } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock"
 import React, { FC, useEffect, useRef, useState } from "react"
@@ -57,20 +57,24 @@ const Navbar: FC<Props> = ({ page, user, logOut }) => {
           </BootstrapNavbar.Brand>
           <span className={styles.page}>{page}</span>
         </div>
-        <BootstrapNavbar.Toggle
-          className={styles.toggle}
-          as={CustomToggle}
-          onClick={() => console.log("CLICKED")}
-          aria-controls="responsive-navbar-nav"
-        >
-          {expanded ? (
-            <FontAwesomeIcon style={{ fontSize: "1.5rem" }} icon={faTimes} />
-          ) : (
-            <FontAwesomeIcon icon={faBars} />
+        <div className="d-flex align-items-center">
+          {user && !expanded && (
+            <BootstrapNav.Link className={styles.newPostLink} as={Link} to="/">
+              <span>
+                <FontAwesomeIcon icon={faEdit} />
+              </span>
+            </BootstrapNav.Link>
           )}
-        </BootstrapNavbar.Toggle>
+          <BootstrapNavbar.Toggle className={styles.toggle} as={CustomToggle} aria-controls="collapsable-nav">
+            {expanded ? (
+              <FontAwesomeIcon style={{ fontSize: "1.5rem" }} icon={faTimes} />
+            ) : (
+              <FontAwesomeIcon icon={faBars} />
+            )}
+          </BootstrapNavbar.Toggle>
+        </div>
       </div>
-      <BootstrapNavbar.Collapse id="responsive-navbar-nav">
+      <BootstrapNavbar.Collapse id="collapsable-nav">
         <BootstrapNav
           className={cx("mr-auto", { expanded })}
           style={expanded ? { height: `${window.innerHeight - topBarRef.current.clientHeight}px` } : {}}
