@@ -86,9 +86,9 @@ const Navbar: FC<Props> = ({ page, user, logOut }) => {
               {!user && <RotateSpinLoader className={styles.loader} />}
               {user && <img className={styles.avatar} src={user.avatar} />}
             </span>
-            {user && user.username}
+            Profile
           </BootstrapNav.Link>
-          <BootstrapNav.Link className="mt-auto" as={Link} to="/login" onClick={() => logOut()}>
+          <BootstrapNav.Link className={styles.logOutLink} as={Link} to="/login" onClick={() => logOut()}>
             Log out
           </BootstrapNav.Link>
         </BootstrapNav>

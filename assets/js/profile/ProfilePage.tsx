@@ -125,12 +125,6 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
                     <div className="form-group">
                       <label htmlFor="country">Country</label>
                       <div className="d-flex align-items-center">
-                        <ReactCountryFlag
-                          className="mr-2"
-                          style={{ width: "2rem", height: "2rem" }}
-                          countryCode={values.country}
-                          svg
-                        />
                         <CountryDropdown
                           classes="form-control"
                           name="country"
@@ -138,6 +132,12 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
                           showDefaultOption={false}
                           value={values.country}
                           onChange={(value) => setFieldValue("country", value)}
+                        />
+                        <ReactCountryFlag
+                          className="ml-2"
+                          style={{ width: "2rem", height: "2rem" }}
+                          countryCode={values.country}
+                          svg
                         />
                       </div>
                     </div>
