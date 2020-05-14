@@ -3,7 +3,7 @@ import WhatdoyouseeExercise from "./WhatdoyouseeExercise"
 import { submitAnswer } from "../../store/post/actions"
 import { connect } from "react-redux"
 import { WhatdoyouseeAnswer } from "../answer/answer.model"
-import { State } from "../../store/configureStore"
+import { State } from "../../store"
 import { setNestedObjectValues } from "formik"
 
 interface Props {

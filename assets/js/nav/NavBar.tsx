@@ -11,54 +11,41 @@ import { withRouter } from "react-router"
 import { Link } from "react-router-dom"
 import logoPath from "../../images/logo.svg"
 import CustomToggle from "../dropdown/CustomToggle"
-import CreatePostModal from "../post/create-post-modal/CreatePostModal"
+import { State } from "../store"
 import { logOut } from "../store/auth/actions"
-import { State } from "../store/configureStore"
 import User from "../user/user.interface"
 import styles from "./Navbar.scss?module"
 const cx = classNames.bind(styles)
 
 interface Props {
   page: string
-  history: any
   loggedIn: boolean
   user?: User
   logOut: () => void
 }
 
-const Navbar: FC<Props> = ({ page, history, loggedIn, user, logOut }) => {
+const Navbar: FC<Props> = ({ page, loggedIn, user, logOut }) => {
   const [expanded, setExpanded] = useState(false)
-  const navRef = useRef(null)
   const topBarRef = useRef(null)
-  const [showModal, setShowModal] = useState(false)
+
+  const collapsableNavElement = document.querySelector("#collapsable-nav")
 
   useEffect(() => {
     if (expanded) {
-      disableBodyScroll(navRef.current)
+      disableBodyScroll(collapsableNavElement)
     } else {
-      enableBodyScroll(navRef.current)
+      enableBodyScroll(collapsableNavElement)
     }
   }, [expanded])
-
-  const handleCreatePostClick = () => {
-    setShowModal(true)
-    // todo set url
-  }
-
-  const handleCloseModal = () => {
-    setShowModal(false)
-  }
 
   return (
     <>
       <BootstrapNavbar
         className={styles.nav}
-        ref={navRef}
         fixed="top"
         expand="lg"
         expanded={expanded}
         onToggle={(expanded) => setExpanded(expanded)}
-        onClick={(e) => console.log()}
       >
         <div className={styles.topBar} ref={topBarRef}>
           <div className="d-flex align-items-center">
@@ -74,13 +61,8 @@ const Navbar: FC<Props> = ({ page, history, loggedIn, user, logOut }) => {
           </div>
           <div className="d-flex align-items-center">
             {loggedIn && !expanded && (
-              <BootstrapNav.Link
-                className={styles.newPostLink}
-                as={Link}
-                to={{ pathname: "/create/post", state: { modal: true } }}
-                onClick={() => setShowModal(true)}
-              >
-                <span className={styles.newPostIcon} onClick={handleCreatePostClick}>
+              <BootstrapNav.Link className={styles.newPostLink} as={Link} to="/create/post">
+                <span className={styles.newPostIcon}>
                   <FontAwesomeIcon icon={faEdit} />
                 </span>
               </BootstrapNav.Link>

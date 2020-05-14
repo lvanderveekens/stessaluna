@@ -1,11 +1,24 @@
-import React, { FC, useState } from "react"
+import React, { FC } from "react"
 import { Modal } from "react-bootstrap"
+import { useHistory } from "react-router-dom"
 
-interface Props {}
+interface Props {
+  previousLocation?: Location
+}
 
-const CreatePostModal: FC<Props> = ({}) => {
+const CreatePostModal: FC<Props> = ({ previousLocation }) => {
+  const history = useHistory()
+
+  const handleHide = () => {
+    if (previousLocation) {
+      history.push(previousLocation.pathname)
+    } else {
+      history.push("/")
+    }
+  }
+
   return (
-    <Modal show keyboard centered>
+    <Modal show keyboard centered onHide={handleHide}>
       Hallo!
     </Modal>
   )

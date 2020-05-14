@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import { fetchPosts, deletePost } from "../store/post/actions"
 import moment from "moment"
 import PostInterface from "../post/post.interface"
-import { State } from "../store/configureStore"
+import { State } from "../store"
 import FeedPlaceholder from "./placeholder/FeedPlaceholder"
 import FadeIn from "react-fade-in"
 

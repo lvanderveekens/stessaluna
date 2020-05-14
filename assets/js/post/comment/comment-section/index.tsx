@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react"
 import { connect } from "react-redux"
-import { State } from "../../../store/configureStore"
+import { State } from "../../../store"
 import { addComment, deleteComment } from "../../../store/post/actions"
 import User from "../../../user/user.interface"
 import CommentInterface from "../comment.interface"

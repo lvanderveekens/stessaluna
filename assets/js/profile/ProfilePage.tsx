@@ -7,7 +7,7 @@ import { connect } from "react-redux"
 import ImageInput from "../image/image-input/ImageInput"
 import Navbar from "../nav/Navbar"
 import { updateProfile } from "../store/auth/actions"
-import { State } from "../store/configureStore"
+import { State } from "../store"
 import User from "../user/user.interface"
 import styles from "./ProfilePage.scss?module"
 
