@@ -1,24 +1,15 @@
-import React, { FC } from "react"
-import { Modal } from "react-bootstrap"
-import { useHistory } from "react-router-dom"
+import React, { FC, useEffect } from "react"
+import styles from "./CreatePostModal.scss?module"
+import Modal from "./Modal"
+import ImagePreview from "../new-post/new-post-form/image-preview/ImagePreview"
 
 interface Props {
   previousLocation?: Location
 }
 
 const CreatePostModal: FC<Props> = ({ previousLocation }) => {
-  const history = useHistory()
-
-  const handleHide = () => {
-    if (previousLocation) {
-      history.push(previousLocation.pathname)
-    } else {
-      history.push("/")
-    }
-  }
-
   return (
-    <Modal show keyboard centered onHide={handleHide}>
+    <Modal className={styles.createPostModal} previousLocation={previousLocation}>
       Hallo!
     </Modal>
   )

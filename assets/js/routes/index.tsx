@@ -13,14 +13,12 @@ import PrivateRoute from "./PrivateRoute"
 const Routes: FC = () => {
   const history = useHistory()
 
-  console.log(history)
-
   const location = useLocation()
   const previousLocation = usePrevious(location)
 
   const getLocation = () => {
     if (location.pathname === "/create/post") {
-      if (previousLocation) {
+      if (previousLocation && previousLocation.pathname !== "/create/post") {
         return previousLocation
       } else {
         return { ...location, pathname: "/" }

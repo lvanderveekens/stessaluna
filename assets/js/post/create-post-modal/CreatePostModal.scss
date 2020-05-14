@@ -1,0 +1,12 @@
+.createPostModal {
+    :global(.modal-dialog) {
+        margin: 0;
+        padding: 0.5rem;
+
+        height: 100%;
+
+        :global(.modal-content) {
+            height: 100%;
+        }
+    }
+}

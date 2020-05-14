@@ -62,7 +62,7 @@ const Navbar: FC<Props> = ({ page, loggedIn, user, logOut }) => {
           <div className="d-flex align-items-center">
             {loggedIn && !expanded && (
               <BootstrapNav.Link className={styles.newPostLink} as={Link} to="/create/post">
-                <span className={styles.newPostIcon}>
+                <span className={styles.createPostIcon}>
                   <FontAwesomeIcon icon={faEdit} />
                 </span>
               </BootstrapNav.Link>

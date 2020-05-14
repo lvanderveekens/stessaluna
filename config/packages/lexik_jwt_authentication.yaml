@@ -1,19 +1,18 @@
 lexik_jwt_authentication:
-    secret_key:  '%env(resolve:JWT_SECRET_KEY)%'
-    public_key:  '%env(resolve:JWT_PUBLIC_KEY)%'
-    pass_phrase: '%env(JWT_PASSPHRASE)%'
-    
-    # an hour in seconds
-    token_ttl:   3600
+  secret_key: "%env(resolve:JWT_SECRET_KEY)%"
+  public_key: "%env(resolve:JWT_PUBLIC_KEY)%"
+  pass_phrase: "%env(JWT_PASSPHRASE)%"
 
-    token_extractors:
-        # look for a token as Authorization Header
-        authorization_header:
-            enabled: true
-            prefix:  Bearer
-            name:    Authorization
+  token_ttl: 3600 # 1 hour
 
-        # check token in a cookie
-        cookie:
-            enabled: true 
-            name:    access_token
+  token_extractors:
+    # look for a token as Authorization Header
+    authorization_header:
+      enabled: true
+      prefix: Bearer
+      name: Authorization
+
+    # check token in a cookie
+    cookie:
+      enabled: true
+      name: access_token
