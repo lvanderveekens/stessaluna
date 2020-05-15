@@ -1,6 +1,6 @@
 import React, { FC, useRef, useEffect } from "react"
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock"
-import styles from "./Model.scss?module"
+import styles from "./Modal.scss?module"
 import { useHistory } from "react-router-dom"
 
 interface Props {
@@ -31,7 +31,6 @@ const Modal: FC<Props> = ({ previousLocation, children }) => {
   }
 
   const onKeyDown = (e) => {
-    e.preventDefault()
     if (e.key === "Escape") {
       close()
     }
@@ -39,8 +38,10 @@ const Modal: FC<Props> = ({ previousLocation, children }) => {
 
   return (
     <div ref={myRef} className={styles.modalWrapper} tabIndex={0} onKeyDown={onKeyDown} onClick={close}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        {children}
+      <div className={styles.anotherWrapper}>
+        <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+          {children}
+        </div>
       </div>
     </div>
   )

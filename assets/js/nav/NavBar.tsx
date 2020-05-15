@@ -28,6 +28,10 @@ const Navbar: FC<Props> = ({ page, loggedIn, user, logOut }) => {
   const [expanded, setExpanded] = useState(false)
   const topBarRef = useRef(null)
 
+  useEffect(() => {
+    document.body.style.paddingTop = `${topBarRef.current.clientHeight}px`
+  }, [])
+
   const collapsableNavElement = document.querySelector("#collapsable-nav")
 
   useEffect(() => {
@@ -47,7 +51,7 @@ const Navbar: FC<Props> = ({ page, loggedIn, user, logOut }) => {
         expanded={expanded}
         onToggle={(expanded) => setExpanded(expanded)}
       >
-        <div className={styles.topBar} ref={topBarRef}>
+        <div id="top-bar" className={styles.topBar} ref={topBarRef}>
           <div className="d-flex align-items-center">
             <BootstrapNavbar.Brand className={styles.brand}>
               <Link to="/">

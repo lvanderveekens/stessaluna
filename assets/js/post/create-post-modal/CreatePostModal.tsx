@@ -1,7 +1,7 @@
-import React, { FC, useEffect } from "react"
+import React, { FC } from "react"
 import styles from "./CreatePostModal.scss?module"
-import Modal from "./Modal"
-import ImagePreview from "../new-post/new-post-form/image-preview/ImagePreview"
+import Modal from "../../modal/Modal"
+import { Container, Row, Col } from "react-bootstrap"
 
 interface Props {
   previousLocation?: Location
@@ -10,7 +10,13 @@ interface Props {
 const CreatePostModal: FC<Props> = ({ previousLocation }) => {
   return (
     <Modal className={styles.createPostModal} previousLocation={previousLocation}>
-      Hallo!
+      {/* <Container className={styles.content}>
+        <Row className="justify-content-center"> */}
+      <Col md={6} lg={6} xl={5}>
+        Hallo!
+      </Col>
+      {/* </Row>
+      </Container> */}
     </Modal>
   )
 }
