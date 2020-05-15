@@ -152,15 +152,11 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
                   <Dropdown.Item onClick={() => setExerciseType(ExerciseType.MISSING_WORD)}>Missing word</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <button
-                className={styles.submitButton}
-                type="submit"
-                disabled={allNull(values) || !isValid || isSubmitting}
-              >
-                Create
-              </button>
             </div>
           </div>
+          <button className={styles.submitButton} type="submit" disabled={allNull(values) || !isValid || isSubmitting}>
+            Create
+          </button>
           {submitError && <div className="alert alert-danger">Something went wrong. Please try again later.</div>}
           {/* <div>{JSON.stringify(errors)}</div> */}
         </Form>

@@ -36,7 +36,7 @@ const Routes: FC = () => {
         <Route exact path="/register" component={RegistrationPage} />
         <Route component={NotFoundPage} />
       </Switch>
-      <Route
+      <PrivateRoute
         exact
         path="/create/post"
         render={(props) => <CreatePostModal {...props} previousLocation={previousLocation} />}
