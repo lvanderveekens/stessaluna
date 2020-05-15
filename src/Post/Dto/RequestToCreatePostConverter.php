@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Stessaluna\Post\Dto;
 
+use Psr\Log\LoggerInterface;
 use Stessaluna\Exercise\Aorb\Dto\AorbChoiceDto;
 use Stessaluna\Exercise\Aorb\Dto\AorbSentenceDto;
 use Stessaluna\Exercise\Aorb\Dto\CreateAorbExercise;

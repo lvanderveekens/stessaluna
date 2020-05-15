@@ -1,19 +1,17 @@
 import React, { FC, useRef, useEffect } from "react"
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock"
 import styles from "./Modal.scss?module"
-import { useHistory } from "react-router-dom"
 import { faTimes } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 interface Props {
   title: string
-  previousLocation: Location
+  onClose: () => void
   children: any
 }
-// TODO: move later
-const Modal: FC<Props> = ({ title, previousLocation, children }) => {
+
+const Modal: FC<Props> = ({ title, onClose, children }) => {
   const modalWrapperRef = useRef(null)
-  const history = useHistory()
 
   useEffect(() => {
     disableBodyScroll(modalWrapperRef.current)
@@ -23,27 +21,18 @@ const Modal: FC<Props> = ({ title, previousLocation, children }) => {
     }
   }, [])
 
-  const close = () => {
-    console.log("ON CLICK")
-    if (previousLocation) {
-      history.push(previousLocation.pathname)
-    } else {
-      history.push("/")
-    }
-  }
-
   const onKeyDown = (e) => {
     if (e.key === "Escape") {
-      close()
+      onClose()
     }
   }
 
   return (
-    <div ref={modalWrapperRef} className={styles.modalWrapper} tabIndex={0} onKeyDown={onKeyDown} onClick={close}>
+    <div ref={modalWrapperRef} className={styles.modalWrapper} tabIndex={0} onKeyDown={onKeyDown} onClick={onClose}>
       <div className={`${styles.modal} animated fadeIn`} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
           <span>{title}</span>
-          <span className={styles.closeIcon} onClick={close}>
+          <span className={styles.closeIcon} onClick={onClose}>
             <FontAwesomeIcon icon={faTimes} />
           </span>
         </div>

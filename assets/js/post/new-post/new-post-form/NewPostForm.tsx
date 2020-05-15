@@ -16,7 +16,6 @@ import WhatdoyouseeExerciseInput from "../exercise-input/whatdoyousee-exercise-i
 import MissingwordExerciseInput from "../exercise-input/missingword-exercise-input/MissingwordExerciseInput"
 
 interface Props {
-  user: User
   onSubmit: (text?: string, image?: File, exercise?: ExerciseInputValue) => Promise<void>
 }
 
@@ -26,7 +25,7 @@ interface Values {
   exercise?: ExerciseInputValue
 }
 
-const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
+const NewPostForm: FC<Props> = ({ onSubmit }) => {
   const fileInput = useRef(null)
   const [imageUrl, setImageUrl] = useState(null)
   const [submitError, setSubmitError] = useState(false)
@@ -111,7 +110,7 @@ const NewPostForm: FC<Props> = ({ user, onSubmit }) => {
               type="text"
               name="text"
               value={values.text || ""}
-              placeholder={user && `What's new, ${user.username}?`}
+              placeholder="What's new?"
               onChange={handleChangeText(setFieldValue)}
             />
             <Form.Control

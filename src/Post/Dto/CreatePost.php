@@ -9,9 +9,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CreatePost
 {
-    public ?string $text;
+    public ?string $text = null;
 
-    public ?UploadedFile $image;
+    public ?UploadedFile $image = null;
 
-    public ?CreateExercise $exercise;
+    public ?CreateExercise $exercise = null;
 }
