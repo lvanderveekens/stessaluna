@@ -5,8 +5,6 @@ import Navbar from "../nav/Navbar"
 import styles from "./HomePage.scss?module"
 
 const HomePage = () => {
-  const topBar = document.querySelector("#top-bar")
-
   return (
     <div className={styles.homePage}>
       <Navbar page="Home" />

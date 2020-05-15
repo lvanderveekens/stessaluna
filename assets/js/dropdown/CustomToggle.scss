@@ -1,0 +1,6 @@
+.customToggle {
+
+    &:global(.dropdown-toggle)::after {
+        display: none;
+    }
+}

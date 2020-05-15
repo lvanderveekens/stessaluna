@@ -1,4 +1,5 @@
-import React from "react"
+import React, { FC } from "react"
+import styles from "./CustomToggle.scss?module"
 
 interface Props {
   className?: string
@@ -6,11 +7,12 @@ interface Props {
   onClick?: Function
 }
 
-const CustomToggle = React.forwardRef(({ className, children, onClick }: Props, ref: React.Ref<HTMLSpanElement>) => {
+const CustomToggle: FC<Props> = ({ className, children, onClick }, ref: React.Ref<HTMLSpanElement>) => {
   return (
     <span
       ref={ref}
-      className={className}
+      // TOOD: when this is needed, override the .dropdown-toggle:after first to get rid of the caret
+      className={`${styles.customToggle} ${className}`}
       onClick={(e) => {
         e.preventDefault()
         onClick(e)
@@ -19,6 +21,6 @@ const CustomToggle = React.forwardRef(({ className, children, onClick }: Props, 
       {children}
     </span>
   )
-})
+}
 
-export default CustomToggle
+export default React.forwardRef(CustomToggle)

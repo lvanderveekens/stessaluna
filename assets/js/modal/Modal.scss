@@ -50,17 +50,14 @@
             .closeIcon {
                 position: relative;
 
-                &:after {
+                &::after {
                     // increase clickable area without changing layout
                     content: "";
                     padding: 1rem;
                     position: absolute;
-                    // top: 0;
-                    // left: 0;
                     left: 50%;
                     top: 50%;
                     transform: translate(-50%, -50%);
-
                 }
 
                 &:hover {
