@@ -2,14 +2,16 @@ import React, { FC, useRef, useEffect } from "react"
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock"
 import styles from "./Modal.scss?module"
 import { useHistory } from "react-router-dom"
+import { faTimes } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 interface Props {
-  className?: string
+  title: string
   previousLocation: Location
   children: any
 }
 // TODO: move later
-const Modal: FC<Props> = ({ previousLocation, children }) => {
+const Modal: FC<Props> = ({ title, previousLocation, children }) => {
   const myRef = useRef(null)
   const history = useHistory()
 
@@ -38,10 +40,14 @@ const Modal: FC<Props> = ({ previousLocation, children }) => {
 
   return (
     <div ref={myRef} className={styles.modalWrapper} tabIndex={0} onKeyDown={onKeyDown} onClick={close}>
-      <div className={styles.anotherWrapper}>
-        <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-          {children}
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <div className={styles.header}>
+          <span>{title}</span>
+          <span className={styles.closeIcon} onClick={close}>
+            <FontAwesomeIcon icon={faTimes} />
+          </span>
         </div>
+        <div className={styles.content}>{children}</div>
       </div>
     </div>
   )
