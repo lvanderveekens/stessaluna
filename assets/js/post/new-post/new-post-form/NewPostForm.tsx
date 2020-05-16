@@ -14,6 +14,7 @@ import CustomToggle from "../../../dropdown/CustomToggle"
 import { ExerciseType } from "../../../exercise/exercise.model"
 import WhatdoyouseeExerciseInput from "../exercise-input/whatdoyousee-exercise-input/WhatdoyouseeExerciseInput"
 import MissingwordExerciseInput from "../exercise-input/missingword-exercise-input/MissingwordExerciseInput"
+import Button from "../../../button/Button"
 
 interface Props {
   onSubmit: (text?: string, image?: File, exercise?: ExerciseInputValue) => Promise<void>
@@ -153,9 +154,9 @@ const NewPostForm: FC<Props> = ({ onSubmit }) => {
               </Dropdown>
             </div>
           </div>
-          <button className={styles.submitButton} type="submit" disabled={allNull(values) || !isValid || isSubmitting}>
+          <Button className={styles.submitButton} type="submit" disabled={allNull(values) || !isValid || isSubmitting}>
             Create
-          </button>
+          </Button>
           {submitError && <div className="alert alert-danger">Something went wrong. Please try again later.</div>}
           {/* <div>{JSON.stringify(errors)}</div> */}
         </Form>

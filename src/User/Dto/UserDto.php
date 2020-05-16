@@ -8,9 +8,7 @@ class UserDto
 
     public string $username;
 
-    public ?string $firstName;
-
-    public ?string $lastName;
+    public ?string $displayName;
 
     public string $country;
 

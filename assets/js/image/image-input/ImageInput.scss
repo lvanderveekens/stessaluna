@@ -4,8 +4,26 @@
     height: 100px;
     border: 1px solid #ced4da;
     background-color: #f5f5f5;
-    border-radius: 0.5rem;
+
     overflow: hidden;
+
+    &.square {
+        border-radius: 0.5rem;
+
+        .deleteIcon {
+            top: 0.1rem;
+            right: 0.3rem;
+        }
+    }
+
+    &.circle {
+        border-radius: 3rem;
+
+        .deleteIcon {
+            top: 15px;
+            right: 15px;
+        }
+    }
 
     .imagePreview {
 
@@ -38,9 +56,6 @@
 
         .deleteIcon {
             position: absolute;
-            top: 0.1rem;
-            right: 0.3rem;
-
             font-size: 1.3rem;
 
             &:hover {

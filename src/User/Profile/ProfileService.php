@@ -20,14 +20,12 @@ class ProfileService
 
     public function updateProfile(
         User $user,
-        ?string $firstName,
-        ?string $lastName,
+        ?string $displayName,
         string $country,
         bool $resetAvatar,
         ?UploadedFile $avatar
     ): User {
-        $user->setFirstName($firstName);
-        $user->setLastName($lastName);
+        $user->setDisplayName($displayName);
         $user->setCountry($country);
         if ($resetAvatar) {
             $this->resetAvatar($user);

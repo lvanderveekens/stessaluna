@@ -35,8 +35,7 @@ class ProfileController extends AbstractController
     {
         $updatedUser = $this->profileService->updateProfile(
             $this->getUser(),
-            $request->get('firstName'),
-            $request->get('lastName'),
+            $request->get('displayName'),
             $request->get('country'),
             $request->get('resetAvatar') === 'true',
             $request->files->get('avatar')

@@ -1,6 +1,6 @@
 import { Formik } from "formik"
 import React, { FC, useEffect, useState } from "react"
-import { Button, Col, Container, Row, Spinner } from "react-bootstrap"
+import { Col, Container, Row, Spinner } from "react-bootstrap"
 import ReactCountryFlag from "react-country-flag"
 import { CountryDropdown } from "react-country-region-selector"
 import { connect } from "react-redux"
@@ -10,17 +10,12 @@ import { updateProfile } from "../store/auth/actions"
 import { State } from "../store"
 import User from "../user/user.interface"
 import styles from "./ProfilePage.scss?module"
+import Button from "../button/Button"
 
 interface Props {
   loading: boolean
   user?: User
-  updateProfile: (
-    firstName: string,
-    lastName: string,
-    country: string,
-    resetAvatar: boolean,
-    avatar?: File
-  ) => Promise<void>
+  updateProfile: (country: string, resetAvatar: boolean, avatar?: File, displayName?: string) => Promise<void>
 }
 
 const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
@@ -54,10 +49,10 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
   }
 
   const handleSubmit = (values, { resetForm }) => {
-    const { firstName, lastName, country, avatar } = values
+    const { displayName, country, avatar } = values
     setFeedbackMessage(null)
 
-    updateProfile(firstName, lastName, country, resetAvatar, avatar)
+    updateProfile(country, resetAvatar, avatar, displayName)
       .then(() => {
         setFeedbackMessage("Saved")
         resetForm()
@@ -80,8 +75,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
               // TODO: move into separate form component
               <Formik
                 initialValues={{
-                  firstName: user.firstName || "",
-                  lastName: user.lastName || "",
+                  displayName: user.displayName || "",
                   country: user.country || "",
                   avatar: null,
                 }}
@@ -90,35 +84,21 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
               >
                 {({ values, setFieldValue, handleSubmit, handleChange }) => (
                   <form className="mb-3" onSubmit={handleSubmit}>
+                    <ImageInput
+                      className={styles.imageInput}
+                      value={avatarImage}
+                      onChange={handleAvatarChange(setFieldValue)}
+                      shape="circle"
+                      overlayDisabled={avatarImage && avatarImage.name.includes("avatar-default")}
+                    />
+                    <div className={styles.username}>@{user.username}</div>
                     <div className="form-group">
-                      <label>Avatar</label>
-                      <ImageInput
-                        value={avatarImage}
-                        onChange={handleAvatarChange(setFieldValue)}
-                        overlayDisabled={avatarImage && avatarImage.name.includes("avatar-default")}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="username">Username</label>
-                      <input name="username" type="text" className="form-control" value={user.username} readOnly />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="firstName">First name</label>
+                      <label htmlFor="displayName">Display name (optional)</label>
                       <input
-                        name="firstName"
+                        name="displayName"
                         type="text"
                         className="form-control"
-                        value={values.firstName}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="lastName">Last name</label>
-                      <input
-                        name="lastName"
-                        type="text"
-                        className="form-control"
-                        value={values.lastName}
+                        value={values.displayName}
                         onChange={handleChange}
                       />
                     </div>
@@ -141,7 +121,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
                         />
                       </div>
                     </div>
-                    <Button className="btn btn-dark" type="submit">
+                    <Button className={styles.saveButton} type="submit">
                       Save
                     </Button>
                   </form>

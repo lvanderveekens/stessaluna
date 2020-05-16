@@ -1,0 +1,20 @@
+@import '../../css/colors';
+
+.button {
+    padding: 0.3rem 0.7rem;
+
+    color: $brand-primary;
+    background: $brand-secondary;
+
+    border: none;
+    border-radius: 0.5rem;
+    outline: none;
+
+    &:enabled:hover {
+        background-color: black;
+    }
+
+    &:disabled {
+        opacity: .65;
+    }
+}

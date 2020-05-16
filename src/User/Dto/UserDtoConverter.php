@@ -23,8 +23,7 @@ class UserDtoConverter
         $dto = new UserDto();
         $dto->id = $user->getId();
         $dto->username = $user->getUsername();
-        $dto->firstName = $user->getFirstName();
-        $dto->lastName = $user->getLastName();
+        $dto->displayName = $user->getDisplayName();
         $dto->country = $user->getCountry();
 
         if ($user->getAvatarFilename()) {
