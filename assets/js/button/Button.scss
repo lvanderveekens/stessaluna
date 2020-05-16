@@ -2,17 +2,28 @@
 
 .button {
     padding: 0.3rem 0.7rem;
+    color: white;
 
-    color: $brand-primary;
-    background: $brand-secondary;
+    &.dark {
+        background: $brand-secondary;
+
+        &:enabled:hover {
+            background-color: black;
+        }
+    }
+
+    &.light {
+        background: $brand-light;
+
+        &:enabled:hover {
+            background-color: #2400a7;
+        }
+    }
+
 
     border: none;
     border-radius: 0.5rem;
     outline: none;
-
-    &:enabled:hover {
-        background-color: black;
-    }
 
     &:disabled {
         opacity: .65;

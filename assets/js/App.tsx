@@ -8,6 +8,7 @@ import history from "./history/history"
 import Routes from "./routes"
 import { State } from "./store"
 import { fetchUser } from "./store/auth/actions"
+import styles from "./App.scss?module"
 
 interface Props {
   loggedIn: boolean
@@ -22,7 +23,7 @@ const App: FC<Props> = ({ loggedIn, fetchUser }) => {
   }, [])
 
   return (
-    <>
+    <div className={styles.app}>
       <Helmet>
         <title>Stessaluna</title>
         <meta charSet="utf-8" />
@@ -31,7 +32,7 @@ const App: FC<Props> = ({ loggedIn, fetchUser }) => {
       <Router history={history}>
         <Routes />
       </Router>
-    </>
+    </div>
   )
 }
 

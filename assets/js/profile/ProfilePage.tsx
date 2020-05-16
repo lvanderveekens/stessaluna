@@ -121,7 +121,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
                         />
                       </div>
                     </div>
-                    <Button className={styles.saveButton} type="submit">
+                    <Button className={styles.saveButton} type="submit" variant="light">
                       Save
                     </Button>
                   </form>
