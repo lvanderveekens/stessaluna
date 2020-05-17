@@ -39,8 +39,9 @@ class PostToPostDtoConverter
         $dto->id = $post->getId();
         $dto->createdAt = $post->getCreatedAt();
         $dto->author = $this->userDtoConverter->toDto($post->getAuthor());
-
         $dto->text = $post->getText();
+        $dto->channel = $post->getChannel();
+        
         if ($post->getImageFilename()) {
             $dto->image = $this->imageStorage->getRelativePath($post->getImageFilename());
         }

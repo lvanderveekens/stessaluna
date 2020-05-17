@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CreatePost
 {
+    public string $channel;
+
     public ?string $text = null;
 
     public ?UploadedFile $image = null;

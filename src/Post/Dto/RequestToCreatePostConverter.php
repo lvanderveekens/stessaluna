@@ -21,6 +21,7 @@ class RequestToCreatePostConverter
     public static function convert(Request $request): CreatePost
     {
         $createPost = new CreatePost();
+        $createPost->channel = $request->get('channel');
         $createPost->text = $request->get('text');
         $createPost->image = $request->files->get('image');
         if ($request->get('exercise')) {

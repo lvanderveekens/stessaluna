@@ -7,6 +7,7 @@ export interface Post {
   type: string
   createdAt: Date
   author: User
+  channel: string
   text?: string
   image?: string
   exercise?: Exercise

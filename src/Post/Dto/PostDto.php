@@ -16,6 +16,8 @@ class PostDto
     public DateTimeInterface $createdAt;
 
     public UserDto $author;
+    
+    public string $channel;
 
     public ?string $text = null;
 

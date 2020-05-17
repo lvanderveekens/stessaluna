@@ -21,6 +21,7 @@ interface Props {
   id: number
   author: User
   timestamp: string
+  channel: string
   text?: string
   image?: string
   exercise?: Exercise
@@ -29,7 +30,18 @@ interface Props {
   user: User
 }
 
-const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, exercise, comments, onDelete, user }) => {
+const Post: FunctionComponent<Props> = ({
+  id,
+  author,
+  timestamp,
+  channel,
+  text,
+  image,
+  exercise,
+  comments,
+  onDelete,
+  user,
+}) => {
   const [showComments, setShowComments] = useState(false)
   // TODO: this is here in order to keep state when comment section is unmounted... is there a better way?
   const [showAllComments, setShowAllComments] = useState(false)
@@ -87,6 +99,9 @@ const Post: FunctionComponent<Props> = ({ id, author, timestamp, text, image, ex
             </div>
             <div className={styles.usernameTimestampWrapper}>
               <div>{renderUserName()}</div>
+              <div className={styles.channelWrapper}>
+                in <span className={styles.channel}>{channel}</span>
+              </div>
               <span className={styles.timestamp}>{timestamp}</span>
             </div>
             {user.id == author.id && (

@@ -33,6 +33,11 @@ class Post
     private User $author;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private string $channel;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private ?string $text = null;
@@ -84,6 +89,17 @@ class Post
     {
         $this->author = $author;
 
+        return $this;
+    }
+
+    public function getChannel(): ?string
+    {
+        return $this->channel;
+    }
+
+    public function setChannel(?string $channel): self
+    {
+        $this->channel = $channel;
         return $this;
     }
 

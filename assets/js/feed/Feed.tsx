@@ -34,6 +34,7 @@ const Feed: FunctionComponent<Props> = ({ loading, posts, fetchPosts, deletePost
               id={post.id}
               timestamp={moment(post.createdAt).fromNow()}
               author={post.author}
+              channel={post.channel}
               text={post.text}
               image={post.image}
               exercise={post.exercise}

@@ -35,6 +35,7 @@ class CreatePostToPostConverter
         $post = new Post();
         $post->setAuthor($user);
         $post->setCreatedAt(new DateTime('now'));
+        $post->setChannel($createPost->channel);
         $post->setText($createPost->text);
 
         if ($createPost->image) {

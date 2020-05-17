@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Formik } from "formik"
 import React, { ChangeEvent, FC, useRef, useState } from "react"
 import { Dropdown, Form } from "react-bootstrap"
+import ReactCountryFlag from "react-country-flag"
 import TextareaAutosize from "react-textarea-autosize"
 import Button from "../../../button/Button"
 import CustomToggle from "../../../dropdown/custom-toggle/CustomToggle"
 import { ExerciseType } from "../../../exercise/exercise.model"
+import LanguageSelect from "../../../language/language-select/LanguageSelect"
 import AorbExerciseInput from "../exercise-input/aorb-exercise-input/AorbExerciseInput"
 import ExerciseInputValue from "../exercise-input/exercise-input.model"
 import MissingwordExerciseInput from "../exercise-input/missingword-exercise-input/MissingwordExerciseInput"
@@ -14,7 +16,6 @@ import WhatdoyouseeExerciseInput from "../exercise-input/whatdoyousee-exercise-i
 import { schema } from "./create-post-form.schema"
 import styles from "./CreatePostForm.scss?module"
 import ImagePreview from "./image-preview/ImagePreview"
-import LanguageSelect from "../../../select/language-select/LanguageSelect"
 
 interface Props {
   onSubmit: (channel: string, text?: string, image?: File, exercise?: ExerciseInputValue) => Promise<void>
@@ -65,7 +66,7 @@ const CreatePostForm: FC<Props> = ({ onSubmit }) => {
     setFieldValue("exercise", null)
   }
 
-  const handleSubmit = ({ channel, text, image, exercise }: Values, resetForm) => {
+  const handleSubmit = ({ channel, text, image, exercise }: Values, { setSubmitting, resetForm }) => {
     setSubmitError(false)
 
     onSubmit(channel, text, image, exercise)
@@ -77,11 +78,12 @@ const CreatePostForm: FC<Props> = ({ onSubmit }) => {
       .catch((e) => {
         console.log(e)
         setSubmitError(true)
+        setSubmitting(false)
       })
   }
 
-  const allNull = ({ text, image, exercise }: Values) => {
-    return text === null && image === null && exercise === null
+  const allNull = (...values) => {
+    return values.every((element) => element === null)
   }
 
   const renderExerciseInput = (setFieldValue) => {
@@ -101,7 +103,7 @@ const CreatePostForm: FC<Props> = ({ onSubmit }) => {
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={(values, { resetForm }) => handleSubmit({ ...values }, resetForm)}
+      onSubmit={(values, { setSubmitting, resetForm }) => handleSubmit({ ...values }, { setSubmitting, resetForm })}
       initialValues={{ channel: null, text: null, image: null, exercise: null } as Values}
     >
       {({ handleSubmit, setFieldValue, values, isValid, isSubmitting, errors }) => (
@@ -113,6 +115,7 @@ const CreatePostForm: FC<Props> = ({ onSubmit }) => {
               name="channel"
               placeholder="Select channel"
               value={values.channel}
+              valueType="long"
               onChange={(value) => setFieldValue("channel", value)}
             />
           </div>
@@ -165,7 +168,11 @@ const CreatePostForm: FC<Props> = ({ onSubmit }) => {
               </Dropdown>
             </div>
           </div>
-          <Button className={styles.submitButton} type="submit" disabled={allNull(values) || !isValid || isSubmitting}>
+          <Button
+            className={styles.submitButton}
+            type="submit"
+            disabled={allNull(values.text, values.image, values.exercise) || !isValid || isSubmitting}
+          >
             Post
           </Button>
           {submitError && <div className="alert alert-danger">Something went wrong. Please try again later.</div>}
