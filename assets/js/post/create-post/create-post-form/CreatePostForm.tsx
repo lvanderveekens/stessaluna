@@ -16,6 +16,7 @@ import WhatdoyouseeExerciseInput from "../exercise-input/whatdoyousee-exercise-i
 import { schema } from "./create-post-form.schema"
 import styles from "./CreatePostForm.scss?module"
 import ImagePreview from "./image-preview/ImagePreview"
+import { getCountryCode } from "../../../country/get-country-code"
 
 interface Props {
   onSubmit: (channel: string, text?: string, image?: File, exercise?: ExerciseInputValue) => Promise<void>
@@ -99,7 +100,6 @@ const CreatePostForm: FC<Props> = ({ onSubmit }) => {
         throw new Error(`Cannot render unsupported exercise type: ${exerciseType}`)
     }
   }
-
   return (
     <Formik
       validationSchema={schema}
@@ -115,9 +115,11 @@ const CreatePostForm: FC<Props> = ({ onSubmit }) => {
               name="channel"
               placeholder="Select channel"
               value={values.channel}
-              valueType="long"
               onChange={(value) => setFieldValue("channel", value)}
             />
+            {values.channel && getCountryCode(values.channel) && (
+              <ReactCountryFlag className={styles.countryFlag} countryCode={getCountryCode(values.channel)} svg />
+            )}
           </div>
           <div className={styles.wrapper}>
             <TextareaAutosize

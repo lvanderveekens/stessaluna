@@ -1,21 +1,25 @@
-import React, { useState, FunctionComponent, useEffect } from "react"
-import styles from "./Post.scss?module"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCommentAlt } from "@fortawesome/free-regular-svg-icons"
-import { connect } from "react-redux"
-import { addComment } from "../store/post/actions"
-import CommentSection from "./comment/comment-section"
-import User from "../user/user.interface"
-import { Dropdown } from "react-bootstrap"
-import CustomToggle from "../dropdown/custom-toggle/CustomToggle"
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons"
-import Avatar from "../user/avatar/Avatar"
-import Exercise, { ExerciseType } from "../exercise/exercise.model"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import React, { FunctionComponent, useEffect, useState } from "react"
+import { Dropdown } from "react-bootstrap"
+import ReactCountryFlag from "react-country-flag"
+import { connect } from "react-redux"
+import CustomToggle from "../dropdown/custom-toggle/CustomToggle"
 import AorbExercise from "../exercise/aorb-exercise"
-import Text from "./text/Text"
-import WhatdoyouseeExercise from "../exercise/whatdoyousee-exercise"
-import MissingwordExercise from "../exercise/missingword-exercise"
 import { isAnswered } from "../exercise/exercise.helper"
+import Exercise, { ExerciseType } from "../exercise/exercise.model"
+import MissingwordExercise from "../exercise/missingword-exercise"
+import WhatdoyouseeExercise from "../exercise/whatdoyousee-exercise"
+import { addComment } from "../store/post/actions"
+import Avatar from "../user/avatar/Avatar"
+import User from "../user/user.interface"
+import CommentSection from "./comment/comment-section"
+import styles from "./Post.scss?module"
+import Text from "./text/Text"
+import { getCountryCode } from "../country/get-country-code"
+import ISO6391 from "iso-639-1"
+const CountryLanguage = require("country-language")
 
 interface Props {
   id: number
@@ -100,7 +104,10 @@ const Post: FunctionComponent<Props> = ({
             <div className={styles.usernameTimestampWrapper}>
               <div>{renderUserName()}</div>
               <div className={styles.channelWrapper}>
-                in <span className={styles.channel}>{channel}</span>
+                in <span className={styles.channel}>{ISO6391.getName(channel)}</span>&nbsp;
+                {getCountryCode(channel) && (
+                  <ReactCountryFlag className={styles.countryFlag} countryCode={getCountryCode(channel)} svg />
+                )}
               </div>
               <span className={styles.timestamp}>{timestamp}</span>
             </div>

@@ -19,8 +19,8 @@ const LanguageSelect: FC<Props> = ({
   valueType = "short",
 }) => {
   return (
-    <select className={className} id={name} value={value} onChange={(e) => onChange(e.currentTarget.value)}>
-      <option value="" disabled selected>
+    <select className={className} id={name} value={value || ""} onChange={(e) => onChange(e.currentTarget.value)}>
+      <option value="" disabled>
         {placeholder}
       </option>
       {ISO6391.getLanguages(ISO6391.getAllCodes())

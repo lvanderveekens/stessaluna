@@ -1,7 +1,6 @@
 @import "../../css/colors";
 
 .post {
-
     border: 1px solid #ced4da;
     border-radius: 0.5rem;
     margin-bottom: 15px;
@@ -44,10 +43,16 @@
                     .channel {
                         color: black;
                     }
+
+                    .countryFlag {
+                        border: 1px solid #ced4da;
+                        width: 18px !important;
+                        height: auto !important;
+                    }
                 }
 
                 .fullName {
-                    margin-right: 0.3rem
+                    margin-right: 0.3rem;
                 }
 
                 .usernameAfterFullName {
@@ -55,7 +60,6 @@
                     font-size: 0.9rem;
                 }
             }
-
         }
 
         .image {
@@ -68,9 +72,8 @@
         .deleteButton:hover {
             cursor: hand;
             cursor: pointer;
-            opacity: .6;
+            opacity: 0.6;
         }
-
     }
 
     .activity {
@@ -79,7 +82,7 @@
 
         padding: 0 1rem 0.5rem 1rem;
 
-        &>div {
+        & > div {
             margin-left: 0.8rem;
             // font-size: 0.7rem;
             color: grey;
@@ -113,7 +116,6 @@
                 svg {
                     vertical-align: -0.18rem;
                 }
-
             }
         }
     }

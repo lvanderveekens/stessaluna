@@ -1,104 +1,107 @@
-@import '../../../../css/colors';
+@import "../../../../css/colors";
 
 .createPostForm {
+  .channelWrapper {
+    margin-bottom: 1rem;
 
-    .channelWrapper {
-        margin-bottom: 1rem;
-
-        label {
-            margin-right: 0.5rem;
-        }
-
-        .channelSelect {
-            display: inline-block;
-            width: auto;
-        }
+    label {
+      margin-right: 0.5rem;
     }
 
-    .wrapper {
-        border: 1px solid #ced4da;
-        border-radius: 0.5rem;
-
-        margin-bottom: 1rem;
+    .channelSelect {
+      display: inline-block;
+      width: auto;
+      margin-right: 0.5rem;
     }
 
-    .textInput {
-        border: none;
-        border-radius: 0.5rem;
-        resize: none;
-        padding: 1rem;
-        margin: 0;
-        width: 100%;
+    .countryFlag {
+      border: 1px solid #ced4da;
+      width: auto !important;
+      height: 28px !important;
+    }
+  }
 
-        &:focus {
-            box-shadow: none;
-        }
+  .wrapper {
+    border: 1px solid #ced4da;
+    border-radius: 0.5rem;
+
+    margin-bottom: 1rem;
+  }
+
+  .textInput {
+    border: none;
+    border-radius: 0.5rem;
+    resize: none;
+    padding: 1rem;
+    margin: 0;
+    width: 100%;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .imageInput {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+
+  .images {
+    display: flex;
+    justify-content: space-between;
+
+    margin: 0 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .exercise {
+    margin: 0 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+
+    border: 1px solid #ced4da;
+    border-radius: 0.5rem;
+  }
+
+  .actions {
+    display: flex;
+
+    // padding: 0 1rem;
+
+    width: 100%;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ced4da;
+
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+
+    .exerciseDropdown {
+      button {
+        // display: flex;
+        height: 100%;
+      }
     }
 
-    .imageInput {
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        z-index: -1;
+    .button {
+      border: none;
+      background: none;
+      outline: none;
+
+      // margin-right: 0.75rem;
+      padding: 0.3rem 0.5rem;
+
+      &:enabled:hover {
+        background-color: #e0e0e0e0;
+      }
     }
+  }
 
-    .images {
-        display: flex;
-        justify-content: space-between;
-
-        margin: 0 1rem;
-        margin-bottom: 1rem;
-    }
-
-    .exercise {
-
-        margin: 0 1rem;
-        margin-bottom: 1rem;
-        padding: 1rem;
-
-        border: 1px solid #ced4da;
-        border-radius: 0.5rem;
-    }
-
-    .actions {
-
-        display: flex;
-
-        // padding: 0 1rem;
-
-        width: 100%;
-        background-color: #f5f5f5;
-        border-top: 1px solid #ced4da;
-
-        border-bottom-left-radius: 0.5rem;
-        border-bottom-right-radius: 0.5rem;
-
-        .exerciseDropdown {
-            button {
-                // display: flex;
-                height: 100%;
-            }
-        }
-
-        .button {
-
-            border: none;
-            background: none;
-            outline: none;
-
-            // margin-right: 0.75rem;
-            padding: 0.3rem 0.5rem;
-
-            &:enabled:hover {
-                background-color: #e0e0e0e0;
-            }
-        }
-    }
-
-    .submitButton {
-        margin: 0.3rem 0;
-        width: 100%;
-    }
+  .submitButton {
+    margin: 0.3rem 0;
+    width: 100%;
+  }
 }
