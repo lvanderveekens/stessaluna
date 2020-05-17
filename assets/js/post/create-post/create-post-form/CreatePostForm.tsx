@@ -2,14 +2,14 @@ import React, { useState, FC, useRef, ChangeEvent } from "react"
 import TextareaAutosize from "react-textarea-autosize"
 import { Formik } from "formik"
 import { Form, Dropdown } from "react-bootstrap"
-import styles from "./NewPostForm.scss?module"
+import styles from "./CreatePostForm.scss?module"
 import User from "../../../user/user.interface"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faImage, faGraduationCap } from "@fortawesome/free-solid-svg-icons"
 import ImagePreview from "./image-preview/ImagePreview"
 import ExerciseInputValue from "../exercise-input/exercise-input.model"
 import AorbExerciseInput from "../exercise-input/aorb-exercise-input/AorbExerciseInput"
-import { schema } from "./new-post-form.schema"
+import { schema } from "./create-post-form.schema"
 import CustomToggle from "../../../dropdown/CustomToggle"
 import { ExerciseType } from "../../../exercise/exercise.model"
 import WhatdoyouseeExerciseInput from "../exercise-input/whatdoyousee-exercise-input/WhatdoyouseeExerciseInput"
@@ -26,7 +26,7 @@ interface Values {
   exercise?: ExerciseInputValue
 }
 
-const NewPostForm: FC<Props> = ({ onSubmit }) => {
+const CreatePostForm: FC<Props> = ({ onSubmit }) => {
   const fileInput = useRef(null)
   const [imageUrl, setImageUrl] = useState(null)
   const [submitError, setSubmitError] = useState(false)
@@ -155,7 +155,7 @@ const NewPostForm: FC<Props> = ({ onSubmit }) => {
             </div>
           </div>
           <Button className={styles.submitButton} type="submit" disabled={allNull(values) || !isValid || isSubmitting}>
-            Create
+            Post
           </Button>
           {submitError && <div className="alert alert-danger">Something went wrong. Please try again later.</div>}
           {/* <div>{JSON.stringify(errors)}</div> */}
@@ -165,4 +165,4 @@ const NewPostForm: FC<Props> = ({ onSubmit }) => {
   )
 }
 
-export default NewPostForm
+export default CreatePostForm

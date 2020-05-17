@@ -1,7 +1,7 @@
 import ActionTypes from "./actionTypes"
 import axios from "../../http/client"
 import Exercise from "../../exercise/exercise.model"
-import ExerciseInputValue from "../../post/new-post/exercise-input/exercise-input.model"
+import ExerciseInputValue from "../../post/create-post/exercise-input/exercise-input.model"
 import { objectToFormData } from "object-to-formdata"
 import { Answer } from "../../exercise/answer/answer.model"
 

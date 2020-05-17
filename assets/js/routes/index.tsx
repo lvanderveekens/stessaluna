@@ -4,15 +4,13 @@ import { useHistory, useLocation } from "react-router-dom"
 import HomePage from "../home/HomePage"
 import LoginPage from "../login/LoginPage"
 import NotFoundPage from "../not-found/NotFoundPage"
-import CreatePostModal from "../post/create-post-modal/CreatePostModal"
+import CreatePostModal from "../post/create-post/create-post-modal/CreatePostModal"
 import ProfilePage from "../profile/ProfilePage"
 import RegistrationPage from "../register/RegistrationPage"
 import { usePrevious } from "../util/hooks"
 import PrivateRoute from "./PrivateRoute"
 
 const Routes: FC = () => {
-  const history = useHistory()
-
   const location = useLocation()
   const previousLocation = usePrevious(location)
 

@@ -1,5 +1,5 @@
 import { validateYupSchema } from "formik"
-import { schema } from "./new-post-form.schema"
+import { schema } from "./create-post-form.schema"
 
 describe("aorb exercise", function () {
   it("requires sentences", async () => {

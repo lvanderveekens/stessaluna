@@ -11,7 +11,6 @@ const HomePage = () => {
       <Container className={styles.content}>
         <Row className="justify-content-center">
           <Col md={6} lg={6} xl={5}>
-            {/* <NewPostForm /> */}
             <Feed />
           </Col>
         </Row>

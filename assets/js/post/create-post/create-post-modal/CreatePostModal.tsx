@@ -1,8 +1,7 @@
 import React, { FC } from "react"
-import Modal from "../../modal/Modal"
-import NewPostForm from "../new-post/new-post-form"
-import styles from "./CreatePostModal.scss?module"
 import { useHistory } from "react-router-dom"
+import CreatePostForm from "../create-post-form"
+import Modal from "../../../modal/Modal"
 
 interface Props {
   previousLocation?: Location
@@ -22,7 +21,7 @@ const CreatePostModal: FC<Props> = ({ previousLocation }) => {
 
   return (
     <Modal title="Create post" onClose={handleClose}>
-      <NewPostForm onCreated={handleClose} />
+      <CreatePostForm onCreated={handleClose} />
     </Modal>
   )
 }

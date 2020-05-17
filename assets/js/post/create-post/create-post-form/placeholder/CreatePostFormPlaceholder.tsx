@@ -1,8 +1,8 @@
-import React, { FC } from "react";
-import ContentLoader from "react-content-loader";
-import styles from "./NewPostFormPlaceholder.scss?module";
+import React, { FC } from "react"
+import ContentLoader from "react-content-loader"
+import styles from "./CreatePostFormPlaceholder.scss?module"
 
-const NewPostFormPlaceholder: FC = () => {
+const CreatePostFormPlaceholder: FC = () => {
   return (
     <ContentLoader className={styles.newPostFormPlaceholder} viewBox="0 0 500 100" speed={1}>
       <rect x={0} y={0} rx={5} width={500} height={15} />
@@ -12,7 +12,7 @@ const NewPostFormPlaceholder: FC = () => {
       <rect x={100} y={70} rx={5} width={70} height={30} />
       <rect x={410} y={70} rx={5} width={100} height={30} />
     </ContentLoader>
-  );
-};
+  )
+}
 
-export default NewPostFormPlaceholder;
+export default CreatePostFormPlaceholder
