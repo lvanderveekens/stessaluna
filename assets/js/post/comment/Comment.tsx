@@ -4,7 +4,7 @@ import User from "../../user/user.interface"
 import { Dropdown } from "react-bootstrap"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons"
-import CustomToggle from "../../dropdown/CustomToggle"
+import CustomToggle from "../../dropdown/custom-toggle/CustomToggle"
 import Avatar from "../../user/avatar/Avatar"
 
 interface Props {

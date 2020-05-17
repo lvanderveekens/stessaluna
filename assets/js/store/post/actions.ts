@@ -31,9 +31,9 @@ export const fetchPosts = () => {
   }
 }
 
-export const createPost = (text?: string, image?: File, exercise?: ExerciseInputValue) => {
+export const createPost = (channel: string, text?: string, image?: File, exercise?: ExerciseInputValue) => {
   return (dispatch) => {
-    const formData = objectToFormData({ text, image, exercise }, { indices: true })
+    const formData = objectToFormData({ channel, text, image, exercise }, { indices: true })
     return axios
       .post("/api/posts", formData)
       .then((res) => {

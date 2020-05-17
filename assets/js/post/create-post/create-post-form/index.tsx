@@ -6,14 +6,14 @@ import CreatePostForm from "./CreatePostForm"
 
 interface Props {
   onCreated: () => void
-  createPost: (text?: string, image?: File, exercise?: Exercise) => Promise<void>
+  createPost: (channel: string, text?: string, image?: File, exercise?: Exercise) => Promise<void>
 }
 
 const CreatePostFormContainer: FC<Props> = ({ onCreated, createPost }) => {
-  const handleSubmit = (text?: string, image?: File, exercise?: Exercise) => {
+  const handleSubmit = (channel: string, text?: string, image?: File, exercise?: Exercise) => {
     console.log("submitting...")
-    console.log({ text, image, exercise })
-    return createPost(text, image, exercise).then(() => onCreated())
+    console.log({ channel, text, image, exercise })
+    return createPost(channel, text, image, exercise).then(() => onCreated())
   }
 
   return <CreatePostForm onSubmit={handleSubmit} />

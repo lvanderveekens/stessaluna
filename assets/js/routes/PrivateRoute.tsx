@@ -1,18 +1,16 @@
-import React from "react"
-import { Route, Redirect } from "react-router-dom"
-import PropTypes from "prop-types"
+import React, { FC } from "react"
 import { connect } from "react-redux"
+import { Redirect, Route } from "react-router-dom"
 
-const PrivateRoute = ({ loggedIn, ...rest }) => {
+interface Props {
+  loggedIn: boolean
+}
+
+const PrivateRoute: FC<Props> = ({ loggedIn, ...rest }) => {
   if (!loggedIn) {
     return <Redirect to="/login" />
   }
   return <Route {...rest} />
-}
-
-PrivateRoute.propTypes = {
-  component: PropTypes.elementType.isRequired,
-  loggedIn: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (state) => ({

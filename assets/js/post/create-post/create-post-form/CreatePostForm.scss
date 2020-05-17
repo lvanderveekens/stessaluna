@@ -1,6 +1,19 @@
 @import '../../../../css/colors';
 
-.newPostForm {
+.createPostForm {
+
+    .channelWrapper {
+        margin-bottom: 1rem;
+
+        label {
+            margin-right: 0.5rem;
+        }
+
+        .channelSelect {
+            display: inline-block;
+            width: auto;
+        }
+    }
 
     .wrapper {
         border: 1px solid #ced4da;
@@ -11,10 +24,11 @@
 
     .textInput {
         border: none;
+        border-radius: 0.5rem;
         resize: none;
-        padding: 0;
-        margin: 1rem;
-        width: calc(100% - 2rem);
+        padding: 1rem;
+        margin: 0;
+        width: 100%;
 
         &:focus {
             box-shadow: none;

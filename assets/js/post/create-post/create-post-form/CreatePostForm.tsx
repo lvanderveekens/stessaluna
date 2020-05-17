@@ -1,26 +1,27 @@
-import React, { useState, FC, useRef, ChangeEvent } from "react"
-import TextareaAutosize from "react-textarea-autosize"
-import { Formik } from "formik"
-import { Form, Dropdown } from "react-bootstrap"
-import styles from "./CreatePostForm.scss?module"
-import User from "../../../user/user.interface"
+import { faGraduationCap, faImage } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faImage, faGraduationCap } from "@fortawesome/free-solid-svg-icons"
-import ImagePreview from "./image-preview/ImagePreview"
-import ExerciseInputValue from "../exercise-input/exercise-input.model"
-import AorbExerciseInput from "../exercise-input/aorb-exercise-input/AorbExerciseInput"
-import { schema } from "./create-post-form.schema"
-import CustomToggle from "../../../dropdown/CustomToggle"
-import { ExerciseType } from "../../../exercise/exercise.model"
-import WhatdoyouseeExerciseInput from "../exercise-input/whatdoyousee-exercise-input/WhatdoyouseeExerciseInput"
-import MissingwordExerciseInput from "../exercise-input/missingword-exercise-input/MissingwordExerciseInput"
+import { Formik } from "formik"
+import React, { ChangeEvent, FC, useRef, useState } from "react"
+import { Dropdown, Form } from "react-bootstrap"
+import TextareaAutosize from "react-textarea-autosize"
 import Button from "../../../button/Button"
+import CustomToggle from "../../../dropdown/custom-toggle/CustomToggle"
+import { ExerciseType } from "../../../exercise/exercise.model"
+import AorbExerciseInput from "../exercise-input/aorb-exercise-input/AorbExerciseInput"
+import ExerciseInputValue from "../exercise-input/exercise-input.model"
+import MissingwordExerciseInput from "../exercise-input/missingword-exercise-input/MissingwordExerciseInput"
+import WhatdoyouseeExerciseInput from "../exercise-input/whatdoyousee-exercise-input/WhatdoyouseeExerciseInput"
+import { schema } from "./create-post-form.schema"
+import styles from "./CreatePostForm.scss?module"
+import ImagePreview from "./image-preview/ImagePreview"
+import LanguageSelect from "../../../select/language-select/LanguageSelect"
 
 interface Props {
-  onSubmit: (text?: string, image?: File, exercise?: ExerciseInputValue) => Promise<void>
+  onSubmit: (channel: string, text?: string, image?: File, exercise?: ExerciseInputValue) => Promise<void>
 }
 
 interface Values {
+  channel: string
   text?: string
   image?: File
   exercise?: ExerciseInputValue
@@ -64,10 +65,10 @@ const CreatePostForm: FC<Props> = ({ onSubmit }) => {
     setFieldValue("exercise", null)
   }
 
-  const handleSubmit = ({ text, image, exercise }: Values, resetForm) => {
+  const handleSubmit = ({ channel, text, image, exercise }: Values, resetForm) => {
     setSubmitError(false)
 
-    onSubmit(text, image, exercise)
+    onSubmit(channel, text, image, exercise)
       .then(() => {
         fileInput.current.value = null
         resetForm()
@@ -100,11 +101,21 @@ const CreatePostForm: FC<Props> = ({ onSubmit }) => {
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={({ text, image, exercise }, { resetForm }) => handleSubmit({ text, image, exercise }, resetForm)}
-      initialValues={{ text: null, image: null, exercise: null } as Values}
+      onSubmit={(values, { resetForm }) => handleSubmit({ ...values }, resetForm)}
+      initialValues={{ channel: null, text: null, image: null, exercise: null } as Values}
     >
       {({ handleSubmit, setFieldValue, values, isValid, isSubmitting, errors }) => (
-        <Form className={styles.newPostForm} noValidate onSubmit={handleSubmit}>
+        <Form className={styles.createPostForm} noValidate onSubmit={handleSubmit}>
+          <div className={styles.channelWrapper}>
+            <label>In</label>
+            <LanguageSelect
+              className={`${styles.channelSelect} form-control`}
+              name="channel"
+              placeholder="Select channel"
+              value={values.channel}
+              onChange={(value) => setFieldValue("channel", value)}
+            />
+          </div>
           <div className={styles.wrapper}>
             <TextareaAutosize
               className={`${styles.textInput} form-control`}

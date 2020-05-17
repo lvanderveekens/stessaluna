@@ -2,6 +2,7 @@ import * as yup from "yup"
 import { ExerciseType } from "../../../exercise/exercise.model"
 
 export const schema = yup.object().shape({
+  channel: yup.string(),
   text: yup.string().nullable(),
   image: yup.mixed(),
   exercise: yup.lazy((value) => {
