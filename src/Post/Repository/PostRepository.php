@@ -1,22 +1,43 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Stessaluna\Post\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Psr\Log\LoggerInterface;
 use Stessaluna\Post\Entity\Post;
 
 /**
  * @method Post|null find($id, $lockMode = null, $lockVersion = null)
  * @method Post|null findOneBy(array $criteria, array $orderBy = null)
- * @method Post[]    findAll()
  * @method Post[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class PostRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private LoggerInterface $logger;
+
+    public function __construct(ManagerRegistry $registry, LoggerInterface $logger)
     {
         parent::__construct($registry, Post::class);
+        $this->logger = $logger;
+    }
+
+    /**
+     * @return Post[] all posts
+     */
+    public function findAll(): array
+    {
+        // using DQL here to select everything with one big query
+        return $this->getEntityManager()->createQueryBuilder()
+            ->select("p, e, a, c")
+            ->from($this->getEntityName(), "p")
+            ->leftJoin("p.exercise", "e")
+            ->leftJoin("e.answers", "a")
+            ->leftJoin("p.comments", "c")
+            ->getQuery()
+            ->getResult();
     }
 
     public function save(Post $post): Post
