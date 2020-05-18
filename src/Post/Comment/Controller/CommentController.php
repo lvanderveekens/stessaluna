@@ -3,8 +3,6 @@
 namespace Stessaluna\Post\Comment\Controller;
 
 use DateTime;
-use Psr\Log\LoggerInterface;
-use Stessaluna\Post\Comment\Dto\CommentConverter;
 use Stessaluna\Post\Comment\Dto\CommentDtoConverter;
 use Stessaluna\Post\Comment\Entity\Comment;
 use Stessaluna\Post\Entity\Post;
@@ -36,7 +34,7 @@ class CommentController extends AbstractController
             ->getRepository(Comment::class)
             ->findBy(array('post' => $postId));
 
-        return $this->json(array_map(function ($comment) {
+        return $this->json(array_map(function (Comment $comment) {
             return $this->commentConverter->toDto($comment);
         }, $comments));
     }
