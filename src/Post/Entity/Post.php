@@ -63,7 +63,7 @@ class Post
         $this->comments = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -92,7 +92,7 @@ class Post
         return $this;
     }
 
-    public function getChannel(): ?string
+    public function getChannel(): string
     {
         return $this->channel;
     }

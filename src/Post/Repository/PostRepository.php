@@ -27,17 +27,24 @@ class PostRepository extends ServiceEntityRepository
     /**
      * @return Post[] all posts
      */
-    public function findAll(): array
+    public function getPosts(?int $beforeId, ?int $limit): array
     {
         // using DQL here to select everything with one big query
-        return $this->getEntityManager()->createQueryBuilder()
+        $qb = $this->getEntityManager()->createQueryBuilder()
             ->select("p, e, a, c")
             ->from($this->getEntityName(), "p")
             ->leftJoin("p.exercise", "e")
             ->leftJoin("e.answers", "a")
             ->leftJoin("p.comments", "c")
-            ->getQuery()
-            ->getResult();
+            ->orderBy('p.id', 'DESC');
+
+        if ($beforeId != null) {
+            $qb->where("p.id < ${beforeId}");
+        }
+        if ($limit != null) {
+            $qb->setMaxResults($limit);
+        }
+        return $qb->getQuery()->getResult();
     }
 
     public function save(Post $post): Post

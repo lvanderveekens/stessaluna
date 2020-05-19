@@ -26,9 +26,9 @@ class PostService
     /**
      * @return Post[] an array containing all posts
      */
-    public function getPosts(): array
+    public function getPosts(?int $beforeId, ?int $limit): array
     {
-        $posts = $this->postRepository->findAll();
+        $posts = $this->postRepository->getPosts($beforeId, $limit);
         usort($posts, function (Post $a, Post $b) { return $a->getCreatedAt() < $b->getCreatedAt(); });
         return $posts;
     }
