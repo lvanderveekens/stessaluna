@@ -68,6 +68,7 @@
         "react-responsive": "^8.0.3",
         "react-router-dom": "^5.1.2",
         "react-textarea-autosize": "^7.1.2",
+        "react-transition-group": "^4.4.1",
         "redux": "^4.0.5",
         "redux-devtools-extension": "^2.13.8",
         "redux-persist": "^6.0.0",
