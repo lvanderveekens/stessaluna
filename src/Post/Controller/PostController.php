@@ -8,6 +8,7 @@ use Psr\Log\LoggerInterface;
 use Stessaluna\Post\Dto\CreatePostToPostConverter;
 use Stessaluna\Post\Dto\PostToPostDtoConverter;
 use Stessaluna\Post\Dto\RequestToCreatePostConverter;
+use Stessaluna\Post\Entity\Post;
 use Stessaluna\Post\Service\PostService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -48,7 +49,7 @@ class PostController extends AbstractController
             (int)$request->query->get('limit')
         );
 
-        return $this->json(array_map(function ($post) {
+        return $this->json(array_map(function (Post $post) {
             return $this->postToPostDtoConverter->convert($post, $this->getUser());
         }, $posts));
     }

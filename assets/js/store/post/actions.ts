@@ -10,7 +10,7 @@ export const fetchPosts = () => {
     dispatch(pending())
 
     axios
-      .get("/api/posts")
+      .get("/api/posts?limit=2")
       .then((res) => {
         dispatch(success(res.data))
       })

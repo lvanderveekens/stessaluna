@@ -3,7 +3,7 @@ import { PostState } from "./state.interface"
 
 const initialState = {
   loading: false,
-  items: [],
+  data: [],
 }
 
 const postReducer = (state: PostState = initialState, action) => {
@@ -17,7 +17,7 @@ const postReducer = (state: PostState = initialState, action) => {
       return {
         ...state,
         loading: false,
-        items: action.payload.posts,
+        data: action.payload.posts,
       }
     case ActionTypes.FETCH_POSTS_ERROR:
       return {
@@ -27,24 +27,24 @@ const postReducer = (state: PostState = initialState, action) => {
     case ActionTypes.CREATE_POST_SUCCESS:
       return {
         ...state,
-        items: [...state.items, action.payload.post],
+        data: [...state.data, action.payload.post],
       }
     case ActionTypes.DELETE_POST_SUCCESS:
       return {
         ...state,
-        items: state.items.filter((post) => post.id !== action.payload.id),
+        data: state.data.filter((post) => post.id !== action.payload.id),
       }
     case ActionTypes.ADD_COMMENT_SUCCESS:
       return {
         ...state,
-        items: state.items.map((post) =>
+        data: state.data.map((post) =>
           post.id === action.payload.postId ? { ...post, comments: [...post.comments, action.payload.comment] } : post
         ),
       }
     case ActionTypes.DELETE_COMMENT_SUCCESS:
       return {
         ...state,
-        items: state.items.map((post) =>
+        data: state.data.map((post) =>
           post.id === action.payload.postId
             ? { ...post, comments: post.comments.filter((comment) => comment.id !== action.payload.commentId) }
             : post
@@ -54,7 +54,7 @@ const postReducer = (state: PostState = initialState, action) => {
       const exercisePost = findPostByExerciseId(action.payload.exercise.id, state)
       return {
         ...state,
-        items: state.items.map((post) =>
+        data: state.data.map((post) =>
           post.id === exercisePost.id ? { ...post, exercise: { ...action.payload.exercise } } : post
         ),
       }
@@ -65,7 +65,7 @@ const postReducer = (state: PostState = initialState, action) => {
 }
 
 const findPostByExerciseId = (exerciseId: number, state: PostState) => {
-  return state.items.filter((p) => p.exercise).find((p) => p.exercise.id === exerciseId)
+  return state.data.filter((p) => p.exercise).find((p) => p.exercise.id === exerciseId)
 }
 
 export default postReducer
