@@ -1,12 +1,23 @@
 .feed {
+  .loadMoreWrapper {
+    text-align: center;
 
+    button {
+      outline: none;
+      background: none;
+      color: white;
+      border: 2px solid white;
+      border-radius: 0.5rem;
+      padding: 0.3rem 0.9rem;
+    }
+  }
 }
 
 :global {
   .fade-enter {
     opacity: 0;
   }
-  
+
   .fade-enter-active {
     opacity: 1;
     transition: opacity 2000ms ease-in-out;
@@ -20,4 +31,5 @@
     opacity: 1;
     transition: opacity 2000ms ease-in-out;
   }
+
 }

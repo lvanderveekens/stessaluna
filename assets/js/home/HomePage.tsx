@@ -1,6 +1,6 @@
 import React from "react"
 import { Col, Container, Row } from "react-bootstrap"
-import Feed from "../feed/Feed"
+import Feed from "../feed"
 import Navbar from "../nav/Navbar"
 import styles from "./HomePage.scss?module"
 

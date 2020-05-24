@@ -4,13 +4,13 @@ import Exercise from "../../exercise/exercise.model"
 import ExerciseInputValue from "../../post/create-post/exercise-input/exercise-input.model"
 import { objectToFormData } from "object-to-formdata"
 import { Answer } from "../../exercise/answer/answer.model"
+const queryString = require('query-string');
 
-export const fetchPosts = () => {
+export const fetchPosts = (limit?: number, beforeId?: number) => {
   return (dispatch) => {
     dispatch(pending())
-
     axios
-      .get("/api/posts?limit=2")
+      .get(queryString.stringifyUrl({url: "/api/posts", query: {limit, beforeId}}))
       .then((res) => {
         dispatch(success(res.data))
       })

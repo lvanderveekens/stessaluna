@@ -4,7 +4,7 @@ import styles from "./FeedPlaceholder.scss?module";
 
 const FeedPlaceholder: FC = () => {
   return (
-    <>
+    <div className={styles.feedPlaceholder}>
       {Array.from({ length: 10 }, (_, i) => (
         <div key={i}>
           <ContentLoader className={styles.contentLoader} viewBox="0 0 500 300" speed={1}>
@@ -15,7 +15,7 @@ const FeedPlaceholder: FC = () => {
           </ContentLoader>
         </div>
       ))}
-    </>
+    </div>
   );
 };
 
