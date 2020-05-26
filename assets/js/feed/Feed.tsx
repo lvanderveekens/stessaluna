@@ -15,10 +15,6 @@ interface Props {
 }
 
 const Feed: FC<Props> = ({loading, posts, onLoadMore, onDeletePost}) => {
-  if (loading) {
-    return <FeedPlaceholder/>
-  }
-
   return (
     <div className={styles.feed}>
       <TransitionGroup component={null}>
@@ -41,6 +37,7 @@ const Feed: FC<Props> = ({loading, posts, onLoadMore, onDeletePost}) => {
           ))
         }
       </TransitionGroup>
+      {loading && (<FeedPlaceholder/>)}
       <div className={styles.loadMoreWrapper}>
         <button onClick={onLoadMore}>Load more</button>
       </div>

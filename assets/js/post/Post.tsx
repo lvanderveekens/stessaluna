@@ -31,7 +31,7 @@ interface Props {
   exercise?: Exercise
   onDelete: () => void
   comments: any[]
-  user: User
+  user?: User
 }
 
 const Post: FunctionComponent<Props> = ({
@@ -111,7 +111,7 @@ const Post: FunctionComponent<Props> = ({
               </div>
               <span className={styles.timestamp}>{timestamp}</span>
             </div>
-            {user.id == author.id && (
+            {user && user.id == author.id && (
               <div className={styles.threeDotsMenu}>
                 <Dropdown alignRight={true}>
                   <Dropdown.Toggle as={CustomToggle} id="something">
@@ -155,7 +155,7 @@ const Post: FunctionComponent<Props> = ({
           setShowAll={setShowAllComments}
           numberOfPreviewComments={numberOfPreviewComments}
           setNumberOfPreviewComments={setNumberOfPreviewComments}
-          locked={exercise && !isAnswered(exercise) && user.id != author.id}
+          locked={!user || (exercise && !isAnswered(exercise) && user.id != author.id)}
         />
       )}
     </div>

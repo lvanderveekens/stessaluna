@@ -15,11 +15,12 @@ interface Props {
 const FeedContainer: FC<Props> = ({loading, posts, fetchPosts, deletePost}) => {
 
   useEffect(() => {
-    fetchPosts(2)
+    fetchPosts(10)
   }, [])
 
   const handleLoadMore = () => {
-    console.log("HANDLE LOAD MORE!!!")
+    const oldestPostIdInFeed = Math.min(...posts.map((post) => post.id))
+    fetchPosts(10, oldestPostIdInFeed)
   }
 
   return (
@@ -28,7 +29,7 @@ const FeedContainer: FC<Props> = ({loading, posts, fetchPosts, deletePost}) => {
 }
 
 const mapStateToProps = (state: State) => ({
-  loading: state.post.loading || !state.auth.user,
+  loading: state.post.loading,
   posts: state.post.data,
 })
 
