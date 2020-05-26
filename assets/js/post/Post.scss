@@ -7,24 +7,21 @@
 
     background-color: white;
 
-    .threeDotsMenu {
-        margin-left: auto;
-
-        .iconWrapper {
-            cursor: pointer;
-            padding: 0 0.2rem;
-        }
-    }
-
     .content {
         padding: 1rem;
         word-break: break-word;
 
         .header {
             display: flex;
-            justify-content: space-between;
+            //justify-content: space-between;
             vertical-align: middle;
             margin-bottom: 1rem;
+            //align-items: center;
+
+            .avatar {
+                margin-top: 0.2rem;
+                margin-right: 1rem;
+            }
 
             .usernameTimestampWrapper {
                 display: flex;
@@ -60,6 +57,17 @@
                     font-size: 0.9rem;
                 }
             }
+
+            .threeDotsMenu {
+                margin-left: auto;
+                margin-top: 0.2rem;
+
+                .iconWrapper {
+                    cursor: pointer;
+                    padding: 0 0.2rem;
+                }
+            }
+
         }
 
         .image {

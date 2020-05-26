@@ -1,24 +1,25 @@
-import { faCommentAlt } from "@fortawesome/free-regular-svg-icons"
-import { faEllipsisV } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import React, { FunctionComponent, useEffect, useState } from "react"
-import { Dropdown } from "react-bootstrap"
+import {faCommentAlt} from "@fortawesome/free-regular-svg-icons"
+import {faEllipsisV} from "@fortawesome/free-solid-svg-icons"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import React, {FunctionComponent, useEffect, useState} from "react"
+import {Dropdown} from "react-bootstrap"
 import ReactCountryFlag from "react-country-flag"
-import { connect } from "react-redux"
+import {connect} from "react-redux"
 import CustomToggle from "../dropdown/custom-toggle/CustomToggle"
 import AorbExercise from "../exercise/aorb-exercise"
-import { isAnswered } from "../exercise/exercise.helper"
-import Exercise, { ExerciseType } from "../exercise/exercise.model"
+import {isAnswered} from "../exercise/exercise.helper"
+import Exercise, {ExerciseType} from "../exercise/exercise.model"
 import MissingwordExercise from "../exercise/missingword-exercise"
 import WhatdoyouseeExercise from "../exercise/whatdoyousee-exercise"
-import { addComment } from "../store/post/actions"
+import {addComment} from "../store/post/actions"
 import Avatar from "../user/avatar/Avatar"
 import User from "../user/user.interface"
 import CommentSection from "./comment/comment-section"
 import styles from "./Post.scss?module"
 import Text from "./text/Text"
-import { getCountryCode } from "../country/get-country-code"
+import {getCountryCode} from "../country/get-country-code"
 import ISO6391 from "iso-639-1"
+
 const CountryLanguage = require("country-language")
 
 interface Props {
@@ -35,17 +36,17 @@ interface Props {
 }
 
 const Post: FunctionComponent<Props> = ({
-  id,
-  author,
-  timestamp,
-  channel,
-  text,
-  image,
-  exercise,
-  comments,
-  onDelete,
-  user,
-}) => {
+                                          id,
+                                          author,
+                                          timestamp,
+                                          channel,
+                                          text,
+                                          image,
+                                          exercise,
+                                          comments,
+                                          onDelete,
+                                          user,
+                                        }) => {
   const [showComments, setShowComments] = useState(false)
   // TODO: this is here in order to keep state when comment section is unmounted... is there a better way?
   const [showAllComments, setShowAllComments] = useState(false)
@@ -72,7 +73,7 @@ const Post: FunctionComponent<Props> = ({
     }
     return (
       <span>
-        <span style={{ marginRight: "0.3rem" }}>@{author.username}</span>
+        <span style={{marginRight: "0.3rem"}}>@{author.username}</span>
       </span>
     )
   }
@@ -80,7 +81,7 @@ const Post: FunctionComponent<Props> = ({
   const renderExercise = () => {
     const props = {
       ...exercise,
-      disabled: user.id == author.id,
+      disabled: !user || user.id == author.id,
     }
 
     switch (exercise.type) {
@@ -97,38 +98,36 @@ const Post: FunctionComponent<Props> = ({
     <div className={styles.post}>
       <div className={styles.content}>
         <div className={styles.header}>
-          <div className="d-flex w-100 align-items-center">
-            <div className="mr-3">
-              <Avatar src={author.avatar} countryCode={author.country} />
-            </div>
-            <div className={styles.usernameTimestampWrapper}>
-              <div>{renderUserName()}</div>
-              <div className={styles.channelWrapper}>
-                in <span className={styles.channel}>{ISO6391.getName(channel)}</span>&nbsp;
-                {getCountryCode(channel) && (
-                  <ReactCountryFlag className={styles.countryFlag} countryCode={getCountryCode(channel)} svg />
-                )}
-              </div>
-              <span className={styles.timestamp}>{timestamp}</span>
-            </div>
-            {user && user.id == author.id && (
-              <div className={styles.threeDotsMenu}>
-                <Dropdown alignRight={true}>
-                  <Dropdown.Toggle as={CustomToggle} id="something">
-                    <span className={styles.iconWrapper}>
-                      <FontAwesomeIcon className={styles.icon} icon={faEllipsisV} />
-                    </span>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item onClick={onDelete}>Delete</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            )}
+          <div className={styles.avatar}>
+            <Avatar src={author.avatar} countryCode={author.country}/>
           </div>
+          <div className={styles.usernameTimestampWrapper}>
+            <div>{renderUserName()}</div>
+            <div className={styles.channelWrapper}>
+              in <span className={styles.channel}>{ISO6391.getName(channel)}</span>&nbsp;
+              {getCountryCode(channel) && (
+                <ReactCountryFlag className={styles.countryFlag} countryCode={getCountryCode(channel)} svg/>
+              )}
+            </div>
+            <span className={styles.timestamp}>{timestamp}</span>
+          </div>
+          {user && user.id == author.id && (
+            <div className={styles.threeDotsMenu}>
+              <Dropdown alignRight={true}>
+                <Dropdown.Toggle as={CustomToggle} id="something">
+                    <span className={styles.iconWrapper}>
+                      <FontAwesomeIcon className={styles.icon} icon={faEllipsisV}/>
+                    </span>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={onDelete}>Delete</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          )}
         </div>
-        {text && <Text text={text} />}
-        {image && <img className={styles.image} src={image} />}
+        {text && <Text text={text}/>}
+        {image && <img className={styles.image} src={image}/>}
         {exercise && renderExercise()}
       </div>
       <div className={styles.activity}>
@@ -142,7 +141,7 @@ const Post: FunctionComponent<Props> = ({
       <div className={styles.actions}>
         <div className={styles.addComment} onClick={() => setShowComments(true)}>
           <span className={styles.commentIcon}>
-            <FontAwesomeIcon icon={faCommentAlt} />
+            <FontAwesomeIcon icon={faCommentAlt}/>
           </span>
           Add comment
         </div>
