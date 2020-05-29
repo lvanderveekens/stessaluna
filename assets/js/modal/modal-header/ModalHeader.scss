@@ -1,0 +1,27 @@
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-weight: bold;
+
+    margin-bottom: 1rem;
+
+    .closeIcon {
+        position: relative;
+
+        &::after {
+            // increase clickable area without changing layout
+            content: "";
+            padding: 1rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

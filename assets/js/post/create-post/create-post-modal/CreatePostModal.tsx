@@ -2,6 +2,8 @@ import React, { FC } from "react"
 import { useHistory } from "react-router-dom"
 import CreatePostForm from "../create-post-form"
 import Modal from "../../../modal/Modal"
+import ModalHeader from "../../../modal/modal-header/ModalHeader";
+import ModalContent from "../../../modal/modal-content/ModalContent";
 
 interface Props {
   previousLocation?: Location
@@ -20,8 +22,11 @@ const CreatePostModal: FC<Props> = ({ previousLocation }) => {
   }
 
   return (
-    <Modal title="Create post" onClose={handleClose}>
-      <CreatePostForm onCreated={handleClose} />
+    <Modal onClose={handleClose}>
+      <ModalHeader onClose={handleClose}>Create post</ModalHeader>
+      <ModalContent>
+        <CreatePostForm onCreated={handleClose} />
+      </ModalContent>
     </Modal>
   )
 }
