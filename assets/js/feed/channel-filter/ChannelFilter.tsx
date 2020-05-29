@@ -7,6 +7,7 @@ import ISO6391 from "iso-639-1";
 import ModalHeader from "../../modal/modal-header/ModalHeader";
 import ModalContent from "../../modal/modal-content/ModalContent";
 import ModalFooter from "../../modal/modal-footer/ModalFooter";
+import Button from "../../button/Button";
 
 const cx = classNames.bind(styles)
 
@@ -26,18 +27,18 @@ const ChannelFilter: FC<Props> = () => {
 
   return (
     <div className={styles.channelFilter}>
-      <button className={cx({on: channels.length})} onClick={() => setShowModal(true)}>
+      <button className={cx(styles.button, {on: channels.length})} onClick={() => setShowModal(true)}>
         {channels.length == 0 && <>Channel</>}
         {channels.length > 0 && channels.join()}
       </button>
       {showModal && (
         <Modal onClose={handleModalClose}>
           <ModalHeader onClose={handleModalClose}>Channel filter</ModalHeader>
-          <ModalContent>
+          <ModalContent className="mb-3">
             {ISO6391.getLanguages(ISO6391.getAllCodes())
               .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
               .map(({ code, name }) => (
-                <div key={code}>
+                <div key={code} className={styles.channelCheckboxWrapper}>
                   <input
                     value={code}
                     name={name}
@@ -51,7 +52,10 @@ const ChannelFilter: FC<Props> = () => {
                 </div>
               ))}
           </ModalContent>
-          <ModalFooter>reset,apply</ModalFooter>
+          <ModalFooter className={styles.footer}>
+            <Button>Reset</Button>
+            <Button>Apply</Button>
+          </ModalFooter>
         </Modal>
       )}
     </div>

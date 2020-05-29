@@ -4,6 +4,14 @@
     padding: 0.3rem 0.7rem;
     color: white;
 
+    border: none;
+    border-radius: 0.5rem;
+    outline: none;
+
+    &:focus {
+        outline: none;
+    }
+
     &.dark {
         background: $brand-secondary;
 
@@ -19,11 +27,6 @@
             background-color: #2400a7;
         }
     }
-
-
-    border: none;
-    border-radius: 0.5rem;
-    outline: none;
 
     &:disabled {
         opacity: .65;

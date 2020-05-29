@@ -3,10 +3,11 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock"
 import styles from "./ModalContent.scss?module";
 
 interface Props {
+  className?: string
   children: any
 }
 
-const ModalContent: FC<Props> = ({children}) => {
+const ModalContent: FC<Props> = ({className, children}) => {
 
   const modalContentRef = useRef(null)
 
@@ -18,7 +19,7 @@ const ModalContent: FC<Props> = ({children}) => {
   }, [])
 
   return (
-    <div ref={modalContentRef} className={styles.modalContent}>{children}</div>
+    <div ref={modalContentRef} className={`${styles.modalContent} ${className}`}>{children}</div>
   )
 }
 
