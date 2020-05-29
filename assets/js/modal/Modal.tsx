@@ -11,13 +11,13 @@ interface Props {
 }
 
 const Modal: FC<Props> = ({ title, onClose, children }) => {
-  const modalWrapperRef = useRef(null)
+  const modalRef = useRef(null)
 
   useEffect(() => {
-    disableBodyScroll(modalWrapperRef.current)
-    modalWrapperRef.current.focus()
+    disableBodyScroll(modalRef.current)
+    modalRef.current.focus()
     return () => {
-      enableBodyScroll(modalWrapperRef.current)
+      enableBodyScroll(modalRef.current)
     }
   }, [])
 
@@ -28,8 +28,8 @@ const Modal: FC<Props> = ({ title, onClose, children }) => {
   }
 
   return (
-    <div ref={modalWrapperRef} className={styles.modalWrapper} tabIndex={0} onKeyDown={onKeyDown} onClick={onClose}>
-      <div className={`${styles.modal} animated fadeIn`} onClick={(e) => e.stopPropagation()}>
+    <div className={styles.modalWrapper} onClick={onClose}>
+      <div ref={modalRef} className={`${styles.modal} animated fadeIn`} tabIndex={0} onKeyDown={onKeyDown}  onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
           <span>{title}</span>
           <span className={styles.closeIcon} onClick={onClose}>

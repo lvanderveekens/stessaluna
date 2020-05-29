@@ -32,13 +32,13 @@ const Navbar: FC<Props> = ({ page, loggedIn, user, logOut }) => {
     document.body.style.paddingTop = `${topBarRef.current.clientHeight}px`
   }, [])
 
-  const collapsableNavElement = document.querySelector("#collapsable-nav")
+  const collapsableNavRef = useRef(null)
 
   useEffect(() => {
     if (expanded) {
-      disableBodyScroll(collapsableNavElement)
+      disableBodyScroll(collapsableNavRef.current)
     } else {
-      enableBodyScroll(collapsableNavElement)
+      enableBodyScroll(collapsableNavRef.current)
     }
   }, [expanded])
 
@@ -80,7 +80,7 @@ const Navbar: FC<Props> = ({ page, loggedIn, user, logOut }) => {
             </BootstrapNavbar.Toggle>
           </div>
         </div>
-        <BootstrapNavbar.Collapse id="collapsable-nav">
+        <BootstrapNavbar.Collapse id="collapsable-nav" ref={collapsableNavRef}>
           <BootstrapNav
             className={cx("mr-auto", { expanded })}
             style={expanded ? { height: `${window.innerHeight - topBarRef.current.clientHeight}px` } : {}}

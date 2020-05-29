@@ -1,0 +1,22 @@
+
+.channelFilter {
+
+    button {
+        background: none;
+        color: grey;
+        border: 2px solid grey;
+        border-radius: 2rem;
+        padding: 0.2rem 0.9rem;
+
+        &:focus {
+            outline: none;
+        }
+
+        &.on {
+            color: white;
+            border-color: white;
+        }
+    }
+
+}
+

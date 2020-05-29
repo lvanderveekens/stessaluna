@@ -5,6 +5,7 @@ import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import FeedPlaceholder from "./placeholder/FeedPlaceholder";
 import moment from "moment";
 import Post from "../post/Post";
+import ChannelFilter from "./channel-filter/ChannelFilter";
 
 
 interface Props {
@@ -17,6 +18,9 @@ interface Props {
 const Feed: FC<Props> = ({loading, posts, onLoadMore, onDeletePost}) => {
   return (
     <div className={styles.feed}>
+      <div className={styles.filters}>
+        <ChannelFilter />
+      </div>
       <TransitionGroup component={null}>
         {posts
           .sort((post, other) => other.id - post.id)
