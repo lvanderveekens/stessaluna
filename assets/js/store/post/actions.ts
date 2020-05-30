@@ -6,13 +6,13 @@ import { objectToFormData } from "object-to-formdata"
 import { Answer } from "../../exercise/answer/answer.model"
 const queryString = require('query-string');
 
-export const fetchPosts = (limit?: number, beforeId?: number) => {
+export const fetchPosts = (limit: number, beforeId?: number, append?: boolean) => {
   return (dispatch) => {
     dispatch(pending())
     axios
       .get(queryString.stringifyUrl({url: "/api/posts", query: {limit, beforeId}}))
       .then((res) => {
-        dispatch(success(res.data))
+        dispatch(success(res.data, append))
       })
       .catch((e) => {
         dispatch(error())
@@ -23,8 +23,8 @@ export const fetchPosts = (limit?: number, beforeId?: number) => {
   function pending() {
     return { type: ActionTypes.FETCH_POSTS_PENDING }
   }
-  function success(posts) {
-    return { type: ActionTypes.FETCH_POSTS_SUCCESS, payload: { posts } }
+  function success(posts, append) {
+    return {type: ActionTypes.FETCH_POSTS_SUCCESS, payload: {posts, append}}
   }
   function error() {
     return { type: ActionTypes.FETCH_POSTS_ERROR }

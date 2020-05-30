@@ -20,7 +20,7 @@ const postReducer = (state: PostState = initialState, action) => {
       return {
         ...state,
         loading: false,
-        data: [...state.data, ...action.payload.posts],
+        data: action.payload.append ? [...state.data, ...action.payload.posts] : [...action.payload.posts],
       }
     case ActionTypes.FETCH_POSTS_ERROR:
       return {

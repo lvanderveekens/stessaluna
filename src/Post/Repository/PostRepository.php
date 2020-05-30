@@ -6,6 +6,7 @@ namespace Stessaluna\Post\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Psr\Log\LoggerInterface;
 use Stessaluna\Post\Entity\Post;
 
@@ -44,7 +45,13 @@ class PostRepository extends ServiceEntityRepository
         if ($limit != null) {
             $qb->setMaxResults($limit);
         }
-        return $qb->getQuery()->getResult();
+
+        $paginator = new Paginator($qb->getQuery(), $fetchJoinCollection = true);
+        $results = [];
+        foreach ($paginator as $post) {
+            array_push($results, $post);
+        }
+        return $results;
     }
 
     public function save(Post $post): Post
