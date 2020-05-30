@@ -8,7 +8,7 @@ const queryString = require('query-string');
 
 export const fetchPosts = (limit: number, beforeId?: number, append?: boolean) => {
   return (dispatch) => {
-    dispatch(pending())
+    dispatch(pending(append))
     axios
       .get(queryString.stringifyUrl({url: "/api/posts", query: {limit, beforeId}}))
       .then((res) => {
@@ -20,8 +20,8 @@ export const fetchPosts = (limit: number, beforeId?: number, append?: boolean) =
       })
   }
 
-  function pending() {
-    return { type: ActionTypes.FETCH_POSTS_PENDING }
+  function pending(append) {
+    return {type: ActionTypes.FETCH_POSTS_PENDING, payload: {append}}
   }
   function success(posts, append) {
     return {type: ActionTypes.FETCH_POSTS_SUCCESS, payload: {posts, append}}

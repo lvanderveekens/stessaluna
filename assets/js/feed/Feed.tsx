@@ -17,6 +17,8 @@ interface Props {
 
 const Feed: FC<Props> = ({loading, posts, onLoadMore, onDeletePost}) => {
 
+  console.log(posts)
+
   return (
     <div className={styles.feed}>
       <div className={styles.filters}>
@@ -26,7 +28,7 @@ const Feed: FC<Props> = ({loading, posts, onLoadMore, onDeletePost}) => {
         {posts
           .sort((post, other) => other.id - post.id)
           .map((post) => (
-            <CSSTransition key={post.id} in={true} appear={true} timeout={1000} classNames="fade">
+            <CSSTransition key={post.id} in={true} exit={true} appear={true} timeout={200} classNames="fade">
               <Post
                 id={post.id}
                 timestamp={moment(post.createdAt).fromNow()}

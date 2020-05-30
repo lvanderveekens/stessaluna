@@ -14,12 +14,11 @@ interface Props {
   deletePost: (id: number) => void
 }
 
-const FETCH_SIZE = 10;
+const FETCH_SIZE = 2;
 
 const FeedContainer: FC<Props> = ({loading, posts, filters, fetchPosts, deletePost}) => {
 
   useEffect(() => {
-    console.log(filters)
     fetchPosts(FETCH_SIZE)
   }, [filters])
 

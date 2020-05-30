@@ -15,6 +15,7 @@ const postReducer = (state: PostState = initialState, action) => {
       return {
         ...state,
         loading: true,
+        data: action.payload.append ? [...state.data] : []
       }
     case ActionTypes.FETCH_POSTS_SUCCESS:
       return {
