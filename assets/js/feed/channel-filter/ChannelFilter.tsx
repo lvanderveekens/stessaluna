@@ -3,23 +3,26 @@ import styles from "./ChannelFilter.scss?module"
 import classNames from "classnames/bind"
 import ISO6391 from "iso-639-1";
 import ChannelFilterModal from "./channel-filter-modal/ChannelFilterModal";
+import { connect } from "react-redux"
+import {applyChannelFilter} from "../../store/post/actions";
+import {State} from "../../store";
 
 const cx = classNames.bind(styles)
 
 interface Props {
-
+  appliedChannels: string[]
+  applyChannelFilter: (channels: string[]) => void
 }
 
-const ChannelFilter: FC<Props> = () => {
+const ChannelFilter: FC<Props> = ({appliedChannels, applyChannelFilter}) => {
 
-  const [appliedChannels, setAppliedChannels] = useState([])
   const [showModal, setShowModal] = useState(false)
 
   const openModal = () => setShowModal(true)
   const closeModal = () => setShowModal(false)
 
   const handleApply = (selectedChannels) => {
-    setAppliedChannels(selectedChannels)
+    applyChannelFilter(selectedChannels)
     setShowModal(false)
   }
 
@@ -36,4 +39,12 @@ const ChannelFilter: FC<Props> = () => {
   )
 }
 
-export default ChannelFilter
+const mapStateToProps = (state: State) => ({
+  appliedChannels: state.post.filters.channel
+})
+
+const actionCreators = {
+  applyChannelFilter,
+}
+
+export default connect(mapStateToProps, actionCreators)(ChannelFilter)

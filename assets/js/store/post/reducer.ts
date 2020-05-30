@@ -1,8 +1,11 @@
 import ActionTypes from "./actionTypes"
 import { PostState } from "./state.interface"
 
+const storedFiltersString = localStorage.getItem('stessaluna:filters');
+
 const initialState = {
   loading: false,
+  filters: storedFiltersString ? JSON.parse(storedFiltersString) : {channel: []},
   data: [],
 }
 
@@ -57,6 +60,15 @@ const postReducer = (state: PostState = initialState, action) => {
         data: state.data.map((post) =>
           post.id === exercisePost.id ? { ...post, exercise: { ...action.payload.exercise } } : post
         ),
+      }
+    }
+    case ActionTypes.APPLY_CHANNEL_FILTER: {
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          channel: action.payload.channels
+        }
       }
     }
     default:

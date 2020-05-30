@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from "react";
+import React, {FC, useEffect, useState} from "react";
 import Feed from "./Feed";
 import {deletePost, fetchPosts} from "../store/post/actions";
 import {State} from "../store";
@@ -24,7 +24,12 @@ const FeedContainer: FC<Props> = ({loading, posts, fetchPosts, deletePost}) => {
   }
 
   return (
-    <Feed loading={loading} posts={posts} onLoadMore={handleLoadMore} onDeletePost={deletePost}/>
+    <Feed
+      loading={loading}
+      posts={posts}
+      onLoadMore={handleLoadMore}
+      onDeletePost={deletePost}
+    />
   )
 }
 

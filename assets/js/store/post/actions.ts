@@ -115,3 +115,9 @@ export const submitAnswer = (exerciseId: number, answer: Answer) => {
       })
   }
 }
+
+export const applyChannelFilter = (channels: string[]) => {
+  return (dispatch) => {
+    dispatch({type: ActionTypes.APPLY_CHANNEL_FILTER, payload: {channels}})
+  }
+}

@@ -1,4 +1,4 @@
-import React, {FC} from "react"
+import React, {FC, useState} from "react"
 import PostInterface from "../post/post.interface"
 import styles from './Feed.scss?module'
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
@@ -16,10 +16,11 @@ interface Props {
 }
 
 const Feed: FC<Props> = ({loading, posts, onLoadMore, onDeletePost}) => {
+
   return (
     <div className={styles.feed}>
       <div className={styles.filters}>
-        <ChannelFilter />
+        <ChannelFilter/>
       </div>
       <TransitionGroup component={null}>
         {posts

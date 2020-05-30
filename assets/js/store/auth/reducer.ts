@@ -1,7 +1,7 @@
 import ActionTypes from './actionTypes';
 import { AuthState } from './state.interface';
 
-const loggedIn = localStorage.getItem('logged-in') == 'true';
+const loggedIn = localStorage.getItem('stessaluna:logged-in') == 'true';
 
 const initialState = {
   loggedIn: loggedIn,

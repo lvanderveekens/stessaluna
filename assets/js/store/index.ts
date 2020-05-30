@@ -21,8 +21,11 @@ export const store = createStore(rootReducer, composeWithDevTools(applyMiddlewar
 store.subscribe(() => {
   const loggedIn = store.getState().auth.loggedIn
   if (loggedIn != null) {
-    localStorage.setItem("logged-in", loggedIn.toString())
+    localStorage.setItem("stessaluna:logged-in", loggedIn.toString())
   } else {
-    localStorage.removeItem("logged-in")
+    localStorage.removeItem("stessaluna:logged-in")
   }
+
+  const filters = store.getState().post.filters
+  localStorage.setItem("stessaluna:filters", JSON.stringify(filters))
 })
