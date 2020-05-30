@@ -1,0 +1,17 @@
+.channelFilterModal {
+
+    .channelCheckboxWrapper {
+        input {
+            margin-right: 0.5rem;
+        }
+    }
+
+    .footer {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+            width: 49%;
+        }
+    }
+}
