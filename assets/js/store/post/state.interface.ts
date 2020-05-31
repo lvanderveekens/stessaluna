@@ -7,5 +7,5 @@ export interface PostState {
 }
 
 export interface Filters {
-    channel: string[]
+    channel?: string[]
 }

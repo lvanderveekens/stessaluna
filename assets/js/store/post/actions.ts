@@ -6,7 +6,8 @@ import { objectToFormData } from "object-to-formdata"
 import { Answer } from "../../exercise/answer/answer.model"
 const queryString = require('query-string');
 
-export const fetchPosts = (channels: string[], limit: number, beforeId?: number, append?: boolean) => {
+export const fetchPosts = (channels?: string[], limit?: number, beforeId?: number, append?: boolean) => {
+  console.log(channels)
   return (dispatch) => {
     dispatch(pending(append))
     axios

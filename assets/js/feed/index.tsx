@@ -10,7 +10,7 @@ interface Props {
   loading: boolean
   posts: Post[]
   filters: Filters
-  fetchPosts: (channels: string[], limit: number, beforeId?: number, append?: boolean) => void
+  fetchPosts: (channels?: string[], limit?: number, beforeId?: number, append?: boolean) => void
   deletePost: (id: number) => void
 }
 

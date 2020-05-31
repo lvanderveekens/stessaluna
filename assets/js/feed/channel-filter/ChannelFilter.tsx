@@ -40,7 +40,7 @@ const ChannelFilter: FC<Props> = ({appliedChannels, applyChannelFilter}) => {
 }
 
 const mapStateToProps = (state: State) => ({
-  appliedChannels: state.post.filters.channel
+  appliedChannels: state.post.filters.channel || []
 })
 
 const actionCreators = {

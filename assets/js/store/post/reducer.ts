@@ -5,7 +5,7 @@ const storedFiltersString = localStorage.getItem('stessaluna:filters');
 
 const initialState = {
   loading: false,
-  filters: storedFiltersString ? JSON.parse(storedFiltersString) : {channel: []},
+  filters: storedFiltersString ? JSON.parse(storedFiltersString) : {},
   data: [],
 }
 
@@ -68,7 +68,7 @@ const postReducer = (state: PostState = initialState, action) => {
         ...state,
         filters: {
           ...state.filters,
-          channel: action.payload.channels
+          channel: action.payload.channels.length ? action.payload.channels : undefined
         }
       }
     }

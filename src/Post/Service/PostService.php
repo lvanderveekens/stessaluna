@@ -24,13 +24,15 @@ class PostService
     }
 
     /**
-     * @param string[] $channels an array of language codes
+     * @param null|string[] $channels an array of channels (language codes) to filter by
      * @return Post[] an array containing all posts
      */
-    public function getPosts(array $channels, ?int $beforeId, ?int $limit): array
+    public function getPosts(?array $channels, ?int $beforeId, ?int $limit): array
     {
         $posts = $this->postRepository->getPosts($channels, $beforeId, $limit);
-        usort($posts, function (Post $a, Post $b) { return $a->getCreatedAt() < $b->getCreatedAt(); });
+        usort($posts, function (Post $a, Post $b) {
+            return $a->getCreatedAt() < $b->getCreatedAt();
+        });
         return $posts;
     }
 
