@@ -17,8 +17,6 @@ interface Props {
 
 const Feed: FC<Props> = ({loading, posts, onLoadMore, onDeletePost}) => {
 
-  console.log(posts)
-
   return (
     <div className={styles.feed}>
       <div className={styles.filters}>

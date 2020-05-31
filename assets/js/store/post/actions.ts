@@ -6,11 +6,14 @@ import { objectToFormData } from "object-to-formdata"
 import { Answer } from "../../exercise/answer/answer.model"
 const queryString = require('query-string');
 
-export const fetchPosts = (limit: number, beforeId?: number, append?: boolean) => {
+export const fetchPosts = (channels: string[], limit: number, beforeId?: number, append?: boolean) => {
   return (dispatch) => {
     dispatch(pending(append))
     axios
-      .get(queryString.stringifyUrl({url: "/api/posts", query: {limit, beforeId}}))
+      .get(queryString.stringifyUrl(
+        {url: "/api/posts", query: {channels, limit, beforeId}},
+        {arrayFormat: 'bracket'}
+      ))
       .then((res) => {
         dispatch(success(res.data, append))
       })

@@ -26,9 +26,10 @@ class PostRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param string[] $channels an array of language codes
      * @return Post[] all posts
      */
-    public function getPosts(?int $beforeId, ?int $limit): array
+    public function getPosts(array $channels, ?int $beforeId, ?int $limit): array
     {
         // using DQL here to select everything with one big query
         $qb = $this->getEntityManager()->createQueryBuilder()
@@ -37,7 +38,9 @@ class PostRepository extends ServiceEntityRepository
             ->leftJoin("p.exercise", "e")
             ->leftJoin("e.answers", "a")
             ->leftJoin("p.comments", "c")
-            ->orderBy('p.id', 'DESC');
+            ->orderBy('p.id', 'DESC')
+            ->where("p.channel IN (:channels)")
+            ->setParameter("channels", $channels);
 
         if ($beforeId != null) {
             $qb->where("p.id < ${beforeId}");

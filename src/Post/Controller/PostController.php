@@ -45,6 +45,7 @@ class PostController extends AbstractController
     public function getPosts(Request $request): JsonResponse
     {
         $posts = $this->postService->getPosts(
+            $request->query->get('channels'),
             (int)$request->query->get('beforeId'),
             (int)$request->query->get('limit')
         );

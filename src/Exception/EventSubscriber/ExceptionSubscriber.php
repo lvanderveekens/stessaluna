@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Stessaluna\Exception\EventSubscriber;
 
+use Psr\Log\LoggerInterface;
 use Stessaluna\Exception\NotAuthorException;
 use Stessaluna\Exception\NotFoundException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -15,6 +16,14 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
+
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     public static function getSubscribedEvents()
     {
         return array(
@@ -25,6 +34,8 @@ class ExceptionSubscriber implements EventSubscriberInterface
     public function onExceptionEvent(ExceptionEvent $event)
     {
         $exception = $event->getThrowable();
+        $this->logger->error($exception);
+
         $response = new JsonResponse();
 
         if ($exception instanceof HttpExceptionInterface) {

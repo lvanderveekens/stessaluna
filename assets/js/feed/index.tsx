@@ -10,7 +10,7 @@ interface Props {
   loading: boolean
   posts: Post[]
   filters: Filters
-  fetchPosts: (limit: number, beforeId?: number, append?: boolean) => void
+  fetchPosts: (channels: string[], limit: number, beforeId?: number, append?: boolean) => void
   deletePost: (id: number) => void
 }
 
@@ -19,12 +19,12 @@ const FETCH_SIZE = 2;
 const FeedContainer: FC<Props> = ({loading, posts, filters, fetchPosts, deletePost}) => {
 
   useEffect(() => {
-    fetchPosts(FETCH_SIZE)
+    fetchPosts(filters.channel, FETCH_SIZE)
   }, [filters])
 
   const handleLoadMore = () => {
     const oldestPostIdInFeed = Math.min(...posts.map((post) => post.id))
-    fetchPosts(FETCH_SIZE, oldestPostIdInFeed, true)
+    fetchPosts(filters.channel, FETCH_SIZE, oldestPostIdInFeed, true)
   }
 
   return (
