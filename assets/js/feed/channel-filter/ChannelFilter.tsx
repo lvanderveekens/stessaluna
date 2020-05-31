@@ -30,7 +30,10 @@ const ChannelFilter: FC<Props> = ({appliedChannels, applyChannelFilter}) => {
     <div className={styles.channelFilter}>
       <button className={cx(styles.button, {on: appliedChannels.length})} onClick={openModal}>
         {appliedChannels.length == 0 && <>Channel</>}
-        {appliedChannels.length > 0 && appliedChannels.map((c) => ISO6391.getName(c)).join()}
+        {appliedChannels.length > 0 && appliedChannels
+          .map((c) => ISO6391.getName(c))
+          .sort((a, b) => (a > b ? 1 : b > a ? -1 : 0))
+          .join()}
       </button>
       {showModal && (
         <ChannelFilterModal appliedChannels={appliedChannels} onApply={handleApply} onClose={closeModal}/>

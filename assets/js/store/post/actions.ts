@@ -9,14 +9,14 @@ const queryString = require('query-string');
 export const fetchPosts = (channels?: string[], limit?: number, beforeId?: number, append?: boolean) => {
   console.log(channels)
   return (dispatch) => {
-    dispatch(pending(append))
+    dispatch(pending())
     axios
       .get(queryString.stringifyUrl(
         {url: "/api/posts", query: {channels, limit, beforeId}},
         {arrayFormat: 'bracket'}
       ))
       .then((res) => {
-        dispatch(success(res.data, append))
+        dispatch(success(res.data))
       })
       .catch((e) => {
         dispatch(error())
@@ -24,11 +24,11 @@ export const fetchPosts = (channels?: string[], limit?: number, beforeId?: numbe
       })
   }
 
-  function pending(append) {
+  function pending() {
     return {type: ActionTypes.FETCH_POSTS_PENDING, payload: {append}}
   }
-  function success(posts, append) {
-    return {type: ActionTypes.FETCH_POSTS_SUCCESS, payload: {posts, append}}
+  function success(posts) {
+    return {type: ActionTypes.FETCH_POSTS_SUCCESS, payload: {posts, append, limit}}
   }
   function error() {
     return { type: ActionTypes.FETCH_POSTS_ERROR }

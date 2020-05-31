@@ -41,12 +41,12 @@ class PostRepository extends ServiceEntityRepository
             ->orderBy('p.id', 'DESC');
 
         if ($channels != null) {
-            $qb->where("p.channel IN (:channels)")
+            $qb->andWhere("p.channel IN (:channels)")
                 ->setParameter("channels", $channels);
         }
 
         if ($beforeId != null) {
-            $qb->where("p.id < ${beforeId}");
+            $qb->andWhere("p.id < ${beforeId}");
         }
         if ($limit != null) {
             $qb->setMaxResults($limit);

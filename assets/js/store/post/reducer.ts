@@ -6,6 +6,7 @@ const storedFiltersString = localStorage.getItem('stessaluna:filters');
 const initialState = {
   loading: false,
   filters: storedFiltersString ? JSON.parse(storedFiltersString) : {},
+  hasNextPage: true,
   data: [],
 }
 
@@ -15,13 +16,18 @@ const postReducer = (state: PostState = initialState, action) => {
       return {
         ...state,
         loading: true,
-        data: action.payload.append ? [...state.data] : []
+        data: action.payload.append
+          ? [...state.data]
+          : []
       }
     case ActionTypes.FETCH_POSTS_SUCCESS:
       return {
         ...state,
         loading: false,
-        data: action.payload.append ? [...state.data, ...action.payload.posts] : [...action.payload.posts],
+        hasNextPage: action.payload.posts.length === action.payload.limit,
+        data: action.payload.append
+          ? [...state.data, ...action.payload.posts]
+          : [...action.payload.posts],
       }
     case ActionTypes.FETCH_POSTS_ERROR:
       return {
@@ -42,7 +48,9 @@ const postReducer = (state: PostState = initialState, action) => {
       return {
         ...state,
         data: state.data.map((post) =>
-          post.id === action.payload.postId ? { ...post, comments: [...post.comments, action.payload.comment] } : post
+          post.id === action.payload.postId
+            ? {...post, comments: [...post.comments, action.payload.comment]}
+            : post
         ),
       }
     case ActionTypes.DELETE_COMMENT_SUCCESS:
@@ -50,7 +58,7 @@ const postReducer = (state: PostState = initialState, action) => {
         ...state,
         data: state.data.map((post) =>
           post.id === action.payload.postId
-            ? { ...post, comments: post.comments.filter((comment) => comment.id !== action.payload.commentId) }
+            ? {...post, comments: post.comments.filter((comment) => comment.id !== action.payload.commentId)}
             : post
         ),
       }
@@ -59,7 +67,9 @@ const postReducer = (state: PostState = initialState, action) => {
       return {
         ...state,
         data: state.data.map((post) =>
-          post.id === exercisePost.id ? { ...post, exercise: { ...action.payload.exercise } } : post
+          post.id === exercisePost.id
+            ? { ...post, exercise: { ...action.payload.exercise } }
+            : post
         ),
       }
     }
@@ -68,7 +78,9 @@ const postReducer = (state: PostState = initialState, action) => {
         ...state,
         filters: {
           ...state.filters,
-          channel: action.payload.channels.length ? action.payload.channels : undefined
+          channel: action.payload.channels.length
+            ? action.payload.channels
+            : undefined
         }
       }
     }

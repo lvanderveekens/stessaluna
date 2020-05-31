@@ -9,14 +9,15 @@ import {Filters} from "../store/post/state.interface";
 interface Props {
   loading: boolean
   posts: Post[]
+  hasMore: boolean
   filters: Filters
   fetchPosts: (channels?: string[], limit?: number, beforeId?: number, append?: boolean) => void
   deletePost: (id: number) => void
 }
 
-const FETCH_SIZE = 2;
+const FETCH_SIZE = 10;
 
-const FeedContainer: FC<Props> = ({loading, posts, filters, fetchPosts, deletePost}) => {
+const FeedContainer: FC<Props> = ({loading, posts, hasMore, filters, fetchPosts, deletePost}) => {
 
   useEffect(() => {
     fetchPosts(filters.channel, FETCH_SIZE)
@@ -31,6 +32,7 @@ const FeedContainer: FC<Props> = ({loading, posts, filters, fetchPosts, deletePo
     <Feed
       loading={loading}
       posts={posts}
+      hasMore={hasMore}
       onLoadMore={handleLoadMore}
       onDeletePost={deletePost}
     />
@@ -40,6 +42,7 @@ const FeedContainer: FC<Props> = ({loading, posts, filters, fetchPosts, deletePo
 const mapStateToProps = (state: State) => ({
   loading: state.post.loading,
   posts: state.post.data,
+  hasMore: state.post.hasNextPage,
   filters: state.post.filters,
 })
 
