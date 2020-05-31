@@ -27,6 +27,7 @@ const getPreferredCountry = (language) => {
 }
 
 const PREFERRED_COUNTRY_BY_LANGUAGE = {
+  French: "France",
   Dutch: "Netherlands",
   Spanish: "Spain",
   Chinese: "China",

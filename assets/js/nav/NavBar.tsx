@@ -40,7 +40,11 @@ const Navbar: FC<Props> = ({ page, loggedIn, user, logOut }) => {
     } else {
       enableBodyScroll(collapsableNavRef.current)
     }
+    return () => {
+      enableBodyScroll(collapsableNavRef.current)
+    }
   }, [expanded])
+
 
   return (
     <>

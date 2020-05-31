@@ -1,16 +1,21 @@
-import React, { FC } from "react"
+import React, {FC} from "react"
 import { connect } from "react-redux"
 import { Redirect, Route } from "react-router-dom"
 
 interface Props {
+  component?: any
+  render?: (props) => void
   loggedIn: boolean
 }
 
-const PrivateRoute: FC<Props> = ({ loggedIn, ...rest }) => {
-  if (!loggedIn) {
-    return <Redirect to="/login" />
-  }
-  return <Route {...rest} />
+const PrivateRoute: FC<Props> = ({component: Component, render, loggedIn, ...rest}) => {
+  return (
+    <Route {...rest} render={props => (
+      loggedIn
+        ? (render ? render(props) : <Component {...props}/>)
+        : <Redirect to="/login"/>
+    )}/>
+  )
 }
 
 const mapStateToProps = (state) => ({

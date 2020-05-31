@@ -12,14 +12,18 @@ interface Props {
 const RegistrationPage = ({ register }) => {
 
   return (
-    <Container>
-      <Row>
-        <Col className={styles.centered} sm={6} md={4} lg={4} xl={3}>
-          <h4 className="mb-3">Register</h4>
-          <RegistrationForm onSubmit={({ username, password, country }) => { register(username, password, country) }} />
-        </Col>
-      </Row>
-    </Container>
+    <div className={styles.registrationPage}>
+      <Container>
+        <Row>
+          <Col className={styles.centered} sm={6} md={4} lg={4} xl={3}>
+            <h4 className="mb-3">Registration</h4>
+            <RegistrationForm onSubmit={({username, password, country}) => {
+              register(username, password, country)
+            }}/>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

@@ -6,6 +6,8 @@ import { Link } from "react-router-dom"
 import { logIn } from "../store/auth/actions"
 import LoginForm from "./LoginForm"
 import styles from "./LoginPage.scss?module"
+import logoPath from "../../images/logo.svg"
+
 
 interface Props {
   history: any
@@ -27,7 +29,7 @@ const LoginPage: FunctionComponent<Props> = ({ history, logIn }) => {
   }
 
   return (
-    <>
+    <div className={styles.loginPage}>
       <Helmet>
         <style>{`body { background-color: ${styles.stessalunaBrandSecondary}; }`}</style>
       </Helmet>
@@ -35,7 +37,9 @@ const LoginPage: FunctionComponent<Props> = ({ history, logIn }) => {
         <Row>
           <Col className={styles.centered} sm={6} md={4} lg={4} xl={3}>
             <div className={styles.header}>
-              <h5>Welcome to</h5>
+              <div className={styles.logoWrapper}>
+                <img src={logoPath} alt="Logo" />
+              </div>
               <h1>Stessaluna</h1>
             </div>
             <LoginForm onSubmit={handleSubmit} />
@@ -46,7 +50,7 @@ const LoginPage: FunctionComponent<Props> = ({ history, logIn }) => {
           </Col>
         </Row>
       </Container>
-    </>
+    </div>
   )
 }
 

@@ -4,21 +4,32 @@
     stessalunaBrandSecondary: $brand-secondary;
 }
 
-.errorMessage {
-    color: #dc3545
+.loginPage {
+
+    .logoWrapper {
+        width: 100%;
+
+        img {
+            width: 50%;
+        }
+    }
+
+    .errorMessage {
+        color: #dc3545
+    }
+
+    .centered {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .header {
+        margin-bottom: 3rem;
+        text-align: center;
+
+        color: $brand-primary;
+    }
 }
 
-.centered {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.header {
-    margin-bottom: 3rem;
-    text-align: center;
-    ;
-
-    color: $brand-primary;
-}
