@@ -1,34 +1,43 @@
-import React, { FunctionComponent } from 'react';
-import { Form } from 'react-bootstrap';
-import { Formik, FormikValues } from 'formik';
-import * as yup from 'yup';
+import React, {FC, useState} from 'react';
+import {Col, Form} from 'react-bootstrap';
+import {Formik, FormikHelpers} from 'formik';
 import styles from './LoginForm.scss?module';
-import Button from '../button/Button';
+import Button from '../../button/Button';
+import {schema} from "./login-form.schema";
 
 interface Props {
-  onSubmit: (values: FormValues) => void
+  onSubmit: (username: string, password: string) => Promise<void>
 }
 
-export interface FormValues {
-  username: string;
-  password: string;
+interface Values {
+  username: string
+  password: string
 }
 
-const LoginForm: FunctionComponent<Props> = ({ onSubmit }) => {
+const LoginForm: FC<Props> = ({ onSubmit }) => {
 
-  const schema = yup.object({
-    username: yup.string().required("Please fill in your username."),
-    password: yup.string().required("Please fill in your password."),
-  });
+  const [errorMessage, setErrorMessage] = useState("")
+
+  const handleSubmit = ({username, password}: Values, {setSubmitting, resetForm}: FormikHelpers<Values>) => {
+    setErrorMessage("")
+    onSubmit(username, password)
+      .then(() => {
+        resetForm()
+      })
+      .catch((e) => {
+        setErrorMessage(e.response.data.message)
+        setSubmitting(false)
+      })
+  }
 
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       initialValues={{ username: '', password: '' }}
-      validateOnChange={false}
+      isInitialValid={false}
     >
-      {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
+      {({handleSubmit, handleChange, handleBlur, values, errors, touched, isSubmitting, isValid}) => (
         <Form noValidate className={styles.loginForm} onSubmit={handleSubmit}>
           <Form.Group>
             <Form.Label>Username</Form.Label>
@@ -58,7 +67,10 @@ const LoginForm: FunctionComponent<Props> = ({ onSubmit }) => {
               <div className="invalid-feedback">{errors.password}</div>
             )}
           </Form.Group>
-          <Button className={styles.submitButton} variant="light" type="submit">Log in</Button>
+          <Button className={styles.submitButton} variant="light" type="submit" disabled={!isValid || isSubmitting}>
+            Log in
+          </Button>
+          {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
         </Form>
       )}
     </Formik>
