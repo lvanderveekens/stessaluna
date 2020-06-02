@@ -30,6 +30,9 @@ const Navbar: FC<Props> = ({ page, loggedIn, user, logOut }) => {
 
   useEffect(() => {
     document.body.style.paddingTop = `${topBarRef.current.clientHeight}px`
+    return () => {
+      document.body.style.paddingTop = null
+    }
   }, [])
 
   const collapsableNavRef = useRef(null)

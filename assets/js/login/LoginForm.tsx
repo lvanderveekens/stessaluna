@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { Formik, FormikValues } from 'formik';
 import * as yup from 'yup';
 import styles from './LoginForm.scss?module';
+import Button from '../button/Button';
 
 interface Props {
   onSubmit: (values: FormValues) => void
@@ -57,7 +58,7 @@ const LoginForm: FunctionComponent<Props> = ({ onSubmit }) => {
               <div className="invalid-feedback">{errors.password}</div>
             )}
           </Form.Group>
-          <Button className="btn btn-dark" type="submit">Log in</Button>
+          <Button className={styles.submitButton} variant="light" type="submit">Log in</Button>
         </Form>
       )}
     </Formik>

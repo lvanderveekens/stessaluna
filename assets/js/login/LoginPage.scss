@@ -7,29 +7,24 @@
 .loginPage {
 
     .logoWrapper {
-        width: 100%;
+        //width: 100%;
+
+        text-align: center;
+        margin-bottom: 1rem;
 
         img {
-            width: 50%;
+            width: 40px;
+            height: 40px;
+            margin: 5px 0;
+
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 
     .errorMessage {
         color: #dc3545
-    }
-
-    .centered {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .header {
-        margin-bottom: 3rem;
-        text-align: center;
-
-        color: $brand-primary;
     }
 }
 

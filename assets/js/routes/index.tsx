@@ -31,7 +31,7 @@ const Routes: FC = () => {
         <PrivateRoute exact path="/" component={HomePage} />
         <PrivateRoute exact path="/profile" component={ProfilePage} />
         <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/register" component={RegistrationPage} />
+        <Route exact path="/signup" component={RegistrationPage} />
         <Route component={NotFoundPage} />
       </Switch>
       <PrivateRoute
