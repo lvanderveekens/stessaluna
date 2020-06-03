@@ -49,9 +49,9 @@ const LoginForm: FC<Props> = ({ onSubmit }) => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {errors.username && touched.username && (
-              <div className="invalid-feedback">{errors.username}</div>
-            )}
+            <div className={styles.feedbackWrapper}>
+              {errors.username && touched.username && (<div className="invalid-feedback">{errors.username}</div>)}
+            </div>
           </Form.Group>
           <Form.Group>
             <Form.Label>Password</Form.Label>
@@ -63,9 +63,9 @@ const LoginForm: FC<Props> = ({ onSubmit }) => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {errors.password && touched.password && (
-              <div className="invalid-feedback">{errors.password}</div>
-            )}
+            <div className={styles.feedbackWrapper}>
+              {errors.password && touched.password && (<div className="invalid-feedback">{errors.password}</div>)}
+            </div>
           </Form.Group>
           <Button className={styles.submitButton} variant="light" type="submit" disabled={!isValid || isSubmitting}>
             Log in

@@ -6,6 +6,8 @@ import ChannelFilterModal from "./channel-filter-modal/ChannelFilterModal";
 import { connect } from "react-redux"
 import {applyChannelFilter} from "../../store/post/actions";
 import {State} from "../../store";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faLanguage} from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles)
 
@@ -29,6 +31,7 @@ const ChannelFilter: FC<Props> = ({appliedChannels, applyChannelFilter}) => {
   return (
     <div className={styles.channelFilter}>
       <button className={cx(styles.button, {on: appliedChannels.length})} onClick={openModal}>
+        <span className={styles.languageIcon}><FontAwesomeIcon icon={faLanguage}/></span>
         {appliedChannels.length == 0 && <>Channel</>}
         {appliedChannels.length > 0 && appliedChannels
           .map((c) => ISO6391.getName(c))

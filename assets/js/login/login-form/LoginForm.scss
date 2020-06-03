@@ -1,6 +1,22 @@
 .loginForm {
     color: white;
 
+    :global(.form-group) {
+
+        margin-bottom: 0rem;
+
+        .feedbackWrapper {
+            height: 1.2rem;
+            //margin-top: 0.3rem;
+
+            :global(.invalid-feedback) {
+                display: block;
+                margin: 0;
+            }
+
+        }
+    }
+
     .submitButton {
         width: 100%;
         padding: 0.5rem 0;
