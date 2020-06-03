@@ -132,6 +132,9 @@
     "namshi/jose": {
         "version": "7.2.3"
     },
+    "netresearch/jsonmapper": {
+        "version": "v2.1.0"
+    },
     "nikic/php-parser": {
         "version": "v4.3.0"
     },

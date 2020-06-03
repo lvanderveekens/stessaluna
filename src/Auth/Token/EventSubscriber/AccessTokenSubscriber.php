@@ -5,11 +5,11 @@ namespace Stessaluna\Auth\Token\EventSubscriber;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Events;
-use Lexik\Bundle\JWTAuthenticationBundle\Response\JWTAuthenticationFailureResponse;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AccessTokenSubscriber implements EventSubscriberInterface
 {
@@ -56,7 +56,12 @@ class AccessTokenSubscriber implements EventSubscriberInterface
 
     public function handleAuthenticationFailure(AuthenticationFailureEvent $event)
     {
-        $response = new JWTAuthenticationFailureResponse("Bad credentials");
+        $response = new JsonResponse();
+        $response->setStatusCode(401);
+        $response->setJson(json_encode(array(
+            'status'    => 401,
+            'message'   => "Bad credentials"
+        ))) ;
         $event->setResponse($response);
     }
 }

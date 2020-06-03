@@ -36,10 +36,10 @@ export const logOut = () => {
   }
 }
 
-export const register = (username: string, password: string, country: string) => {
+export const register = (email: string, username: string, password: string, country: string) => {
   return (dispatch) => {
     return axios
-      .post("/api/register", { username, password, country })
+      .post("/api/register", { email, username, password, country })
       .then((res) => {
         dispatch(success())
       })

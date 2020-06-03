@@ -1,6 +1,6 @@
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import {Form} from 'react-bootstrap';
-import {Formik} from 'formik';
+import {Formik, FormikHelpers} from 'formik';
 import {CountryDropdown} from 'react-country-region-selector';
 import {schema} from "./registration-form.schema";
 import styles from "./RegistrationForm.scss?module";
@@ -8,15 +8,37 @@ import ReactCountryFlag from "react-country-flag"
 import Button from "../../button/Button";
 
 interface Props {
-  onSubmit: (email: string, username: string, password: string, country: string) => void
+  onSubmit: (email: string, username: string, password: string, country: string) => Promise<void>
+}
+
+interface Values {
+  email: string
+  username: string
+  password: string
+  confirmPassword: string
+  country: string
 }
 
 const RegistrationForm: FunctionComponent<Props> = ({ onSubmit }) => {
 
+  const [errorMessage, setErrorMessage] = useState("")
+
+  const handleSubmit = ({email, username, password, country}: Values, {setSubmitting, resetForm}: FormikHelpers<Values>) => {
+    setErrorMessage("")
+    onSubmit(email, username, password, country)
+      .then(() => {
+        resetForm()
+      })
+      .catch((e) => {
+        setErrorMessage(e.response.data.message)
+        setSubmitting(false)
+      })
+  }
+
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={values => onSubmit(values.email, values.username, values.password, values.country)}
+      onSubmit={handleSubmit}
       initialValues={{email: '', username: '', password: '', confirmPassword: '', country: ''}}
       isInitialValid={false}
     >
@@ -107,6 +129,7 @@ const RegistrationForm: FunctionComponent<Props> = ({ onSubmit }) => {
           <Button className={styles.submitButton} type="submit" variant="light" disabled={!isValid || isSubmitting}>
             Sign up
           </Button>
+          {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
         </Form>
       )}
     </Formik>

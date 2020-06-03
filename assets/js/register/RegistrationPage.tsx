@@ -8,15 +8,15 @@ import logoPath from "../../images/logo.svg"
 import { History } from 'history';
 
 interface Props {
-  register: (email: string, username: string, password: string, country: string) => void
+  register: (email: string, username: string, password: string, country: string) => Promise<void>
   history: History
 }
 
 const RegistrationPage: FC<Props> = ({register, history}) => {
 
   const handleSubmit = (email, username, password, country) => {
-    // TODO: onSubmit check if username already exists...
-    register(email, username, password, country)
+    // TODO: go to login page?
+    return register(email, username, password, country)
   }
 
   return (
@@ -27,7 +27,7 @@ const RegistrationPage: FC<Props> = ({register, history}) => {
       <Container>
         <Row>
           <Col sm={6} md={4} lg={4} xl={3}>
-            <h4 className="mb-3">Create your account</h4>
+            <h4 className="mb-3">Create an account</h4>
             <RegistrationForm onSubmit={handleSubmit}/>
           </Col>
         </Row>

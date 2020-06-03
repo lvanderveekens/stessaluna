@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
@@ -33,6 +34,8 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     public function onExceptionEvent(ExceptionEvent $event)
     {
+        $this->logger->warning("ON EXCEPTION EVENT");
+
         $exception = $event->getThrowable();
         $this->logger->error($exception);
 
