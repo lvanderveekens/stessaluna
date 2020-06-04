@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {Col, Form} from 'react-bootstrap';
+import {Alert, Col, Form} from 'react-bootstrap';
 import {Formik, FormikHelpers} from 'formik';
 import styles from './LoginForm.scss?module';
 import Button from '../../button/Button';
@@ -16,10 +16,10 @@ interface Values {
 
 const LoginForm: FC<Props> = ({ onSubmit }) => {
 
-  const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const handleSubmit = ({username, password}: Values, {setSubmitting, resetForm}: FormikHelpers<Values>) => {
-    setErrorMessage("")
+    setErrorMessage(null)
     onSubmit(username, password)
       .then(() => {
         resetForm()
@@ -70,7 +70,11 @@ const LoginForm: FC<Props> = ({ onSubmit }) => {
           <Button className={styles.submitButton} variant="light" type="submit" disabled={!isValid || isSubmitting}>
             Log in
           </Button>
-          {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
+          {errorMessage && (
+            <Alert className={styles.alert} variant="danger" onClose={() => setErrorMessage(null)} dismissible>
+              {errorMessage}
+            </Alert>
+          )}
         </Form>
       )}
     </Formik>

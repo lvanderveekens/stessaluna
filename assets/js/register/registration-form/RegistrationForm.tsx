@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useState} from 'react';
-import {Form} from 'react-bootstrap';
+import {Alert, Form} from 'react-bootstrap';
 import {Formik, FormikHelpers} from 'formik';
 import {CountryDropdown} from 'react-country-region-selector';
 import {schema} from "./registration-form.schema";
@@ -21,16 +21,22 @@ interface Values {
 
 const RegistrationForm: FunctionComponent<Props> = ({ onSubmit }) => {
 
-  const [errorMessage, setErrorMessage] = useState("")
+  const [alertMessage, setAlertMessage] = useState(null)
+  const [submitError, setSubmitError] = useState(false)
 
   const handleSubmit = ({email, username, password, country}: Values, {setSubmitting, resetForm}: FormikHelpers<Values>) => {
-    setErrorMessage("")
+    setAlertMessage(null)
+    setSubmitError(false)
+
     onSubmit(email, username, password, country)
       .then(() => {
+        // TODO: link to login page
+        setAlertMessage("Successfully registered")
         resetForm()
       })
       .catch((e) => {
-        setErrorMessage(e.response.data.message)
+        setAlertMessage(e.response.data.message)
+        setSubmitError(true)
         setSubmitting(false)
       })
   }
@@ -129,7 +135,16 @@ const RegistrationForm: FunctionComponent<Props> = ({ onSubmit }) => {
           <Button className={styles.submitButton} type="submit" variant="light" disabled={!isValid || isSubmitting}>
             Sign up
           </Button>
-          {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
+          {alertMessage && (
+            <Alert
+              className={styles.alert}
+              variant={submitError ? "danger" : "success"}
+              onClose={() => setAlertMessage(null)}
+              dismissible
+            >
+              {alertMessage}
+            </Alert>
+          )}
         </Form>
       )}
     </Formik>

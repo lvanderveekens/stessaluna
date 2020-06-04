@@ -1,6 +1,6 @@
 import { Formik } from "formik"
 import React, { FC, useEffect, useState } from "react"
-import { Col, Container, Row, Spinner } from "react-bootstrap"
+import {Alert, Col, Container, Form, Row, Spinner} from "react-bootstrap"
 import ReactCountryFlag from "react-country-flag"
 import { CountryDropdown } from "react-country-region-selector"
 import { connect } from "react-redux"
@@ -21,7 +21,8 @@ interface Props {
 const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
   const [resetAvatar, setResetAvatar] = useState(false)
   const [avatarImage, setAvatarImage] = useState<File>(null)
-  const [feedbackMessage, setFeedbackMessage] = useState(null)
+  const [alertMessage, setAlertMessage] = useState(null)
+  const [submitError, setSubmitError] = useState(false)
 
   useEffect(() => {
     if (user && !user.avatar.includes("avatar-default")) {
@@ -50,14 +51,18 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
 
   const handleSubmit = (values, { resetForm }) => {
     const { displayName, country, avatar } = values
-    setFeedbackMessage(null)
+    setAlertMessage(null)
+    setSubmitError(false)
 
     updateProfile(country, resetAvatar, avatar, displayName)
       .then(() => {
-        setFeedbackMessage("Saved")
+        setAlertMessage("Profile saved")
         resetForm()
       })
-      .catch((error) => setFeedbackMessage(error))
+      .catch((error) => {
+        setAlertMessage(error)
+        setSubmitError(true)
+      })
   }
 
   return (
@@ -144,12 +149,20 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
                     <Button className={styles.saveButton} type="submit" variant="light" disabled={!isValid || isSubmitting}>
                       Save
                     </Button>
+                    {alertMessage && (
+                      <Alert
+                        className={styles.alert}
+                        variant={submitError ? "danger" : "success"}
+                        onClose={() => setAlertMessage(null)}
+                        dismissible
+                      >
+                        {alertMessage}
+                      </Alert>
+                    )}
                   </form>
                 )}
               </Formik>
             )}
-            {/* TODO: update feedback message */}
-            {feedbackMessage && <div>{feedbackMessage}</div>}
           </Col>
         </Row>
       </Container>

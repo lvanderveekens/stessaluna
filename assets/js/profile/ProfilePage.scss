@@ -21,6 +21,15 @@
 
     .saveButton {
         width: 100%;
-        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .alert {
+        :global(button.close) {
+            span:first-child {
+                position: relative;
+                top: -1px;
+            }
+        }
     }
 }
