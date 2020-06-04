@@ -22,6 +22,7 @@ class UserDtoConverter
     {
         $dto = new UserDto();
         $dto->id = $user->getId();
+        $dto->email = $user->getEmail();
         $dto->username = $user->getUsername();
         $dto->displayName = $user->getDisplayName();
         $dto->country = $user->getCountry();

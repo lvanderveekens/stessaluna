@@ -82,7 +82,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
                 enableReinitialize
                 onSubmit={handleSubmit}
               >
-                {({ values, setFieldValue, handleSubmit, handleChange }) => (
+                {({values, setFieldValue, handleSubmit, handleChange, isValid, isSubmitting}) => (
                   <form className="mb-3" onSubmit={handleSubmit}>
                     <ImageInput
                       className={styles.imageInput}
@@ -90,8 +90,28 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
                       onChange={handleAvatarChange(setFieldValue)}
                       shape="circle"
                       overlayDisabled={avatarImage && avatarImage.name.includes("avatar-default")}
+                      label="Avatar"
                     />
-                    <div className={styles.username}>@{user.username}</div>
+                    <div className="form-group">
+                      <label htmlFor="email">Email</label>
+                      <input
+                        name="email"
+                        type="text"
+                        className="form-control"
+                        value={user.email}
+                        disabled
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="username">Username</label>
+                      <input
+                        name="username"
+                        type="text"
+                        className="form-control"
+                        value={user.username}
+                        disabled
+                      />
+                    </div>
                     <div className="form-group">
                       <label htmlFor="displayName">Display name (optional)</label>
                       <input
@@ -121,13 +141,14 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
                         />
                       </div>
                     </div>
-                    <Button className={styles.saveButton} type="submit" variant="light">
+                    <Button className={styles.saveButton} type="submit" variant="light" disabled={!isValid || isSubmitting}>
                       Save
                     </Button>
                   </form>
                 )}
               </Formik>
             )}
+            {/* TODO: update feedback message */}
             {feedbackMessage && <div>{feedbackMessage}</div>}
           </Col>
         </Row>

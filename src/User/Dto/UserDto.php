@@ -6,6 +6,8 @@ class UserDto
 {
     public int $id;
 
+    public string $email;
+
     public string $username;
 
     public ?string $displayName;

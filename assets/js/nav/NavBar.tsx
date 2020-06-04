@@ -1,30 +1,29 @@
-import { faBars, faEdit, faHome, faTimes } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock"
+import {faUser, faBars, faEdit, faHome, faTimes} from "@fortawesome/free-solid-svg-icons"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {disableBodyScroll, enableBodyScroll} from "body-scroll-lock"
 import classNames from "classnames/bind"
-import React, { FC, useEffect, useRef, useState } from "react"
-import { Nav as BootstrapNav, Navbar as BootstrapNavbar } from "react-bootstrap"
-import { RotateSpinLoader } from "react-css-loaders"
-import { connect } from "react-redux"
+import React, {FC, useEffect, useRef, useState} from "react"
+import {Nav as BootstrapNav, Navbar as BootstrapNavbar} from "react-bootstrap"
+import {connect} from "react-redux"
 import MediaQuery from "react-responsive"
-import { withRouter } from "react-router"
-import { Link } from "react-router-dom"
+import {withRouter} from "react-router"
+import {Link} from "react-router-dom"
 import logoPath from "../../images/logo.svg"
 import CustomToggle from "../dropdown/custom-toggle/CustomToggle"
-import { State } from "../store"
-import { logOut } from "../store/auth/actions"
+import {State} from "../store"
+import {logOut} from "../store/auth/actions"
 import User from "../user/user.interface"
 import styles from "./Navbar.scss?module"
+
 const cx = classNames.bind(styles)
 
 interface Props {
   page: string
   loggedIn: boolean
-  user?: User
   logOut: () => void
 }
 
-const Navbar: FC<Props> = ({ page, loggedIn, user, logOut }) => {
+const Navbar: FC<Props> = ({page, loggedIn, logOut}) => {
   const [expanded, setExpanded] = useState(false)
   const topBarRef = useRef(null)
 
@@ -48,6 +47,12 @@ const Navbar: FC<Props> = ({ page, loggedIn, user, logOut }) => {
     }
   }, [expanded])
 
+  const closeMenu = () => setExpanded(false)
+
+  const handleLogOutClick = () => {
+    closeMenu()
+    logOut()
+  }
 
   return (
     <>
@@ -62,7 +67,7 @@ const Navbar: FC<Props> = ({ page, loggedIn, user, logOut }) => {
           <div className="d-flex align-items-center">
             <BootstrapNavbar.Brand className={styles.brand}>
               <Link to="/">
-                <img className={styles.logo} src={logoPath} alt="Logo" />
+                <img className={styles.logo} src={logoPath} alt="Logo"/>
                 <MediaQuery query="(min-width: 992px)">
                   <span>Stessaluna</span>
                 </MediaQuery>
@@ -74,38 +79,38 @@ const Navbar: FC<Props> = ({ page, loggedIn, user, logOut }) => {
             {loggedIn && !expanded && (
               <BootstrapNav.Link className={styles.newPostLink} as={Link} to="/create/post">
                 <span className={styles.createPostIcon}>
-                  <FontAwesomeIcon icon={faEdit} />
+                  <FontAwesomeIcon icon={faEdit}/>
                 </span>
               </BootstrapNav.Link>
             )}
             <BootstrapNavbar.Toggle className={styles.toggle} as={CustomToggle} aria-controls="collapsable-nav">
               {expanded ? (
-                <FontAwesomeIcon style={{ fontSize: "1.5rem" }} icon={faTimes} />
+                <FontAwesomeIcon style={{fontSize: "1.5rem"}} icon={faTimes}/>
               ) : (
-                <FontAwesomeIcon icon={faBars} />
+                <FontAwesomeIcon icon={faBars}/>
               )}
             </BootstrapNavbar.Toggle>
           </div>
         </div>
         <BootstrapNavbar.Collapse id="collapsable-nav" ref={collapsableNavRef}>
           <BootstrapNav
-            className={cx("mr-auto", { expanded })}
-            style={expanded ? { height: `${window.innerHeight - topBarRef.current.clientHeight}px` } : {}}
+            className={cx("mr-auto", {expanded})}
+            style={expanded ? {height: `${window.innerHeight - topBarRef.current.clientHeight}px`} : {}}
+            onSelect={() => setExpanded(false)}
           >
-            <BootstrapNav.Link as={Link} to="/">
+            <BootstrapNav.Link as={Link} to="/" onClick={closeMenu}>
               <span className={styles.icon}>
-                <FontAwesomeIcon icon={faHome} />
+                <FontAwesomeIcon icon={faHome}/>
               </span>
               Home
             </BootstrapNav.Link>
-            <BootstrapNav.Link className={styles.profileLink} as={Link} to="/profile">
+            <BootstrapNav.Link className={styles.profileLink} as={Link} to="/profile" onClick={closeMenu}>
               <span className={styles.icon}>
-                {!user && <RotateSpinLoader className={styles.loader} />}
-                {user && <img className={styles.avatar} src={user.avatar} />}
+                <FontAwesomeIcon icon={faUser}/>
               </span>
               Profile
             </BootstrapNav.Link>
-            <BootstrapNav.Link className={styles.logOutLink} as={Link} to="/login" onClick={() => logOut()}>
+            <BootstrapNav.Link className={styles.logOutLink} as={Link} to="/login" onClick={handleLogOutClick}>
               Log out
             </BootstrapNav.Link>
           </BootstrapNav>
@@ -117,7 +122,6 @@ const Navbar: FC<Props> = ({ page, loggedIn, user, logOut }) => {
 
 const mapStateToProps = (state: State) => ({
   loggedIn: state.auth.loggedIn,
-  user: state.auth.user,
 })
 
 const actionCreators = {

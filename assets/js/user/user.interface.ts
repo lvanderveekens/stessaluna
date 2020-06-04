@@ -1,5 +1,6 @@
 interface User {
   id: number
+  email: string
   username: string
   displayName?: string
   country: string

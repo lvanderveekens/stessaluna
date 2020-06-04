@@ -12,9 +12,19 @@ interface Props {
   onChange: (image?: File) => void
   shape?: "square" | "circle"
   overlayDisabled?: boolean
+  label?: string
 }
 
-const ImageInput: FC<Props> = ({ className, value, onChange, shape = "square", overlayDisabled = false }) => {
+const ImageInput: FC<Props> = (
+  {
+    className,
+    value,
+    onChange,
+    shape = "square",
+    overlayDisabled = false,
+    label = "Upload image"
+  }
+) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [inputId] = useState<string>(() => `input${nextId()}`)
   const [src, setSrc] = useState(null)
@@ -48,7 +58,7 @@ const ImageInput: FC<Props> = ({ className, value, onChange, shape = "square", o
         <label className={styles.uploadImageWrapper} htmlFor={inputId}>
           <div className={styles.uploadImage}>
             <FontAwesomeIcon icon={faUpload} />
-            <div>Upload image</div>
+            <div>{label}</div>
           </div>
         </label>
       )}
