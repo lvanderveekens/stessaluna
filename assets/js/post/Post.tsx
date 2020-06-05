@@ -48,7 +48,6 @@ const Post: FunctionComponent<Props> = ({
                                           user,
                                         }) => {
   const [showComments, setShowComments] = useState(false)
-  // TODO: this is here in order to keep state when comment section is unmounted... is there a better way?
   const [showAllComments, setShowAllComments] = useState(false)
   const [numberOfPreviewComments, setNumberOfPreviewComments] = useState(1)
 

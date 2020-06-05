@@ -69,13 +69,13 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
     <div className={styles.profilePage}>
       <Navbar page="Profile" />
       <Container className={styles.content}>
+        {loading && (
+          <span className={styles.spinner}>
+            <Spinner animation="border" />
+          </span>
+        )}
         <Row className="justify-content-center">
           <Col className={styles.centered} sm={8} md={6} lg={5} xl={5}>
-            {loading && (
-              <span style={{ padding: "0 0.5rem" }}>
-                <Spinner animation="border" variant="warning" />
-              </span>
-            )}
             {user && (
               // TODO: move into separate form component
               <Formik
