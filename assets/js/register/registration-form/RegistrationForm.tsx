@@ -6,6 +6,7 @@ import {schema} from "./registration-form.schema";
 import styles from "./RegistrationForm.scss?module";
 import ReactCountryFlag from "react-country-flag"
 import Button from "../../button/Button";
+import {Link} from "react-router-dom"
 
 interface Props {
   onSubmit: (email: string, username: string, password: string, country: string) => Promise<void>
@@ -21,22 +22,20 @@ interface Values {
 
 const RegistrationForm: FunctionComponent<Props> = ({ onSubmit }) => {
 
-  const [alertMessage, setAlertMessage] = useState(null)
-  const [submitError, setSubmitError] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState(null)
 
   const handleSubmit = ({email, username, password, country}: Values, {setSubmitting, resetForm}: FormikHelpers<Values>) => {
-    setAlertMessage(null)
-    setSubmitError(false)
+    setSubmitSuccess(false)
+    setSubmitError(null)
 
     onSubmit(email, username, password, country)
       .then(() => {
-        // TODO: link to login page
-        setAlertMessage("Successfully registered")
+        setSubmitSuccess(true)
         resetForm()
       })
       .catch((e) => {
-        setAlertMessage(e.response.data.message)
-        setSubmitError(true)
+        setSubmitError(e.response.data.message)
         setSubmitting(false)
       })
   }
@@ -135,14 +134,15 @@ const RegistrationForm: FunctionComponent<Props> = ({ onSubmit }) => {
           <Button className={styles.submitButton} type="submit" variant="light" disabled={!isValid || isSubmitting}>
             Sign up
           </Button>
-          {alertMessage && (
-            <Alert
-              className={styles.alert}
-              variant={submitError ? "danger" : "success"}
-              onClose={() => setAlertMessage(null)}
-              dismissible
-            >
-              {alertMessage}
+          {submitSuccess && (
+            <Alert className={styles.alert} variant="success" onClose={() => setSubmitSuccess(false)} dismissible>
+              Registration successful. <Alert.Link as={Link} to="/login">Click here</Alert.Link> to go to the login
+              page.
+            </Alert>
+          )}
+          {submitError && (
+            <Alert className={styles.alert} variant="danger" onClose={() => setSubmitError(null)} dismissible>
+              {submitError}
             </Alert>
           )}
         </Form>
