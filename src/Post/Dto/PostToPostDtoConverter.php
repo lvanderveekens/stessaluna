@@ -33,7 +33,7 @@ class PostToPostDtoConverter
         $this->imageStorage = $imageStorage;
     }
 
-    public function convert(Post $post, User $user): PostDto
+    public function convert(Post $post, ?User $user): PostDto
     {
         $dto = new PostDto();
         $dto->id = $post->getId();

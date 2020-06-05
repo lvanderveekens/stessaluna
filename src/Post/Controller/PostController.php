@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stessaluna\Post\Controller;
 
 use Psr\Log\LoggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Stessaluna\Post\Dto\CreatePostToPostConverter;
 use Stessaluna\Post\Dto\PostToPostDtoConverter;
 use Stessaluna\Post\Dto\RequestToCreatePostConverter;
@@ -18,6 +19,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/posts")
+ *
+ * @IsGranted("IS_AUTHENTICATED_ANONYMOUSLY")
  */
 class PostController extends AbstractController
 {
@@ -57,6 +60,8 @@ class PostController extends AbstractController
 
     /**
      * @Route(methods={"POST"})
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function createPost(Request $request): JsonResponse
     {
@@ -70,6 +75,8 @@ class PostController extends AbstractController
 
     /**
      * @Route("/{id}", methods={"DELETE"})
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function deletePostById(int $id): Response
     {

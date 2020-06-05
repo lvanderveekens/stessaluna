@@ -28,7 +28,7 @@ const Routes: FC = () => {
   return (
     <>
       <Switch location={getLocation()}>
-        <PrivateRoute exact path="/" component={HomePage} />
+        <Route exact path="/" component={HomePage} />
         <PrivateRoute exact path="/profile" component={ProfilePage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/signup" component={RegistrationPage} />

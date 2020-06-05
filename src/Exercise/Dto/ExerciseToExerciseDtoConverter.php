@@ -30,10 +30,10 @@ class ExerciseToExerciseDtoConverter
         $this->imageStorage = $imageStorage;
     }
 
-    public function convert(Exercise $exercise, User $user): ExerciseDto
+    public function convert(Exercise $exercise, ?User $user): ExerciseDto
     {
         $answers = $exercise->getAnswers()->toArray();
-        $answer = $this->findAnswerFromUser($answers, $user);
+        $answer = $user ? $this->findAnswerFromUser($answers, $user) : null;
 
         $dto = null;
         if ($exercise instanceof AorbExercise) {
