@@ -1,4 +1,4 @@
-import {faUser, faBars, faEdit, faHome, faTimes} from "@fortawesome/free-solid-svg-icons"
+import {faBars, faEdit, faHome, faTimes, faUser} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {disableBodyScroll, enableBodyScroll} from "body-scroll-lock"
 import classNames from "classnames/bind"
@@ -12,7 +12,6 @@ import logoPath from "../../images/logo.svg"
 import CustomToggle from "../dropdown/custom-toggle/CustomToggle"
 import {State} from "../store"
 import {logOut} from "../store/auth/actions"
-import User from "../user/user.interface"
 import styles from "./Navbar.scss?module"
 
 const cx = classNames.bind(styles)
@@ -112,11 +111,21 @@ const Navbar: FC<Props> = ({page, loggedIn, logOut}) => {
                 Profile
               </BootstrapNav.Link>
             )}
-            {loggedIn && (
-              <BootstrapNav.Link className={styles.logOutLink} as={Link} to="/" onClick={handleLogOutClick}>
-                Log out
-              </BootstrapNav.Link>
-            )}
+            <div className={styles.footer}>
+              {loggedIn
+                ? (
+                  <BootstrapNav.Link as={Link} to="/" onClick={handleLogOutClick}>Log out</BootstrapNav.Link>)
+                : (
+                  <div className={styles.loginSignupWrapper}>
+                    <BootstrapNav.Link as={Link} to="/login">
+                      Log in
+                    </BootstrapNav.Link>
+                    <BootstrapNav.Link className={styles.signupLink} as={Link} to="/signup">
+                      Sign up
+                    </BootstrapNav.Link>
+                  </div>)
+              }
+            </div>
           </BootstrapNav>
         </BootstrapNavbar.Collapse>
       </BootstrapNavbar>

@@ -55,11 +55,11 @@ const Post: FunctionComponent<Props> = (
 
   useEffect(() => {
     if (comments.length > 0) {
-      setShowCommentSection(true)
+      toggleCommentSection()
     }
   }, [])
 
-  const toggleComments = () => {
+  const toggleCommentSection = () => {
     setShowCommentSection(!showCommentSection)
   }
 
@@ -136,7 +136,7 @@ const Post: FunctionComponent<Props> = (
       <div className={styles.activity}>
         {exercise && exercise.answerCount > 0 && <div>Answers: {exercise.answerCount}</div>}
         {comments && comments.length > 0 && (
-          <div className={styles.numberOfComments} onClick={toggleComments}>
+          <div className={styles.numberOfComments} onClick={toggleCommentSection}>
             Comments: {comments.length}
           </div>
         )}

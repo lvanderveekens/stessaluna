@@ -1,128 +1,158 @@
 @import "../../css/colors";
 
 .nav {
-  color: white;
-  background-color: $brand-secondary;
-  padding: 0;
-
-  .topBar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    width: 100%;
-  }
-
-  .brand {
-
-    margin: 0;
-    margin-left: 1rem;
-    margin-right: 0.5rem;
-
-    font-weight: bold;
-
-    a {
-      color: $brand-primary;
-      display: flex;
-      align-items: center;
-
-      &:hover {
-        text-decoration: none;
-      }
-
-      .logo {
-        width: 40px;
-        height: 40px;
-      }
-    }
-  }
-
-  .createPostIcon {
     color: white;
-    font-size: 1.2rem;
-  }
+    background-color: $brand-secondary;
+    padding: 0;
 
-  .toggle {
-    color: white;
-    padding: 0.25rem 1rem;
-    border: none;
+    .topBar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  :global(.navbar-nav) {
-
-    :global(.nav-link) {
-      padding-left: 1rem;
-      display: flex;
-      align-items: center;
-      white-space: nowrap;
-
-      color: white !important;
-      text-decoration: none;
-
-      &:hover {
-        color: rgba(255, 255, 255, 0.5) !important;
-      }
-    }
-
-    &.expanded {
-      :global(.nav-link) {
-        &:first-child {
-          margin-top: 1rem;
-        }
-
-        &:last-child {
-          margin-bottom: 1rem;
-        }
-      }
-
-      .logOutLink {
-        margin-top: auto;
-        margin-right: auto;
-        margin-left: auto;
-        padding: 0;
-      }
-    }
-
-    .icon {
-      display: inline-block;
-      width: 18px;
-      height: 18px;
-      margin: 3px 0; // to get to a default height of 24px
-      margin-right: 0.5rem;
-      color: grey;
-
-      svg {
         width: 100%;
-        height: 100%;
-        vertical-align: top;
-      }
-
-      img {
-        width: 100%;
-        height: 100%;
-        border-radius: 1rem;
-        vertical-align: top;
-      }
     }
 
-    .profileLink {
-      .loader {
-        width: 100%;
-        height: 100%;
+    .brand {
+
         margin: 0;
-        border-width: 4px;
-        border-color: rgba(255, 255, 255, 0.2);
-        border-left-color: white;
-      }
+        margin-left: 1rem;
+        margin-right: 0.5rem;
+
+        font-weight: bold;
+
+        a {
+            color: $brand-primary;
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                text-decoration: none;
+            }
+
+            .logo {
+                width: 40px;
+                height: 40px;
+            }
+        }
     }
 
-  }
+    .createPostIcon {
+        color: white;
+        font-size: 1.2rem;
+    }
 
-  :global(.collapsing) {
-    transition: height 0.2s ease;
-  }
+    .toggle {
+        color: white;
+        padding: 0.25rem 1rem;
+        border: none;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    :global(.navbar-nav) {
+
+        :global(.nav-link) {
+            padding-left: 1rem;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+
+            color: white !important;
+            text-decoration: none;
+
+            &:hover {
+                color: rgba(255, 255, 255, 0.5) !important;
+            }
+        }
+
+        &.expanded {
+            :global(.nav-link) {
+                &:first-child {
+                    margin-top: 1rem;
+                }
+
+                &:last-child {
+                    margin-bottom: 1rem;
+                }
+            }
+
+            .footer {
+                margin-top: auto;
+                padding: 0.5rem 1rem;
+
+                :global(.nav-link) {
+                    margin: 0;
+                    padding: 0;
+                    margin-right: auto;
+                    margin-left: auto;
+
+                }
+
+                .loginSignupWrapper {
+                    display: flex;
+                    justify-content: space-between;
+
+                    :global(.nav-link) {
+                        width: 49%;
+                        margin: 0;
+
+                        display: inline-block;
+                        text-align: center;
+
+                        padding: 0.3rem 0.7rem;
+                    }
+
+                    .signupLink {
+                        border: 1px solid white;
+                        border-radius: 0.5rem;
+
+                        &:hover {
+                            border-color: rgba(255, 255, 255, 0.5);
+                        }
+                    }
+                }
+            }
+        }
+
+        .icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            margin: 3px 0; // to get to a default height of 24px
+            margin-right: 0.5rem;
+            color: grey;
+
+            svg {
+                width: 100%;
+                height: 100%;
+                vertical-align: top;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 1rem;
+                vertical-align: top;
+            }
+        }
+
+        .profileLink {
+            .loader {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                border-width: 4px;
+                border-color: rgba(255, 255, 255, 0.2);
+                border-left-color: white;
+            }
+        }
+
+    }
+
+    :global(.collapsing) {
+        transition: height 0.2s ease;
+    }
 }

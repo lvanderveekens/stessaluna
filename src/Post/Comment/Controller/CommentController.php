@@ -3,6 +3,7 @@
 namespace Stessaluna\Post\Comment\Controller;
 
 use DateTime;
+use Psr\Log\LoggerInterface;
 use Stessaluna\Post\Comment\Dto\CommentDtoConverter;
 use Stessaluna\Post\Comment\Entity\Comment;
 use Stessaluna\Post\Entity\Post;
@@ -19,10 +20,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommentController extends AbstractController
 {
     private CommentDtoConverter $commentConverter;
+    private LoggerInterface $logger;
 
-    public function __construct(CommentDtoConverter $commentConverter)
+    public function __construct(CommentDtoConverter $commentConverter, LoggerInterface $logger)
     {
         $this->commentConverter = $commentConverter;
+        $this->logger = $logger;
     }
 
     /**
@@ -45,6 +48,9 @@ class CommentController extends AbstractController
     public function addComment(int $postId, Request $request): JsonResponse
     {
         $user = $this->getUser();
+
+        $this->logger->warning("Add comment ()");
+        $this->logger->warning(var_dump($user));
 
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository(Post::class)->find($postId);

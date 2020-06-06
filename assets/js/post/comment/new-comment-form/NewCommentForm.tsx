@@ -50,7 +50,7 @@ const NewCommentForm: FunctionComponent<Props> = ({ onSubmit, avatar }) => {
             value={formik.values.text}
             onChange={formik.handleChange("text")}
             onKeyDown={handleKeyDown(formik.isSubmitting, formik.handleSubmit)}
-            placeholder="Write a comment..."
+            placeholder="Add a comment..."
           />
         </div>
         <div className={styles.submit}>

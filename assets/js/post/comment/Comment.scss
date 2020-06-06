@@ -1,8 +1,13 @@
 .comment {
 
+
     font-size: 0.9rem;
     display: flex;
     margin-bottom: 0.5rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 
     .authorTextTimestamp {
         margin-right: 1rem;

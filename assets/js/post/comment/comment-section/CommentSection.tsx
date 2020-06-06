@@ -61,7 +61,10 @@ const CommentSection: FunctionComponent<Props> = ({
                 onDelete={() => deleteComment(comment.id)}
               />
             ))}
-          {user && (<NewCommentForm onSubmit={addComment} avatar={user.avatar}/>)}
+          {user
+            ? (<NewCommentForm onSubmit={addComment} avatar={user.avatar}/>)
+            : (<div>Log in to add a comment</div>)
+          }
         </>
       )}
     </div>
