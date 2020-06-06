@@ -11,7 +11,7 @@ interface Props {
   author: User
   timestamp: string
   text: string
-  user: User
+  user?: User
   onDelete: () => void
 }
 
@@ -28,7 +28,7 @@ const Comment: FunctionComponent<Props> = ({ author, timestamp, text, user, onDe
             <span className={styles.text}>{text}</span>
             <div className={styles.timestamp}>{timestamp}</div>
           </div>
-          {user.id == author.id && (
+          {user && user.id == author.id && (
             <div className={styles.threeDotsMenu}>
               <Dropdown alignRight={true}>
                 <Dropdown.Toggle as={CustomToggle} id="something">

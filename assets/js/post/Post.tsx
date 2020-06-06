@@ -35,30 +35,32 @@ interface Props {
   user?: User
 }
 
-const Post: FunctionComponent<Props> = ({
-                                          id,
-                                          author,
-                                          timestamp,
-                                          channel,
-                                          text,
-                                          image,
-                                          exercise,
-                                          comments,
-                                          onDelete,
-                                          user,
-                                        }) => {
-  const [showComments, setShowComments] = useState(false)
+const Post: FunctionComponent<Props> = (
+  {
+    id,
+    author,
+    timestamp,
+    channel,
+    text,
+    image,
+    exercise,
+    comments,
+    onDelete,
+    user,
+  }
+) => {
+  const [showCommentSection, setShowCommentSection] = useState(false)
   const [showAllComments, setShowAllComments] = useState(false)
   const [numberOfPreviewComments, setNumberOfPreviewComments] = useState(1)
 
   useEffect(() => {
     if (comments.length > 0) {
-      setShowComments(true)
+      setShowCommentSection(true)
     }
   }, [])
 
   const toggleComments = () => {
-    setShowComments(!showComments)
+    setShowCommentSection(!showCommentSection)
   }
 
   const renderUserName = () => {
@@ -92,6 +94,8 @@ const Post: FunctionComponent<Props> = ({
         return <MissingwordExercise {...props} />
     }
   }
+
+  const isCommentSectionLocked = exercise && (!isAnswered(exercise) || user.id != author.id)
 
   return (
     <div className={styles.post}>
@@ -138,14 +142,14 @@ const Post: FunctionComponent<Props> = ({
         )}
       </div>
       <div className={styles.actions}>
-        <div className={styles.addComment} onClick={() => setShowComments(true)}>
+        <div className={styles.addComment} onClick={() => setShowCommentSection(true)}>
           <span className={styles.commentIcon}>
             <FontAwesomeIcon icon={faCommentAlt}/>
           </span>
           Add comment
         </div>
       </div>
-      {showComments && (
+      {showCommentSection && (
         <CommentSection
           postId={id}
           comments={comments}
@@ -153,7 +157,7 @@ const Post: FunctionComponent<Props> = ({
           setShowAll={setShowAllComments}
           numberOfPreviewComments={numberOfPreviewComments}
           setNumberOfPreviewComments={setNumberOfPreviewComments}
-          locked={!user || (exercise && !isAnswered(exercise) && user.id != author.id)}
+          locked={isCommentSectionLocked}
         />
       )}
     </div>

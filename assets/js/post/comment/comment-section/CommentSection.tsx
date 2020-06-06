@@ -13,7 +13,7 @@ interface Props {
   numberOfPreviewComments: number
   showAll: boolean
   setShowAll: (showAll: boolean) => void
-  user: User
+  user?: User
   addComment: (text: string) => Promise<void>
   deleteComment: (id: number) => void
   locked: boolean
@@ -61,7 +61,7 @@ const CommentSection: FunctionComponent<Props> = ({
                 onDelete={() => deleteComment(comment.id)}
               />
             ))}
-          <NewCommentForm onSubmit={addComment} avatar={user.avatar} />
+          {user && (<NewCommentForm onSubmit={addComment} avatar={user.avatar}/>)}
         </>
       )}
     </div>

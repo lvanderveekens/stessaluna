@@ -13,7 +13,7 @@ interface Props {
   setShowAll: (showAll: boolean) => void
   numberOfPreviewComments: number
   setNumberOfPreviewComments: (count: number) => void
-  user: User
+  user?: User
   addComment: (postId: number, text: string) => Promise<void>
   deleteComment: (postId: number, commentId: number) => Promise<void>
   locked: boolean
