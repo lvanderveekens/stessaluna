@@ -6,6 +6,7 @@ import FeedPlaceholder from "./placeholder/FeedPlaceholder";
 import moment from "moment";
 import Post from "../post/Post";
 import ChannelFilter from "./channel-filter/ChannelFilter";
+import Button from "../button/Button";
 
 
 interface Props {
@@ -54,7 +55,7 @@ const Feed: FC<Props> = ({loading, posts, hasMore, onLoadMore, onDeletePost}) =>
       {loading && (<FeedPlaceholder/>)}
       {hasMore && (
         <div className={styles.loadMoreWrapper}>
-          <button onClick={onLoadMore}>Load more</button>
+          <Button variant="transparent" onClick={onLoadMore}>Load more</Button>
         </div>
       )}
     </div>

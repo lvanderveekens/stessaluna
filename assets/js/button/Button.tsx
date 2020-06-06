@@ -5,7 +5,7 @@ const cx = classNames.bind(styles)
 
 interface Props {
   className?: string
-  variant?: "light" | "dark"
+  variant?: "light" | "dark" | "transparent"
 }
 
 const Button: FC<Props & React.ButtonHTMLAttributes<HTMLButtonElement>> = ({

@@ -3,6 +3,7 @@
 .button {
     padding: 0.3rem 0.7rem;
     color: white;
+    font-weight: bold;
 
     border: none;
     border-radius: 0.5rem;
@@ -12,20 +13,21 @@
         outline: none;
     }
 
-    &.dark {
-        background: $brand-secondary;
+    &.transparent {
+        background-color: inherit;
+        border: 1px solid white;
+    }
 
-        &:enabled:hover {
-            background-color: black;
-        }
+    &.dark {
+        background-color: $brand-secondary;
     }
 
     &.light {
-        background: $brand-light;
+        background-color: $brand-light;
+    }
 
-        &:enabled:hover {
-            background-color: #2400a7;
-        }
+    &:enabled:hover {
+        opacity: 0.8;
     }
 
     &:disabled {

@@ -1,0 +1,43 @@
+@import 'assets/css/colors';
+
+.loginSignupFooter {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: $brand-secondary;
+    //color: white;
+    text-align: center;
+
+    padding: 0.5rem 1rem;
+    border-top: 1px solid white;
+
+    display: flex;
+    justify-content: space-between;
+
+    button {
+        //padding: 0.3rem 0.7rem;
+        //font-weight: bold;
+        //
+        //border-radius: 0.5rem;
+        //outline: none;
+        //background: none;
+
+        width: 49%;
+
+        //color: white;
+        //
+        //&.loginButton {
+        //    border-color: white;
+        //}
+        //
+        //&.signupButton {
+        //    border-color: $brand-tertiary;
+        //    background-color: $brand-tertiary;
+        //}
+
+        //&:focus {
+        //    outline: none;
+        //}
+    }
+}

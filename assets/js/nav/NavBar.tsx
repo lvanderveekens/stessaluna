@@ -104,15 +104,19 @@ const Navbar: FC<Props> = ({page, loggedIn, logOut}) => {
               </span>
               Home
             </BootstrapNav.Link>
-            <BootstrapNav.Link className={styles.profileLink} as={Link} to="/profile" onClick={closeMenu}>
+            {loggedIn && (
+              <BootstrapNav.Link className={styles.profileLink} as={Link} to="/profile" onClick={closeMenu}>
               <span className={styles.icon}>
                 <FontAwesomeIcon icon={faUser}/>
               </span>
-              Profile
-            </BootstrapNav.Link>
-            <BootstrapNav.Link className={styles.logOutLink} as={Link} to="/login" onClick={handleLogOutClick}>
-              Log out
-            </BootstrapNav.Link>
+                Profile
+              </BootstrapNav.Link>
+            )}
+            {loggedIn && (
+              <BootstrapNav.Link className={styles.logOutLink} as={Link} to="/" onClick={handleLogOutClick}>
+                Log out
+              </BootstrapNav.Link>
+            )}
           </BootstrapNav>
         </BootstrapNavbar.Collapse>
       </BootstrapNavbar>
