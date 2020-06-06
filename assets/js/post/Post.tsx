@@ -95,7 +95,7 @@ const Post: FunctionComponent<Props> = (
     }
   }
 
-  const isCommentSectionLocked = exercise && (!isAnswered(exercise) || user.id != author.id)
+  const isCommentSectionLocked = exercise && (!isAnswered(exercise) || !user || user.id != author.id)
 
   return (
     <div className={styles.post}>

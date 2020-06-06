@@ -86,9 +86,11 @@
                 :global(.nav-link) {
                     margin: 0;
                     padding: 0;
-                    margin-right: auto;
-                    margin-left: auto;
+                }
 
+                .logoutWrapper {
+                    display: flex;
+                    justify-content: center;
                 }
 
                 .loginSignupWrapper {

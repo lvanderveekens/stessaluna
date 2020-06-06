@@ -114,7 +114,11 @@ const Navbar: FC<Props> = ({page, loggedIn, logOut}) => {
             <div className={styles.footer}>
               {loggedIn
                 ? (
-                  <BootstrapNav.Link as={Link} to="/" onClick={handleLogOutClick}>Log out</BootstrapNav.Link>)
+                  <div className={styles.logoutWrapper}>
+                    <BootstrapNav.Link  as={Link} to="/" onClick={handleLogOutClick}>
+                      Log out
+                    </BootstrapNav.Link>
+                  </div>)
                 : (
                   <div className={styles.loginSignupWrapper}>
                     <BootstrapNav.Link as={Link} to="/login">

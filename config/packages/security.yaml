@@ -23,13 +23,9 @@ security:
       pattern: ^/api/register
       anonymous: true
       stateless: true
-    post:
-      pattern: ^/api/posts
-      anonymous: true
-      stateless: true
     api:
       pattern: ^/api
-      anonymous: false
+      anonymous: true
       stateless: true
       guard:
         authenticators:

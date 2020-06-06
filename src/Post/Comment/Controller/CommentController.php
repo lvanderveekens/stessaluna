@@ -4,6 +4,7 @@ namespace Stessaluna\Post\Comment\Controller;
 
 use DateTime;
 use Psr\Log\LoggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Stessaluna\Post\Comment\Dto\CommentDtoConverter;
 use Stessaluna\Post\Comment\Entity\Comment;
 use Stessaluna\Post\Entity\Post;
@@ -16,6 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/posts/{postId}/comments")
+ *
+ * @IsGranted("IS_AUTHENTICATED_ANONYMOUSLY")
  */
 class CommentController extends AbstractController
 {
@@ -44,14 +47,12 @@ class CommentController extends AbstractController
 
     /**
      * @Route(methods={"POST"})
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function addComment(int $postId, Request $request): JsonResponse
     {
         $user = $this->getUser();
-
-        $this->logger->warning("Add comment ()");
-        $this->logger->warning(var_dump($user));
-
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository(Post::class)->find($postId);
 
@@ -69,6 +70,8 @@ class CommentController extends AbstractController
 
     /**
      * @Route("/{id}", methods={"DELETE"})
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function deleteCommentById(int $id)
     {
