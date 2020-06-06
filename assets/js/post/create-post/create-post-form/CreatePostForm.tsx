@@ -2,7 +2,7 @@ import { faGraduationCap, faImage } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Formik } from "formik"
 import React, { ChangeEvent, FC, useRef, useState } from "react"
-import { Dropdown, Form } from "react-bootstrap"
+import {Alert, Dropdown, Form} from "react-bootstrap"
 import ReactCountryFlag from "react-country-flag"
 import TextareaAutosize from "react-textarea-autosize"
 import Button from "../../../button/Button"
@@ -177,8 +177,16 @@ const CreatePostForm: FC<Props> = ({ onSubmit }) => {
           >
             Post
           </Button>
-          {submitError && <div className="alert alert-danger">Something went wrong. Please try again later.</div>}
-          {/* <div>{JSON.stringify(errors)}</div> */}
+          {submitError && (
+            <Alert
+              className={styles.alert}
+              variant="danger"
+              onClose={() => setSubmitError(false)}
+              dismissible
+            >
+              Something went wrong. Please try again later.
+            </Alert>
+          )}
         </Form>
       )}
     </Formik>
