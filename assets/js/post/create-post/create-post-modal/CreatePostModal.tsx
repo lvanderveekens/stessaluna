@@ -13,7 +13,6 @@ const CreatePostModal: FC<Props> = ({ previousLocation }) => {
   const history = useHistory()
 
   const handleClose = () => {
-    console.log("ON CLICK")
     if (previousLocation) {
       history.push(previousLocation.pathname)
     } else {
@@ -21,11 +20,13 @@ const CreatePostModal: FC<Props> = ({ previousLocation }) => {
     }
   }
 
+  const handleCreated = () => history.push("/")
+
   return (
     <Modal onClose={handleClose}>
       <ModalHeader onClose={handleClose}>Create post</ModalHeader>
       <ModalContent>
-        <CreatePostForm onCreated={handleClose} />
+        <CreatePostForm onCreated={handleCreated}/>
       </ModalContent>
     </Modal>
   )
