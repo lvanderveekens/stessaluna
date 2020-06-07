@@ -20,7 +20,9 @@ const AboutPage: FC = ({}) => {
           <p>Hi 👋🏻, my name is Luciano and I'm the founder of Stessaluna, a social platform for community-driven language learning exercises.</p>
           <p>Practicing a language on a daily basis is fundamental to improvement and with Stessaluna I intended to create such an environment where people can go to and learn or teach a language together for whatever amount of time you have available on a given day.</p>
           <p>If you 👍🏻 what I’m doing and want to share new feature ideas with me or you just want to say Hi, send me an email.</p>
-          <Button className={styles.mailButton} variant="light"><FontAwesomeIcon icon={faPaperPlane}/> Mail me</Button>
+          <div className={styles.mailLinkWrapper}>
+            <a href="mailto:info@stessaluna.com"><FontAwesomeIcon icon={faPaperPlane}/> Mail me</a>
+          </div>
           <p>Or if you ❤️ what I’m doing and you want to support further development, you can buy me a coffee.</p>
           <p>BMAC link</p>
         </Col>
