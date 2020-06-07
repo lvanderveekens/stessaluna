@@ -3,7 +3,6 @@ import styles from "./AboutPage.scss?module";
 import Navbar from "../nav/Navbar";
 import {Col, Container, Row} from "react-bootstrap";
 import meImagePath from "../../images/me.jpg"
-import Button from "../button/Button";
 import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
@@ -24,7 +23,12 @@ const AboutPage: FC = ({}) => {
             <a href="mailto:info@stessaluna.com"><FontAwesomeIcon icon={faPaperPlane}/> Mail me</a>
           </div>
           <p>Or if you ❤️ what I’m doing and you want to support further development, you can buy me a coffee.</p>
-          <p>BMAC link</p>
+          <div className={styles.bmcLinkWrapper}>
+            <a className={styles.bmcLink} target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/lvdveekens">
+              <img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a coffee"/>
+              <span>Buy me a coffee</span>
+            </a>
+          </div>
         </Col>
       </Row>
     </Container>
