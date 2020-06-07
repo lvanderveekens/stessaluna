@@ -1,6 +1,6 @@
 # Stessaluna
 
-A social platform for community-driven language exercises. 🇳🇱🇮🇹🇺🇸
+A social platform for community-driven language learning exercises. 🇳🇱🇮🇹🇺🇸
 
 ## Installation
 
