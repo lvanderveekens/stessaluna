@@ -9,7 +9,7 @@ import ProfilePage from "../profile/ProfilePage"
 import RegistrationPage from "../register/RegistrationPage"
 import {usePrevious} from "../util/hooks"
 import PrivateRoute from "./PrivateRoute"
-import ContactPage from "../contact/ContactPage";
+import AboutPage from "../about/AboutPage";
 
 const Routes: FC = () => {
   const location = useLocation()
@@ -31,7 +31,7 @@ const Routes: FC = () => {
       <Switch location={getLocation()}>
         <Route exact path="/" component={HomePage} />
         <PrivateRoute exact path="/profile" component={ProfilePage} />
-        <Route exact path="/contact" component={ContactPage} />
+        <Route exact path="/about" component={AboutPage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/signup" component={RegistrationPage} />
         <Route component={NotFoundPage} />

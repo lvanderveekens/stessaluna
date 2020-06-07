@@ -1,4 +1,12 @@
-import {faBars, faEdit, faEnvelope, faHome, faTimes, faUser} from "@fortawesome/free-solid-svg-icons"
+import {
+  faBars,
+  faEdit,
+  faEnvelope,
+  faHome, faInfo,
+  faInfoCircle,
+  faTimes,
+  faUserCircle
+} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {disableBodyScroll, enableBodyScroll} from "body-scroll-lock"
 import classNames from "classnames/bind"
@@ -18,12 +26,12 @@ import {useWindowSize} from "../hooks/use-window-size";
 const cx = classNames.bind(styles)
 
 interface Props {
-  page: string
+  pageTitle: string
   loggedIn: boolean
   logOut: () => void
 }
 
-const Navbar: FC<Props> = ({page, loggedIn, logOut}) => {
+const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
   const [expanded, setExpanded] = useState(false)
   const topBarRef = useRef(null)
 
@@ -75,11 +83,11 @@ const Navbar: FC<Props> = ({page, loggedIn, logOut}) => {
                 </MediaQuery>
               </Link>
             </BootstrapNavbar.Brand>
-            <span className={styles.page}>{page}</span>
+            <span className={styles.page}>{pageTitle}</span>
           </div>
           <div className="d-flex align-items-center">
             {loggedIn && !expanded && (
-              <BootstrapNav.Link className={styles.newPostLink} as={Link} to="/create/post">
+              <BootstrapNav.Link className={styles.newPostLink} as={Link} to="/create-post">
                 <span className={styles.createPostIcon}>
                   <FontAwesomeIcon icon={faEdit}/>
                 </span>
@@ -109,16 +117,16 @@ const Navbar: FC<Props> = ({page, loggedIn, logOut}) => {
             {loggedIn && (
               <BootstrapNav.Link className={styles.profileLink} as={Link} to="/profile" onClick={closeMenu}>
               <span className={styles.icon}>
-                <FontAwesomeIcon icon={faUser}/>
+                <FontAwesomeIcon icon={faUserCircle}/>
               </span>
                 Profile
               </BootstrapNav.Link>
             )}
-            <BootstrapNav.Link className={styles.contactLink} as={Link} to="/contact" onClick={closeMenu}>
+            <BootstrapNav.Link className={styles.aboutLink} as={Link} to="/about" onClick={closeMenu}>
               <span className={styles.icon}>
-                <FontAwesomeIcon icon={faEnvelope}/>
+                <FontAwesomeIcon icon={faInfo}/>
               </span>
-              Contact
+              About
             </BootstrapNav.Link>
             <div className={styles.footer}>
               {loggedIn
