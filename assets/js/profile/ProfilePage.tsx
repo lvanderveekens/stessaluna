@@ -67,7 +67,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
 
   return (
     <div className={styles.profilePage}>
-      <Navbar page="Profile" />
+      <Navbar pageTitle="Profile" />
       <Container className={styles.content}>
         {loading && (
           <span className={styles.spinner}>

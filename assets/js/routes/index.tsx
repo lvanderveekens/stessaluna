@@ -16,8 +16,8 @@ const Routes: FC = () => {
   const previousLocation = usePrevious(location)
 
   const getLocation = () => {
-    if (location.pathname === "/create/post") {
-      if (previousLocation && previousLocation.pathname !== "/create/post") {
+    if (location.pathname === "/create-post") {
+      if (previousLocation && previousLocation.pathname !== "/create-post") {
         return previousLocation
       } else {
         return { ...location, pathname: "/" }
@@ -38,7 +38,7 @@ const Routes: FC = () => {
       </Switch>
       <PrivateRoute
         exact
-        path="/create/post"
+        path="/create-post"
         render={(props) => <CreatePostModal {...props} previousLocation={previousLocation} />}
       />
     </>
