@@ -1,4 +1,4 @@
-@import "../../css/colors";
+@import "assets/css/colors";
 
 .nav {
     color: white;
@@ -125,7 +125,7 @@
             height: 18px;
             margin: 3px 0; // to get to a default height of 24px
             margin-right: 0.5rem;
-            color: grey;
+            color: $brand-light;
 
             svg {
                 width: 100%;

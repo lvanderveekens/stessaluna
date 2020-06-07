@@ -1,4 +1,4 @@
-import {faBars, faEdit, faHome, faTimes, faUser} from "@fortawesome/free-solid-svg-icons"
+import {faBars, faEdit, faEnvelope, faHome, faTimes, faUser} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {disableBodyScroll, enableBodyScroll} from "body-scroll-lock"
 import classNames from "classnames/bind"
@@ -13,6 +13,7 @@ import CustomToggle from "../dropdown/custom-toggle/CustomToggle"
 import {State} from "../store"
 import {logOut} from "../store/auth/actions"
 import styles from "./Navbar.scss?module"
+import {useWindowSize} from "../hooks/use-window-size";
 
 const cx = classNames.bind(styles)
 
@@ -25,6 +26,8 @@ interface Props {
 const Navbar: FC<Props> = ({page, loggedIn, logOut}) => {
   const [expanded, setExpanded] = useState(false)
   const topBarRef = useRef(null)
+
+  const [_, windowHeight] = useWindowSize()
 
   useEffect(() => {
     document.body.style.paddingTop = `${topBarRef.current.clientHeight}px`
@@ -94,7 +97,7 @@ const Navbar: FC<Props> = ({page, loggedIn, logOut}) => {
         <BootstrapNavbar.Collapse id="collapsable-nav" ref={collapsableNavRef}>
           <BootstrapNav
             className={cx("mr-auto", {expanded})}
-            style={expanded ? {height: `${window.innerHeight - topBarRef.current.clientHeight}px`} : {}}
+            style={expanded ? {height: `${windowHeight - topBarRef.current.clientHeight}px`} : {}}
             onSelect={() => setExpanded(false)}
           >
             <BootstrapNav.Link as={Link} to="/" onClick={closeMenu}>
@@ -111,6 +114,12 @@ const Navbar: FC<Props> = ({page, loggedIn, logOut}) => {
                 Profile
               </BootstrapNav.Link>
             )}
+            <BootstrapNav.Link className={styles.contactLink} as={Link} to="/contact" onClick={closeMenu}>
+              <span className={styles.icon}>
+                <FontAwesomeIcon icon={faEnvelope}/>
+              </span>
+              Contact
+            </BootstrapNav.Link>
             <div className={styles.footer}>
               {loggedIn
                 ? (

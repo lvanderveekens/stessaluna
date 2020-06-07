@@ -1,14 +1,15 @@
-import React, { FC } from "react"
-import { Route, Switch } from "react-router"
-import { useHistory, useLocation } from "react-router-dom"
+import React, {FC} from "react"
+import {Route, Switch} from "react-router"
+import {useLocation} from "react-router-dom"
 import HomePage from "../home/HomePage"
 import LoginPage from "../login/LoginPage"
 import NotFoundPage from "../not-found/NotFoundPage"
 import CreatePostModal from "../post/create-post/create-post-modal/CreatePostModal"
 import ProfilePage from "../profile/ProfilePage"
 import RegistrationPage from "../register/RegistrationPage"
-import { usePrevious } from "../util/hooks"
+import {usePrevious} from "../util/hooks"
 import PrivateRoute from "./PrivateRoute"
+import ContactPage from "../contact/ContactPage";
 
 const Routes: FC = () => {
   const location = useLocation()
@@ -30,6 +31,7 @@ const Routes: FC = () => {
       <Switch location={getLocation()}>
         <Route exact path="/" component={HomePage} />
         <PrivateRoute exact path="/profile" component={ProfilePage} />
+        <Route exact path="/contact" component={ContactPage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/signup" component={RegistrationPage} />
         <Route component={NotFoundPage} />
