@@ -3,9 +3,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {disableBodyScroll, enableBodyScroll} from "body-scroll-lock"
 import classNames from "classnames/bind"
 import React, {FC, useEffect, useRef, useState} from "react"
-import {Nav as BootstrapNav, Navbar as BootstrapNavbar} from "react-bootstrap"
+import {Container, Nav as BootstrapNav, Navbar as BootstrapNavbar} from "react-bootstrap"
 import {connect} from "react-redux"
-import MediaQuery, {useMediaQuery} from "react-responsive"
+import {useMediaQuery} from "react-responsive"
 import {withRouter} from "react-router"
 import {Link} from "react-router-dom"
 import logoPath from "../../images/logo.svg"
@@ -14,6 +14,7 @@ import {State} from "../store"
 import {logOut} from "../store/auth/actions"
 import styles from "./Navbar.scss?module"
 import {useWindowSize} from "../hooks/use-window-size";
+import Button from "../button/Button";
 
 const cx = classNames.bind(styles)
 
@@ -25,7 +26,7 @@ interface Props {
 
 const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
   const [expanded, setExpanded] = useState(false)
-  const isBeforeBreakpoint = useMediaQuery({ query: '(max-width: 991px)' }) // based on 'lg' from bootstrap
+  const isBeforeBreakpoint = useMediaQuery({ query: '(max-width: 991px)' }) // based on 'md' from bootstrap
   const topBarRef = useRef(null)
 
   const isExpandedNavVisible = expanded && isBeforeBreakpoint
@@ -60,32 +61,32 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
   }
 
   return (
-    <>
-      <BootstrapNavbar
-        className={styles.nav}
-        fixed="top"
-        expand="lg"
-        expanded={expanded}
-        onToggle={(expanded) => setExpanded(expanded)}
-      >
+    <BootstrapNavbar
+      className={styles.nav}
+      fixed="top"
+      expand="lg"
+      expanded={expanded}
+      onToggle={(expanded) => setExpanded(expanded)}
+    >
+      <Container>
         <div id="top-bar" className={styles.topBar} ref={topBarRef}>
           <div className="d-flex align-items-center">
             <BootstrapNavbar.Brand className={styles.brand}>
               <Link to="/">
                 <img className={styles.logo} src={logoPath} alt="Logo"/>
-                <MediaQuery query="(min-width: 992px)">
-                  <span>Stessaluna</span>
-                </MediaQuery>
+                {!isBeforeBreakpoint && (<span>Stessaluna</span>)}
               </Link>
             </BootstrapNavbar.Brand>
             <span className={styles.pageTitle}>{pageTitle}</span>
           </div>
           <div className="d-flex align-items-center">
             {loggedIn && !isExpandedNavVisible && (
-              <BootstrapNav.Link className={styles.newPostLink} as={Link} to="/create-post">
-                <span className={styles.createPostIcon}>
-                  <FontAwesomeIcon icon={faEdit}/>
-                </span>
+              <BootstrapNav.Link className={styles.createPostLink} as={Link} to="/create-post">
+                {isBeforeBreakpoint
+                  ? (<span className={styles.createPostIcon}>
+                      <FontAwesomeIcon icon={faEdit}/>
+                     </span>)
+                  : (<Button className={styles.createPostButton} variant="light">Post</Button>)}
               </BootstrapNav.Link>
             )}
             <BootstrapNavbar.Toggle className={styles.toggle} as={CustomToggle} aria-controls="collapsable-nav">
@@ -133,7 +134,7 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
               {loggedIn
                 ? (
                   <div className={styles.logoutWrapper}>
-                    <BootstrapNav.Link  as={Link} to="/" onClick={handleLogOutClick}>
+                    <BootstrapNav.Link as={Link} to="/" onClick={handleLogOutClick}>
                       Log out
                     </BootstrapNav.Link>
                   </div>)
@@ -150,8 +151,8 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
             </div>
           </BootstrapNav>
         </BootstrapNavbar.Collapse>
-      </BootstrapNavbar>
-    </>
+      </Container>
+    </BootstrapNavbar>
   )
 }
 
