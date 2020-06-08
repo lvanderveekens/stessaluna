@@ -2,6 +2,7 @@
 
 .nav {
     color: white;
+    border-bottom: 1px solid white;
     background-color: $brand-secondary;
     padding: 0;
 
@@ -11,6 +12,11 @@
         justify-content: space-between;
 
         width: 100%;
+
+        .pageTitle {
+            padding-left: 0.5rem;
+            border-left: 1px solid white;
+        }
     }
 
     .brand {
@@ -68,7 +74,35 @@
             }
         }
 
-        &.expanded {
+        .entryWrapper {
+            .loginSignupWrapper {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .signupLink {
+                    padding-top: 3px;
+                    padding-bottom: 3px;
+
+                    span {
+                        width: 100%;
+                        display: inline-block;
+
+                        padding: 4px 8px;
+
+                        border: 1px solid white;
+                        border-radius: 0.5rem;
+                        box-sizing: content-box;
+
+                        &:hover {
+                            border-color: rgba(255, 255, 255, 0.5);
+                        }
+                    }
+                }
+            }
+        }
+
+        &.isExpandedNavVisible {
             :global(.nav-link) {
                 &:first-child {
                     margin-top: 1rem;
@@ -79,7 +113,7 @@
                 }
             }
 
-            .footer {
+            .entryWrapper {
                 margin-top: auto;
                 padding: 0.5rem 1rem;
 
@@ -94,9 +128,6 @@
                 }
 
                 .loginSignupWrapper {
-                    display: flex;
-                    justify-content: space-between;
-
                     :global(.nav-link) {
                         width: 49%;
                         margin: 0;
@@ -105,15 +136,6 @@
                         text-align: center;
 
                         padding: 0.3rem 0.7rem;
-                    }
-
-                    .signupLink {
-                        border: 1px solid white;
-                        border-radius: 0.5rem;
-
-                        &:hover {
-                            border-color: rgba(255, 255, 255, 0.5);
-                        }
                     }
                 }
             }

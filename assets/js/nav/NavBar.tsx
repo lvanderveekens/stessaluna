@@ -1,19 +1,11 @@
-import {
-  faBars,
-  faEdit,
-  faEnvelope,
-  faHome, faInfo,
-  faInfoCircle,
-  faTimes,
-  faUserCircle
-} from "@fortawesome/free-solid-svg-icons"
+import {faBars, faEdit, faHome, faInfo, faTimes, faUserCircle} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {disableBodyScroll, enableBodyScroll} from "body-scroll-lock"
 import classNames from "classnames/bind"
 import React, {FC, useEffect, useRef, useState} from "react"
 import {Nav as BootstrapNav, Navbar as BootstrapNavbar} from "react-bootstrap"
 import {connect} from "react-redux"
-import MediaQuery from "react-responsive"
+import MediaQuery, {useMediaQuery} from "react-responsive"
 import {withRouter} from "react-router"
 import {Link} from "react-router-dom"
 import logoPath from "../../images/logo.svg"
@@ -33,7 +25,10 @@ interface Props {
 
 const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
   const [expanded, setExpanded] = useState(false)
+  const isBeforeBreakpoint = useMediaQuery({ query: '(max-width: 991px)' }) // based on 'lg' from bootstrap
   const topBarRef = useRef(null)
+
+  const isExpandedNavVisible = expanded && isBeforeBreakpoint
 
   const [_, windowHeight] = useWindowSize()
 
@@ -47,7 +42,7 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
   const collapsableNavRef = useRef(null)
 
   useEffect(() => {
-    if (expanded) {
+    if (isExpandedNavVisible) {
       disableBodyScroll(collapsableNavRef.current)
     } else {
       enableBodyScroll(collapsableNavRef.current)
@@ -55,7 +50,7 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
     return () => {
       enableBodyScroll(collapsableNavRef.current)
     }
-  }, [expanded])
+  }, [isExpandedNavVisible])
 
   const closeMenu = () => setExpanded(false)
 
@@ -83,10 +78,10 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
                 </MediaQuery>
               </Link>
             </BootstrapNavbar.Brand>
-            <span className={styles.page}>{pageTitle}</span>
+            <span className={styles.pageTitle}>{pageTitle}</span>
           </div>
           <div className="d-flex align-items-center">
-            {loggedIn && !expanded && (
+            {loggedIn && !isExpandedNavVisible && (
               <BootstrapNav.Link className={styles.newPostLink} as={Link} to="/create-post">
                 <span className={styles.createPostIcon}>
                   <FontAwesomeIcon icon={faEdit}/>
@@ -104,31 +99,37 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
         </div>
         <BootstrapNavbar.Collapse id="collapsable-nav" ref={collapsableNavRef}>
           <BootstrapNav
-            className={cx("mr-auto", {expanded})}
-            style={expanded ? {height: `${windowHeight - topBarRef.current.clientHeight}px`} : {}}
+            className={cx("mr-auto", {isExpandedNavVisible})}
+            style={isExpandedNavVisible ? {height: `${windowHeight - topBarRef.current.clientHeight}px`} : {}}
             onSelect={() => setExpanded(false)}
           >
             <BootstrapNav.Link as={Link} to="/" onClick={closeMenu}>
-              <span className={styles.icon}>
-                <FontAwesomeIcon icon={faHome}/>
-              </span>
+              {isExpandedNavVisible && (
+                <span className={styles.icon}>
+                  <FontAwesomeIcon icon={faHome}/>
+                </span>
+              )}
               Home
             </BootstrapNav.Link>
             {loggedIn && (
               <BootstrapNav.Link className={styles.profileLink} as={Link} to="/profile" onClick={closeMenu}>
-              <span className={styles.icon}>
-                <FontAwesomeIcon icon={faUserCircle}/>
-              </span>
+                {isExpandedNavVisible && (
+                  <span className={styles.icon}>
+                    <FontAwesomeIcon icon={faUserCircle}/>
+                  </span>
+                )}
                 Profile
               </BootstrapNav.Link>
             )}
             <BootstrapNav.Link className={styles.aboutLink} as={Link} to="/about" onClick={closeMenu}>
-              <span className={styles.icon}>
-                <FontAwesomeIcon icon={faInfo}/>
-              </span>
+              {isExpandedNavVisible && (
+                <span className={styles.icon}>
+                  <FontAwesomeIcon icon={faInfo}/>
+                </span>
+              )}
               About
             </BootstrapNav.Link>
-            <div className={styles.footer}>
+            <div className={styles.entryWrapper}>
               {loggedIn
                 ? (
                   <div className={styles.logoutWrapper}>
@@ -142,7 +143,7 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
                       Log in
                     </BootstrapNav.Link>
                     <BootstrapNav.Link className={styles.signupLink} as={Link} to="/signup">
-                      Sign up
+                      <span>Sign up</span>
                     </BootstrapNav.Link>
                   </div>)
               }
