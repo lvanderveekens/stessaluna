@@ -43,6 +43,8 @@
             border: none;
             border-radius: 0.5rem;
 
+            min-width: 50%;
+
             &:hover {
                 opacity: 0.8;
             }
@@ -57,6 +59,7 @@
         .bmcLink {
             text-decoration: none;
             display: inline-flex;
+            justify-content: center;
             color: #FFFFFF;
             background-color: #FF813F;
             border-radius: 0.5rem;
@@ -66,6 +69,8 @@
             font-family: 'Cookie', cursive;
             -webkit-box-sizing: border-box;
             box-sizing: border-box;
+
+            min-width: 50%;
 
             img {
                 height: 24px;
