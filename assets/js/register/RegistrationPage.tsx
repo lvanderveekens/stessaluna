@@ -6,6 +6,7 @@ import { register } from '../store/auth/actions';
 import styles from './RegistrationPage.scss?module';
 import logoPath from "../../images/logo.svg"
 import { History } from 'history';
+import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
 
 interface Props {
   register: (email: string, username: string, password: string, country: string) => Promise<void>
@@ -15,7 +16,6 @@ interface Props {
 const RegistrationPage: FC<Props> = ({register, history}) => {
 
   const handleSubmit = (email, username, password, country) => {
-    // TODO: go to login page?
     return register(email, username, password, country)
   }
 
@@ -25,8 +25,8 @@ const RegistrationPage: FC<Props> = ({register, history}) => {
         <img src={logoPath} alt="Logo" onClick={() => history.push("/")}/>
       </div>
       <Container>
-        <Row>
-          <Col sm={6} md={4} lg={4} xl={3}>
+        <Row className="justify-content-center">
+          <Col {...COLUMN_BREAKPOINTS}>
             <h4 className="mb-3">Create an account</h4>
             <RegistrationForm onSubmit={handleSubmit}/>
           </Col>

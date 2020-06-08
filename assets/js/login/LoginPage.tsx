@@ -8,6 +8,7 @@ import LoginForm from "./login-form/LoginForm"
 import styles from "./LoginPage.scss?module"
 import logoPath from "../../images/logo.svg"
 import {History} from 'history';
+import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
 
 interface Props {
   logIn: (username: string, password: string) => Promise<void>
@@ -30,8 +31,8 @@ const LoginPage: FC<Props> = ({logIn, history}) => {
         <img src={logoPath} alt="Logo" onClick={() => history.push("/")}/>
       </div>
       <Container>
-        <Row>
-          <Col sm={6} md={4} lg={4} xl={3}>
+        <Row className="justify-content-center">
+          <Col {...COLUMN_BREAKPOINTS}>
             <h4>Log in to Stessaluna</h4>
             <LoginForm onSubmit={handleSubmit}/>
             <p className="text-white">

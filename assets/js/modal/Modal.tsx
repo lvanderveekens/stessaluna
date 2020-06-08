@@ -1,5 +1,7 @@
 import React, {FC, useEffect, useRef} from "react"
 import styles from "./Modal.scss?module"
+import {Col, Container, Row} from "react-bootstrap";
+import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
 
 interface Props {
   className?: string

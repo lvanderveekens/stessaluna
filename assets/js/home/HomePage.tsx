@@ -6,6 +6,7 @@ import styles from "./HomePage.scss?module"
 import {connect} from "react-redux";
 import {State} from "../store";
 import LoginSignupFooter from "./login-signup-footer/LoginSignupFooter"
+import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
 
 interface Props {
   loggedIn: boolean
@@ -17,7 +18,7 @@ const HomePage = ({loggedIn}) => {
       <Navbar pageTitle="Home"/>
       <Container className={styles.content}>
         <Row className="justify-content-center">
-          <Col md={6} lg={6} xl={5}>
+          <Col {...COLUMN_BREAKPOINTS}>
             <Feed/>
           </Col>
         </Row>

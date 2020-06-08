@@ -11,6 +11,7 @@ import { State } from "../store"
 import User from "../user/user.interface"
 import styles from "./ProfilePage.scss?module"
 import Button from "../button/Button"
+import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
 
 interface Props {
   loading: boolean
@@ -75,7 +76,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
           </span>
         )}
         <Row className="justify-content-center">
-          <Col className={styles.centered} sm={8} md={6} lg={5} xl={5}>
+          <Col className={styles.centered} {...COLUMN_BREAKPOINTS}>
             {user && (
               // TODO: move into separate form component
               <Formik

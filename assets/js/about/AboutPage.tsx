@@ -5,6 +5,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import meImagePath from "../../images/me.jpg"
 import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
 
 const AboutPage: FC = ({}) => {
   return (
@@ -12,7 +13,7 @@ const AboutPage: FC = ({}) => {
     <Navbar pageTitle="About"/>
     <Container className={styles.content}>
       <Row className="justify-content-center">
-        <Col md={6} lg={6} xl={5}>
+        <Col {...COLUMN_BREAKPOINTS}>
           <div className={styles.imageWrapper}>
             <img src={meImagePath}/>
           </div>
