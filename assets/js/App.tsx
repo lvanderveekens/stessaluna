@@ -1,13 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import "loaders.css/loaders.min.css"
-import React, { FC, useEffect } from "react"
+import React, {FC, useEffect} from "react"
 import Helmet from "react-helmet"
-import { connect } from "react-redux"
-import { Router } from "react-router"
+import {connect} from "react-redux"
+import {Router} from "react-router"
 import history from "./history/history"
 import Routes from "./routes"
-import { State } from "./store"
-import { fetchUser } from "./store/auth/actions"
+import {State} from "./store"
+import {fetchUser} from "./store/auth/actions"
 import styles from "./App.scss?module"
 
 interface Props {

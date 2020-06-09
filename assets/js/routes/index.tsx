@@ -1,4 +1,4 @@
-import React, {FC} from "react"
+import React, {FC, useEffect} from "react"
 import {Route, Switch} from "react-router"
 import {useLocation} from "react-router-dom"
 import HomePage from "../home/HomePage"
@@ -10,10 +10,16 @@ import RegistrationPage from "../register/RegistrationPage"
 import {usePrevious} from "../util/hooks"
 import PrivateRoute from "./PrivateRoute"
 import AboutPage from "../about/AboutPage";
+import ReactGA from "react-ga";
 
 const Routes: FC = () => {
   const location = useLocation()
   const previousLocation = usePrevious(location)
+
+  useEffect(() => {
+    // register metric on page load too
+    ReactGA.pageview(location.pathname)
+  }, [])
 
   const getLocation = () => {
     if (location.pathname === "/create-post") {

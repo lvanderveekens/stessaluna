@@ -43,9 +43,18 @@
         }
     }
 
-    .createPostIcon {
-        color: white;
-        font-size: 1.2rem;
+    .createPostLink {
+        padding: 0;
+
+        .createPostIcon {
+            color: white;
+            font-size: 1.2rem;
+            padding: .5rem 1rem;
+        }
+
+        .createPostButton {
+            margin-right: 0.5rem;
+        }
     }
 
     .toggle {

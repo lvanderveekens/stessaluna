@@ -7,7 +7,6 @@ import { Answer } from "../../exercise/answer/answer.model"
 const queryString = require('query-string');
 
 export const fetchPosts = (channels?: string[], limit?: number, beforeId?: number, append?: boolean) => {
-  console.log(channels)
   return (dispatch) => {
     dispatch(pending())
     axios
@@ -41,7 +40,6 @@ export const createPost = (channel: string, text?: string, image?: File, exercis
     return axios
       .post("/api/posts", formData)
       .then((res) => {
-        console.log(res.data)
         dispatch(success(res.data))
       })
       .catch((error) => {
@@ -59,7 +57,6 @@ export const deletePost = (id) => {
     axios
       .delete("/api/posts/" + id)
       .then((res) => {
-        console.log(res.data)
         dispatch(success(id))
       })
       .catch(console.log)
@@ -75,7 +72,6 @@ export const addComment = (postId, text) => {
     return axios
       .post(`/api/posts/${postId}/comments`, { text })
       .then((res) => {
-        console.log(res.data)
         dispatch(success(postId, res.data))
       })
       .catch(console.log)
@@ -91,7 +87,6 @@ export const deleteComment = (postId, commentId) => {
     return axios
       .delete(`/api/posts/${postId}/comments/${commentId}`)
       .then((res) => {
-        console.log(res.data)
         dispatch(success(postId, commentId))
       })
       .catch(console.log)
@@ -109,7 +104,6 @@ export const submitAnswer = (exerciseId: number, answer: Answer) => {
     return axios
       .post(`/api/exercises/${exerciseId}/answers`, answer)
       .then((res) => {
-        console.log(res.data)
         dispatch(success(res.data))
         return Promise.resolve(res.data)
       })
