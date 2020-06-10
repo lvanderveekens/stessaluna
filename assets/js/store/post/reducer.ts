@@ -6,7 +6,7 @@ const storedFiltersString = localStorage.getItem('stessaluna:filters');
 const initialState = {
   loading: false,
   filters: storedFiltersString ? JSON.parse(storedFiltersString) : {},
-  hasNextPage: true,
+  hasNextPage: false,
   data: [],
 }
 
