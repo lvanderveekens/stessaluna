@@ -16,7 +16,7 @@ class AorbExercise extends Exercise
     /**
      * @ORM\Column(type="json")
      */
-    private array $sentences;
+    private $sentences;
 
     public function __construct()
     {
@@ -25,7 +25,7 @@ class AorbExercise extends Exercise
     }
 
     /**
-     * @return []
+     * @return AorbSentence[]
      */
     public function getSentences(): ?array
     {

@@ -7,21 +7,29 @@ use Stessaluna\Exercise\ExerciseType;
 
 class MissingwordExerciseDto extends ExerciseDto
 {
-    public string $textBefore;
+    /** @var string */
+    public $textBefore;
 
-    public string $textAfter;
+    /** @var string */
+    public $textAfter;
 
-    public string $option1;
+    /** @var string */
+    public $option1;
 
-    public string $option2;
+    /** @var string */
+    public $option2;
 
-    public string $option3;
+    /** @var string */
+    public $option3;
 
-    public string $option4;
+    /** @var string */
+    public $option4;
 
-    public ?int $correct = null;
+    /** @var int */
+    public $correct = null;
 
-    public ?int $answer = null;
+    /** @var int */
+    public $answer = null;
 
     public function __construct()
     {

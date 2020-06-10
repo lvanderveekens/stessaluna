@@ -8,7 +8,7 @@ use Stessaluna\Exercise\ExerciseType;
 class AorbExerciseDto extends ExerciseDto {
 
     /** @var AorbSentenceDto[] */
-    public array $sentences;
+    public $sentences;
 
     public function __construct()
     {

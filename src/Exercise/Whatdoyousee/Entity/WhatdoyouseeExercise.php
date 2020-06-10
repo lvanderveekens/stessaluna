@@ -16,32 +16,32 @@ class WhatdoyouseeExercise extends Exercise
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $imageFilename;
+    private $imageFilename;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $option1;
+    private $option1;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $option2;
+    private $option2;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $option3;
+    private $option3;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $option4;
+    private $option4;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private int $correct;
+    private $correct;
 
     public function __construct()
     {

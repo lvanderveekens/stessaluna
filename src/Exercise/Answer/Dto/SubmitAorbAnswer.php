@@ -9,7 +9,7 @@ use Stessaluna\Exercise\ExerciseType;
 class SubmitAorbAnswer extends SubmitAnswer
 {
     /** @var string[] an array containing 'a' and 'b' characters */
-    public array $choices;
+    public $choices;
 
     public function __construct()
     {

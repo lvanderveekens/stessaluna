@@ -24,10 +24,17 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PostController extends AbstractController
 {
-    private CreatePostToPostConverter $createPostToPostConverter;
-    private PostToPostDtoConverter $postToPostDtoConverter;
-    private PostService $postService;
-    private LoggerInterface $logger;
+    /** @var CreatePostToPostConverter */
+    private $createPostToPostConverter;
+
+    /** @var PostToPostDtoConverter */
+    private $postToPostDtoConverter;
+
+    /** @var PostService */
+    private $postService;
+
+    /** @var LoggerInterface */
+    private $logger;
 
     public function __construct(
         CreatePostToPostConverter $createPostToPostConverter,

@@ -9,11 +9,15 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CreatePost
 {
-    public string $channel;
+    /** @var string */
+    public $channel;
 
-    public ?string $text = null;
+    /** @var string */
+    public $text = null;
 
-    public ?UploadedFile $image = null;
+    /** @var UploadedFile */
+    public $image = null;
 
-    public ?CreateExercise $exercise = null;
+    /** @var CreateExercise */
+    public $exercise = null;
 }

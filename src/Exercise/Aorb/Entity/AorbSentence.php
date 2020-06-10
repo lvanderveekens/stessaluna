@@ -4,9 +4,12 @@ namespace Stessaluna\Exercise\Aorb\Entity;
 
 class AorbSentence
 {
-    public string $textBefore;
+    /** @var string */
+    public $textBefore;
 
-    public AorbChoice $choice;
+    /** @var AorbChoice */
+    public $choice;
 
-    public string $textAfter;
+    /** @var string */
+    public $textAfter;
 }

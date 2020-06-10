@@ -105,6 +105,12 @@
     "intervention/image": {
         "version": "2.5.1"
     },
+    "laminas/laminas-code": {
+        "version": "3.4.1"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.2.1"
+    },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.3"
     },
@@ -145,7 +151,7 @@
         "version": "2.2.3"
     },
     "php": {
-        "version": "7.4"
+        "version": "7.3"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.0.0"

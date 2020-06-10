@@ -6,11 +6,14 @@ namespace Stessaluna\Exercise\Dto;
 
 abstract class ExerciseDto
 {
-    public int $id;
+    /** @var int */
+    public $id;
 
-    public string $type;
+    /** @var string */
+    public $type;
 
-    public int $answerCount;
+    /** @var int */
+    public $answerCount;
 
     protected function __construct(string $type)
     {

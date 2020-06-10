@@ -17,7 +17,8 @@ use Stessaluna\Post\Entity\Post;
  */
 class PostRepository extends ServiceEntityRepository
 {
-    private LoggerInterface $logger;
+    /** @var LoggerInterface */
+    private $logger;
 
     public function __construct(ManagerRegistry $registry, LoggerInterface $logger)
     {

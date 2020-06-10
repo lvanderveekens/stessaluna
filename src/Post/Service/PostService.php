@@ -14,8 +14,11 @@ use Stessaluna\User\Entity\User;
 
 class PostService
 {
-    private PostRepository $postRepository;
-    private ImageStorage $imageStorage;
+    /** @var PostRepository */
+    private $postRepository;
+
+    /** @var ImageStorage */
+    private $imageStorage;
 
     public function __construct(PostRepository $postRepository, ImageStorage $imageStorage)
     {

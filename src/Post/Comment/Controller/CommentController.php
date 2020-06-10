@@ -22,8 +22,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CommentController extends AbstractController
 {
-    private CommentDtoConverter $commentConverter;
-    private LoggerInterface $logger;
+    /** @var CommentDtoConverter */
+    private $commentConverter;
+
+    /** @var LoggerInterface */
+    private $logger;
 
     public function __construct(CommentDtoConverter $commentConverter, LoggerInterface $logger)
     {

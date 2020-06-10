@@ -11,20 +11,27 @@ use Stessaluna\User\Dto\UserDto;
 
 class PostDto
 {
-    public int $id;
+    /** @var int */
+    public $id;
 
-    public DateTimeInterface $createdAt;
+    /** @var DateTimeInterface */
+    public $createdAt;
 
-    public UserDto $author;
-    
-    public string $channel;
+    /** @var UserDto */
+    public $author;
 
-    public ?string $text = null;
+    /** @var string */
+    public $channel;
 
-    public ?string $image = null;
+    /** @var string */
+    public $text = null;
 
-    public ?ExerciseDto $exercise = null;
+    /** @var string */
+    public $image = null;
+
+    /** @var ExerciseDto */
+    public $exercise = null;
 
     /** @var CommentDto[] */
-    public array $comments;
+    public $comments;
 }

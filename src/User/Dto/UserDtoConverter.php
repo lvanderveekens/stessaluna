@@ -8,9 +8,11 @@ use Symfony\Component\Asset\Packages;
 
 class UserDtoConverter
 {
-    private LoggerInterface $logger;
+    /** @var LoggerInterface */
+    private $logger;
 
-    private Packages $packages;
+    /** @var Packages */
+    private $packages;
 
     public function __construct(LoggerInterface $logger, Packages $packages)
     {

@@ -10,17 +10,23 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CreateWhatdoyouseeExercise extends CreateExercise
 {
-    public UploadedFile $image;
+    /** @var UploadedFile */
+    public $image;
 
-    public string $option1;
+    /** @var string */
+    public $option1;
 
-    public string $option2;
+    /** @var string */
+    public $option2;
 
-    public string $option3;
+    /** @var string */
+    public $option3;
 
-    public string $option4;
+    /** @var string */
+    public $option4;
 
-    public int $correct;
+    /** @var int */
+    public $correct;
 
     public function __construct()
     {

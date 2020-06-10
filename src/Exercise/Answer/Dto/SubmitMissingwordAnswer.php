@@ -8,7 +8,8 @@ use Stessaluna\Exercise\ExerciseType;
 
 class SubmitMissingwordAnswer extends SubmitAnswer
 {
-    public int $option;
+    /** @var int */
+    public $option;
 
     public function __construct()
     {

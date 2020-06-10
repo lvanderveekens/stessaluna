@@ -31,13 +31,13 @@ abstract class Answer
      * @ORM\ManyToOne(targetEntity="Stessaluna\User\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
-    private User $user;
+    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="Stessaluna\Exercise\Entity\Exercise", inversedBy="answers")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private Exercise $exercise;
+    private $exercise;
 
     /**
      * @ORM\Column(name="value", type="json")

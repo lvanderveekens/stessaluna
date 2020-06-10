@@ -4,9 +4,13 @@ namespace Stessaluna\Exercise\Aorb\Dto;
 
 class AorbSentenceDto
 {
-    public string $textBefore;
 
-    public AorbChoiceDto $choice;
+    /** @var string */
+    public $textBefore;
 
-    public string $textAfter;
+    /** @var AorbChoiceDto */
+    public $choice;
+
+    /** @var string */
+    public $textAfter;
 }

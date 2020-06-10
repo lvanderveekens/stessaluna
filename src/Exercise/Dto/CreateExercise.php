@@ -6,7 +6,8 @@ namespace Stessaluna\Exercise\Dto;
 
 abstract class CreateExercise
 {
-    private string $type;
+    /** @var string */
+    private $type;
 
     protected function __construct(string $type)
     {

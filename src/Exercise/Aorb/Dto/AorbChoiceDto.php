@@ -4,13 +4,15 @@ namespace Stessaluna\Exercise\Aorb\Dto;
 
 class AorbChoiceDto
 {
-    public string $a;
+    /** @var string */
+    public $a;
 
-    public string $b;
+    /** @var string */
+    public $b;
 
     /** @var string either 'a' or 'b' */
-    public ?string $correct = null;
+    public $correct = null;
 
     /** @var string either 'a' or 'b' */
-    public ?string $answer = null;
+    public $answer = null;
 }

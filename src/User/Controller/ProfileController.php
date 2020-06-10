@@ -14,9 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProfileController extends AbstractController
 {
-    private LoggerInterface $logger;
-    private ProfileService $profileService;
-    private UserDtoConverter $userDtoConverter;
+    /** @var LoggerInterface */
+    private $logger;
+
+    /** @var ProfileService */
+    private $profileService;
+
+    /** @var UserDtoConverter */
+    private $userDtoConverter;
 
     public function __construct(
         LoggerInterface $logger,

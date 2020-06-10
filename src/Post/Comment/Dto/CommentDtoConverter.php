@@ -8,9 +8,11 @@ use Stessaluna\Post\Comment\Entity\Comment;
 
 class CommentDtoConverter
 {
+    /** @var LoggerInterface */
     private $logger;
 
-    private UserDtoConverter $userDtoConverter;
+    /** @var UserDtoConverter */
+    private $userDtoConverter;
 
     public function __construct(LoggerInterface $logger, UserDtoConverter $userDtoConverter)
     {

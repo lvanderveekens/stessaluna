@@ -12,7 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
-    private UserDtoConverter $userDtoConverter;
+    /** @var UserDtoConverter */
+    private $userDtoConverter;
 
     public function __construct(UserDtoConverter $userDtoConverter)
     {

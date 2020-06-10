@@ -10,7 +10,7 @@ use Stessaluna\Exercise\ExerciseType;
 class CreateAorbExercise extends CreateExercise
 {
     /** @var AorbSentenceDto[] */
-    public array $sentences;
+    public $sentences;
 
     public function __construct()
     {

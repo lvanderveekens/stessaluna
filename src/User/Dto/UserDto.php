@@ -4,15 +4,21 @@ namespace Stessaluna\User\Dto;
 
 class UserDto
 {
-    public int $id;
+    /** @var int */
+    public $id;
 
-    public string $email;
+    /** @var string */
+    public $email;
 
-    public string $username;
+    /** @var string */
+    public $username;
 
-    public ?string $displayName;
+    /** @var string|null */
+    public $displayName;
 
-    public string $country;
+    /** @var string */
+    public $country;
 
-    public ?string $avatar;
+    /** @var string|null */
+    public $avatar;
 }

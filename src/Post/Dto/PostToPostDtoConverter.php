@@ -13,13 +13,17 @@ use Stessaluna\User\Entity\User;
 
 class PostToPostDtoConverter
 {
-    private UserDtoConverter $userDtoConverter;
+    /** @var UserDtoConverter */
+    private $userDtoConverter;
 
-    private CommentDtoConverter $commentDtoConverter;
+    /** @var CommentDtoConverter */
+    private $commentDtoConverter;
 
-    private ExerciseToExerciseDtoConverter $exerciseToExerciseDtoConverter;
+    /** @var ExerciseToExerciseDtoConverter */
+    private $exerciseToExerciseDtoConverter;
 
-    private ImageStorage $imageStorage;
+    /** @var ImageStorage */
+    private $imageStorage;
 
     public function __construct(
         UserDtoConverter $userDtoConverter,

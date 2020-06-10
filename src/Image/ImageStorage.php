@@ -15,10 +15,13 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class ImageStorage
 {
-    private static string $PUBLIC_PATH = '/uploads/images';
+    private static $PUBLIC_PATH = '/uploads/images';
 
-    private string $directory;
-    private LoggerInterface $logger;
+    /** @var string */
+    private $directory;
+
+    /** @var LoggerInterface */
+    private $logger;
 
     public function __construct(KernelInterface $kernel, LoggerInterface $logger)
     {

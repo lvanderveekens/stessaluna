@@ -20,8 +20,11 @@ use function Functional\map;
  */
 class RegistrationController extends AbstractController
 {
-    private UserRepository $userRepository;
-    private UserPasswordEncoderInterface $passwordEncoder;
+    /** @var UserRepository */
+    private $userRepository;
+
+    /** @var UserPasswordEncoderInterface */
+    private $passwordEncoder;
 
     public function __construct(UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder)
     {

@@ -23,7 +23,8 @@ use Stessaluna\User\Entity\User;
 
 class CreatePostToPostConverter
 {
-    private ImageStorage $imageStorage;
+    /** @var ImageStorage */
+    private $imageStorage;
 
     public function __construct(ImageStorage $imageStorage)
     {

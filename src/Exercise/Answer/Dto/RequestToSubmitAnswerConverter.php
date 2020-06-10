@@ -2,12 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Stessaluna\Exercise\Dto;
+namespace Stessaluna\Exercise\Answer\Dto;
 
-use Stessaluna\Exercise\Answer\Dto\SubmitAnswer;
-use Stessaluna\Exercise\Answer\Dto\SubmitAorbAnswer;
-use Stessaluna\Exercise\Answer\Dto\SubmitMissingwordAnswer;
-use Stessaluna\Exercise\Answer\Dto\SubmitWhatdoyouseeAnswer;
 use Stessaluna\Exercise\ExerciseType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;

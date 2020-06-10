@@ -9,8 +9,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProfileService
 {
-    private UserRepository $userRepository;
-    private ImageStorage $imageStorage;
+    /** @var UserRepository */
+    private $userRepository;
+
+    /** @var ImageStorage */
+    private $imageStorage;
 
     public function __construct(UserRepository $userRepository, ImageStorage $imageStorage)
     {

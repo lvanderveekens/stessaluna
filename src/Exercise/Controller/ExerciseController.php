@@ -4,32 +4,34 @@ declare(strict_types=1);
 
 namespace Stessaluna\Exercise\Controller;
 
-use function Functional\some;
 use RuntimeException;
+use Stessaluna\Exercise\Answer\Dto\RequestToSubmitAnswerConverter;
 use Stessaluna\Exercise\Answer\Dto\SubmitAorbAnswer;
 use Stessaluna\Exercise\Answer\Dto\SubmitMissingwordAnswer;
 use Stessaluna\Exercise\Answer\Dto\SubmitWhatdoyouseeAnswer;
 use Stessaluna\Exercise\Answer\Entity\Answer;
-use Stessaluna\Exercise\Answer\Entity\AorbAnswer ;
+use Stessaluna\Exercise\Answer\Entity\AorbAnswer;
 use Stessaluna\Exercise\Answer\Entity\MissingwordAnswer;
 use Stessaluna\Exercise\Answer\Entity\WhatdoyouseeAnswer;
 use Stessaluna\Exercise\Dto\ExerciseToExerciseDtoConverter;
-use Stessaluna\Exercise\Dto\RequestToSubmitAnswerConverter;
 use Stessaluna\Exercise\Repository\ExerciseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use function Functional\some;
 
 /**
  * @Route("/api/exercises")
  */
 class ExerciseController extends AbstractController
 {
-    private ExerciseRepository $exerciseRepository;
+    /** @var ExerciseRepository */
+    private $exerciseRepository;
 
-    private ExerciseToExerciseDtoConverter $exerciseToExerciseDtoConverter;
+    /** @var ExerciseToExerciseDtoConverter */
+    private $exerciseToExerciseDtoConverter;
 
     public function __construct(
         ExerciseRepository $exerciseRepository,

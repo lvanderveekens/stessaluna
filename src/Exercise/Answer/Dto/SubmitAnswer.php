@@ -6,7 +6,8 @@ namespace Stessaluna\Exercise\Answer\Dto;
 
 abstract class SubmitAnswer
 {
-    public string $type;
+    /** @var string */
+    public $type;
 
     protected function __construct(string $type)
     {

@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LogoutController extends AbstractController
 {
+    /** @var LoggerInterface */
     private $logger;
 
     public function __construct(LoggerInterface $logger)

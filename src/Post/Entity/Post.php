@@ -19,39 +19,39 @@ class Post
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id = null;
+    private $id = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private DateTimeInterface $createdAt;
+    private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="Stessaluna\User\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
-    private User $author;
+    private $author;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private string $channel;
+    private $channel;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private ?string $text = null;
+    private $text = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private ?string $imageFilename = null;
+    private $imageFilename = null;
 
     /**
      * @ORM\OneToOne(targetEntity="Stessaluna\Exercise\Entity\Exercise", orphanRemoval=true, cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
-    private ?Exercise $exercise = null;
+    private $exercise = null;
 
     /**
      * @ORM\OneToMany(targetEntity="Stessaluna\Post\Comment\Entity\Comment", mappedBy="post")
