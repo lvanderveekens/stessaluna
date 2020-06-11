@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Stessaluna\Exception\EventSubscriber;
 
+use Google\Cloud\ErrorReporting\Bootstrap;
 use Psr\Log\LoggerInterface;
 use Stessaluna\Exception\NotAuthorException;
 use Stessaluna\Exception\NotFoundException;
@@ -13,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
@@ -37,6 +37,10 @@ class ExceptionSubscriber implements EventSubscriberInterface
         $this->logger->warning("ON EXCEPTION EVENT");
 
         $exception = $event->getThrowable();
+
+        Bootstrap::init();
+        Bootstrap::exceptionHandler($exception);
+
         $this->logger->error($exception);
 
         $response = new JsonResponse();
