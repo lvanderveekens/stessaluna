@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Stessaluna\Post\Dto;
 
 use Stessaluna\Exercise\Dto\ExerciseToExerciseDtoConverter;
-use Stessaluna\Image\ImageStorage;
+use Stessaluna\Image\Storage\ImageStorage;
 use Stessaluna\Post\Comment\Dto\CommentDtoConverter;
 use Stessaluna\Post\Entity\Post;
 use Stessaluna\User\Dto\UserDtoConverter;

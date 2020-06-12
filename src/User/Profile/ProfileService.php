@@ -2,7 +2,7 @@
 
 namespace Stessaluna\User\Profile;
 
-use Stessaluna\Image\ImageStorage;
+use Stessaluna\Image\Storage\ImageStorage;
 use Stessaluna\User\Entity\User;
 use Stessaluna\User\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

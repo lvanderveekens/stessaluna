@@ -18,7 +18,7 @@ use Stessaluna\Exercise\Missingword\Dto\MissingwordExerciseDto;
 use Stessaluna\Exercise\Missingword\Entity\MissingwordExercise;
 use Stessaluna\Exercise\Whatdoyousee\Dto\WhatdoyouseeExerciseDto;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
-use Stessaluna\Image\ImageStorage;
+use Stessaluna\Image\Storage\ImageStorage;
 use Stessaluna\User\Entity\User;
 
 class ExerciseToExerciseDtoConverter

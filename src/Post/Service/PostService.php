@@ -6,7 +6,7 @@ namespace Stessaluna\Post\Service;
 
 use Stessaluna\Exception\NotAuthorException;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
-use Stessaluna\Image\ImageStorage;
+use Stessaluna\Image\Storage\ImageStorage;
 use Stessaluna\Post\Entity\Post;
 use Stessaluna\Post\Exception\PostNotFoundException;
 use Stessaluna\Post\Repository\PostRepository;

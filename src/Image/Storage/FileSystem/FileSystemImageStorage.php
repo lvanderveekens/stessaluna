@@ -2,18 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Stessaluna\Image;
+namespace Stessaluna\Image\Storage\FileSystem;
 
 use Exception;
 use Intervention\Image\ImageManagerStatic as Image;
 use Psr\Log\LoggerInterface;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
+use Stessaluna\Image\Storage\ImageStorage;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class ImageStorage
+class FileSystemImageStorage implements ImageStorage
 {
     private static $PUBLIC_PATH = '/uploads/images';
 
@@ -25,8 +26,9 @@ class ImageStorage
 
     public function __construct(KernelInterface $kernel, LoggerInterface $logger)
     {
-        $this->directory = $kernel->getProjectDir().'/public'.self::$PUBLIC_PATH;
+        $this->directory = $kernel->getProjectDir() . '/public' . self::$PUBLIC_PATH;
         $this->logger = $logger;
+        $this->logger->warning("@@@ CREATING FILE SYSTEM IMAGE STORAGE OBJECT");
     }
 
     /**
@@ -34,7 +36,7 @@ class ImageStorage
      */
     public function getRelativePath(string $filename): string
     {
-        return self::$PUBLIC_PATH.'/'.$filename;
+        return self::$PUBLIC_PATH . '/' . $filename;
     }
 
     /**
@@ -48,7 +50,7 @@ class ImageStorage
             'Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
             $originalFilename
         );
-        $filename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+        $filename = $safeFilename . '-' . uniqid() . '.' . $image->guessExtension();
 
         try {
             $imageFile = $image->move($this->directory, $filename);
@@ -63,7 +65,7 @@ class ImageStorage
     public function delete(string $filename)
     {
         try {
-            unlink($this->directory.'/'.$filename);
+            unlink($this->directory . '/' . $filename);
         } catch (Exception $e) {
             $this->logger->error($e);
         }
@@ -80,7 +82,7 @@ class ImageStorage
     {
         $optimizerChain = OptimizerChainFactory::create();
         $optimizerChain
-                ->useLogger($this->logger)
-                ->optimize($imageFile->getPathname());
+            ->useLogger($this->logger)
+            ->optimize($imageFile->getPathname());
     }
 }

@@ -14,15 +14,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
-
+    /** @var LoggerInterface */
     private $logger;
 
-    public function __construct(LoggerInterface $logger)
+    /** @var KernelInterface */
+    private $kernel;
+
+    public function __construct(LoggerInterface $logger, KernelInterface $kernel)
     {
         $this->logger = $logger;
+        $this->kernel = $kernel;
     }
 
     public static function getSubscribedEvents()
@@ -38,8 +43,10 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
         $exception = $event->getThrowable();
 
-        Bootstrap::init();
-        Bootstrap::exceptionHandler($exception);
+        if ($this->kernel->getEnvironment() === 'prod') {
+            Bootstrap::init();
+            Bootstrap::exceptionHandler($exception);
+        }
 
         $this->logger->error($exception);
 

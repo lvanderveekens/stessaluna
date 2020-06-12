@@ -17,7 +17,7 @@ use Stessaluna\Exercise\Missingword\Dto\CreateMissingwordExercise;
 use Stessaluna\Exercise\Missingword\Entity\MissingwordExercise;
 use Stessaluna\Exercise\Whatdoyousee\Dto\CreateWhatdoyouseeExercise;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
-use Stessaluna\Image\ImageStorage;
+use Stessaluna\Image\Storage\ImageStorage;
 use Stessaluna\Post\Entity\Post;
 use Stessaluna\User\Entity\User;
 
