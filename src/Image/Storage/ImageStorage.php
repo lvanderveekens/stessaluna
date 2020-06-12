@@ -7,10 +7,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 interface ImageStorage {
 
     /**
-     * Get the relative path to the image.
+     * Get the path to the image.
      * @return string the path
      */
-    public function getRelativePath(string $filename): string;
+    public function getPath(string $filename): string;
 
     /**
      * Store an uploaded image and return the filename.

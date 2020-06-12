@@ -16,33 +16,27 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class GoogleCloudImageStorage implements ImageStorage
 {
-    private static $PUBLIC_PATH = '/uploads/images';
-
-    /** @var string */
-    private $directory;
+    private static $BUCKET_DIRECTORY = 'uploads/images/';
 
     /** @var LoggerInterface */
     private $logger;
 
     public function __construct(KernelInterface $kernel, LoggerInterface $logger)
     {
-        $this->directory = $kernel->getProjectDir().'/public'.self::$PUBLIC_PATH;
         $this->logger = $logger;
     }
 
-    /**
-     * @return string the relative path to the image.
-     */
-    public function getRelativePath(string $filename): string
+    public function getPath(string $filename): string
     {
-        return self::$PUBLIC_PATH.'/'.$filename;
+        $bucketName = "stessaluna-bucket-public";
+        $objectPath = self::$BUCKET_DIRECTORY . $filename;
+        return "https://$bucketName.storage.googleapis.com/$objectPath";
     }
 
-    /**
-     * @return string the filename of the stored image.
-     */
     public function store(UploadedFile $image): string
     {
+        // TODO: common code, move to abstract parent?
+
         $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
         // this is needed to safely include the filename as part of the URL
         $safeFilename = transliterator_transliterate(
@@ -52,63 +46,32 @@ class GoogleCloudImageStorage implements ImageStorage
         $filename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
 
         $bucketName = "stessaluna-bucket-public";
+        $objectPath = self::$BUCKET_DIRECTORY . $filename;
 
-        $fileContent = file_get_contents($image->getPathname());
-
-        // NOTE: if 'folder' or 'tree' is not exist then it will be automatically created !
-        $cloudPath = 'uploads/images/' . $filename;
-
-//        $privateKeyFileContent = $GLOBALS['privateKeyFileContent'];
-
-        // connect to Google Cloud Storage using private key as authentication
-
-        $storage = new StorageClient([
-            'projectId' => 'stessaluna'
-            // not required, because it implicitly uses the app engine's default service account
-//            'keyFile' => json_decode($privateKeyFileContent, true)
-        ]);
-
-        // set which bucket to work in
+        $storage = new StorageClient();
         $bucket = $storage->bucket($bucketName);
 
-        // TODO: compress before upload?
+        // in AppEngine we can only write to the temp directory
+        $imageFile = $image->move(sys_get_temp_dir(), $filename);
+        $this->fixOrientation($imageFile);
+        $this->optimize($imageFile);
 
-        // upload/replace file
-        $storageObject = $bucket->upload(
-            $fileContent,
-            ['name' => $cloudPath]
-        // if $cloudPath is existed then will be overwrite without confirmation
-        // NOTE:
-        // a. do not put prefix '/', '/' is a separate folder name  !!
-        // b. private key MUST have 'storage.objects.delete' permission if want to replace file !
-        );
+        $fileContent = file_get_contents($imageFile->getPathname());
+        $bucket->upload($fileContent, ['name' => $objectPath]);
 
-        // TODO: did it succeed ?
-//        return $storageObject != null;
-
-//        $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-//        // this is needed to safely include the filename as part of the URL
-//        $safeFilename = transliterator_transliterate(
-//            'Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
-//            $originalFilename
-//        );
-//        $filename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
-//
-//        try {
-//            $imageFile = $image->move($this->directory, $filename);
-//            $this->fixOrientation($imageFile);
-//            $this->optimize($imageFile);
-//        } catch (FileException $e) {
-//            $this->logger->error($e);
-//        }
-//        return $filename;
         return $filename;
     }
 
     public function delete(string $filename)
     {
+        $bucketName = "stessaluna-bucket-public";
+        $objectPath = self::$BUCKET_DIRECTORY . $filename;
+
+        $storage = new StorageClient();
+        $bucket = $storage->bucket($bucketName);
+        $storageObject = $bucket->object($objectPath);
         try {
-            unlink($this->directory.'/'.$filename);
+            $storageObject->delete();
         } catch (Exception $e) {
             $this->logger->error($e);
         }

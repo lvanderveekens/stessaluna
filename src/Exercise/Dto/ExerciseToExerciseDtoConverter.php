@@ -82,7 +82,7 @@ class ExerciseToExerciseDtoConverter
         ?WhatdoyouseeAnswer $answer
     ): WhatdoyouseeExerciseDto {
         $dto = new WhatdoyouseeExerciseDto();
-        $dto->image = $this->imageStorage->getRelativePath($exercise->getImageFilename());
+        $dto->image = $this->imageStorage->getPath($exercise->getImageFilename());
         $dto->option1 = $exercise->getOption1();
         $dto->option2 = $exercise->getOption2();
         $dto->option3 = $exercise->getOption3();

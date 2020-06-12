@@ -34,7 +34,7 @@ class FileSystemImageStorage implements ImageStorage
     /**
      * @return string the relative path to the image.
      */
-    public function getRelativePath(string $filename): string
+    public function getPath(string $filename): string
     {
         return self::$PUBLIC_PATH . '/' . $filename;
     }

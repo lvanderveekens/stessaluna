@@ -3,6 +3,7 @@
 namespace Stessaluna\User\Dto;
 
 use Psr\Log\LoggerInterface;
+use Stessaluna\Image\Storage\ImageStorage;
 use Stessaluna\User\Entity\User;
 use Symfony\Component\Asset\Packages;
 
@@ -14,10 +15,14 @@ class UserDtoConverter
     /** @var Packages */
     private $packages;
 
-    public function __construct(LoggerInterface $logger, Packages $packages)
+    /** @var ImageStorage */
+    private $imageStorage;
+
+    public function __construct(LoggerInterface $logger, Packages $packages, ImageStorage $imageStorage)
     {
         $this->logger = $logger;
         $this->packages = $packages;
+        $this->imageStorage = $imageStorage;
     }
 
     public function toDto(User $user): UserDto
@@ -30,8 +35,7 @@ class UserDtoConverter
         $dto->country = $user->getCountry();
 
         if ($user->getAvatarFilename()) {
-            // TODO: move base upload path to a common place
-            $dto->avatar = '/uploads/images/'.$user->getAvatarFilename();
+            $dto->avatar = $this->imageStorage->getPath($user->getAvatarFilename());
         } else {
             $dto->avatar = $this->packages->getUrl('build/images/avatar-default.svg');
         }

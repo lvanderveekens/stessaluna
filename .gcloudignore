@@ -13,6 +13,8 @@
 .git
 .gitignore
 
+.env.local
+
 # PHP Composer dependencies:
 vendor/
 
