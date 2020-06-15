@@ -1,8 +1,5 @@
 import React, { FC } from 'react';
 import styles from './AorbElement.scss?module';
-import classNames from 'classnames/bind';
-import { AorbSentenceInput } from '../../aorb-sentence-input.model';
-let cx = classNames.bind(styles);
 
 interface Props {
   attributes,
@@ -13,13 +10,6 @@ interface Props {
 }
 
 const AorbElement: FC<Props> = ({ attributes, children, element, value, onChange }) => {
-
-  const aClassName = cx('a', {
-    'correct': (value.choice && value.choice.correct === 'a'),
-  });
-  const bClassName = cx('b', {
-    'correct': (value.choice && value.choice.correct === 'b'),
-  });
 
   const handleClickOnA = () => {
     value.choice.correct = 'a';

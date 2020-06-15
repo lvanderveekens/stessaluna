@@ -51,10 +51,6 @@ const AorbChoiceForm: FC<Props> = ({ choice, onSubmit }) => {
           </button>
         </div>
       )}
-      {/* TODO: probably not the right place for this..., because why can choice be null... */}
-      {choice && !choice.correct && (
-        <span className={styles.markAsCorrectHint}>Click on A or B to mark it as correct.</span>
-      )}
     </div>
   )
 };

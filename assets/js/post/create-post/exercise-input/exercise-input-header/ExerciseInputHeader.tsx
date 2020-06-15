@@ -13,7 +13,12 @@ const ExerciseInputHeader: FC<Props> = ({ title, onClose }) => {
   return (
     <div className={styles.exerciseInputHeader}>
       <span>{title}</span>
-      <FontAwesomeIcon className={styles.closeButton} icon={faTimes} onClick={onClose} />
+      <span
+        className={styles.closeButton}
+        onClick={onClose}
+      >
+      <FontAwesomeIcon icon={faTimes}/>
+      </span>
     </div>
   )
 }

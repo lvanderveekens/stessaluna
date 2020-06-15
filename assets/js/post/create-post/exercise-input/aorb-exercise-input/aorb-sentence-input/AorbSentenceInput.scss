@@ -1,6 +1,104 @@
-.aorbInput {
-    
-    flex-grow: 1;
-    margin-right: 0.5rem;
+@import "assets/css/colors";
 
+.aorbSentenceInput {
+    flex-grow: 1;
+    text-align: center;
+
+    .textBefore {
+        margin-bottom: 0.4rem;
+    }
+
+    .textAfter {
+        margin-top: 0.4rem;
+    }
+
+    .textBefore,
+    .textAfter {
+        text-align: center;
+        min-width: 70%;
+        max-width: 100%;
+
+        vertical-align: top;
+
+        border: 1px solid #ced4da;
+        border-radius: 0.5rem;
+        padding: 0.2rem;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .choice {
+        display: flex;
+        align-items: center;
+
+        div {
+            display: flex;
+            align-items: center;
+            padding: 0.2rem;
+
+            label {
+                margin-bottom: 0;
+                //margin-left: 0.3rem;
+                padding: 0 0.5rem;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            input {
+                width: 100%;
+                border: none;
+
+                margin-left: 0.3rem;
+                margin-right: 0.3rem;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .aInputGroup,
+        .bInputGroup {
+            color: $stessaluna-exercise-default;
+            border: 1px solid $stessaluna-exercise-default;
+            background: $stessaluna-exercise-default-bg;
+
+            input {
+                padding: 0;
+                color: $stessaluna-exercise-default-text;
+                background: unset;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+
+            &.correct {
+                border-color: $stessaluna-exercise-correct;
+                background: $stessaluna-exercise-correct-bg;
+
+                label {
+                    color: $stessaluna-exercise-correct;
+                }
+            }
+        }
+
+        .aInputGroup {
+            border-bottom-left-radius: 0.5rem;
+            border-top-left-radius: 0.5rem;
+        }
+
+        .bInputGroup {
+            border-bottom-right-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+        }
+
+    }
+
+    .markAsCorrectHint {
+        margin-top: 1rem;
+        font-style: italic;
+        font-size: 0.85rem;
+    }
 }

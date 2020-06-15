@@ -15,7 +15,6 @@ interface Props {
 
 const AorbExerciseInput: FC<Props> = ({ onChange, onClose }) => {
 
-  // TODO: split into presentational and container components
   const [sentences, setSentences] = useState<AorbSentenceInputValue[]>(() => [{ id: nextId() }]);
 
   useEffect(() => {
@@ -47,11 +46,13 @@ const AorbExerciseInput: FC<Props> = ({ onChange, onClose }) => {
         <div className={styles.sentences}>
           {sentences.map((sentence, i) => (
             <div key={sentence.id} className={styles.inputRow}>
-              <div className={styles.inputIndex}>{i + 1}.</div>
-              <AorbSentenceInput value={sentence} onChange={handleChange(i)} />
-              <div className={styles.deleteInput} onClick={deleteInput(i)}>
-                <FontAwesomeIcon icon={faTimes} />
+              <div className="d-flex justify-content-between">
+                <div className={styles.inputIndex}>{i + 1}.</div>
+                <div className={styles.deleteInput} onClick={deleteInput(i)}>
+                  <FontAwesomeIcon icon={faTimes} />
+                </div>
               </div>
+              <AorbSentenceInput value={sentence} onChange={handleChange(i)} />
             </div>
           ))}
         </div>

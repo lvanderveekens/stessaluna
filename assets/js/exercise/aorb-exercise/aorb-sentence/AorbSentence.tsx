@@ -24,7 +24,7 @@ const AorbSentence: FunctionComponent<Props> = ({ textBefore, choice, textAfter,
 
   return (
     <div className={styles.sentence}>
-      {textBefore}
+      <span>{textBefore} </span>
       <span className={choiceClassName("a")} onClick={() => !disabled && onChoice("a")}>
         <span className={styles.label}>A</span>
         <span className={styles.text}>{choice.a}</span>
@@ -33,7 +33,7 @@ const AorbSentence: FunctionComponent<Props> = ({ textBefore, choice, textAfter,
         <span className={styles.label}>B</span>
         <span className={styles.text}>{choice.b}</span>
       </span>
-      {textAfter}
+      <span> {textAfter}</span>
     </div>
   )
 }

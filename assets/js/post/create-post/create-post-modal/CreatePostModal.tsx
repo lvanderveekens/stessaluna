@@ -25,7 +25,7 @@ const CreatePostModal: FC<Props> = ({ previousLocation }) => {
   return (
     <Modal onClose={handleClose}>
       <ModalHeader onClose={handleClose}>Create post</ModalHeader>
-      <ModalContent>
+      <ModalContent className="h-100">
         <CreatePostForm onCreated={handleCreated}/>
       </ModalContent>
     </Modal>
