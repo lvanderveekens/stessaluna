@@ -1,15 +1,11 @@
-import React, {FC, useMemo} from 'react'
+import React, {FC} from 'react'
 import styles from './AorbSentenceInput.scss?module';
-import {withReact} from 'slate-react';
-import {withHistory} from 'slate-history';
-import {createEditor, Transforms} from 'slate';
-import AorbEditor from './aorb-sentence-editor/AorbSentenceEditor';
-import AorbChoiceForm from './aorb-choice-form/AorbChoiceForm';
-import AorbSentenceInputValue, {AorbChoiceInput} from './aorb-sentence-input.model';
+import AorbSentenceInputValue from './aorb-sentence-input.model';
 import TextareaAutosize from "react-autosize-textarea";
 import {faLightbulb} from "@fortawesome/free-regular-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import classNames from 'classnames/bind';
+
 let cx = classNames.bind(styles);
 
 interface Props {
@@ -18,24 +14,6 @@ interface Props {
 }
 
 const AorbSentenceInput: FC<Props> = ({value, onChange}) => {
-
-  const withAorb = editor => {
-    const {isInline, isVoid} = editor;
-    editor.isInline = element => {
-      return element.type === 'aorb' ? true : isInline(element);
-    }
-    editor.isVoid = element => {
-      return element.type === 'aorb' ? true : isVoid(element)
-    }
-    return editor;
-  }
-
-  const editor = useMemo(() => withAorb(withReact(withHistory(createEditor()))), []);
-
-  const insertAorb = (choice: AorbChoiceInput) => {
-    const aorb = {type: 'aorb', a: choice.a, b: choice.b, children: [{text: ''}]}
-    Transforms.insertNodes(editor, aorb);
-  }
 
   const aInputGroupClassName = cx(styles.aInputGroup, {
     'correct': (value.choice && value.choice.correct === 'a'),
