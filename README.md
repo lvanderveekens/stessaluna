@@ -6,4 +6,9 @@ A social platform for community-driven language learning exercises. 🇳🇱🇮
 
 The following dependencies are needed otherwise uploaded images won't be optimized.
 
-    brew install jpegoptim optipng pngquant
+    $ brew install jpegoptim optipng pngquant
+
+## Deploy
+
+    $ yarn build
+    $ gcloud app deploy
