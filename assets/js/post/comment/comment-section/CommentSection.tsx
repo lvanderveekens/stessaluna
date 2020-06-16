@@ -1,12 +1,13 @@
 import moment from "moment"
-import React, { FunctionComponent } from "react"
+import React, {FunctionComponent} from "react"
 import User from "../../../user/user.interface"
 import Comment from "../Comment"
 import CommentInterface from "../comment.interface"
 import NewCommentForm from "../new-comment-form/NewCommentForm"
 import styles from "./CommentSection.scss?module"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faLock } from "@fortawesome/free-solid-svg-icons"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faLock} from "@fortawesome/free-solid-svg-icons"
+import {Link} from "react-router-dom"
 
 interface Props {
   comments: CommentInterface[]
@@ -16,7 +17,8 @@ interface Props {
   user?: User
   addComment: (text: string) => Promise<void>
   deleteComment: (id: number) => void
-  locked: boolean
+  locked: boolean,
+  loggedIn: boolean,
 }
 
 const CommentSection: FunctionComponent<Props> = ({
@@ -28,6 +30,7 @@ const CommentSection: FunctionComponent<Props> = ({
   addComment,
   deleteComment,
   locked,
+  loggedIn,
 }) => {
   return (
     <div className={styles.commentSection}>
@@ -61,10 +64,8 @@ const CommentSection: FunctionComponent<Props> = ({
                 onDelete={() => deleteComment(comment.id)}
               />
             ))}
-          {user
-            ? (<NewCommentForm onSubmit={addComment} avatar={user.avatar}/>)
-            : (<div>Log in to add a comment</div>)
-          }
+          {user && <NewCommentForm onSubmit={addComment} avatar={user.avatar}/>}
+          {!loggedIn && <div><Link to="/login">Log in</Link> to add a comment</div>}
         </>
       )}
     </div>

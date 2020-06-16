@@ -17,6 +17,7 @@ interface Props {
   addComment: (postId: number, text: string) => Promise<void>
   deleteComment: (postId: number, commentId: number) => Promise<void>
   locked: boolean
+  loggedIn: boolean
 }
 
 const CommentSectionContainer: FC<Props> = ({
@@ -30,6 +31,7 @@ const CommentSectionContainer: FC<Props> = ({
   addComment,
   deleteComment,
   locked,
+  loggedIn
 }) => {
   useEffect(() => {
     if (comments.length <= numberOfPreviewComments) {
@@ -55,6 +57,7 @@ const CommentSectionContainer: FC<Props> = ({
       addComment={handleAddComment}
       deleteComment={handleDeleteComment}
       locked={locked}
+      loggedIn={loggedIn}
     />
   )
 }
@@ -66,6 +69,7 @@ const actionCreators = {
 
 const mapStateToProps = (state: State) => ({
   user: state.auth.user,
+  loggedIn: state.auth.loggedIn,
 })
 
 export default connect(mapStateToProps, actionCreators)(CommentSectionContainer)
