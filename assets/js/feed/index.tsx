@@ -13,15 +13,16 @@ interface Props {
   filters: Filters
   fetchPosts: (channels?: string[], limit?: number, beforeId?: number, append?: boolean) => void
   deletePost: (id: number) => void
+  loggedIn: boolean
 }
 
 const FETCH_SIZE = 10;
 
-const FeedContainer: FC<Props> = ({loading, posts, hasMore, filters, fetchPosts, deletePost}) => {
+const FeedContainer: FC<Props> = ({loading, posts, hasMore, filters, fetchPosts, deletePost, loggedIn}) => {
 
   useEffect(() => {
     fetchPosts(filters.channel, FETCH_SIZE)
-  }, [filters])
+  }, [filters, loggedIn])
 
   const handleLoadMore = () => {
     const oldestPostIdInFeed = Math.min(...posts.map((post) => post.id))
@@ -44,6 +45,7 @@ const mapStateToProps = (state: State) => ({
   posts: state.post.data,
   hasMore: state.post.hasNextPage,
   filters: state.post.filters,
+  loggedIn: state.auth.loggedIn,
 })
 
 const actionCreators = {

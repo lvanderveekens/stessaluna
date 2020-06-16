@@ -65,7 +65,7 @@ const CommentSection: FunctionComponent<Props> = ({
               />
             ))}
           {user && <NewCommentForm onSubmit={addComment} avatar={user.avatar}/>}
-          {!loggedIn && <div><Link to="/login">Log in</Link> to add a comment</div>}
+          {!loggedIn && <div><Link to="/login">Log in</Link> to add comments</div>}
         </>
       )}
     </div>
