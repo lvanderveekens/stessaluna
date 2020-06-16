@@ -43,6 +43,9 @@
         cursor: pointer;
 
         button {
+            // for chrome on android
+            background: none;
+            
             border: none;
             padding: 0;
         }
