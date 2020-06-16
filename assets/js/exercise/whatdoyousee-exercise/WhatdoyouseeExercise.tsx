@@ -35,7 +35,9 @@ const WhatdoyouseeExercise: FC<Props> = ({
         <span>What do you see</span>
       </div>
       <div className={styles.imageWrapper}>
-        <img src={image} />
+        <div className={styles.aspectRatioBox}>
+          <img src={image}/>
+        </div>
       </div>
       <div>
         <div className="d-flex mb-3">
