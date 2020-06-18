@@ -30,7 +30,7 @@ class GoogleCloudImageStorage implements ImageStorage
     {
         $bucketName = "stessaluna-bucket-public";
         $objectPath = self::$BUCKET_DIRECTORY . $filename;
-        return "https://$bucketName.storage.googleapis.com/$objectPath";
+        return "https://storage-download.googleapis.com/$bucketName/$objectPath";
     }
 
     public function store(UploadedFile $image): string

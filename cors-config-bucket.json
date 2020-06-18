@@ -1,0 +1,8 @@
+[
+    {
+        "origin": ["*"],
+        "responseHeader": ["X-CSRF-Token"], 
+        "method": ["GET"],
+        "maxAgeSeconds": 3600
+    }
+]
