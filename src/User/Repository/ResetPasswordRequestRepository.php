@@ -1,6 +1,6 @@
 <?php
 
-namespace Stessaluna\Repository;
+namespace Stessaluna\User\Repository;
 
 use Stessaluna\Entity\ResetPasswordRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

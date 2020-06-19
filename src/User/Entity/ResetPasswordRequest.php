@@ -1,13 +1,13 @@
 <?php
 
-namespace Stessaluna\Entity;
+namespace Stessaluna\User\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestTrait;
 
 /**
- * @ORM\Entity(repositoryClass="Stessaluna\Repository\ResetPasswordRequestRepository")
+ * @ORM\Entity
  */
 class ResetPasswordRequest implements ResetPasswordRequestInterface
 {
