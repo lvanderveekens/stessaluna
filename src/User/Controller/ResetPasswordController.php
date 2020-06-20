@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,7 +40,7 @@ class ResetPasswordController extends AbstractController
     }
 
     /**
-     * Display & process form to request a password reset.
+     * Send a mail containing a password reset link.
      *
      * @Route(methods={"POST"})
      */
@@ -58,10 +59,12 @@ class ResetPasswordController extends AbstractController
      */
     public function reset(Request $request): Response
     {
-        $this->passwordResetter->reset(
-            $request->get('token'),
-            $request->get('newPassword')
-        );
+        $token = $request->get('token');
+        if (!$token) {
+            throw new BadRequestHttpException("Password reset token not found");
+        }
+
+        $this->passwordResetter->reset($token, $request->get('newPassword'));
         return new Response();
     }
 }

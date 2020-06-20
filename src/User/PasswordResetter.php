@@ -5,6 +5,7 @@ namespace Stessaluna\User;
 
 use DateTime;
 use Psr\Log\LoggerInterface;
+use Stessaluna\Exception\NotFoundException;
 use Stessaluna\User\Entity\User;
 use Stessaluna\User\Repository\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -55,8 +56,7 @@ class PasswordResetter
             return;
         }
 
-//        $resetToken = $this->resetPasswordHelper->generateResetToken($user);
-        $resetToken = new ResetPasswordToken("abc123", new DateTime());
+        $resetToken = $this->resetPasswordHelper->generateResetToken($user);
 
         $email = (new TemplatedEmail())
             ->from(new Address('support@stessaluna.com', 'Stessaluna Support'))

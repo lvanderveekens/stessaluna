@@ -1,11 +1,9 @@
-import React, {FC, useState} from "react"
+import React, {FC} from "react"
 import logoPath from "../../images/logo.svg";
-import {Alert, Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
 import {RouteComponentProps} from 'react-router-dom';
 import styles from './ResetPasswordPage.scss?module';
-import {Formik} from "formik";
-import Button from "../button/Button";
 import ResetPasswordForm from "./reset-password-form/ResetPasswordForm";
 
 interface Props extends RouteComponentProps {
