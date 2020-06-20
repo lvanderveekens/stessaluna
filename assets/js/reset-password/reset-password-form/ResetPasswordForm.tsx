@@ -58,8 +58,8 @@ const ResetPasswordForm: FunctionComponent<Props> = ({}) => {
               isInvalid={errors.email && touched.email}
             />
           </Form.Group>
-          <Button className={styles.resetButton} type="submit" variant="light" disabled={!isValid || isSubmitting}>
-            Reset
+          <Button className={styles.submitButton} type="submit" variant="light" disabled={!isValid || isSubmitting}>
+            Send
           </Button>
           {alertMessage && (
             <Alert

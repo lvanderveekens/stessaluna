@@ -3,11 +3,15 @@ declare(strict_types=1);
 
 namespace Stessaluna\User;
 
+use DateTime;
 use Psr\Log\LoggerInterface;
+use Stessaluna\User\Entity\User;
 use Stessaluna\User\Repository\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 class PasswordResetter
@@ -28,13 +32,19 @@ class PasswordResetter
      * @var LoggerInterface
      */
     private $logger;
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $passwordEncoder;
 
     public function __construct(MailerInterface $mailer, UserRepository $userRepository,
-                                ResetPasswordHelperInterface $resetPasswordHelper, LoggerInterface $logger)
+                                ResetPasswordHelperInterface $resetPasswordHelper,
+                                UserPasswordEncoderInterface $passwordEncoder, LoggerInterface $logger)
     {
         $this->mailer = $mailer;
         $this->userRepository = $userRepository;
         $this->resetPasswordHelper = $resetPasswordHelper;
+        $this->passwordEncoder= $passwordEncoder;
         $this->logger = $logger;
     }
 
@@ -45,8 +55,8 @@ class PasswordResetter
             return;
         }
 
-        // TODO: how to present these kinds of submit errors to the user?
-        $resetToken = $this->resetPasswordHelper->generateResetToken($user);
+//        $resetToken = $this->resetPasswordHelper->generateResetToken($user);
+        $resetToken = new ResetPasswordToken("abc123", new DateTime());
 
         $email = (new TemplatedEmail())
             ->from(new Address('support@stessaluna.com', 'Stessaluna Support'))
@@ -59,5 +69,19 @@ class PasswordResetter
             ]);
 
         $this->mailer->send($email);
+    }
+
+    public function reset(string $token, string $newPassword)
+    {
+        /** @var User $user */
+        $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
+
+        // a password reset token should only be used once
+        $this->resetPasswordHelper->removeResetRequest($token);
+
+        $encodedPassword = $this->passwordEncoder->encodePassword($user, $newPassword);
+        $user->setPassword($encodedPassword);
+
+        $this->userRepository->save($user);
     }
 }
