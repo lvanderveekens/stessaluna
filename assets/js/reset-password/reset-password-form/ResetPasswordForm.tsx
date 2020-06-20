@@ -4,6 +4,7 @@ import {Formik} from 'formik';
 import styles from "./ResetPasswordForm.scss?module";
 import Button from "../../button/Button";
 import {schema} from "./reset-password-form.schema";
+import axios from '../../http/client';
 
 interface Props {
 }
@@ -17,19 +18,20 @@ const ResetPasswordForm: FunctionComponent<Props> = ({}) => {
   const [alertMessage, setAlertMessage] = useState(null)
   const [submitError, setSubmitError] = useState(false)
 
-  const handleSubmit = (values: FormValues, {resetForm}) => {
+  const handleSubmit = ({email}: FormValues, {setSubmitting, resetForm}) => {
     setAlertMessage(null)
     setSubmitError(false)
 
-    // updateProfile(country, resetAvatar, avatar, displayName)
-    //   .then(() => {
-    //     setAlertMessage("Profile saved")
-    //     resetForm()
-    //   })
-    //   .catch((error) => {
-    //     setAlertMessage(error)
-    //     setSubmitError(true)
-    //   })
+    axios.post('/api/reset-password', {email})
+      .then(() => {
+        setAlertMessage(`A password reset link has been sent to ${email}.`)
+        resetForm()
+      })
+      .catch((e) => {
+        setAlertMessage(e.response.data.message)
+        setSubmitError(true)
+        setSubmitting(false)
+      })
   }
 
   return (
@@ -40,6 +42,8 @@ const ResetPasswordForm: FunctionComponent<Props> = ({}) => {
       }}
       onSubmit={handleSubmit}
       isInitialValid={false}
+      validateOnChange={true}
+      validateOnBlur={false}
     >
       {({values, handleSubmit, handleBlur, handleChange, isValid, isSubmitting, errors, touched}) => (
         <Form className={styles.resetPasswordForm} onSubmit={handleSubmit}>

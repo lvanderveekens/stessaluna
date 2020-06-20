@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Stessaluna\User\Profile;
+namespace Stessaluna\User;
 
 use Stessaluna\Image\Storage\ImageStorage;
 use Stessaluna\User\Entity\User;
 use Stessaluna\User\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class ProfileService
+class ProfileUpdater
 {
     /** @var UserRepository */
     private $userRepository;
@@ -21,7 +21,7 @@ class ProfileService
         $this->imageStorage = $imageStorage;
     }
 
-    public function updateProfile(
+    public function update(
         User $user,
         ?string $displayName,
         string $country,

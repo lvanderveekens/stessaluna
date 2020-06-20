@@ -4,7 +4,7 @@ namespace Stessaluna\User\Controller;
 
 use Psr\Log\LoggerInterface;
 use Stessaluna\User\Dto\UserDtoConverter;
-use Stessaluna\User\Profile\ProfileService;
+use Stessaluna\User\ProfileUpdater;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,19 +17,19 @@ class ProfileController extends AbstractController
     /** @var LoggerInterface */
     private $logger;
 
-    /** @var ProfileService */
-    private $profileService;
+    /** @var ProfileUpdater */
+    private $profileUpdater;
 
     /** @var UserDtoConverter */
     private $userDtoConverter;
 
     public function __construct(
         LoggerInterface $logger,
-        ProfileService $profileService,
+        ProfileUpdater $profileUpdater,
         UserDtoConverter $userDtoConverter
     ) {
         $this->logger = $logger;
-        $this->profileService = $profileService;
+        $this->profileUpdater = $profileUpdater;
         $this->userDtoConverter = $userDtoConverter;
     }
 
@@ -38,7 +38,7 @@ class ProfileController extends AbstractController
      */
     public function updateProfile(Request $request)
     {
-        $updatedUser = $this->profileService->updateProfile(
+        $updatedUser = $this->profileUpdater->update(
             $this->getUser(),
             $request->get('displayName'),
             $request->get('country'),
