@@ -15,6 +15,7 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\KernelInterface;
+use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 
 class ExceptionSubscriber implements EventSubscriberInterface
 {
@@ -42,6 +43,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
         $this->logger->warning("ON EXCEPTION EVENT");
 
         $exception = $event->getThrowable();
+        $message = $exception->getMessage();
 
         if ($this->kernel->getEnvironment() === 'prod') {
             Bootstrap::init();
@@ -59,13 +61,18 @@ class ExceptionSubscriber implements EventSubscriberInterface
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
         } elseif ($exception instanceof NotAuthorException) {
             $response->setStatusCode(Response::HTTP_FORBIDDEN);
+        } elseif ($exception instanceof ResetPasswordExceptionInterface) {
+            $response->setStatusCode(Response::HTTP_BAD_REQUEST);
+            $message = $exception->getReason();
         } else {
             $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+            // don't leak internal error messages to the client
+            $message = "Something went wrong...";
         }
 
         $response->setJson(json_encode(array(
             'status'    => $response->getStatusCode(),
-            'message'   => $exception->getMessage()
+            'message'   => $message
         ))) ;
 
         $event->setResponse($response);
