@@ -4,6 +4,7 @@ import {Formik, FormikHelpers} from 'formik';
 import styles from './LoginForm.scss?module';
 import Button from '../../button/Button';
 import {schema} from "./login-form.schema";
+import {Link} from "react-router-dom"
 
 interface Props {
   onSubmit: (username: string, password: string) => Promise<void>
@@ -49,9 +50,6 @@ const LoginForm: FC<Props> = ({ onSubmit }) => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            <div className={styles.feedbackWrapper}>
-              {errors.username && touched.username && (<div className="invalid-feedback">{errors.username}</div>)}
-            </div>
           </Form.Group>
           <Form.Group>
             <Form.Label>Password</Form.Label>
@@ -63,11 +61,13 @@ const LoginForm: FC<Props> = ({ onSubmit }) => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            <div className={styles.feedbackWrapper}>
-              {errors.password && touched.password && (<div className="invalid-feedback">{errors.password}</div>)}
+            <div className={styles.forgotPassword}>
+              <Link to="/reset-password">
+                Forgot your password?
+              </Link>
             </div>
           </Form.Group>
-          <Button className={styles.submitButton} variant="light" type="submit" disabled={!isValid || isSubmitting}>
+          <Button className={styles.submitButton} variant="transparent" type="submit" disabled={!isValid || isSubmitting}>
             Log in
           </Button>
           {errorMessage && (

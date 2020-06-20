@@ -11,6 +11,7 @@ import {usePrevious} from "../util/hooks"
 import PrivateRoute from "./PrivateRoute"
 import AboutPage from "../about/AboutPage";
 import ReactGA from "react-ga";
+import ResetPasswordPage from "../reset-password/ResetPasswordPage";
 
 const Routes: FC = () => {
   const location = useLocation()
@@ -40,6 +41,7 @@ const Routes: FC = () => {
         <Route exact path="/about" component={AboutPage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/signup" component={RegistrationPage} />
+        <Route exact path="/reset-password" component={ResetPasswordPage} />
         <Route component={NotFoundPage} />
       </Switch>
       <PrivateRoute

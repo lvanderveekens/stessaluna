@@ -1,10 +1,9 @@
 <?php
+declare(strict_types=1);
 
-namespace Stessaluna\Controller;
+namespace Stessaluna\User\Controller;
 
 use Stessaluna\User\Entity\User;
-use Stessaluna\Form\ChangePasswordFormType;
-use Stessaluna\Form\ResetPasswordRequestFormType;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;

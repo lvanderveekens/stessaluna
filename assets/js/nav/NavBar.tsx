@@ -6,7 +6,6 @@ import React, {FC, useEffect, useRef, useState} from "react"
 import {Container, Nav as BootstrapNav, Navbar as BootstrapNavbar} from "react-bootstrap"
 import {connect} from "react-redux"
 import {useMediaQuery} from "react-responsive"
-import {withRouter} from "react-router"
 import {Link} from "react-router-dom"
 import logoPath from "../../images/logo.svg"
 import CustomToggle from "../dropdown/custom-toggle/CustomToggle"
@@ -164,4 +163,4 @@ const actionCreators = {
   logOut,
 }
 
-export default withRouter(connect(mapStateToProps, actionCreators)(Navbar))
+export default connect(mapStateToProps, actionCreators)(Navbar)

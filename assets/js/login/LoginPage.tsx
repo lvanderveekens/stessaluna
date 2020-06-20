@@ -1,5 +1,5 @@
 import React, {FC, useState} from "react"
-import {Col, Container, Row} from "react-bootstrap"
+import {Col, Container, Form, Row} from "react-bootstrap"
 import Helmet from "react-helmet"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
@@ -9,6 +9,7 @@ import styles from "./LoginPage.scss?module"
 import logoPath from "../../images/logo.svg"
 import {History} from 'history';
 import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
+import Button from "../button/Button";
 
 interface Props {
   logIn: (username: string, password: string) => Promise<void>
@@ -24,9 +25,6 @@ const LoginPage: FC<Props> = ({logIn, history}) => {
 
   return (
     <div className={styles.loginPage}>
-      <Helmet>
-        <style>{`body { background-color: ${styles.stessalunaBrandSecondary}; }`}</style>
-      </Helmet>
       <div className={styles.logoWrapper}>
         <img src={logoPath} alt="Logo" onClick={() => history.push("/")}/>
       </div>
@@ -35,9 +33,16 @@ const LoginPage: FC<Props> = ({logIn, history}) => {
           <Col {...COLUMN_BREAKPOINTS}>
             <h4>Log in to Stessaluna</h4>
             <LoginForm onSubmit={handleSubmit}/>
-            <p className="text-white">
-              Or <Link to="/signup">click here</Link> to create a new account.
-            </p>
+            <div className={styles.divider}>
+              <span className={styles.line}/>
+              <span className={styles.text}>OR</span>
+              <span className={styles.line}/>
+            </div>
+            <Link to="/signup">
+              <Button variant="light" className={styles.signupButton}>
+                Sign up
+              </Button>
+            </Link>
           </Col>
         </Row>
       </Container>

@@ -4,7 +4,7 @@ import { Redirect, Route } from "react-router-dom"
 
 interface Props {
   component?: any
-  render?: (props) => void
+  render?: (props) => any
   loggedIn: boolean
 }
 

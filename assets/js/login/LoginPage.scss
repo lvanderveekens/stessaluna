@@ -1,9 +1,5 @@
 @import '../../css/colors';
 
-:export {
-    stessalunaBrandSecondary: $brand-secondary;
-}
-
 .loginPage {
 
     color: white;
@@ -26,6 +22,28 @@
                 cursor: pointer;
             }
         }
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        .line {
+            border-top: 1px solid white;
+            height: 0;
+            flex-grow: 1;
+        }
+
+        .text {
+            padding: 0 1rem;
+        }
+    }
+
+    .signupButton {
+        width: 100%;
+        padding: 0.5rem 0;
+        margin-bottom: 1rem;
     }
 }
 
