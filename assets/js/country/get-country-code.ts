@@ -33,4 +33,5 @@ const PREFERRED_COUNTRY_BY_LANGUAGE = {
   Chinese: "China",
   Portuguese: "Portugal",
   German: "Germany",
+  English: "United Kingdom",
 }
