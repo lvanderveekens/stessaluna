@@ -34,3 +34,7 @@ yarn-error.log
 *.swp
 
 .idea/
+
+# don't commit the app.yaml files containing production secrets
+app.yaml
+app-secrets.env

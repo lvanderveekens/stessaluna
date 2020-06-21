@@ -23,6 +23,7 @@ final class Version20200603161120 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE user ADD email VARCHAR(180) NOT NULL');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON user (email)');
     }
 
     public function down(Schema $schema) : void
@@ -31,5 +32,6 @@ final class Version20200603161120 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE user DROP email');
+        $this->addSql('DROP INDEX UNIQ_8D93D649E7927C74 ON user');
     }
 }

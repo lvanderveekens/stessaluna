@@ -1,0 +1,26 @@
+runtime: php73
+
+env_variables:
+  APP_ENV: prod
+  APP_DEBUG: true
+  APP_SECRET: ${APP_SECRET}
+  DATABASE_URL: ${DATABASE_URL}
+  MAILER_DSN: ${MAILER_DSN}
+
+handlers:
+  # Declare the build and bundles directory as static assets to be served by the
+  # App Engine CDN.
+  - url: /build
+    static_dir: public/build
+  - url: /bundles
+    static_dir: public/bundles
+
+  # Declare any media files in the public directory as static assets as well.
+  - url: /(.*\.(ico|txt|gif|png|jpg))$
+    static_files: public/\1
+    upload: public/.*\.(ico|txt|gif|png|jpg)$
+
+  - url: /.*
+    script: auto
+    secure: always
+    redirect_http_response_code: 301
