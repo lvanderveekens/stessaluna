@@ -9,4 +9,4 @@ export $(cat app-secrets.env | xargs)
 envsubst < app-template.yaml > app.yaml
 
 # Deploy to App Engine
-gcloud app deploy
+gcloud app deploy -q
