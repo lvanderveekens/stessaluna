@@ -61,7 +61,9 @@ class RequestToCreatePostConverter
         $sentences = array();
         foreach ($exercise['sentences'] as $sentenceParameter) {
             $sentence = new AorbSentenceDto();
-            $sentence->textBefore = $sentenceParameter['textBefore'];
+            if (isset($sentenceParameter['textBefore'])) {
+                $sentence->textBefore = $sentenceParameter['textBefore'];
+            }
 
             $choice = new AorbChoiceDto();
             $choice->a = $sentenceParameter['choice']['a'];
@@ -69,7 +71,10 @@ class RequestToCreatePostConverter
             $choice->correct = $sentenceParameter['choice']['correct'];
             $sentence->choice = $choice;
 
-            $sentence->textAfter = $sentenceParameter['textAfter'];
+            if (isset($sentenceParameter['textAfter'])) {
+                $sentence->textAfter = $sentenceParameter['textAfter'];
+            }
+
             array_push($sentences, $sentence);
         }
 

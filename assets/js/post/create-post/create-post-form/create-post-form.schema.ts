@@ -26,14 +26,22 @@ const aorbSchema = yup.object().shape({
     .required()
     .of(
       yup.object().shape({
-        textBefore: yup.string().required(),
-        choice: yup.object().shape({
-          a: yup.string().required(),
-          b: yup.string().required(),
-          correct: yup.string().required(),
-        }),
-        textAfter: yup.string().nullable(),
-      })
+          textBefore: yup.string().when(["textAfter"], {
+            is: (textAfter) => !textAfter,
+            then: yup.string().required(),
+          }),
+          choice: yup.object().shape({
+            a: yup.string().required(),
+            b: yup.string().required(),
+            correct: yup.string().required(),
+          }),
+          textAfter: yup.string().when(["textBefore"], {
+            is: (textBefore) => !textBefore,
+            then: yup.string().required(),
+          }),
+        },
+        ["textBefore", "textAfter"]
+      )
     ),
 })
 
