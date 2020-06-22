@@ -17,13 +17,18 @@ const AboutPage: FC = ({}) => {
           <div className={styles.imageWrapper}>
             <img src={meImagePath}/>
           </div>
-          <p>Hi 👋🏻, my name is Luciano and I'm the founder of Stessaluna, a social platform for community-driven language learning exercises.</p>
-          <p>Practicing a language on a daily basis is fundamental to improvement and with Stessaluna I intended to create such an environment where people can go to and learn or teach a language together for whatever amount of time you have available on a given day.</p>
-          <p>If you 👍🏻 what I’m doing and want to share new feature ideas with me or you just want to say Hi, send me an email.</p>
+          <p>Hi <span className={styles.emoji}>👋🏻</span>, my name is Luciano and I'm the founder of Stessaluna, a social platform for
+            community-driven language learning exercises.</p>
+          <p>Practicing a language on a daily basis is fundamental to improvement and with Stessaluna I intended to
+            create such an environment where people can go to and learn or teach a language together for whatever amount
+            of time you have available on a given day.</p>
+          <p>If you <span className={styles.emoji}>👍🏻</span> what I’m doing and want to share new feature ideas with me or you just want to say Hi, send me
+            an email.</p>
           <div className={styles.mailLinkWrapper}>
             <a href="mailto:info@stessaluna.com"><FontAwesomeIcon icon={faPaperPlane}/> Mail me</a>
           </div>
-          <p>Or if you ❤️ what I’m doing and want to support development and server costs, you can always buy me a dose of caffeine.</p>
+          <p>Or if you <span className={styles.emoji}>❤️</span> what I’m doing and want to support development and server costs, you can always buy me a dose
+            of caffeine.</p>
           <div className={styles.bmcLinkWrapper}>
             <a className={styles.bmcLink} target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/lvdveekens">
               <img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a coffee"/>
