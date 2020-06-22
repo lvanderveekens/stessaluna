@@ -30,19 +30,20 @@
 
             @media (min-width: 768px) {
 
-                width: 65%;
-                max-height: 50%;
+                width: 60%;
+                max-height: 70%;
 
                 border: 1px solid #ced4da;
                 border-radius: 0.5rem;
             }
 
             @media (min-width: 992px) {
-                width: 50%;
+                width: 45%;
             }
 
             @media (min-width: 1200px) {
-                width: 40%;
+                //width: 30%;
+                max-width: 500px;
             }
         }
     }
