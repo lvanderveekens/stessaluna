@@ -23,7 +23,7 @@ const AboutPage: FC = ({}) => {
           <div className={styles.mailLinkWrapper}>
             <a href="mailto:info@stessaluna.com"><FontAwesomeIcon icon={faPaperPlane}/> Mail me</a>
           </div>
-          <p>Or if you ❤️ what I’m doing and you want to support further development, you can always buy me a dose of caffeine.</p>
+          <p>Or if you ❤️ what I’m doing and you want to support development and server costs, you can always buy me a dose of caffeine.</p>
           <div className={styles.bmcLinkWrapper}>
             <a className={styles.bmcLink} target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/lvdveekens">
               <img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a coffee"/>
