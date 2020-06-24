@@ -5,6 +5,7 @@ import styles from './LoginForm.scss?module';
 import Button from '../../button/Button';
 import {schema} from "./login-form.schema";
 import {Link} from "react-router-dom"
+import ReactGA from "react-ga";
 
 interface Props {
   onSubmit: (username: string, password: string) => Promise<void>
@@ -24,6 +25,7 @@ const LoginForm: FC<Props> = ({ onSubmit }) => {
     onSubmit(username, password)
       .then(() => {
         resetForm()
+        ReactGA.event({category: 'User', action: 'Logged in'});
       })
       .catch((e) => {
         setErrorMessage(e.response.data.message)

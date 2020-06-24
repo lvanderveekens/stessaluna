@@ -12,6 +12,7 @@ import User from "../user/user.interface"
 import styles from "./ProfilePage.scss?module"
 import Button from "../button/Button"
 import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
+import ReactGA from "react-ga";
 
 interface Props {
   loading: boolean
@@ -59,6 +60,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
       .then(() => {
         setAlertMessage("Profile saved")
         resetForm()
+        ReactGA.event({category: 'User', action: 'Updated profile'});
       })
       .catch((error) => {
         setAlertMessage(error)

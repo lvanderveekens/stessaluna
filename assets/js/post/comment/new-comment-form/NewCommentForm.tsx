@@ -1,18 +1,19 @@
-import { faArrowCircleRight } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useFormik } from "formik"
+import {faArrowCircleRight} from "@fortawesome/free-solid-svg-icons"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {useFormik} from "formik"
 import PropTypes from "prop-types"
-import React, { FunctionComponent } from "react"
+import React, {FC} from "react"
 import TextareaAutosize from "react-textarea-autosize"
 import * as yup from "yup"
 import styles from "./NewCommentForm.scss?module"
+import ReactGA from "react-ga";
 
 interface Props {
   onSubmit: (comment: string) => Promise<void>
   avatar: string
 }
 
-const NewCommentForm: FunctionComponent<Props> = ({ onSubmit, avatar }) => {
+const NewCommentForm: FC<Props> = ({onSubmit, avatar}) => {
   const handleKeyDown = (isSubmitting: boolean, handleSubmit: () => void) => (e) => {
     if (e.key === "Enter") {
       e.preventDefault()
@@ -22,9 +23,12 @@ const NewCommentForm: FunctionComponent<Props> = ({ onSubmit, avatar }) => {
     }
   }
 
-  const handleSubmit = async (values, { resetForm }) => {
-    await onSubmit(values.text)
-    resetForm()
+  const handleSubmit = (values, {resetForm}) => {
+    onSubmit(values.text)
+      .then(() => {
+        resetForm()
+        ReactGA.event({category: 'Post', action: 'Created comment'});
+      })
   }
 
   const formik = useFormik({
@@ -32,7 +36,7 @@ const NewCommentForm: FunctionComponent<Props> = ({ onSubmit, avatar }) => {
       text: "",
     },
     isInitialValid: false,
-    validationSchema: yup.object().shape({ text: yup.string().required() }),
+    validationSchema: yup.object().shape({text: yup.string().required()}),
     onSubmit: handleSubmit,
   })
 
@@ -40,7 +44,7 @@ const NewCommentForm: FunctionComponent<Props> = ({ onSubmit, avatar }) => {
     <form className={styles.newCommentForm} onSubmit={formik.handleSubmit}>
       <div className="d-flex">
         <div className={styles.avatar}>
-          <img src={avatar} />
+          <img src={avatar}/>
         </div>
         <div className={styles.inputWrapper}>
           <TextareaAutosize
@@ -55,7 +59,7 @@ const NewCommentForm: FunctionComponent<Props> = ({ onSubmit, avatar }) => {
         </div>
         <div className={styles.submit}>
           <button type="submit" disabled={!formik.isValid || formik.isSubmitting}>
-            <FontAwesomeIcon icon={faArrowCircleRight} />
+            <FontAwesomeIcon icon={faArrowCircleRight}/>
           </button>
         </div>
       </div>

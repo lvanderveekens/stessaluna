@@ -74,7 +74,10 @@ export const addComment = (postId, text) => {
       .then((res) => {
         dispatch(success(postId, res.data))
       })
-      .catch(console.log)
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
   }
 
   function success(postId, comment) {
