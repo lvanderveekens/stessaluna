@@ -61,7 +61,7 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
 
   return (
     <BootstrapNavbar
-      className={styles.nav}
+      className={cx(styles.nav, {isBeforeBreakpoint})}
       fixed="top"
       expand="lg"
       expanded={expanded}
@@ -81,11 +81,7 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
           <div className="d-flex align-items-center">
             {loggedIn && !isExpandedNavVisible && (
               <BootstrapNav.Link className={styles.createPostLink} as={Link} to="/create-post">
-                {isBeforeBreakpoint
-                  ? (<span className={styles.createPostIcon}>
-                      <FontAwesomeIcon icon={faEdit}/>
-                     </span>)
-                  : (<Button className={styles.createPostButton} variant="light">Post</Button>)}
+                <Button className={styles.createPostButton} variant="light">Post</Button>
               </BootstrapNav.Link>
             )}
             <BootstrapNavbar.Toggle className={styles.toggle} as={CustomToggle} aria-controls="collapsable-nav">
