@@ -1,9 +1,10 @@
-import ActionTypes from "./actionTypes"
+import * as ActionTypes from "./actionTypes"
 import axios from "../../http/client"
 import Exercise from "../../exercise/exercise.model"
 import ExerciseInputValue from "../../post/create-post/exercise-input/exercise-input.model"
-import { objectToFormData } from "object-to-formdata"
-import { Answer } from "../../exercise/answer/answer.model"
+import {objectToFormData} from "object-to-formdata"
+import {Answer} from "../../exercise/answer/answer.model"
+
 const queryString = require('query-string');
 
 export const fetchPosts = (channels?: string[], limit?: number, beforeId?: number, append?: boolean) => {
@@ -26,17 +27,19 @@ export const fetchPosts = (channels?: string[], limit?: number, beforeId?: numbe
   function pending() {
     return {type: ActionTypes.FETCH_POSTS_PENDING, payload: {append}}
   }
+
   function success(posts) {
     return {type: ActionTypes.FETCH_POSTS_SUCCESS, payload: {posts, append, limit}}
   }
+
   function error() {
-    return { type: ActionTypes.FETCH_POSTS_ERROR }
+    return {type: ActionTypes.FETCH_POSTS_ERROR}
   }
 }
 
 export const createPost = (channel: string, text?: string, image?: File, exercise?: ExerciseInputValue) => {
   return (dispatch) => {
-    const formData = objectToFormData({ channel, text, image, exercise }, { indices: true })
+    const formData = objectToFormData({channel, text, image, exercise}, {indices: true})
     return axios
       .post("/api/posts", formData)
       .then((res) => {
@@ -48,7 +51,7 @@ export const createPost = (channel: string, text?: string, image?: File, exercis
   }
 
   function success(post) {
-    return { type: ActionTypes.CREATE_POST_SUCCESS, payload: { post } }
+    return {type: ActionTypes.CREATE_POST_SUCCESS, payload: {post}}
   }
 }
 
@@ -59,18 +62,21 @@ export const deletePost = (id) => {
       .then((res) => {
         dispatch(success(id))
       })
-      .catch(console.log)
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
   }
 
   function success(id) {
-    return { type: ActionTypes.DELETE_POST_SUCCESS, payload: { id } }
+    return {type: ActionTypes.DELETE_POST_SUCCESS, payload: {id}}
   }
 }
 
 export const addComment = (postId, text) => {
   return (dispatch) => {
     return axios
-      .post(`/api/posts/${postId}/comments`, { text })
+      .post(`/api/posts/${postId}/comments`, {text})
       .then((res) => {
         dispatch(success(postId, res.data))
       })
@@ -81,7 +87,7 @@ export const addComment = (postId, text) => {
   }
 
   function success(postId, comment) {
-    return { type: ActionTypes.ADD_COMMENT_SUCCESS, payload: { postId, comment } }
+    return {type: ActionTypes.ADD_COMMENT_SUCCESS, payload: {postId, comment}}
   }
 }
 
@@ -92,16 +98,19 @@ export const deleteComment = (postId, commentId) => {
       .then((res) => {
         dispatch(success(postId, commentId))
       })
-      .catch(console.log)
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
   }
 
   function success(postId, commentId) {
-    return { type: ActionTypes.DELETE_COMMENT_SUCCESS, payload: { postId, commentId } }
+    return {type: ActionTypes.DELETE_COMMENT_SUCCESS, payload: {postId, commentId}}
   }
 }
 
 export const submitAnswer = (exerciseId: number, answer: Answer) => {
-  const success = (exercise: Exercise) => ({ type: ActionTypes.SUBMIT_ANSWER_SUCCESS, payload: { exercise } })
+  const success = (exercise: Exercise) => ({type: ActionTypes.SUBMIT_ANSWER_SUCCESS, payload: {exercise}})
 
   return (dispatch) => {
     return axios

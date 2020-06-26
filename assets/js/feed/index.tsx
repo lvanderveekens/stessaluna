@@ -12,7 +12,7 @@ interface Props {
   hasMore: boolean
   filters: Filters
   fetchPosts: (channels?: string[], limit?: number, beforeId?: number, append?: boolean) => void
-  deletePost: (id: number) => void
+  deletePost: (id: number) => Promise<void>
   loggedIn: boolean
 }
 

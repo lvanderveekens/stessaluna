@@ -1,4 +1,4 @@
-import ActionTypes from "./actionTypes"
+import * as ActionTypes from "./actionTypes"
 import { PostState } from "./state.interface"
 
 const storedFiltersString = localStorage.getItem('stessaluna:filters');

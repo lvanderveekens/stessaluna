@@ -17,7 +17,6 @@ import { schema } from "./create-post-form.schema"
 import styles from "./CreatePostForm.scss?module"
 import ImagePreview from "./image-preview/ImagePreview"
 import { getCountryCode } from "../../../country/get-country-code"
-import ReactGA from "react-ga";
 
 interface Props {
   onSubmit: (channel: string, text?: string, image?: File, exercise?: ExerciseInputValue) => Promise<void>
@@ -78,7 +77,6 @@ const CreatePostForm: FC<Props> = ({ onSubmit }) => {
         }
         resetForm()
         setExerciseType(null)
-        ReactGA.event({category: 'Post', action: 'Created post'});
       })
       .catch((e) => {
         console.log(e)

@@ -1,4 +1,4 @@
-import { createBrowserHistory } from "history"
+import {createBrowserHistory} from "history"
 import ReactGA from 'react-ga';
 
 const history = createBrowserHistory({})

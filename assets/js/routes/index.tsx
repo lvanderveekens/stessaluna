@@ -10,18 +10,12 @@ import RegistrationPage from "../register/RegistrationPage"
 import {usePrevious} from "../util/hooks"
 import PrivateRoute from "./PrivateRoute"
 import AboutPage from "../about/AboutPage";
-import ReactGA from "react-ga";
 import ResetPasswordPage from "../reset-password/ResetPasswordPage";
 import ChooseNewPasswordPage from "../reset-password/choose-new-password/ChooseNewPasswordPage";
 
 const Routes: FC = () => {
   const location = useLocation()
   const previousLocation = usePrevious(location)
-
-  useEffect(() => {
-    // register metric on page load too
-    ReactGA.pageview(location.pathname)
-  }, [])
 
   const getLocation = () => {
     if (location.pathname === "/create-post") {

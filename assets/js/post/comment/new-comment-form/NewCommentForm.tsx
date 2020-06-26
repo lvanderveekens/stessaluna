@@ -6,7 +6,6 @@ import React, {FC} from "react"
 import TextareaAutosize from "react-textarea-autosize"
 import * as yup from "yup"
 import styles from "./NewCommentForm.scss?module"
-import ReactGA from "react-ga";
 
 interface Props {
   onSubmit: (comment: string) => Promise<void>
@@ -27,7 +26,6 @@ const NewCommentForm: FC<Props> = ({onSubmit, avatar}) => {
     onSubmit(values.text)
       .then(() => {
         resetForm()
-        ReactGA.event({category: 'Post', action: 'Created comment'});
       })
   }
 

@@ -7,7 +7,6 @@ import styles from "./RegistrationForm.scss?module";
 import ReactCountryFlag from "react-country-flag"
 import Button from "../../button/Button";
 import {Link} from "react-router-dom"
-import ReactGA from "react-ga";
 
 interface Props {
   onSubmit: (email: string, username: string, password: string, country: string) => Promise<void>
@@ -34,7 +33,6 @@ const RegistrationForm: FunctionComponent<Props> = ({ onSubmit }) => {
       .then(() => {
         setSubmitSuccess(true)
         resetForm()
-        ReactGA.event({category: 'User', action: 'Created an account'});
       })
       .catch((e) => {
         setSubmitError(e.response.data.message)

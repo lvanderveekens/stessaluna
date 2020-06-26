@@ -40,11 +40,18 @@ const CommentSectionContainer: FC<Props> = ({
   }, [comments])
 
   const handleAddComment = (text: string) => {
-    return addComment(postId, text).then(() => setNumberOfPreviewComments(numberOfPreviewComments + 1))
+    return addComment(postId, text)
+      .then(() => {
+        setNumberOfPreviewComments(numberOfPreviewComments + 1)
+      })
+
   }
 
   const handleDeleteComment = (commentId: number) => {
-    deleteComment(postId, commentId).then(() => setNumberOfPreviewComments(Math.max(numberOfPreviewComments - 1, 1)))
+    deleteComment(postId, commentId)
+      .then(() => {
+        setNumberOfPreviewComments(Math.max(numberOfPreviewComments - 1, 1))
+      })
   }
 
   return (
