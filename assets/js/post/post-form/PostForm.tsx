@@ -5,31 +5,32 @@ import React, { ChangeEvent, FC, useRef, useState } from "react"
 import {Alert, Dropdown, Form} from "react-bootstrap"
 import ReactCountryFlag from "react-country-flag"
 import TextareaAutosize from "react-textarea-autosize"
-import Button from "../../../button/Button"
-import CustomToggle from "../../../dropdown/custom-toggle/CustomToggle"
-import { ExerciseType } from "../../../exercise/exercise.model"
-import LanguageSelect from "../../../language/language-select/LanguageSelect"
-import AorbExerciseInput from "../exercise-input/aorb-exercise-input/AorbExerciseInput"
-import ExerciseInputValue from "../exercise-input/exercise-input.model"
-import MissingwordExerciseInput from "../exercise-input/missingword-exercise-input/MissingwordExerciseInput"
-import WhatdoyouseeExerciseInput from "../exercise-input/whatdoyousee-exercise-input/WhatdoyouseeExerciseInput"
-import { schema } from "./create-post-form.schema"
-import styles from "./CreatePostForm.scss?module"
+import Button from "../../button/Button"
+import CustomToggle from "../../dropdown/custom-toggle/CustomToggle"
+import { ExerciseType } from "../../exercise/exercise.model"
+import LanguageSelect from "../../language/language-select/LanguageSelect"
+import AorbExerciseInput from "./exercise-input/aorb-exercise-input/AorbExerciseInput"
+import ExerciseInputValue from "./exercise-input/exercise-input.model"
+import MissingwordExerciseInput from "./exercise-input/missingword-exercise-input/MissingwordExerciseInput"
+import WhatdoyouseeExerciseInput from "./exercise-input/whatdoyousee-exercise-input/WhatdoyouseeExerciseInput"
+import { schema } from "./schema"
+import styles from "./PostForm.scss?module"
 import ImagePreview from "./image-preview/ImagePreview"
-import { getCountryCode } from "../../../country/get-country-code"
+import { getCountryCode } from "../../country/get-country-code"
 
 interface Props {
-  onSubmit: (channel: string, text?: string, image?: File, exercise?: ExerciseInputValue) => Promise<void>
+  initialValues: Values
+  onSubmit: (values: Values) => Promise<void>
 }
 
 interface Values {
-  channel: string
+  channel?: string
   text?: string
   image?: File
   exercise?: ExerciseInputValue
 }
 
-const CreatePostForm: FC<Props> = ({ onSubmit }) => {
+const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
   const fileInput = useRef(null)
   const [imageUrl, setImageUrl] = useState(null)
   const [submitError, setSubmitError] = useState(false)
@@ -67,10 +68,10 @@ const CreatePostForm: FC<Props> = ({ onSubmit }) => {
     setFieldValue("exercise", null)
   }
 
-  const handleSubmit = ({ channel, text, image, exercise }: Values, { setSubmitting, resetForm }) => {
+  const handleSubmit = (values: Values, { setSubmitting, resetForm }) => {
     setSubmitError(false)
 
-    onSubmit(channel, text, image, exercise)
+    onSubmit(values)
       .then(() => {
         if (fileInput.current != null) {
           fileInput.current.value = null
@@ -106,10 +107,10 @@ const CreatePostForm: FC<Props> = ({ onSubmit }) => {
     <Formik
       validationSchema={schema}
       onSubmit={(values, { setSubmitting, resetForm }) => handleSubmit({ ...values }, { setSubmitting, resetForm })}
-      initialValues={{ channel: null, text: null, image: null, exercise: null } as Values}
+      initialValues={initialValues}
     >
       {({ handleSubmit, setFieldValue, values, isValid, isSubmitting, errors }) => (
-        <Form className={styles.createPostForm} noValidate onSubmit={handleSubmit}>
+        <Form className={styles.postForm} noValidate onSubmit={handleSubmit}>
           <div className={styles.channelWrapper}>
             <label>In</label>
             <LanguageSelect
@@ -195,4 +196,4 @@ const CreatePostForm: FC<Props> = ({ onSubmit }) => {
   )
 }
 
-export default CreatePostForm
+export default PostForm

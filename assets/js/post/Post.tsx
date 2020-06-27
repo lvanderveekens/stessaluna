@@ -2,7 +2,7 @@ import {faCommentAlt} from "@fortawesome/free-regular-svg-icons"
 import {faEllipsisV} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import React, {FunctionComponent, useEffect, useState} from "react"
-import {Dropdown} from "react-bootstrap"
+import {Dropdown, Nav as BootstrapNav} from "react-bootstrap"
 import ReactCountryFlag from "react-country-flag"
 import {connect} from "react-redux"
 import CustomToggle from "../dropdown/custom-toggle/CustomToggle"
@@ -19,6 +19,7 @@ import Text from "./text/Text"
 import {getCountryCode} from "../country/get-country-code"
 import ISO6391 from "iso-639-1"
 import Comment from "./comment/comment.interface";
+import {Link} from "react-router-dom";
 
 interface Props {
   id: number
@@ -123,6 +124,7 @@ const Post: FunctionComponent<Props> = (
                     </span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
+                  <Dropdown.Item as={Link} to={`/edit-post/${id}`}>Edit</Dropdown.Item>
                   <Dropdown.Item onClick={onDelete}>Delete</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
