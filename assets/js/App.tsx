@@ -7,7 +7,7 @@ import {Router} from "react-router"
 import history from "./history/history"
 import Routes from "./routes"
 import {State} from "./store"
-import {fetchUser} from "./store/auth/actions"
+import {fetchCurrentUser} from "./store/auth/actions"
 import styles from "./App.scss?module"
 
 interface Props {
@@ -41,7 +41,7 @@ const mapStateToProps = (state: State) => ({
 })
 
 const actionCreators = {
-  fetchUser,
+  fetchUser: fetchCurrentUser,
 }
 
 export default connect(mapStateToProps, actionCreators)(App)

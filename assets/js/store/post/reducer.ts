@@ -1,5 +1,15 @@
-import * as ActionTypes from "./actionTypes"
-import { PostState } from "./state.interface"
+import {
+  ADD_COMMENT_SUCCESS,
+  APPLY_CHANNEL_FILTER,
+  CREATE_POST_SUCCESS,
+  DELETE_COMMENT_SUCCESS,
+  DELETE_POST_SUCCESS,
+  FETCH_POSTS_ERROR,
+  FETCH_POSTS_PENDING,
+  FETCH_POSTS_SUCCESS,
+  SUBMIT_ANSWER_SUCCESS
+} from "./actionTypes"
+import {PostState} from "./state.interface"
 
 const storedFiltersString = localStorage.getItem('stessaluna:filters');
 
@@ -12,7 +22,7 @@ const initialState = {
 
 const postReducer = (state: PostState = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.FETCH_POSTS_PENDING:
+    case FETCH_POSTS_PENDING:
       return {
         ...state,
         loading: true,
@@ -20,7 +30,7 @@ const postReducer = (state: PostState = initialState, action) => {
           ? [...state.data]
           : []
       }
-    case ActionTypes.FETCH_POSTS_SUCCESS:
+    case FETCH_POSTS_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -29,22 +39,22 @@ const postReducer = (state: PostState = initialState, action) => {
           ? [...state.data, ...action.payload.posts]
           : [...action.payload.posts],
       }
-    case ActionTypes.FETCH_POSTS_ERROR:
+    case FETCH_POSTS_ERROR:
       return {
         ...state,
         loading: false,
       }
-    case ActionTypes.CREATE_POST_SUCCESS:
+    case CREATE_POST_SUCCESS:
       return {
         ...state,
         data: [...state.data, action.payload.post],
       }
-    case ActionTypes.DELETE_POST_SUCCESS:
+    case DELETE_POST_SUCCESS:
       return {
         ...state,
         data: state.data.filter((post) => post.id !== action.payload.id),
       }
-    case ActionTypes.ADD_COMMENT_SUCCESS:
+    case ADD_COMMENT_SUCCESS:
       return {
         ...state,
         data: state.data.map((post) =>
@@ -53,7 +63,7 @@ const postReducer = (state: PostState = initialState, action) => {
             : post
         ),
       }
-    case ActionTypes.DELETE_COMMENT_SUCCESS:
+    case DELETE_COMMENT_SUCCESS:
       return {
         ...state,
         data: state.data.map((post) =>
@@ -62,7 +72,7 @@ const postReducer = (state: PostState = initialState, action) => {
             : post
         ),
       }
-    case ActionTypes.SUBMIT_ANSWER_SUCCESS: {
+    case SUBMIT_ANSWER_SUCCESS: {
       const exercisePost = findPostByExerciseId(action.payload.exercise.id, state)
       return {
         ...state,
@@ -73,7 +83,7 @@ const postReducer = (state: PostState = initialState, action) => {
         ),
       }
     }
-    case ActionTypes.APPLY_CHANNEL_FILTER: {
+    case APPLY_CHANNEL_FILTER: {
       return {
         ...state,
         filters: {

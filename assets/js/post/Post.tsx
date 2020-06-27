@@ -11,7 +11,6 @@ import {isAnswered} from "../exercise/exercise.helper"
 import Exercise, {ExerciseType} from "../exercise/exercise.model"
 import MissingwordExercise from "../exercise/missingword-exercise"
 import WhatdoyouseeExercise from "../exercise/whatdoyousee-exercise"
-import {addComment} from "../store/post/actions"
 import Avatar from "../user/avatar/Avatar"
 import User from "../user/user.interface"
 import CommentSection from "./comment/comment-section"
@@ -19,8 +18,7 @@ import styles from "./Post.scss?module"
 import Text from "./text/Text"
 import {getCountryCode} from "../country/get-country-code"
 import ISO6391 from "iso-639-1"
-
-const CountryLanguage = require("country-language")
+import Comment from "./comment/comment.interface";
 
 interface Props {
   id: number
@@ -31,7 +29,7 @@ interface Props {
   image?: string
   exercise?: Exercise
   onDelete: () => void
-  comments: any[]
+  comments: Comment[]
   user?: User
 }
 
@@ -170,8 +168,4 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 })
 
-const actionCreators = {
-  addComment,
-}
-
-export default connect(mapStateToProps, actionCreators)(Post)
+export default connect(mapStateToProps, null)(Post)

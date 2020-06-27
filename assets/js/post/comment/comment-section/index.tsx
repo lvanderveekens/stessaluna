@@ -1,14 +1,14 @@
-import React, { FC, useEffect } from "react"
-import { connect } from "react-redux"
-import { State } from "../../../store"
-import { addComment, deleteComment } from "../../../store/post/actions"
+import React, {FC, useEffect} from "react"
+import {connect} from "react-redux"
+import {State} from "../../../store"
+import {addComment, deleteComment} from "../../../store/post/actions"
 import User from "../../../user/user.interface"
-import CommentInterface from "../comment.interface"
+import Comment from "../comment.interface"
 import CommentSection from "./CommentSection"
 
 interface Props {
   postId: number
-  comments: CommentInterface[]
+  comments: Comment[]
   showAll: boolean
   setShowAll: (showAll: boolean) => void
   numberOfPreviewComments: number

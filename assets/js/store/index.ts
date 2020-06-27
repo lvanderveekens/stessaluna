@@ -6,8 +6,9 @@ import postReducer from "./post/reducer"
 import {AuthState} from "./auth/state.interface"
 import {PostState} from "./post/state.interface"
 import {createMiddleware} from 'redux-beacon'
-import GoogleAnalytics, {trackEvent, trackPageView} from '@redux-beacon/google-analytics'
-import {FETCH_POSTS_SUCCESS} from './post/actionTypes';
+import GoogleAnalytics from '@redux-beacon/google-analytics'
+import {postEvents} from "./post/events";
+import {authEvents} from "./auth/events";
 
 
 export interface State {
@@ -20,15 +21,7 @@ const rootReducer = combineReducers({
   post: postReducer,
 })
 
-const eventsMap = {
-  FETCH_POSTS_SUCCESS: trackEvent((action, prevState, nextState) => ({
-    category: 'Post',
-    action: "Fetch",
-    label: 'Label...',
-  }))
-};
-
-const analyticsMiddleware = createMiddleware(eventsMap, GoogleAnalytics());
+const analyticsMiddleware = createMiddleware({...postEvents, ...authEvents}, GoogleAnalytics());
 
 const store = createStore(rootReducer, composeWithDevTools(
   applyMiddleware(thunk),

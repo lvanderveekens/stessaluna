@@ -1,13 +1,21 @@
-import ActionTypes from "./actionTypes"
 import axios from "../../http/client"
-import { objectToFormData } from "object-to-formdata"
+import {objectToFormData} from "object-to-formdata"
+import {
+  FETCH_CURRENT_USER_ERROR,
+  FETCH_CURRENT_USER_PENDING,
+  FETCH_CURRENT_USER_SUCCESS,
+  LOG_IN_SUCCESS,
+  LOG_OUT_SUCCESS,
+  REGISTER_SUCCESS,
+  UPDATE_PROFILE_SUCCESS
+} from "./actionTypes";
 
 export const logIn = (username, password) => {
   return (dispatch) => {
     return axios
       .post("/api/token", { username, password })
       .then((res) => {
-        dispatch(fetchUser())
+        dispatch(fetchCurrentUser())
         dispatch(success())
       })
       .catch((error) => {
@@ -17,7 +25,7 @@ export const logIn = (username, password) => {
   }
 
   function success() {
-    return { type: ActionTypes.LOGIN_SUCCESS }
+    return { type: LOG_IN_SUCCESS }
   }
 }
 
@@ -32,7 +40,7 @@ export const logOut = () => {
   }
 
   function success() {
-    return { type: ActionTypes.LOGOUT_SUCCESS }
+    return { type: LOG_OUT_SUCCESS }
   }
 }
 
@@ -50,11 +58,11 @@ export const register = (email: string, username: string, password: string, coun
   }
 
   function success() {
-    return { type: ActionTypes.REGISTER_SUCCESS }
+    return { type: REGISTER_SUCCESS }
   }
 }
 
-export const fetchUser = () => {
+export const fetchCurrentUser = () => {
   return (dispatch) => {
     dispatch(pending())
     axios
@@ -69,13 +77,13 @@ export const fetchUser = () => {
   }
 
   function pending() {
-    return { type: ActionTypes.FETCH_USER_PENDING }
+    return { type: FETCH_CURRENT_USER_PENDING }
   }
   function success(user) {
-    return { type: ActionTypes.FETCH_USER_SUCCESS, payload: { user } }
+    return { type: FETCH_CURRENT_USER_SUCCESS, payload: { user } }
   }
   function error() {
-    return { type: ActionTypes.FETCH_USER_ERROR }
+    return { type: FETCH_CURRENT_USER_ERROR }
   }
 }
 
@@ -95,19 +103,6 @@ export const updateProfile = (country: string, resetAvatar: boolean, avatar?: Fi
   }
 
   function success(user) {
-    return { type: ActionTypes.UPDATE_PROFILE_SUCCESS, payload: { user } }
+    return { type: UPDATE_PROFILE_SUCCESS, payload: { user } }
   }
-
-  // function toFormData(country: string, resetAvatar: boolean, avatar?: File, displayName?: string): FormData {
-  //   const formData = new FormData();
-  //   if (displayName) {
-  //     formData.append('displayName', displayName);
-  //   }
-  //   formData.append('country', country);
-  //   formData.append('resetAvatar', resetAvatar.toString());
-  //   if (avatar) {
-  //     formData.append('avatar', avatar);
-  //   }
-  //   return formData;
-  // }
 }
