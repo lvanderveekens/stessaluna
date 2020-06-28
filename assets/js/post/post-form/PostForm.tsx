@@ -1,23 +1,27 @@
-import { faGraduationCap, faImage } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Formik } from "formik"
+import {faGraduationCap, faImage} from "@fortawesome/free-solid-svg-icons"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {Formik} from "formik"
 import React, {ChangeEvent, FC, useEffect, useRef, useState} from "react"
 import {Alert, Dropdown, Form} from "react-bootstrap"
 import ReactCountryFlag from "react-country-flag"
 import TextareaAutosize from "react-textarea-autosize"
 import Button from "../../button/Button"
 import CustomToggle from "../../dropdown/custom-toggle/CustomToggle"
-import { ExerciseType } from "../../exercise/exercise.model"
+import {ExerciseType} from "../../exercise/exercise.model"
 import LanguageSelect from "../../language/language-select/LanguageSelect"
 import AorbExerciseInput from "./exercise-input/aorb-exercise-input/AorbExerciseInput"
-import ExerciseInputValue from "./exercise-input/exercise-input.model"
+import ExerciseInputValues from "./exercise-input/exercise-input.model"
 import MissingwordExerciseInput from "./exercise-input/missingword-exercise-input/MissingwordExerciseInput"
 import WhatdoyouseeExerciseInput from "./exercise-input/whatdoyousee-exercise-input/WhatdoyouseeExerciseInput"
-import { schema } from "./schema"
+import {schema} from "./schema"
 import styles from "./PostForm.scss?module"
 import ImagePreview from "./image-preview/ImagePreview"
-import { getCountryCode } from "../../country/get-country-code"
-import AorbExerciseInputValue from "./exercise-input/aorb-exercise-input/aorb-exercise-input.model";
+import {getCountryCode} from "../../country/get-country-code"
+import AorbExerciseInputValues from "./exercise-input/aorb-exercise-input/aorb-exercise-input.model";
+import WhatdoyouseeExerciseInputValues
+  from "./exercise-input/whatdoyousee-exercise-input/whatdoyousee-exercise-input.model";
+import MissingwordExerciseInputValues
+  from "./exercise-input/missingword-exercise-input/missingword-exercise-input.model";
 
 interface Props {
   initialValues: Values
@@ -28,7 +32,7 @@ export interface Values {
   channel?: string
   text?: string
   image?: File
-  exercise?: ExerciseInputValue
+  exercise?: ExerciseInputValues
 }
 
 const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
@@ -63,7 +67,7 @@ const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
     setFieldValue("text", value || null)
   }
 
-  const handleChangeExercise = (setFieldValue) => (change: ExerciseInputValue) => {
+  const handleChangeExercise = (setFieldValue) => (change: ExerciseInputValues) => {
     setFieldValue("exercise", change)
   }
 
@@ -102,22 +106,35 @@ const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
     return values.every((element) => element === null)
   }
 
-  const renderExerciseInput = (setFieldValue) => {
+  const renderExerciseInput = (exerciseInputValues: ExerciseInputValues, setFieldValue) => {
     const otherProps = {
       onChange: handleChangeExercise(setFieldValue),
       onClose: handleCloseExercise(setFieldValue)
     }
-    switch (exerciseType) {
-      case ExerciseType.A_OR_B:
-        return <AorbExerciseInput initialValue={initialValues.exercise as AorbExerciseInputValue} {...otherProps} />
-      case ExerciseType.WHAT_DO_YOU_SEE:
-        return <WhatdoyouseeExerciseInput {...otherProps} />
-      case ExerciseType.MISSING_WORD:
-        return <MissingwordExerciseInput {...otherProps} />
+
+    switch (exerciseInputValues.type) {
+      case ExerciseType.A_OR_B: {
+        const initialValues = exerciseInputValues as AorbExerciseInputValues
+        return <AorbExerciseInput initialValues={initialValues} {...otherProps} />
+      }
+      case ExerciseType.WHAT_DO_YOU_SEE: {
+        const initialValues = exerciseInputValues as WhatdoyouseeExerciseInputValues
+        return <WhatdoyouseeExerciseInput initialValues={initialValues} {...otherProps} />
+      }
+      case ExerciseType.MISSING_WORD: {
+        const initialValues = exerciseInputValues as MissingwordExerciseInputValues
+        return <MissingwordExerciseInput initialValues={initialValues} {...otherProps} />
+      }
       default:
-        throw new Error(`Cannot render unsupported exercise type: ${exerciseType}`)
+        throw new Error(`Cannot render unsupported exercise type: ${exerciseInputValues.type}`)
     }
   }
+
+  const createExercise = (type: string, setFieldValue) => {
+    const exercise = {type}
+    setFieldValue("exercise", exercise)
+  }
+
   return (
     <Formik
       validationSchema={schema}
@@ -164,8 +181,8 @@ const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
                   onDelete={handleDeleteImage(setFieldValue)}
                 />
               )}
-              {exerciseType && (
-                <div className={styles.exercise}>{renderExerciseInput(setFieldValue)}</div>
+              {values.exercise && (
+                <div className={styles.exercise}>{renderExerciseInput(values.exercise, setFieldValue)}</div>
               )}
           </div>
             <div className={styles.actions}>
@@ -185,11 +202,15 @@ const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
                   </button>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => setExerciseType(ExerciseType.A_OR_B)}>A or B</Dropdown.Item>
-                  <Dropdown.Item onClick={() => setExerciseType(ExerciseType.WHAT_DO_YOU_SEE)}>
+                  <Dropdown.Item onClick={() => createExercise(ExerciseType.A_OR_B, setFieldValue)}>
+                    A or B
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => createExercise(ExerciseType.WHAT_DO_YOU_SEE, setFieldValue)}>
                     What do you see
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => setExerciseType(ExerciseType.MISSING_WORD)}>Missing word</Dropdown.Item>
+                  <Dropdown.Item onClick={() => createExercise(ExerciseType.MISSING_WORD, setFieldValue)}>
+                    Missing word
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>

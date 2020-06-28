@@ -1,5 +1,5 @@
 import * as yup from "yup"
-import { ExerciseType } from "../../exercise/exercise.model"
+import {ExerciseType} from "../../exercise/exercise.model"
 
 export const schema = yup.object().shape({
   channel: yup.string(),
@@ -29,6 +29,7 @@ const aorbSchema = yup.object().shape({
           textBefore: yup.string().when(["textAfter"], {
             is: (textAfter) => !textAfter,
             then: yup.string().required(),
+            otherwise: yup.string().nullable(),
           }),
           choice: yup.object().shape({
             a: yup.string().required(),
@@ -38,6 +39,7 @@ const aorbSchema = yup.object().shape({
           textAfter: yup.string().when(["textBefore"], {
             is: (textBefore) => !textBefore,
             then: yup.string().required(),
+            otherwise: yup.string().nullable(),
           }),
         },
         ["textBefore", "textAfter"]
@@ -60,10 +62,12 @@ const missingwordSchema = yup.object().shape(
     textBefore: yup.string().when(["textAfter"], {
       is: (textAfter) => !textAfter,
       then: yup.string().required(),
+      otherwise: yup.string().nullable(),
     }),
     textAfter: yup.string().when(["textBefore"], {
       is: (textBefore) => !textBefore,
       then: yup.string().required(),
+      otherwise: yup.string().nullable(),
     }),
     option1: yup.string().required(),
     option2: yup.string().required(),

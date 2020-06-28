@@ -1,29 +1,30 @@
-import { faLightbulb } from "@fortawesome/free-regular-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import React, { FC, useEffect, useState } from "react"
+import {faLightbulb} from "@fortawesome/free-regular-svg-icons"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import React, {FC, useEffect, useState} from "react"
 import TextareaAutosize from "react-autosize-textarea"
 import ExerciseInputHeader from "../exercise-input-header/ExerciseInputHeader"
 import ExerciseOptionInput from "../exercise-option-input/ExerciseOptionInput"
-import { MissingwordExerciseInputValue } from "./missingword-exercise-input.model"
+import {MissingwordExerciseInputValues} from "./missingword-exercise-input.model"
 import styles from "./MissingwordExerciseInput.scss?module"
 
 interface Props {
-  onChange: (change: MissingwordExerciseInputValue) => void
+  initialValues: MissingwordExerciseInputValues
+  onChange: (change: MissingwordExerciseInputValues) => void
   onClose: () => void
 }
 
-const MissingwordExerciseInput: FC<Props> = ({ onChange, onClose }) => {
-  const [textBefore, setTextBefore] = useState<string>("")
-  const [textAfter, setTextAfter] = useState<string>("")
+const MissingwordExerciseInput: FC<Props> = ({initialValues, onChange, onClose}) => {
+  const [textBefore, setTextBefore] = useState<string>(initialValues.textBefore)
+  const [textAfter, setTextAfter] = useState<string>(initialValues.textAfter)
 
-  const [option1, setOption1] = useState<string>("")
-  const [option2, setOption2] = useState<string>("")
-  const [option3, setOption3] = useState<string>("")
-  const [option4, setOption4] = useState<string>("")
-  const [correct, setCorrect] = useState<number>(null)
+  const [option1, setOption1] = useState<string>(initialValues.option1)
+  const [option2, setOption2] = useState<string>(initialValues.option2)
+  const [option3, setOption3] = useState<string>(initialValues.option3)
+  const [option4, setOption4] = useState<string>(initialValues.option4)
+  const [correct, setCorrect] = useState<number>(initialValues.correct)
 
   useEffect(() => {
-    onChange(new MissingwordExerciseInputValue(textBefore, textAfter, option1, option2, option3, option4, correct))
+    onChange(new MissingwordExerciseInputValues(textBefore, textAfter, option1, option2, option3, option4, correct))
   }, [textBefore, textAfter, option1, option2, option3, option4, correct])
 
   return (

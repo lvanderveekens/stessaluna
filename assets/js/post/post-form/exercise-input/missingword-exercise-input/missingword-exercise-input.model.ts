@@ -1,7 +1,7 @@
-import ExerciseInputValue from "../exercise-input.model"
-import { ExerciseType } from "../../../../exercise/exercise.model"
+import ExerciseInputValues from "../exercise-input.model"
+import {ExerciseType} from "../../../../exercise/exercise.model"
 
-export class MissingwordExerciseInputValue extends ExerciseInputValue {
+export class MissingwordExerciseInputValues extends ExerciseInputValues {
   textBefore?: string
   textAfter?: string
   option1?: string
@@ -30,4 +30,4 @@ export class MissingwordExerciseInputValue extends ExerciseInputValue {
   }
 }
 
-export default MissingwordExerciseInputValue
+export default MissingwordExerciseInputValues

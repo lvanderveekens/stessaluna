@@ -1,8 +1,8 @@
-import ExerciseInputValue from "../exercise-input.model";
-import { AorbSentenceInput } from "./aorb-sentence-input/aorb-sentence-input.model";
-import { ExerciseType } from "../../../../exercise/exercise.model";
+import ExerciseInputValues from "../exercise-input.model";
+import {AorbSentenceInput} from "./aorb-sentence-input/aorb-sentence-input.model";
+import {ExerciseType} from "../../../../exercise/exercise.model";
 
-export class AorbExerciseInputValue extends ExerciseInputValue {
+export class AorbExerciseInputValues extends ExerciseInputValues {
     sentences: AorbSentenceInput[]
 
     constructor(sentences: AorbSentenceInput[]) {
@@ -11,4 +11,4 @@ export class AorbExerciseInputValue extends ExerciseInputValue {
     }
 }
 
-export default AorbExerciseInputValue;
+export default AorbExerciseInputValues;

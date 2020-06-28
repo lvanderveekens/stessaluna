@@ -1,7 +1,7 @@
-import ExerciseInputValue from "../exercise-input.model"
-import { ExerciseType } from "../../../../exercise/exercise.model"
+import ExerciseInputValues from "../exercise-input.model"
+import {ExerciseType} from "../../../../exercise/exercise.model"
 
-export class WhatdoyouseeExerciseInputValue extends ExerciseInputValue {
+export class WhatdoyouseeExerciseInputValues extends ExerciseInputValues {
   image?: File
   option1?: string
   option2?: string
@@ -20,4 +20,4 @@ export class WhatdoyouseeExerciseInputValue extends ExerciseInputValue {
   }
 }
 
-export default WhatdoyouseeExerciseInputValue
+export default WhatdoyouseeExerciseInputValues

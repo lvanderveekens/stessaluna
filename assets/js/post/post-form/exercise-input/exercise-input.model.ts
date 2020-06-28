@@ -1,7 +1,7 @@
-import { ExerciseType } from "../../../exercise/exercise.model";
+import {ExerciseType} from "../../../exercise/exercise.model";
 
 // TODO: merge exercise and exercise input models?
-export abstract class ExerciseInputValue {
+export abstract class ExerciseInputValues {
     type: ExerciseType
 
     constructor(type: ExerciseType) {
@@ -9,4 +9,4 @@ export abstract class ExerciseInputValue {
     }
 }
 
-export default ExerciseInputValue;
+export default ExerciseInputValues;

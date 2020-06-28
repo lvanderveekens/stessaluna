@@ -9,11 +9,7 @@ import {createPost} from "../../store/post/actions";
 import PostForm, {Values as PostValues} from "../post-form/PostForm";
 import {State} from "../../store";
 import Post from "../post.interface";
-import AorbExerciseInput from "../post-form/exercise-input/aorb-exercise-input/AorbExerciseInput";
-import WhatdoyouseeExerciseInput
-  from "../post-form/exercise-input/whatdoyousee-exercise-input/WhatdoyouseeExerciseInput";
-import MissingwordExerciseInput from "../post-form/exercise-input/missingword-exercise-input/MissingwordExerciseInput";
-import AorbExerciseInputValue from "../post-form/exercise-input/aorb-exercise-input/aorb-exercise-input.model";
+import AorbExerciseInputValues from "../post-form/exercise-input/aorb-exercise-input/aorb-exercise-input.model";
 import {nextId} from "../../util/id-generator";
 
 
@@ -50,13 +46,16 @@ const EditPostModal: FC<Props> = ({findPost, onClose, createPost}) => {
     }
   }, [post])
 
+  // TODO: separate class?
   const mapToExerciseInputValue = (exercise: Exercise) => {
     switch (exercise.type) {
       case ExerciseType.A_OR_B:
-        return new AorbExerciseInputValue(exercise.sentences.map((s) => ({...s, id: nextId()})))
+        return new AorbExerciseInputValues(exercise.sentences.map((s) => ({...s, id: nextId()})))
       case ExerciseType.WHAT_DO_YOU_SEE:
+        // TODO
         // return <WhatdoyouseeExerciseInputValue {...props} />
       case ExerciseType.MISSING_WORD:
+        // TODO
         // return <MissingwordExerciseInputValue {...props} />
       default:
         throw new Error(`Cannot convert to unsupported exercise input type: ${exercise.type}`)

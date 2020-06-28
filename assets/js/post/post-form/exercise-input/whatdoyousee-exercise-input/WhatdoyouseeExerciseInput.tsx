@@ -1,29 +1,31 @@
-import React, { FC, useState, useEffect } from "react"
+import React, {FC, useEffect, useState} from "react"
 import styles from "./WhatdoyouseeExerciseInput.scss?module"
-import WhatdoyouseeExerciseInputValue from "./whatdoyousee-exercise-input.model"
+import WhatdoyouseeExerciseInputValues from "./whatdoyousee-exercise-input.model"
 import ExerciseInputHeader from "../exercise-input-header/ExerciseInputHeader"
 import ImageInput from "../../../../image/image-input/ImageInput"
 import classNames from "classnames/bind"
 import ExerciseOptionInput from "../exercise-option-input/ExerciseOptionInput"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faLightbulb } from "@fortawesome/free-regular-svg-icons"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faLightbulb} from "@fortawesome/free-regular-svg-icons"
+
 const cx = classNames.bind(styles)
 
 interface Props {
-  onChange: (change: WhatdoyouseeExerciseInputValue) => void
+  initialValues: WhatdoyouseeExerciseInputValues
+  onChange: (change: WhatdoyouseeExerciseInputValues) => void
   onClose: () => void
 }
 
-const WhatdoyouseeExerciseInput: FC<Props> = ({ onChange, onClose }) => {
-  const [image, setImage] = useState<File>(null)
-  const [option1, setOption1] = useState<string>("")
-  const [option2, setOption2] = useState<string>("")
-  const [option3, setOption3] = useState<string>("")
-  const [option4, setOption4] = useState<string>("")
-  const [correct, setCorrect] = useState<number>(null)
+const WhatdoyouseeExerciseInput: FC<Props> = ({initialValues, onChange, onClose}) => {
+  const [image, setImage] = useState<File>(initialValues.image)
+  const [option1, setOption1] = useState<string>(initialValues.option1)
+  const [option2, setOption2] = useState<string>(initialValues.option2)
+  const [option3, setOption3] = useState<string>(initialValues.option3)
+  const [option4, setOption4] = useState<string>(initialValues.option4)
+  const [correct, setCorrect] = useState<number>(initialValues.correct)
 
   useEffect(() => {
-    onChange(new WhatdoyouseeExerciseInputValue(image, option1, option2, option3, option4, correct))
+    onChange(new WhatdoyouseeExerciseInputValues(image, option1, option2, option3, option4, correct))
   }, [image, option1, option2, option3, option4, correct])
 
   const optionClassName = (option: number) => {

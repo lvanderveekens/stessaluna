@@ -1,28 +1,27 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import styles from './AorbExerciseInput.scss?module';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faPlus, faTimes} from '@fortawesome/free-solid-svg-icons';
 import AorbSentenceInput from './aorb-sentence-input/AorbSentenceInput';
 import AorbSentenceInputValue from './aorb-sentence-input/aorb-sentence-input.model';
-import AorbExerciseInputValue from './aorb-exercise-input.model';
+import AorbExerciseInputValues from './aorb-exercise-input.model';
 import ExerciseInputHeader from '../exercise-input-header/ExerciseInputHeader';
-import { nextId } from '../../../../util/id-generator';
+import {nextId} from '../../../../util/id-generator';
 
 interface Props {
-  initialValue?: AorbExerciseInputValue
-  onChange: (change: AorbExerciseInputValue) => void
+  initialValues?: AorbExerciseInputValues
+  onChange: (change: AorbExerciseInputValues) => void
   onClose: () => void
 }
 
-const AorbExerciseInput: FC<Props> = ({ initialValue, onChange, onClose }) => {
+const AorbExerciseInput: FC<Props> = ({ initialValues, onChange, onClose }) => {
 
-  console.log(`initial value: ${initialValue}`)
   const [sentences, setSentences] = useState<AorbSentenceInputValue[]>(
-    () => (initialValue && initialValue.sentences) || [{id: nextId()}]
+    () => (initialValues && initialValues.sentences) || [{id: nextId()}]
   );
 
   useEffect(() => {
-    onChange(new AorbExerciseInputValue(sentences));
+    onChange(new AorbExerciseInputValues(sentences));
   }, [sentences]);
 
   const addSentence = () => {

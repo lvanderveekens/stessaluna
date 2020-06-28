@@ -1,6 +1,6 @@
 import axios from "../../http/client"
 import Exercise from "../../exercise/exercise.model"
-import ExerciseInputValue from "../../post/post-form/exercise-input/exercise-input.model"
+import ExerciseInputValues from "../../post/post-form/exercise-input/exercise-input.model"
 import {objectToFormData} from "object-to-formdata"
 import {Answer} from "../../exercise/answer/answer.model"
 import {
@@ -47,7 +47,7 @@ export const fetchPosts = (channels?: string[], limit?: number, beforeId?: numbe
   }
 }
 
-export const createPost = (channel: string, text?: string, image?: File, exercise?: ExerciseInputValue) => {
+export const createPost = (channel: string, text?: string, image?: File, exercise?: ExerciseInputValues) => {
   return (dispatch) => {
     const formData = objectToFormData({channel, text, image, exercise}, {indices: true})
     return axios

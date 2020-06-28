@@ -26,7 +26,7 @@ const AorbSentenceInput: FC<Props> = ({value, onChange}) => {
     <div className={styles.aorbSentenceInput}>
       <TextareaAutosize
         className={styles.textBefore}
-        value={value.textBefore}
+        value={value.textBefore || ""}
         placeholder="Before"
         onChange={(e) => onChange({...value, textBefore: e.currentTarget.value})}
       />
@@ -62,7 +62,7 @@ const AorbSentenceInput: FC<Props> = ({value, onChange}) => {
       </div>
       <TextareaAutosize
         className={styles.textAfter}
-        value={value.textAfter}
+        value={value.textAfter || ""}
         placeholder="After"
         onChange={(e) => onChange({...value, textAfter: e.currentTarget.value})}
       />
