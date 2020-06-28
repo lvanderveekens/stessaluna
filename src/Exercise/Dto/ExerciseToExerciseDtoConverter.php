@@ -19,16 +19,24 @@ use Stessaluna\Exercise\Missingword\Entity\MissingwordExercise;
 use Stessaluna\Exercise\Whatdoyousee\Dto\WhatdoyouseeExerciseDto;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
 use Stessaluna\Image\Storage\ImageStorage;
+use Stessaluna\Post\Repository\PostRepository;
 use Stessaluna\User\Entity\User;
 
 class ExerciseToExerciseDtoConverter
 {
-    /** @var ImageStorage */
+    /**
+     * @var ImageStorage
+     */
     private $imageStorage;
+    /**
+     * @var PostRepository
+     */
+    private $postRepository;
 
-    public function __construct(ImageStorage $imageStorage)
+    public function __construct(ImageStorage $imageStorage, PostRepository $postRepository)
     {
         $this->imageStorage = $imageStorage;
+        $this->postRepository = $postRepository;
     }
 
     public function convert(Exercise $exercise, ?User $user): ExerciseDto
@@ -38,11 +46,11 @@ class ExerciseToExerciseDtoConverter
 
         $dto = null;
         if ($exercise instanceof AorbExercise) {
-            $dto = $this->convertToAorbExerciseDto($exercise, $answer);
+            $dto = $this->convertToAorbExerciseDto($exercise, $answer, $user);
         } elseif ($exercise instanceof WhatdoyouseeExercise) {
-            $dto = $this->convertToWhatdoyouseeExerciseDto($exercise, $answer);
+            $dto = $this->convertToWhatdoyouseeExerciseDto($exercise, $answer, $user);
         } elseif ($exercise instanceof MissingwordExercise) {
-            $dto = $this->convertToMissingwordExerciseDto($exercise, $answer);
+            $dto = $this->convertToMissingwordExerciseDto($exercise, $answer, $user);
         }
 
         $dto->id = $exercise->getId();
@@ -50,37 +58,56 @@ class ExerciseToExerciseDtoConverter
         return $dto;
     }
 
-    private function convertToAorbExerciseDto(AorbExercise $exercise, ?AorbAnswer $answer): AorbExerciseDto
+    private function convertToAorbExerciseDto(AorbExercise $exercise, ?AorbAnswer $answer, ?User $user): AorbExerciseDto
     {
         $dto = new AorbExerciseDto();
-
         $sentences = $exercise->getSentences();
-        $sentenceDtos = array_map(function (int $i, AorbSentence $sentence) use ($answer) {
-            $dto = new AorbSentenceDto();
-            $dto->textBefore = $sentence->textBefore;
+        $isAuthor = $this->isAuthor($user, $exercise);
 
-            $choiceDto = new AorbChoiceDto();
-            $choiceDto->a = $sentence->choice->a;
-            $choiceDto->b = $sentence->choice->b;
-
-            if (isset($answer)) {
-                $choiceDto->correct = $sentence->choice->correct;
-                $choiceDto->answer = $answer->getChoices()[$i];
-            }
-
-            $dto->choice = $choiceDto;
-            $dto->textAfter = $sentence->textAfter;
-            return $dto;
+        $sentenceDtos = array_map(function (int $i, AorbSentence $sentence) use ($answer, $isAuthor) {
+            $sentenceAnswer = $answer ? $answer->getChoices()[$i] : null;
+            return $this->convertToSentenceDto($sentence, $sentenceAnswer, $isAuthor);
         }, array_keys($sentences), $sentences);
 
         $dto->sentences = $sentenceDtos;
         return $dto;
     }
 
+    private function convertToSentenceDto(AorbSentence $sentence, ?string $answer, bool $isAuthor): AorbSentenceDto
+    {
+        $sentenceDto = new AorbSentenceDto();
+        $sentenceDto->textBefore = $sentence->textBefore;
+
+        $choiceDto = new AorbChoiceDto();
+        $choiceDto->a = $sentence->choice->a;
+        $choiceDto->b = $sentence->choice->b;
+        if (isset($answer)) {
+            $choiceDto->answer = $answer;
+            $choiceDto->correct = $sentence->choice->correct;
+        }
+        if ($isAuthor) {
+            $choiceDto->correct = $sentence->choice->correct;
+        }
+        $sentenceDto->choice = $choiceDto;
+
+        $sentenceDto->textAfter = $sentence->textAfter;
+        return $sentenceDto;
+    }
+
+    private function isAuthor(?User $user, Exercise $exercise): bool {
+        if (empty($user)) {
+            return false;
+        }
+        $post = $this->postRepository->findByExerciseId($exercise->getId());
+        return $user->getId() == $post->getAuthor()->getId();
+    }
+
     private function convertToWhatdoyouseeExerciseDto(
         WhatdoyouseeExercise $exercise,
-        ?WhatdoyouseeAnswer $answer
-    ): WhatdoyouseeExerciseDto {
+        ?WhatdoyouseeAnswer $answer,
+        ?User $user
+    ): WhatdoyouseeExerciseDto
+    {
         $dto = new WhatdoyouseeExerciseDto();
         $dto->image = $this->imageStorage->getPath($exercise->getImageFilename());
         $dto->option1 = $exercise->getOption1();
@@ -92,13 +119,20 @@ class ExerciseToExerciseDtoConverter
             $dto->correct = $exercise->getCorrect();
             $dto->answer = $answer->getOption();
         }
+
+        if ($this->isAuthor($user, $exercise)) {
+            $dto->correct = $exercise->getCorrect();
+        }
+
         return $dto;
     }
 
     private function convertToMissingwordExerciseDto(
         MissingwordExercise $exercise,
-        ?MissingwordAnswer $answer
-    ): MissingwordExerciseDto {
+        ?MissingwordAnswer $answer,
+        ?User $user
+    ): MissingwordExerciseDto
+    {
         $dto = new MissingwordExerciseDto();
         $dto->textBefore = $exercise->getTextBefore();
         $dto->textAfter = $exercise->getTextAfter();
@@ -110,6 +144,10 @@ class ExerciseToExerciseDtoConverter
         if (isset($answer)) {
             $dto->correct = $exercise->getCorrect();
             $dto->answer = $answer->getOption();
+        }
+
+        if ($this->isAuthor($user, $exercise)) {
+            $dto->correct = $exercise->getCorrect();
         }
         return $dto;
     }

@@ -4,11 +4,17 @@ import {connect} from "react-redux"
 import Modal from "../../modal/Modal"
 import ModalHeader from "../../modal/modal-header/ModalHeader";
 import ModalContent from "../../modal/modal-content/ModalContent";
-import Exercise from "../../exercise/exercise.model";
+import Exercise, {ExerciseType} from "../../exercise/exercise.model";
 import {createPost} from "../../store/post/actions";
-import PostForm from "../post-form/PostForm";
+import PostForm, {Values as PostValues} from "../post-form/PostForm";
 import {State} from "../../store";
 import Post from "../post.interface";
+import AorbExerciseInput from "../post-form/exercise-input/aorb-exercise-input/AorbExerciseInput";
+import WhatdoyouseeExerciseInput
+  from "../post-form/exercise-input/whatdoyousee-exercise-input/WhatdoyouseeExerciseInput";
+import MissingwordExerciseInput from "../post-form/exercise-input/missingword-exercise-input/MissingwordExerciseInput";
+import AorbExerciseInputValue from "../post-form/exercise-input/aorb-exercise-input/aorb-exercise-input.model";
+import {nextId} from "../../util/id-generator";
 
 
 interface Props {
@@ -25,23 +31,44 @@ const EditPostModal: FC<Props> = ({findPost, onClose, createPost}) => {
   const {id} = useParams()
   const post = findPost(parseInt(id))
 
-  const [initialValues, setInitialValues] = useState(null)
+  const [initialValues, setInitialValues] = useState<PostValues>(null)
 
-  useEffect(() => {
+  useEffect( () => {
     if (post) {
-      const initialValues = {channel: post.channel, text: post.text, image: null, exercise: null}
+      const initialValues = {
+        channel: post.channel,
+        text: post.text,
+        image: null,
+        exercise: post.exercise && mapToExerciseInputValue(post.exercise)
+      } as PostValues
+
       if (post.image) {
-        const filename = post.image.substring(post.image.lastIndexOf('/')+1);
-        fetch(post.image)
-          .then(r => r.blob())
-          .then(blobFile => {
-            setInitialValues({...initialValues, image: new File([blobFile], filename, {type: "image/png"})})
-          });
+        getImageFile(post.image).then((file) => setInitialValues({...initialValues, image: file}));
       } else {
         setInitialValues(initialValues)
       }
     }
   }, [post])
+
+  const mapToExerciseInputValue = (exercise: Exercise) => {
+    switch (exercise.type) {
+      case ExerciseType.A_OR_B:
+        return new AorbExerciseInputValue(exercise.sentences.map((s) => ({...s, id: nextId()})))
+      case ExerciseType.WHAT_DO_YOU_SEE:
+        // return <WhatdoyouseeExerciseInputValue {...props} />
+      case ExerciseType.MISSING_WORD:
+        // return <MissingwordExerciseInputValue {...props} />
+      default:
+        throw new Error(`Cannot convert to unsupported exercise input type: ${exercise.type}`)
+    }
+  }
+
+  const getImageFile = (imageUrl) => {
+    const filename = post.image.substring(post.image.lastIndexOf('/') + 1);
+    return fetch(post.image)
+      .then(r => r.blob())
+      .then(blobFile => new File([blobFile], filename, {type: "image/png"}));
+  }
 
   const handleSubmit = ({channel, text, image, exercise}) => {
     console.log({channel, text, image, exercise})

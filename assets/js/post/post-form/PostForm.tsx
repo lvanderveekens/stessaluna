@@ -17,13 +17,14 @@ import { schema } from "./schema"
 import styles from "./PostForm.scss?module"
 import ImagePreview from "./image-preview/ImagePreview"
 import { getCountryCode } from "../../country/get-country-code"
+import AorbExerciseInputValue from "./exercise-input/aorb-exercise-input/aorb-exercise-input.model";
 
 interface Props {
   initialValues: Values
   onSubmit: (values: Values) => Promise<void>
 }
 
-interface Values {
+export interface Values {
   channel?: string
   text?: string
   image?: File
@@ -38,10 +39,14 @@ const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
 
   const actionsDisabled = (fileInput.current && fileInput.current.value) || exerciseType != null
 
-
   useEffect(() => {
-    if (initialValues.image) {
-      setImageUrl(URL.createObjectURL(initialValues.image))
+    const {image, exercise} = initialValues
+    if (image) {
+      setImageUrl(URL.createObjectURL(image))
+    }
+    if (exercise) {
+      setExerciseType(exercise.type)
+      console.log(exercise.type)
     }
   }, [initialValues])
 
@@ -98,14 +103,17 @@ const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
   }
 
   const renderExerciseInput = (setFieldValue) => {
-    const props = { onChange: handleChangeExercise(setFieldValue), onClose: handleCloseExercise(setFieldValue) }
+    const otherProps = {
+      onChange: handleChangeExercise(setFieldValue),
+      onClose: handleCloseExercise(setFieldValue)
+    }
     switch (exerciseType) {
       case ExerciseType.A_OR_B:
-        return <AorbExerciseInput {...props} />
+        return <AorbExerciseInput initialValue={initialValues.exercise as AorbExerciseInputValue} {...otherProps} />
       case ExerciseType.WHAT_DO_YOU_SEE:
-        return <WhatdoyouseeExerciseInput {...props} />
+        return <WhatdoyouseeExerciseInput {...otherProps} />
       case ExerciseType.MISSING_WORD:
-        return <MissingwordExerciseInput {...props} />
+        return <MissingwordExerciseInput {...otherProps} />
       default:
         throw new Error(`Cannot render unsupported exercise type: ${exerciseType}`)
     }
@@ -132,28 +140,34 @@ const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
             )}
           </div>
           <div className={styles.wrapper}>
-            <TextareaAutosize
-              className={`${styles.textInput} form-control`}
-              type="text"
-              name="text"
-              value={values.text || ""}
-              placeholder="What's new?"
-              onChange={handleChangeText(setFieldValue)}
-            />
-            <Form.Control
-              className={styles.imageInput}
-              name="image"
-              type="file"
-              onChange={handleChangeImage(setFieldValue)}
-              accept=".jpg,.png"
-              ref={fileInput}
-            />
-            {values.image && (
-              <div className={styles.images}>
-                <ImagePreview src={imageUrl} onDelete={handleDeleteImage(setFieldValue)} />
-              </div>
-            )}
-            {exerciseType && <div className={styles.exercise}>{renderExerciseInput(setFieldValue)}</div>}
+            <div className={styles.content}>
+              <TextareaAutosize
+                className={`${styles.textInput} form-control`}
+                type="text"
+                name="text"
+                value={values.text || ""}
+                placeholder="What's new?"
+                onChange={handleChangeText(setFieldValue)}
+              />
+              <Form.Control
+                className={styles.imageInput}
+                name="image"
+                type="file"
+                onChange={handleChangeImage(setFieldValue)}
+                accept=".jpg,.png"
+                ref={fileInput}
+              />
+              {values.image && (
+                <ImagePreview
+                  className={styles.imagePreview}
+                  src={imageUrl}
+                  onDelete={handleDeleteImage(setFieldValue)}
+                />
+              )}
+              {exerciseType && (
+                <div className={styles.exercise}>{renderExerciseInput(setFieldValue)}</div>
+              )}
+          </div>
             <div className={styles.actions}>
               <button className={styles.button} type="button" onClick={handleClickImage} disabled={actionsDisabled}>
                 <span className="mr-2">

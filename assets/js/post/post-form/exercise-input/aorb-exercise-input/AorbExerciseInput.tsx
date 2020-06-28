@@ -9,13 +9,17 @@ import ExerciseInputHeader from '../exercise-input-header/ExerciseInputHeader';
 import { nextId } from '../../../../util/id-generator';
 
 interface Props {
+  initialValue?: AorbExerciseInputValue
   onChange: (change: AorbExerciseInputValue) => void
   onClose: () => void
 }
 
-const AorbExerciseInput: FC<Props> = ({ onChange, onClose }) => {
+const AorbExerciseInput: FC<Props> = ({ initialValue, onChange, onClose }) => {
 
-  const [sentences, setSentences] = useState<AorbSentenceInputValue[]>(() => [{ id: nextId() }]);
+  console.log(`initial value: ${initialValue}`)
+  const [sentences, setSentences] = useState<AorbSentenceInputValue[]>(
+    () => (initialValue && initialValue.sentences) || [{id: nextId()}]
+  );
 
   useEffect(() => {
     onChange(new AorbExerciseInputValue(sentences));

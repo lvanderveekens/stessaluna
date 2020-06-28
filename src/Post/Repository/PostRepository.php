@@ -26,6 +26,15 @@ class PostRepository extends ServiceEntityRepository
         $this->logger = $logger;
     }
 
+    public function findByExerciseId(int $exerciseId): Post
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exercise = :exerciseId')
+            ->setParameter('exerciseId', $exerciseId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     /**
      * @param null|string[] $channels an array of channels (language codes) to filter by
      * @return Post[] all posts
