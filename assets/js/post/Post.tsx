@@ -132,7 +132,13 @@ const Post: FunctionComponent<Props> = (
           )}
         </div>
         {text && <Text text={text}/>}
-        {image && <img className={styles.image} src={image}/>}
+        {image && (
+          <div className={styles.imageWrapper}>
+            <div className={styles.aspectRatioBox}>
+              <img src={image} alt="Post image"/>
+            </div>
+          </div>
+        )}
         {exercise && renderExercise()}
       </div>
       <div className={styles.activity}>

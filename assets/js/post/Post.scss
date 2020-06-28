@@ -70,11 +70,26 @@
 
         }
 
-        .image {
-            width: 100%;
-            display: block;
-            margin-right: auto;
-            margin-left: auto;
+        .imageWrapper {
+
+            .aspectRatioBox {
+                position: relative;
+
+                width: 100%;
+                padding-top: calc(9 / 16 * 100%);
+
+                overflow: hidden;
+
+                img {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+
+                    object-fit: contain;
+                }
+            }
         }
 
         .deleteButton:hover {

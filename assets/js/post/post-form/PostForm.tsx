@@ -1,7 +1,7 @@
 import { faGraduationCap, faImage } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Formik } from "formik"
-import React, { ChangeEvent, FC, useRef, useState } from "react"
+import React, {ChangeEvent, FC, useEffect, useRef, useState} from "react"
 import {Alert, Dropdown, Form} from "react-bootstrap"
 import ReactCountryFlag from "react-country-flag"
 import TextareaAutosize from "react-textarea-autosize"
@@ -37,6 +37,13 @@ const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
   const [exerciseType, setExerciseType] = useState<ExerciseType>(null)
 
   const actionsDisabled = (fileInput.current && fileInput.current.value) || exerciseType != null
+
+
+  useEffect(() => {
+    if (initialValues.image) {
+      setImageUrl(URL.createObjectURL(initialValues.image))
+    }
+  }, [initialValues])
 
   const handleChangeImage = (setFieldValue) => (e: ChangeEvent<HTMLInputElement>) => {
     const image = e.currentTarget.files[0]
