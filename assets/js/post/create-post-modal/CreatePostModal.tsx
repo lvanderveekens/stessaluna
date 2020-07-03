@@ -1,6 +1,6 @@
-import React, { FC } from "react"
-import { useHistory } from "react-router-dom"
-import { connect } from "react-redux"
+import React, {FC} from "react"
+import {useHistory} from "react-router-dom"
+import {connect} from "react-redux"
 import Modal from "../../modal/Modal"
 import ModalHeader from "../../modal/modal-header/ModalHeader";
 import ModalContent from "../../modal/modal-content/ModalContent";
@@ -29,6 +29,7 @@ const CreatePostModal: FC<Props> = ({onClose, createPost}) => {
         <PostForm
           initialValues={{channel: null, text: null, image: null, exercise: null}}
           onSubmit={handleSubmit}
+          submitLabel="Create"
         />
       </ModalContent>
     </Modal>

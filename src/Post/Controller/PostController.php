@@ -69,6 +69,7 @@ class PostController extends AbstractController
      * @Route(methods={"POST"})
      *
      * @IsGranted("ROLE_USER")
+     * // TODO: convert to json request after having a separate functioning image controller
      */
     public function createPost(Request $request): JsonResponse
     {

@@ -47,7 +47,7 @@ class PostToPostDtoConverter
         $dto->channel = $post->getChannel();
         
         if ($post->getImageFilename()) {
-            $dto->image = $this->imageStorage->getPath($post->getImageFilename());
+            $dto->image = $this->imageStorage->getUrl($post->getImageFilename());
         }
 
         if ($post->getExercise()) {

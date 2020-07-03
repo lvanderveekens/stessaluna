@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Stessaluna\Exercise\Dto;
 
+use Psr\Log\LoggerInterface;
 use Stessaluna\Exercise\Answer\Entity\Answer;
 use Stessaluna\Exercise\Answer\Entity\AorbAnswer;
 use Stessaluna\Exercise\Answer\Entity\MissingwordAnswer;
@@ -32,11 +33,16 @@ class ExerciseToExerciseDtoConverter
      * @var PostRepository
      */
     private $postRepository;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
-    public function __construct(ImageStorage $imageStorage, PostRepository $postRepository)
+    public function __construct(ImageStorage $imageStorage, PostRepository $postRepository, LoggerInterface $logger)
     {
         $this->imageStorage = $imageStorage;
         $this->postRepository = $postRepository;
+        $this->logger = $logger;
     }
 
     public function convert(Exercise $exercise, ?User $user): ExerciseDto
@@ -109,7 +115,7 @@ class ExerciseToExerciseDtoConverter
     ): WhatdoyouseeExerciseDto
     {
         $dto = new WhatdoyouseeExerciseDto();
-        $dto->image = $this->imageStorage->getPath($exercise->getImageFilename());
+        $dto->image = $this->imageStorage->getUrl($exercise->getImageFilename());
         $dto->option1 = $exercise->getOption1();
         $dto->option2 = $exercise->getOption2();
         $dto->option3 = $exercise->getOption3();

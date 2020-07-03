@@ -26,6 +26,7 @@ import MissingwordExerciseInputValues
 interface Props {
   initialValues: Values
   onSubmit: (values: Values) => Promise<void>
+  submitLabel: string
 }
 
 export interface Values {
@@ -35,13 +36,15 @@ export interface Values {
   exercise?: ExerciseInputValues
 }
 
-const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
+const PostForm: FC<Props> = ({initialValues, onSubmit, submitLabel}) => {
   const fileInput = useRef(null)
   const [imageUrl, setImageUrl] = useState(null)
   const [submitError, setSubmitError] = useState(false)
   const [exerciseType, setExerciseType] = useState<ExerciseType>(null)
 
-  const actionsDisabled = (fileInput.current && fileInput.current.value) || exerciseType != null
+  const actionsDisabled = (values: Values) => {
+    return values.image != null || values.exercise != null
+  }
 
   useEffect(() => {
     const {image, exercise} = initialValues
@@ -88,18 +91,11 @@ const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
     setSubmitError(false)
 
     onSubmit(values)
-      .then(() => {
-        if (fileInput.current != null) {
-          fileInput.current.value = null
-        }
-        resetForm()
-        setExerciseType(null)
-      })
       .catch((e) => {
         console.log(e)
         setSubmitError(true)
-        setSubmitting(false)
       })
+    setSubmitting(false)
   }
 
   const allNull = (...values) => {
@@ -141,7 +137,7 @@ const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
       onSubmit={(values, { setSubmitting, resetForm }) => handleSubmit({ ...values }, { setSubmitting, resetForm })}
       initialValues={initialValues}
     >
-      {({ handleSubmit, setFieldValue, values, isValid, isSubmitting, errors }) => (
+      {({handleSubmit, setFieldValue, values, isValid, isSubmitting, errors, dirty}) => (
         <Form className={styles.postForm} noValidate onSubmit={handleSubmit}>
           <div className={styles.channelWrapper}>
             <label>In</label>
@@ -186,7 +182,7 @@ const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
               )}
           </div>
             <div className={styles.actions}>
-              <button className={styles.button} type="button" onClick={handleClickImage} disabled={actionsDisabled}>
+              <button className={styles.button} type="button" onClick={handleClickImage} disabled={actionsDisabled(values)}>
                 <span className="mr-2">
                   <FontAwesomeIcon icon={faImage} />
                 </span>
@@ -194,7 +190,7 @@ const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
               </button>
               <Dropdown className={styles.exerciseDropdown}>
                 <Dropdown.Toggle as={CustomToggle} id="something">
-                  <button className={styles.button} type="button" disabled={actionsDisabled}>
+                  <button className={styles.button} type="button" disabled={actionsDisabled(values)}>
                     <span className="mr-2">
                       <FontAwesomeIcon icon={faGraduationCap} />
                     </span>
@@ -218,9 +214,10 @@ const PostForm: FC<Props> = ({initialValues, onSubmit}) => {
           <Button
             className={styles.submitButton}
             type="submit"
-            disabled={allNull(values.text, values.image, values.exercise) || !isValid || isSubmitting}
+            // disabled={allNull(values.text, values.image, values.exercise) || !isValid || isSubmitting || !dirty}
+            disabled={!dirty}
           >
-            Post
+            {submitLabel}
           </Button>
           {submitError && (
             <Alert

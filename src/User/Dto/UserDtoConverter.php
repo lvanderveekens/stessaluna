@@ -35,7 +35,7 @@ class UserDtoConverter
         $dto->country = $user->getCountry();
 
         if ($user->getAvatarFilename()) {
-            $dto->avatar = $this->imageStorage->getPath($user->getAvatarFilename());
+            $dto->avatar = $this->imageStorage->getUrl($user->getAvatarFilename());
         } else {
             $dto->avatar = $this->packages->getUrl('build/images/avatar-default.svg');
         }

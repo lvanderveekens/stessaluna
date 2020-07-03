@@ -70,9 +70,13 @@ const EditPostModal: FC<Props> = ({findPost, onClose, createPost}) => {
   }
 
   const handleSubmit = ({channel, text, image, exercise}) => {
-    console.log({channel, text, image, exercise})
     // return createPost(channel, text, image, exercise)
-    //   .then(() => history.push("/"))
+
+    console.log(`channel ${JSON.stringify(initialValues.channel) !== JSON.stringify(channel)}`)
+    console.log(`text ${JSON.stringify(initialValues.text) !== JSON.stringify(text)}`)
+    console.log(`image ${initialValues.image !== image}`)
+    console.log(`exercise ${JSON.stringify(initialValues.exercise) !== JSON.stringify(exercise)}`)
+
     return Promise.resolve()
   }
 
@@ -81,7 +85,7 @@ const EditPostModal: FC<Props> = ({findPost, onClose, createPost}) => {
       <ModalHeader onClose={onClose}>Edit post</ModalHeader>
       <ModalContent className="h-100">
         {initialValues && (
-          <PostForm initialValues={initialValues} onSubmit={handleSubmit}/>
+          <PostForm initialValues={initialValues} onSubmit={handleSubmit} submitLabel="Save"/>
         )}
       </ModalContent>
     </Modal>
