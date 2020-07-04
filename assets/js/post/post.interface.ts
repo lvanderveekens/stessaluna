@@ -1,6 +1,7 @@
 import User from "../user/user.interface"
 import Comment from "./comment/comment.interface"
 import Exercise from "../exercise/exercise.model"
+import Image from "../image/image.interface";
 
 export interface Post {
   id: number
@@ -9,7 +10,7 @@ export interface Post {
   author: User
   channel: string
   text?: string
-  image?: string
+  image?: Image
   exercise?: Exercise
   comments: Comment[]
 }

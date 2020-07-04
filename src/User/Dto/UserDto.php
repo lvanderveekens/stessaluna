@@ -2,6 +2,8 @@
 
 namespace Stessaluna\User\Dto;
 
+use Stessaluna\Image\Dto\ImageDto;
+
 class UserDto
 {
     /** @var int */
@@ -13,12 +15,12 @@ class UserDto
     /** @var string */
     public $username;
 
-    /** @var string|null */
-    public $displayName;
+    /** @var string */
+    public $displayName = null;
 
     /** @var string */
     public $country;
 
-    /** @var string|null */
-    public $avatar;
+    /** @var ImageDto */
+    public $avatar = null;
 }

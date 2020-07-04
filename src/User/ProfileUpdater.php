@@ -2,23 +2,23 @@
 
 namespace Stessaluna\User;
 
-use Stessaluna\Image\Storage\ImageStorage;
+use Stessaluna\Image\ImageService;
 use Stessaluna\User\Entity\User;
 use Stessaluna\User\Repository\UserRepository;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 class ProfileUpdater
 {
     /** @var UserRepository */
     private $userRepository;
 
-    /** @var ImageStorage */
-    private $imageStorage;
+    /** @var ImageService */
+    private $imageService;
 
-    public function __construct(UserRepository $userRepository, ImageStorage $imageStorage)
+    public function __construct(UserRepository $userRepository, ImageService $imageService)
     {
         $this->userRepository = $userRepository;
-        $this->imageStorage = $imageStorage;
+        $this->imageService = $imageService;
     }
 
     public function update(
@@ -26,8 +26,9 @@ class ProfileUpdater
         ?string $displayName,
         string $country,
         bool $resetAvatar,
-        ?UploadedFile $avatar
-    ): User {
+        ?File $avatar
+    ): User
+    {
         $user->setDisplayName($displayName);
         $user->setCountry($country);
         if ($resetAvatar) {
@@ -38,19 +39,19 @@ class ProfileUpdater
         return $this->userRepository->save($user);
     }
 
-    private function setAvatar(User $user, UploadedFile $avatar)
+    private function setAvatar(User $user, File $avatar)
     {
-        if ($user->getAvatarFilename()) {
-            $this->imageStorage->delete($user->getAvatarFilename());
+        if ($user->getAvatar()) {
+            $this->imageService->delete($user->getAvatar());
         }
-        $user->setAvatarFilename($this->imageStorage->store($avatar));
+        $user->setAvatar($this->imageService->store($avatar));
     }
 
     private function resetAvatar(User $user)
     {
-        if ($user->getAvatarFilename()) {
-            $this->imageStorage->delete($user->getAvatarFilename());
+        if ($user->getAvatar()) {
+            $this->imageService->delete($user->getAvatar());
         }
-        $user->setAvatarFilename(null);
+        $user->setAvatar(null);
     }
 }

@@ -3,6 +3,7 @@
 namespace Stessaluna\User\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Stessaluna\Image\Entity\Image;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -49,9 +50,12 @@ class User implements UserInterface
     private $country;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity="Stessaluna\Image\Entity\Image")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     *
+     * @var Image
      */
-    private $avatarFilename;
+    private $avatar;
 
     public function getId(): ?int
     {
@@ -161,27 +165,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getLastName(): ?string
+    public function getAvatar(): ?Image
     {
-        return $this->lastName;
+        return $this->avatar;
     }
 
-    public function setLastName(?string $lastName): self
+    public function setAvatar(?Image $avatar): self
     {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    public function getAvatarFilename(): ?string
-    {
-        return $this->avatarFilename;
-    }
-
-    public function setAvatarFilename(?string $avatarFilename): self
-    {
-        $this->avatarFilename = $avatarFilename;
-
+        $this->avatar = $avatar;
         return $this;
     }
 }

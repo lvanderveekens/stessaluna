@@ -1,13 +1,15 @@
 <?php
+declare(strict_types=1);
 
 namespace Stessaluna\Exercise\Whatdoyousee\Dto;
 
 use Stessaluna\Exercise\Dto\ExerciseDto;
 use Stessaluna\Exercise\ExerciseType;
+use Stessaluna\Image\Dto\ImageDto;
 
 class WhatdoyouseeExerciseDto extends ExerciseDto
 {
-    /** @var string */
+    /** @var ImageDto */
     public $image;
 
     /** @var string */

@@ -2,7 +2,7 @@
 
 namespace Stessaluna\User\Controller;
 
-use Stessaluna\User\Dto\UserDtoConverter;
+use Stessaluna\User\Dto\UserToUserDtoConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,12 +12,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
-    /** @var UserDtoConverter */
-    private $userDtoConverter;
+    /**
+     * @var UserToUserDtoConverter
+     */
+    private $userToUserDtoConverter;
 
-    public function __construct(UserDtoConverter $userDtoConverter)
+    public function __construct(UserToUserDtoConverter $userToUserDtoConverter)
     {
-        $this->userDtoConverter = $userDtoConverter;
+        $this->userToUserDtoConverter = $userToUserDtoConverter;
     }
 
     /**
@@ -25,6 +27,6 @@ class UserController extends AbstractController
      */
     public function getCurrentUser() : JsonResponse
     {
-        return $this->json($this->userDtoConverter->toDto($this->getUser()));
+        return $this->json($this->userToUserDtoConverter->convert($this->getUser()));
     }
 }

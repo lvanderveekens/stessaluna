@@ -7,6 +7,7 @@ import classNames from "classnames/bind"
 import ExerciseOptionInput from "../exercise-option-input/ExerciseOptionInput"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faLightbulb} from "@fortawesome/free-regular-svg-icons"
+import Image from "../../../../image/image.interface";
 
 const cx = classNames.bind(styles)
 
@@ -17,7 +18,7 @@ interface Props {
 }
 
 const WhatdoyouseeExerciseInput: FC<Props> = ({initialValues, onChange, onClose}) => {
-  const [image, setImage] = useState<File>(initialValues.image)
+  const [image, setImage] = useState<Image>(initialValues.image)
   const [option1, setOption1] = useState<string>(initialValues.option1)
   const [option2, setOption2] = useState<string>(initialValues.option2)
   const [option3, setOption3] = useState<string>(initialValues.option3)

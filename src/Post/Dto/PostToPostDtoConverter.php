@@ -5,36 +5,37 @@ declare(strict_types=1);
 namespace Stessaluna\Post\Dto;
 
 use Stessaluna\Exercise\Dto\ExerciseToExerciseDtoConverter;
-use Stessaluna\Image\Storage\ImageStorage;
-use Stessaluna\Post\Comment\Dto\CommentDtoConverter;
+use Stessaluna\Image\Dto\ImageToImageDtoConverter;
+use Stessaluna\Post\Comment\Dto\CommentToCommentDtoConverter;
 use Stessaluna\Post\Entity\Post;
-use Stessaluna\User\Dto\UserDtoConverter;
+use Stessaluna\User\Dto\UserToUserDtoConverter;
 use Stessaluna\User\Entity\User;
 
 class PostToPostDtoConverter
 {
-    /** @var UserDtoConverter */
+    /** @var UserToUserDtoConverter */
     private $userDtoConverter;
 
-    /** @var CommentDtoConverter */
+    /** @var CommentToCommentDtoConverter */
     private $commentDtoConverter;
 
     /** @var ExerciseToExerciseDtoConverter */
     private $exerciseToExerciseDtoConverter;
 
-    /** @var ImageStorage */
-    private $imageStorage;
+    /** @var ImageToImageDtoConverter */
+    private $imageToImageDtoConverter;
 
     public function __construct(
-        UserDtoConverter $userDtoConverter,
-        CommentDtoConverter $commentDtoConverter,
+        UserToUserDtoConverter $userDtoConverter,
+        CommentToCommentDtoConverter $commentDtoConverter,
         ExerciseToExerciseDtoConverter $exerciseToExerciseDtoConverter,
-        ImageStorage $imageStorage
-    ) {
+        ImageToImageDtoConverter $imageToImageDtoConverter
+    )
+    {
         $this->userDtoConverter = $userDtoConverter;
         $this->commentDtoConverter = $commentDtoConverter;
         $this->exerciseToExerciseDtoConverter = $exerciseToExerciseDtoConverter;
-        $this->imageStorage = $imageStorage;
+        $this->imageToImageDtoConverter = $imageToImageDtoConverter;
     }
 
     public function convert(Post $post, ?User $user): PostDto
@@ -42,20 +43,17 @@ class PostToPostDtoConverter
         $dto = new PostDto();
         $dto->id = $post->getId();
         $dto->createdAt = $post->getCreatedAt();
-        $dto->author = $this->userDtoConverter->toDto($post->getAuthor());
+        $dto->author = $this->userDtoConverter->convert($post->getAuthor());
         $dto->text = $post->getText();
         $dto->channel = $post->getChannel();
-        
-        if ($post->getImageFilename()) {
-            $dto->image = $this->imageStorage->getUrl($post->getImageFilename());
+        if ($post->getImage()) {
+            $dto->image = $this->imageToImageDtoConverter->convert($post->getImage());
         }
-
         if ($post->getExercise()) {
             $dto->exercise = $this->exerciseToExerciseDtoConverter->convert($post->getExercise(), $user);
         }
-
         $dto->comments = array_map(function ($comment) {
-            return $this->commentDtoConverter->toDto($comment);
+            return $this->commentDtoConverter->convert($comment);
         }, $post->getComments()->toArray());
 
         return $dto;

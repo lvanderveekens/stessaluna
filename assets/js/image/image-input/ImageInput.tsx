@@ -1,15 +1,17 @@
-import React, { FC, useState, ChangeEvent, useRef, useEffect } from "react"
+import React, {ChangeEvent, FC, useRef, useState} from "react"
 import styles from "./ImageInput.scss?module"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faTimes, faUpload } from "@fortawesome/free-solid-svg-icons"
-import { nextId } from "../../util/id-generator"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faTimes, faUpload} from "@fortawesome/free-solid-svg-icons"
+import {nextId} from "../../util/id-generator"
 import classNames from "classnames/bind"
+import Image from "../image.interface";
+
 const cx = classNames.bind(styles)
 
 interface Props {
   className?: string
-  value?: File
-  onChange: (image?: File) => void
+  value?: Image
+  onChange: (image?: Image) => void
   shape?: "square" | "circle"
   overlayDisabled?: boolean
   label?: string
@@ -27,27 +29,29 @@ const ImageInput: FC<Props> = (
 ) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [inputId] = useState<string>(() => `input${nextId()}`)
-  const [src, setSrc] = useState(null)
+  // const [src, setSrc] = useState(null)
 
-  useEffect(() => {
-    const src = value ? URL.createObjectURL(value) : null
-    setSrc(src)
-  }, [value])
+  // useEffect(() => {
+  //   const src = value ? URL.createObjectURL(value) : null
+  //   setSrc(src)
+  // }, [value])
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(event.currentTarget.files[0])
+    // onChange(event.currentTarget.files[0])
+    // TODO
   }
 
   const handleDelete = () => {
-    inputRef.current.value = null
-    onChange(null)
+    // inputRef.current.value = null
+    // onChange(null)
+    // TODO
   }
 
   return (
     <div className={cx(styles.imageInput, className, shape)}>
-      {src ? (
+      {value ? (
         <div className={styles.imagePreview}>
-          <img src={src} />
+          <img src={value.url} />
           {!overlayDisabled && (
             <div className={styles.overlay}>
               <FontAwesomeIcon className={styles.deleteIcon} icon={faTimes} onClick={handleDelete} />

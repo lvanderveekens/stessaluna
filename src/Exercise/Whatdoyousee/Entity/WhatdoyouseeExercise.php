@@ -7,6 +7,7 @@ namespace Stessaluna\Exercise\Whatdoyousee\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Stessaluna\Exercise\Entity\Exercise;
 use Stessaluna\Exercise\ExerciseType;
+use Stessaluna\Image\Entity\Image;
 
 /**
  * @ORM\Entity
@@ -14,9 +15,12 @@ use Stessaluna\Exercise\ExerciseType;
 class WhatdoyouseeExercise extends Exercise
 {
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToOne(targetEntity="Stessaluna\Image\Entity\Image")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     *
+     * @var Image
      */
-    private $imageFilename;
+    private $image;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -48,15 +52,14 @@ class WhatdoyouseeExercise extends Exercise
         parent::__construct();
     }
 
-    public function getImageFilename(): ?string
+    public function getImage(): ?Image
     {
-        return $this->imageFilename;
+        return $this->image;
     }
 
-    public function setImageFilename(?string $imageFilename): self
+    public function setImage(?Image $image): self
     {
-        $this->imageFilename = $imageFilename;
-
+        $this->image = $image;
         return $this;
     }
 

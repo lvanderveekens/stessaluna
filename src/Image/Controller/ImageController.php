@@ -33,8 +33,8 @@ class ImageController extends AbstractController
     public function storeImage(Request $request): JsonResponse
     {
         $uploadedImage = $request->files->get('image');
-        $filename = $this->imageService->storeImage($uploadedImage);
-        return $this->json(array('filename' => $filename));
+        $image = $this->imageService->store($uploadedImage);
+        return $this->json($image);
     }
 }
 

@@ -11,12 +11,13 @@ import {State} from "../../store";
 import Post from "../post.interface";
 import AorbExerciseInputValues from "../post-form/exercise-input/aorb-exercise-input/aorb-exercise-input.model";
 import {nextId} from "../../util/id-generator";
+import ExerciseInputValues from "../post-form/exercise-input/exercise-input.model";
 
 
 interface Props {
   findPost: (id: number) => Post
   onClose: () => void
-  createPost: (channel: string, text?: string, image?: File, exercise?: Exercise) => Promise<void>
+  createPost: (channel: string, text?: string, imageUrl?: string, exercise?: ExerciseInputValues) => Promise<void>
 }
 
 
@@ -31,18 +32,12 @@ const EditPostModal: FC<Props> = ({findPost, onClose, createPost}) => {
 
   useEffect( () => {
     if (post) {
-      const initialValues = {
+      setInitialValues({
         channel: post.channel,
         text: post.text,
-        image: null,
+        image: post.image,
         exercise: post.exercise && mapToExerciseInputValue(post.exercise)
-      } as PostValues
-
-      if (post.image) {
-        getImageFile(post.image).then((file) => setInitialValues({...initialValues, image: file}));
-      } else {
-        setInitialValues(initialValues)
-      }
+      })
     }
   }, [post])
 
@@ -60,13 +55,6 @@ const EditPostModal: FC<Props> = ({findPost, onClose, createPost}) => {
       default:
         throw new Error(`Cannot convert to unsupported exercise input type: ${exercise.type}`)
     }
-  }
-
-  const getImageFile = (imageUrl) => {
-    const filename = post.image.substring(post.image.lastIndexOf('/') + 1);
-    return fetch(post.image)
-      .then(r => r.blob())
-      .then(blobFile => new File([blobFile], filename, {type: "image/png"}));
   }
 
   const handleSubmit = ({channel, text, image, exercise}) => {

@@ -1,16 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Stessaluna\Image\Storage\FileSystem;
+namespace Stessaluna\Image\Storage\Local;
 
 use Exception;
 use Psr\Log\LoggerInterface;
 use Stessaluna\Image\Storage\ImageStorage;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class FileSystemImageStorage implements ImageStorage
+class LocalImageStorage implements ImageStorage
 {
     private static $PUBLIC_PATH = '/uploads/images';
 
@@ -31,13 +30,10 @@ class FileSystemImageStorage implements ImageStorage
         return self::$PUBLIC_PATH . '/' . $filename;
     }
 
-    public function store(File $image, string $filename)
+    public function store(File $image, string $filename): string
     {
-        try {
-            $image->move($this->directory, $filename);
-        } catch (FileException $e) {
-            $this->logger->error($e);
-        }
+        $image->move($this->directory, $filename);
+        return $this->getUrl($filename);
     }
 
     public function delete(string $filename)

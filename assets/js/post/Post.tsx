@@ -2,7 +2,7 @@ import {faCommentAlt} from "@fortawesome/free-regular-svg-icons"
 import {faEllipsisV} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import React, {FunctionComponent, useEffect, useState} from "react"
-import {Dropdown, Nav as BootstrapNav} from "react-bootstrap"
+import {Dropdown} from "react-bootstrap"
 import ReactCountryFlag from "react-country-flag"
 import {connect} from "react-redux"
 import CustomToggle from "../dropdown/custom-toggle/CustomToggle"
@@ -103,7 +103,7 @@ const Post: FunctionComponent<Props> = (
       <div className={styles.content}>
         <div className={styles.header}>
           <div className={styles.avatar}>
-            <Avatar src={author.avatar} countryCode={author.country}/>
+            <Avatar src={author.avatar.url} countryCode={author.country}/>
           </div>
           <div className={styles.usernameTimestampWrapper}>
             <div>{renderUserName()}</div>

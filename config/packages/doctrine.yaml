@@ -58,3 +58,9 @@ doctrine:
         dir: "%kernel.project_dir%/src/Post/Comment/Entity"
         prefix: 'Stessaluna\Post\Comment\Entity'
         alias: Comment
+      Image:
+        is_bundle: false
+        type: annotation
+        dir: "%kernel.project_dir%/src/Image/Entity"
+        prefix: 'Stessaluna\Image\Entity'
+        alias: Image

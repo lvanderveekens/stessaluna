@@ -5,7 +5,7 @@ namespace Stessaluna\Post\Comment\Controller;
 use DateTime;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Stessaluna\Post\Comment\Dto\CommentDtoConverter;
+use Stessaluna\Post\Comment\Dto\CommentToCommentDtoConverter;
 use Stessaluna\Post\Comment\Entity\Comment;
 use Stessaluna\Post\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,15 +22,15 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CommentController extends AbstractController
 {
-    /** @var CommentDtoConverter */
-    private $commentConverter;
+    /** @var CommentToCommentDtoConverter */
+    private $commentToCommentDtoConverter;
 
     /** @var LoggerInterface */
     private $logger;
 
-    public function __construct(CommentDtoConverter $commentConverter, LoggerInterface $logger)
+    public function __construct(CommentToCommentDtoConverter $commentToCommentDtoConverter, LoggerInterface $logger)
     {
-        $this->commentConverter = $commentConverter;
+        $this->commentToCommentDtoConverter = $commentToCommentDtoConverter;
         $this->logger = $logger;
     }
 
@@ -44,7 +44,7 @@ class CommentController extends AbstractController
             ->findBy(array('post' => $postId));
 
         return $this->json(array_map(function (Comment $comment) {
-            return $this->commentConverter->toDto($comment);
+            return $this->commentToCommentDtoConverter->convert($comment);
         }, $comments));
     }
 
@@ -68,7 +68,7 @@ class CommentController extends AbstractController
         $em->persist($comment);
         $em->flush();
 
-        return $this->json($this->commentConverter->toDto($comment));
+        return $this->json($this->commentToCommentDtoConverter->convert($comment));
     }
 
     /**

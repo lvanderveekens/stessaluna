@@ -6,6 +6,7 @@ namespace Stessaluna\Post\Dto;
 
 use DateTimeInterface;
 use Stessaluna\Exercise\Dto\ExerciseDto;
+use Stessaluna\Image\Dto\ImageDto;
 use Stessaluna\Post\Comment\Dto\CommentDto;
 use Stessaluna\User\Dto\UserDto;
 
@@ -26,7 +27,7 @@ class PostDto
     /** @var string */
     public $text = null;
 
-    /** @var string */
+    /** @var ImageDto */
     public $image = null;
 
     /** @var ExerciseDto */

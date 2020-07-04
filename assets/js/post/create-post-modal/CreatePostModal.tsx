@@ -4,20 +4,21 @@ import {connect} from "react-redux"
 import Modal from "../../modal/Modal"
 import ModalHeader from "../../modal/modal-header/ModalHeader";
 import ModalContent from "../../modal/modal-content/ModalContent";
-import Exercise from "../../exercise/exercise.model";
 import {createPost} from "../../store/post/actions";
-import PostForm from "../post-form/PostForm";
+import PostForm, {Values as PostValues} from "../post-form/PostForm";
+import ExerciseInputValues from "../post-form/exercise-input/exercise-input.model";
+import Image from "../../image/image.interface";
 
 interface Props {
   onClose: () => void
-  createPost: (channel: string, text?: string, image?: File, exercise?: Exercise) => Promise<void>
+  createPost: (channel: string, text?: string, image?: Image, exercise?: ExerciseInputValues) => Promise<void>
 }
 
 
 const CreatePostModal: FC<Props> = ({onClose, createPost}) => {
   const history = useHistory()
 
-  const handleSubmit = ({channel, text, image, exercise}) => {
+  const handleSubmit = ({channel, text, image, exercise}: PostValues) => {
     return createPost(channel, text, image, exercise)
       .then(() => history.push("/"))
   }

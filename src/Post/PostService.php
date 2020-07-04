@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Stessaluna\Post\Service;
+namespace Stessaluna\Post;
 
 use Stessaluna\Exception\NotAuthorException;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
-use Stessaluna\Image\Storage\ImageStorage;
+use Stessaluna\Image\ImageService;
 use Stessaluna\Post\Entity\Post;
 use Stessaluna\Post\Exception\PostNotFoundException;
 use Stessaluna\Post\Repository\PostRepository;
@@ -17,13 +17,13 @@ class PostService
     /** @var PostRepository */
     private $postRepository;
 
-    /** @var ImageStorage */
-    private $imageStorage;
+    /** @var ImageService */
+    private $imageService;
 
-    public function __construct(PostRepository $postRepository, ImageStorage $imageStorage)
+    public function __construct(PostRepository $postRepository, ImageService $imageService)
     {
         $this->postRepository = $postRepository;
-        $this->imageStorage = $imageStorage;
+        $this->imageService = $imageService;
     }
 
     /**
@@ -55,15 +55,15 @@ class PostService
             throw new NotAuthorException('Not the author of post: '.$id);
         }
 
-        if ($post->getImageFilename()) {
-            $this->imageStorage->delete($post->getImageFilename());
+        if ($post->getImage()) {
+            $this->imageService->delete($post->getImage());
         }
 
         $exercise = $post->getExercise();
         if ($exercise) {
             if ($exercise instanceof WhatdoyouseeExercise) {
                 // delete image by hand and let doctrine automagically cascade delete the exercise
-                $this->imageStorage->delete($exercise->getImageFilename());
+                $this->imageService->delete($exercise->getImage());
             }
         }
         $this->postRepository->delete($post);

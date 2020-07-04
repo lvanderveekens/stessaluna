@@ -4,13 +4,14 @@
 namespace Stessaluna\Image;
 
 
+use Stessaluna\Image\Entity\Image;
 use Stessaluna\Image\Optimization\ImageOptimizer;
+use Stessaluna\Image\Repository\ImageRepository;
 use Stessaluna\Image\Storage\ImageStorage;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 class ImageService
 {
-
     /**
      * @var ImageOptimizer
      */
@@ -19,30 +20,35 @@ class ImageService
      * @var ImageStorage
      */
     private $imageStorage;
+    /**
+     * @var ImageRepository
+     */
+    private $imageRepository;
 
-    public function __construct(ImageOptimizer $imageOptimizer, ImageStorage $imageStorage)
+    public function __construct(ImageOptimizer $imageOptimizer, ImageStorage $imageStorage,
+                                ImageRepository $imageRepository)
     {
         $this->imageOptimizer = $imageOptimizer;
         $this->imageStorage = $imageStorage;
+        $this->imageRepository = $imageRepository;
     }
 
-    /**
-     * Store an uploaded image.
-     * @return string the filename
-     */
-    public function storeImage(UploadedFile $uploadedImage): string
+    public function store(File $imageFile): Image
     {
-        $optimizedImage = $this->imageOptimizer->optimize($uploadedImage);
+        $optimizedImageFile = $this->imageOptimizer->optimize($imageFile);
+        $filename = md5(uniqid());
+        $this->imageStorage->store($optimizedImageFile, $filename);
 
-        $originalFilename = pathinfo($uploadedImage->getClientOriginalName(), PATHINFO_FILENAME);
-        // this is needed to safely include the filename as part of the URL
-        $safeFilename = transliterator_transliterate(
-            'Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()',
-            $originalFilename
-        );
-        $filename = $safeFilename . '-' . uniqid() . '.' . $uploadedImage->guessExtension();
+        $image = new Image();
+        $image->setFilename($filename);
+        $image->setMimeType($imageFile->getMimeType());
+        $this->imageRepository->save($image);
 
-        $this->imageStorage->store($optimizedImage, $filename);
-        return $filename;
+        return $image;
+    }
+
+    public function delete(Image $image) {
+        $this->imageStorage->delete($image->getFilename());
+        $this->imageRepository->delete($image);
     }
 }

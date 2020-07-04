@@ -3,5 +3,5 @@ services:
     autowire: true # Automatically injects dependencies in your services.
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-  Stessaluna\Image\Storage\ImageStorage: '@Stessaluna\Image\Storage\FileSystem\FileSystemImageStorage'
+  Stessaluna\Image\Storage\ImageStorage: '@Stessaluna\Image\Storage\Local\LocalImageStorage'
 

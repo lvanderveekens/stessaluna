@@ -8,14 +8,15 @@ interface ImageStorage {
 
     /**
      * Get the URL to the image.
-     * @return string the url
+     * @return string the image url
      */
     public function getUrl(string $filename): string;
 
     /**
      * Store an uploaded image.
+     * @return string the image url
      */
-    public function store(File $image, string $filename);
+    public function store(File $image, string $filename): string;
 
     /**
      * Delete an image by filename.

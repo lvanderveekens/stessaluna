@@ -1,15 +1,16 @@
 import ExerciseInputValues from "../exercise-input.model"
 import {ExerciseType} from "../../../../exercise/exercise.model"
+import Image from "../../../../image/image.interface";
 
 export class WhatdoyouseeExerciseInputValues extends ExerciseInputValues {
-  image?: File
+  image?: Image
   option1?: string
   option2?: string
   option3?: string
   option4?: string
   correct?: number
 
-  constructor(image?: File, option1?: string, option2?: string, option3?: string, option4?: string, correct?: number) {
+  constructor(image?: Image, option1?: string, option2?: string, option3?: string, option4?: string, correct?: number) {
     super(ExerciseType.WHAT_DO_YOU_SEE)
     this.image = image
     this.option1 = option1

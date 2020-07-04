@@ -19,29 +19,30 @@ use Stessaluna\Exercise\Missingword\Dto\MissingwordExerciseDto;
 use Stessaluna\Exercise\Missingword\Entity\MissingwordExercise;
 use Stessaluna\Exercise\Whatdoyousee\Dto\WhatdoyouseeExerciseDto;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
-use Stessaluna\Image\Storage\ImageStorage;
+use Stessaluna\Image\Dto\ImageToImageDtoConverter;
 use Stessaluna\Post\Repository\PostRepository;
 use Stessaluna\User\Entity\User;
 
 class ExerciseToExerciseDtoConverter
 {
     /**
-     * @var ImageStorage
-     */
-    private $imageStorage;
-    /**
      * @var PostRepository
      */
     private $postRepository;
+    /**
+     * @var ImageToImageDtoConverter
+     */
+    private $imageToImageDtoConverter;
     /**
      * @var LoggerInterface
      */
     private $logger;
 
-    public function __construct(ImageStorage $imageStorage, PostRepository $postRepository, LoggerInterface $logger)
+    public function __construct(PostRepository $postRepository, ImageToImageDtoConverter $imageToImageDtoConverter,
+                                LoggerInterface $logger)
     {
-        $this->imageStorage = $imageStorage;
         $this->postRepository = $postRepository;
+        $this->imageToImageDtoConverter = $imageToImageDtoConverter;
         $this->logger = $logger;
     }
 
@@ -100,7 +101,8 @@ class ExerciseToExerciseDtoConverter
         return $sentenceDto;
     }
 
-    private function isAuthor(?User $user, Exercise $exercise): bool {
+    private function isAuthor(?User $user, Exercise $exercise): bool
+    {
         if (empty($user)) {
             return false;
         }
@@ -115,7 +117,7 @@ class ExerciseToExerciseDtoConverter
     ): WhatdoyouseeExerciseDto
     {
         $dto = new WhatdoyouseeExerciseDto();
-        $dto->image = $this->imageStorage->getUrl($exercise->getImageFilename());
+        $dto->image = $this->imageToImageDtoConverter->convert($exercise->getImage());
         $dto->option1 = $exercise->getOption1();
         $dto->option2 = $exercise->getOption2();
         $dto->option3 = $exercise->getOption3();
@@ -164,7 +166,9 @@ class ExerciseToExerciseDtoConverter
         // TODO: use functional find?
         $answersFromUser = array_values(array_filter(
             $answers,
-            function (Answer $answer) use ($user) { return $answer->getUser() == $user; }
+            function (Answer $answer) use ($user) {
+                return $answer->getUser() === $user;
+            }
         ));
 
         if (count($answersFromUser) > 0) {

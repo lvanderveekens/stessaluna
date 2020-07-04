@@ -22,6 +22,7 @@ import WhatdoyouseeExerciseInputValues
   from "./exercise-input/whatdoyousee-exercise-input/whatdoyousee-exercise-input.model";
 import MissingwordExerciseInputValues
   from "./exercise-input/missingword-exercise-input/missingword-exercise-input.model";
+import Image from "../../image/image.interface";
 
 interface Props {
   initialValues: Values
@@ -32,13 +33,13 @@ interface Props {
 export interface Values {
   channel?: string
   text?: string
-  image?: File
+  image?: Image
   exercise?: ExerciseInputValues
 }
 
 const PostForm: FC<Props> = ({initialValues, onSubmit, submitLabel}) => {
   const fileInput = useRef(null)
-  const [imageUrl, setImageUrl] = useState(null)
+  // const [imageUrl, setImageUrl] = useState(null)
   const [submitError, setSubmitError] = useState(false)
   const [exerciseType, setExerciseType] = useState<ExerciseType>(null)
 
@@ -46,11 +47,21 @@ const PostForm: FC<Props> = ({initialValues, onSubmit, submitLabel}) => {
     return values.image != null || values.exercise != null
   }
 
+  // TODO: not used yet
+  // const getImageFile = (imageUrl) => {
+  //   const filename = post.image.substring(post.image.lastIndexOf('/') + 1);
+  //   return fetch(post.image)
+  //     .then(r => r.blob())
+  //     .then(blobFile => new File([blobFile], filename, {type: "image/png"}));
+  // }
+
   useEffect(() => {
+
+    // TODO: fetch post images and exercise images...
     const {image, exercise} = initialValues
-    if (image) {
-      setImageUrl(URL.createObjectURL(image))
-    }
+    // if (imageFilename) {
+    //   setImageUrl(image))
+    // }
     if (exercise) {
       setExerciseType(exercise.type)
       console.log(exercise.type)
@@ -58,11 +69,12 @@ const PostForm: FC<Props> = ({initialValues, onSubmit, submitLabel}) => {
   }, [initialValues])
 
   const handleChangeImage = (setFieldValue) => (e: ChangeEvent<HTMLInputElement>) => {
-    const image = e.currentTarget.files[0]
-    if (image) {
-      setFieldValue("image", image)
-      setImageUrl(URL.createObjectURL(image))
-    }
+    // const image = e.currentTarget.files[0]
+    // if (image) {
+    //   setFieldValue("image", image)
+      // setImageUrl(URL.createObjectURL(image))
+    // }
+    // TODO
   }
 
   const handleChangeText = (setFieldValue) => (e: ChangeEvent<HTMLInputElement>) => {
@@ -75,9 +87,10 @@ const PostForm: FC<Props> = ({initialValues, onSubmit, submitLabel}) => {
   }
 
   const handleDeleteImage = (setFieldValue) => () => {
-    setFieldValue("image", null)
-    setImageUrl(null)
-    fileInput.current.value = null
+    // setFieldValue("image", null)
+    // setImageUrl(null)
+    // fileInput.current.value = null
+    // TODO
   }
 
   const handleClickImage = () => fileInput.current.click()
@@ -173,7 +186,7 @@ const PostForm: FC<Props> = ({initialValues, onSubmit, submitLabel}) => {
               {values.image && (
                 <ImagePreview
                   className={styles.imagePreview}
-                  src={imageUrl}
+                  src={values.image.url}
                   onDelete={handleDeleteImage(setFieldValue)}
                 />
               )}

@@ -3,7 +3,7 @@
 namespace Stessaluna\User\Controller;
 
 use Psr\Log\LoggerInterface;
-use Stessaluna\User\Dto\UserDtoConverter;
+use Stessaluna\User\Dto\UserToUserDtoConverter;
 use Stessaluna\User\ProfileUpdater;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,17 +20,17 @@ class ProfileController extends AbstractController
     /** @var ProfileUpdater */
     private $profileUpdater;
 
-    /** @var UserDtoConverter */
-    private $userDtoConverter;
+    /** @var UserToUserDtoConverter */
+    private $userToUserDtoConverter;
 
     public function __construct(
         LoggerInterface $logger,
         ProfileUpdater $profileUpdater,
-        UserDtoConverter $userDtoConverter
+        UserToUserDtoConverter $userToUserDtoConverter
     ) {
         $this->logger = $logger;
         $this->profileUpdater = $profileUpdater;
-        $this->userDtoConverter = $userDtoConverter;
+        $this->userToUserDtoConverter = $userToUserDtoConverter;
     }
 
     /**
@@ -45,6 +45,6 @@ class ProfileController extends AbstractController
             $request->get('resetAvatar') === 'true',
             $request->files->get('avatar')
         );
-        return $this->json($this->userDtoConverter->toDto($updatedUser));
+        return $this->json($this->userToUserDtoConverter->convert($updatedUser));
     }
 }

@@ -9,7 +9,6 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Psr\Log\LoggerInterface;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageOptimizer
 {
@@ -23,7 +22,7 @@ class ImageOptimizer
         $this->logger = $logger;
     }
 
-    public function optimize(UploadedFile $image): File
+    public function optimize(File $image): File
     {
         // in AppEngine we can only write to the temp directory
         $imageFile = $image->move(sys_get_temp_dir());

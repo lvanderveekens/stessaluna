@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Stessaluna\Image\Storage\GoogleCloud;
+namespace Stessaluna\Image\Storage\Cloud;
 
 use Exception;
 use Google\Cloud\Storage\StorageClient;
@@ -11,7 +11,7 @@ use Stessaluna\Image\Storage\ImageStorage;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class GoogleCloudImageStorage implements ImageStorage
+class CloudImageStorage implements ImageStorage
 {
     private static $BUCKET_DIRECTORY = 'uploads/images/';
 
@@ -30,7 +30,7 @@ class GoogleCloudImageStorage implements ImageStorage
         return "https://storage-download.googleapis.com/$bucketName/$objectPath";
     }
 
-    public function store(File $image, string $filename)
+    public function store(File $image, string $filename): string
     {
         $storage = new StorageClient();
 
@@ -41,6 +41,7 @@ class GoogleCloudImageStorage implements ImageStorage
 
         $fileContent = file_get_contents($image->getPathname());
         $bucket->upload($fileContent, ['name' => $objectPath]);
+        return $this->getUrl($filename);
     }
 
     public function delete(string $filename)

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Stessaluna\Post\Dto;
 
-use Stessaluna\Exercise\Dto\CreateExercise;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Stessaluna\Exercise\Dto\ExerciseDto;
+use Stessaluna\Image\Dto\ImageDto;
 
-class CreatePost
+class CreatePostRequest
 {
     /** @var string */
     public $channel;
@@ -15,9 +15,9 @@ class CreatePost
     /** @var string */
     public $text = null;
 
-    /** @var UploadedFile */
+    /** @var ImageDto */
     public $image = null;
 
-    /** @var CreateExercise */
+    /** @var ExerciseDto */
     public $exercise = null;
 }
