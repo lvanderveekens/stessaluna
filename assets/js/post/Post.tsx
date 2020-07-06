@@ -20,6 +20,7 @@ import {getCountryCode} from "../country/get-country-code"
 import ISO6391 from "iso-639-1"
 import Comment from "./comment/comment.interface";
 import {Link} from "react-router-dom";
+import Image from "../image/image.interface";
 
 interface Props {
   id: number
@@ -27,7 +28,7 @@ interface Props {
   timestamp: string
   channel: string
   text?: string
-  image?: string
+  image?: Image
   exercise?: Exercise
   onDelete: () => void
   comments: Comment[]
@@ -135,7 +136,7 @@ const Post: FunctionComponent<Props> = (
         {image && (
           <div className={styles.imageWrapper}>
             <div className={styles.aspectRatioBox}>
-              <img src={image} alt="Post image"/>
+              <img src={image.url} alt="Post image"/>
             </div>
           </div>
         )}

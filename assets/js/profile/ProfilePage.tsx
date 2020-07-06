@@ -4,7 +4,6 @@ import {Alert, Col, Container, Row, Spinner} from "react-bootstrap"
 import ReactCountryFlag from "react-country-flag"
 import {CountryDropdown} from "react-country-region-selector"
 import {connect} from "react-redux"
-import ImageInput from "../image/image-input/ImageInput"
 import Navbar from "../nav/Navbar"
 import {updateProfile} from "../store/auth/actions"
 import {State} from "../store"
@@ -99,14 +98,15 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
               >
                 {({values, setFieldValue, handleSubmit, handleChange, isValid, isSubmitting}) => (
                   <form className="mb-3" onSubmit={handleSubmit}>
-                    <ImageInput
-                      className={styles.imageInput}
-                      value={user.avatar}
-                      onChange={handleAvatarChange(setFieldValue)}
-                      shape="circle"
-                      overlayDisabled={user.avatar.url.includes("avatar-default")}
-                      label="Avatar"
-                    />
+                    {/*TODO*/}
+                    {/*<ImageInput*/}
+                    {/*  className={styles.imageInput}*/}
+                    {/*  value={user.avatar}*/}
+                    {/*  onChange={handleAvatarChange(setFieldValue)}*/}
+                    {/*  shape="circle"*/}
+                    {/*  overlayDisabled={user.avatar.url.includes("avatar-default")}*/}
+                    {/*  label="Avatar"*/}
+                    {/*/>*/}
                     <div className="form-group">
                       <label htmlFor="email">Email</label>
                       <input

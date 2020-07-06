@@ -12,12 +12,12 @@ class CreatePostRequest
     /** @var string */
     public $channel;
 
-    /** @var string */
+    /** @var string|null */
     public $text = null;
 
-    /** @var ImageDto */
+    /** @var ImageDto|null */
     public $image = null;
 
-    /** @var ExerciseDto */
+    /** @var ExerciseDto|null */
     public $exercise = null;
 }

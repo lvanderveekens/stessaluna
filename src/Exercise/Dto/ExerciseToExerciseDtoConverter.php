@@ -117,7 +117,9 @@ class ExerciseToExerciseDtoConverter
     ): WhatdoyouseeExerciseDto
     {
         $dto = new WhatdoyouseeExerciseDto();
-        $dto->image = $this->imageToImageDtoConverter->convert($exercise->getImage());
+        if ($exercise->getImage()) {
+            $dto->image = $this->imageToImageDtoConverter->convert($exercise->getImage());
+        }
         $dto->option1 = $exercise->getOption1();
         $dto->option2 = $exercise->getOption2();
         $dto->option3 = $exercise->getOption3();

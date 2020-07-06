@@ -2,7 +2,6 @@ import React, {FC, useEffect, useState} from "react"
 import styles from "./WhatdoyouseeExerciseInput.scss?module"
 import WhatdoyouseeExerciseInputValues from "./whatdoyousee-exercise-input.model"
 import ExerciseInputHeader from "../exercise-input-header/ExerciseInputHeader"
-import ImageInput from "../../../../image/image-input/ImageInput"
 import classNames from "classnames/bind"
 import ExerciseOptionInput from "../exercise-option-input/ExerciseOptionInput"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
@@ -42,7 +41,8 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({initialValues, onChange, onClose}
       <ExerciseInputHeader title="What do you see" onClose={onClose} />
       <div className={styles.image}>
         <div className={styles.aspectRatioBox}>
-          <ImageInput className={styles.imageInput} value={image} onChange={setImage} />
+          {/*TODO*/}
+          {/*<ImageInput className={styles.imageInput} value={image} onChange={setImage} />*/}
         </div>
       </div>
       <div>

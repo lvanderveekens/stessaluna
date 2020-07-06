@@ -35,13 +35,15 @@ class ImageService
 
     public function store(File $imageFile): Image
     {
-        $optimizedImageFile = $this->imageOptimizer->optimize($imageFile);
         $filename = md5(uniqid());
+        $mimeType = $imageFile->getMimeType();
+
+        $optimizedImageFile = $this->imageOptimizer->optimize($imageFile);
         $this->imageStorage->store($optimizedImageFile, $filename);
 
         $image = new Image();
         $image->setFilename($filename);
-        $image->setMimeType($imageFile->getMimeType());
+        $image->setMimeType($mimeType);
         $this->imageRepository->save($image);
 
         return $image;
