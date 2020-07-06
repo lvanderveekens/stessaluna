@@ -12,13 +12,13 @@ import styles from "./App.scss?module"
 
 interface Props {
   loggedIn: boolean
-  fetchUser: () => void
+  fetchCurrentUser: () => void
 }
 
-const App: FC<Props> = ({ loggedIn, fetchUser }) => {
+const App: FC<Props> = ({ loggedIn, fetchCurrentUser }) => {
   useEffect(() => {
     if (loggedIn) {
-      fetchUser()
+      fetchCurrentUser()
     }
   }, [])
 
@@ -41,7 +41,7 @@ const mapStateToProps = (state: State) => ({
 })
 
 const actionCreators = {
-  fetchUser: fetchCurrentUser,
+  fetchCurrentUser,
 }
 
 export default connect(mapStateToProps, actionCreators)(App)

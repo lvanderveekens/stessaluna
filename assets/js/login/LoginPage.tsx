@@ -1,6 +1,5 @@
-import React, {FC, useState} from "react"
-import {Col, Container, Form, Row} from "react-bootstrap"
-import Helmet from "react-helmet"
+import React, {FC} from "react"
+import {Col, Container, Row} from "react-bootstrap"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
 import {logIn} from "../store/auth/actions"
@@ -20,7 +19,9 @@ const LoginPage: FC<Props> = ({logIn, history}) => {
 
   const handleSubmit = (username: string, password: string) => {
     return logIn(username, password)
-      .then(() => history.push("/"))
+      .then(() => {
+        history.push("/")
+      })
   }
 
   return (

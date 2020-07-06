@@ -15,8 +15,8 @@ export const logIn = (username, password) => {
     return axios
       .post("/api/token", { username, password })
       .then((res) => {
-        dispatch(fetchCurrentUser())
         dispatch(success())
+        dispatch(fetchCurrentUser())
       })
       .catch((error) => {
         console.log(error)
@@ -65,7 +65,7 @@ export const register = (email: string, username: string, password: string, coun
 export const fetchCurrentUser = () => {
   return (dispatch) => {
     dispatch(pending())
-    axios
+    return axios
       .get("/api/users/me")
       .then((res) => {
         dispatch(success(res.data))

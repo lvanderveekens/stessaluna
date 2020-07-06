@@ -1,4 +1,4 @@
-import React, {FC, useState} from "react"
+import React, {FC} from "react"
 import PostInterface from "../post/post.interface"
 import styles from './Feed.scss?module'
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
