@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from "react";
+import React, {FC, useEffect, useState} from "react";
 import Feed from "./Feed";
 import {deletePost, fetchPosts} from "../store/post/actions";
 import {State} from "../store";
@@ -22,9 +22,12 @@ const FETCH_SIZE = 10;
 
 const FeedContainer: FC<Props> = ({loading, posts, hasMore, filters, fetchPosts, deletePost, user, loggedIn}) => {
 
+  const [waitingForInitialFetch, setWaitingForInitialFetch] = useState(true)
+
   useEffect(() => {
     if (!loggedIn || user) {
       fetchPosts(filters.channel, FETCH_SIZE)
+      setWaitingForInitialFetch(false)
     }
   }, [filters, loggedIn, user])
 
@@ -35,7 +38,7 @@ const FeedContainer: FC<Props> = ({loading, posts, hasMore, filters, fetchPosts,
 
   return (
     <Feed
-      loading={loading}
+      loading={waitingForInitialFetch || loading}
       posts={posts}
       hasMore={hasMore}
       onLoadMore={handleLoadMore}
@@ -45,7 +48,7 @@ const FeedContainer: FC<Props> = ({loading, posts, hasMore, filters, fetchPosts,
 }
 
 const mapStateToProps = (state: State) => ({
-  loading: (state.auth.loggedIn && !state.auth.user) || state.post.loading,
+  loading: state.post.loading,
   posts: state.post.data,
   hasMore: state.post.hasNextPage,
   filters: state.post.filters,
