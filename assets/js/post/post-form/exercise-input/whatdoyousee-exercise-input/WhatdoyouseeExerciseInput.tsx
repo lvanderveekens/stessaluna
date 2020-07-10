@@ -7,6 +7,9 @@ import ExerciseOptionInput from "../exercise-option-input/ExerciseOptionInput"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faLightbulb} from "@fortawesome/free-regular-svg-icons"
 import Image from "../../../../image/image.interface";
+import ImageInput from "../../../../image/image-input/ImageInput";
+import ImagePreview from "../../image-preview/ImagePreview";
+import {faUpload} from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles)
 
@@ -39,12 +42,28 @@ const WhatdoyouseeExerciseInput: FC<Props> = ({initialValues, onChange, onClose}
   return (
     <div className={styles.whatdoyouseeExerciseInput}>
       <ExerciseInputHeader title="What do you see" onClose={onClose} />
-      <div className={styles.image}>
-        <div className={styles.aspectRatioBox}>
-          {/*TODO*/}
-          {/*<ImageInput className={styles.imageInput} value={image} onChange={setImage} />*/}
+        <div className={styles.image}>
+          <div className={styles.aspectRatioBox}>
+            {!image && (
+              <>
+                <label className={styles.uploadImageWrapper} htmlFor="image">
+                  <div className={styles.uploadImage}>
+                    <FontAwesomeIcon icon={faUpload}/>
+                    <div>Upload image</div>
+                  </div>
+                </label>
+                <ImageInput className={styles.imageInput} id="image" onChange={setImage}/>
+              </>
+            )}
+            {image && (
+              <ImagePreview
+                className={styles.imagePreview}
+                src={image.url}
+                onDelete={() => setImage(null)}
+              />
+            )}
+          </div>
         </div>
-      </div>
       <div>
         <div className="d-flex mb-3">
           <ExerciseOptionInput

@@ -10,7 +10,7 @@
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window, document, 'script', 'https://www.google-analytics.com/analytics{{ app.environment == 'dev' ? '_debug.js' : '.js' }}', 'ga');
         ga('create', 'UA-114305707-2', 'auto');
-        if (location.hostname == 'localhost') {
+        if (location.hostname == 'localhost' || location.hostname == '127.0.0.1') {
           ga('set', 'sendHitTask', null);
         }
         ga('send', 'pageview');

@@ -112,16 +112,16 @@ const PostForm: FC<Props> = ({initialValues, onSubmit, submitLabel}) => {
                 placeholder="What's new?"
                 onChange={handleChangeText(setFieldValue)}
               />
-              <ImageInput
-                ref={imageInputRef}
-                onChange={handleChangeImage(setFieldValue)}
-              />
-              {values.image && (
-                <ImagePreview
-                  className={styles.imagePreview}
-                  src={values.image.url}
-                  onDelete={handleDeleteImage(setFieldValue)}
+              {!values.image && (
+                <ImageInput
+                  ref={imageInputRef}
+                  onChange={handleChangeImage(setFieldValue)}
                 />
+              )}
+              {values.image && (
+                <div className={styles.imagePreview}>
+                  <ImagePreview src={values.image.url} onDelete={handleDeleteImage(setFieldValue)}/>
+                </div>
               )}
               {values.exercise && (
                 <div className={styles.exercise}>{

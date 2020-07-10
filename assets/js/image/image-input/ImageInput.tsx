@@ -1,17 +1,19 @@
-import React, {ChangeEvent, FC, useState} from "react"
-import {nextId} from "../../util/id-generator"
+import React, {ChangeEvent, FC} from "react"
 import Image from "../image.interface";
 import axios from "../../http/client"
 
 interface Props {
+  className?: string
+  id?: string
   onChange: (image: Image) => void
 }
 
-const ImageInput: FC<Props> = ({onChange}, ref) => {
-  const [inputId] = useState<string>(() => `input${nextId()}`)
+const ImageInput: FC<Props> = ({className, id, onChange}, ref) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const image = event.currentTarget.files[0]
+    console.log('HANDLE CHANGE')
+    console.log(image)
     if (image) {
       const formData = new FormData();
       formData.append('image', image);
@@ -25,10 +27,10 @@ const ImageInput: FC<Props> = ({onChange}, ref) => {
   return (
     <input
       ref={ref}
-      id={inputId}
+      id={id}
       name="image"
       type="file"
-      className="form-control d-none"
+      className={`${className} form-control d-none`}
       onChange={handleChange}
       accept=".jpg,.png"
     />

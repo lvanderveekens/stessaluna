@@ -57,6 +57,13 @@
 
         .imagePreview {
             margin-top: 1rem;
+
+            position: relative;
+
+            width: 100%;
+            padding-top: calc(9 / 16 * 100%);
+
+            overflow: hidden;
         }
 
         .exercise {

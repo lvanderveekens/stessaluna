@@ -20,7 +20,6 @@ interface Props {
   createPost: (channel: string, text?: string, imageUrl?: string, exercise?: ExerciseInputValues) => Promise<void>
 }
 
-
 const EditPostModal: FC<Props> = ({findPost, onClose, createPost}) => {
 
   const history = useHistory()
@@ -41,19 +40,13 @@ const EditPostModal: FC<Props> = ({findPost, onClose, createPost}) => {
     }
   }, [post])
 
-  // TODO: separate class?
   const mapToExerciseInputValue = (exercise: Exercise) => {
     switch (exercise.type) {
       case ExerciseType.A_OR_B:
         return new AorbExerciseInputValues(exercise.sentences.map((s) => ({...s, id: nextId()})))
       case ExerciseType.WHAT_DO_YOU_SEE:
-        // TODO
-        // return <WhatdoyouseeExerciseInputValue {...props} />
       case ExerciseType.MISSING_WORD:
-        // TODO
-        // return <MissingwordExerciseInputValue {...props} />
-      default:
-        throw new Error(`Cannot convert to unsupported exercise input type: ${exercise.type}`)
+        return exercise
     }
   }
 
