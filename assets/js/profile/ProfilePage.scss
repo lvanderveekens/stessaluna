@@ -8,6 +8,19 @@
         padding-top: 1rem;
     }
 
+
+    .avatar {
+
+        display: flex;
+        justify-content: center;
+
+        .previewContainer {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+    }
+
     .imageInput {
         margin: auto;
         margin-bottom: 0.5rem;

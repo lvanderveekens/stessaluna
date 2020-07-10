@@ -11,27 +11,13 @@
 
     border: 1px solid transparent;
 
-    &:hover {
-        border: 1px solid #ced4da;
-    }
-
-    //.aspectRatioBox {
-    //    position: relative;
-    //
-    //    width: 100%;
-    //    padding-top: calc(9 / 16 * 100%);
-    //
-    //    overflow: hidden;
-
     img {
         width: 100%;
         height: 100%;
         object-fit: contain;
     }
-    //}
 
-
-    &:hover img {
+    &.overlayEnabled:hover img {
         opacity: 0.3;
         transition: 0.3s;
     }
@@ -46,6 +32,7 @@
         opacity: 0;
 
         &:hover {
+            border: 1px solid #ced4da;
             opacity: 1;
             transition: 0.3s;
         }

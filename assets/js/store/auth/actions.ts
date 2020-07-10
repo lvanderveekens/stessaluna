@@ -9,6 +9,7 @@ import {
   REGISTER_SUCCESS,
   UPDATE_PROFILE_SUCCESS
 } from "./actionTypes";
+import Image from "../../image/image.interface";
 
 export const logIn = (username, password) => {
   return (dispatch) => {
@@ -87,11 +88,11 @@ export const fetchCurrentUser = () => {
   }
 }
 
-export const updateProfile = (country: string, resetAvatar: boolean, avatar?: File, displayName?: string) => {
+export const updateCurrentUser = (country: string, avatar?: Image, displayName?: string) => {
   return (dispatch) => {
     return new Promise((resolve, reject) => {
       axios
-        .post("/api/profile", objectToFormData({ country, resetAvatar, avatar, displayName }))
+        .put("/api/users/me", {country, avatar, displayName})
         .then((res) => {
           dispatch(success(res.data))
           resolve(res)

@@ -5,18 +5,20 @@ import ReactCountryFlag from "react-country-flag"
 import {CountryDropdown} from "react-country-region-selector"
 import {connect} from "react-redux"
 import Navbar from "../nav/Navbar"
-import {updateProfile} from "../store/auth/actions"
+import {updateCurrentUser} from "../store/auth/actions"
 import {State} from "../store"
 import User from "../user/user.interface"
 import styles from "./ProfilePage.scss?module"
 import Button from "../button/Button"
 import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
 import Image from "../image/image.interface";
+import ImageInput from "../image/image-input/ImageInput";
+import ImagePreview from "../post/post-form/image-preview/ImagePreview";
 
 interface Props {
   loading: boolean
   user?: User
-  updateProfile: (country: string, resetAvatar: boolean, avatar?: File, displayName?: string) => Promise<void>
+  updateCurrentUser: (country: string, avatar?: Image, displayName?: string) => Promise<void>
 }
 
 interface FormValues {
@@ -25,23 +27,11 @@ interface FormValues {
   avatar: Image
 }
 
-const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
+const ProfilePage: FC<Props> = ({ loading, user, updateCurrentUser }) => {
   const [resetAvatar, setResetAvatar] = useState(false)
-  const [avatarImage, setAvatarImage] = useState<File>(null)
+  // const [avatar, setAvatar] = useState<File>(null)
   const [alertMessage, setAlertMessage] = useState(null)
   const [submitError, setSubmitError] = useState(false)
-
-  useEffect(() => {
-    if (user && !user.avatar.url.includes("avatar-default")) {
-      // fetch(user.avatar.url)
-      //   .then((res) => res.blob())
-      //   .then((blob) => {
-      //     const filename = user.avatar.url.substring(user.avatar.url.lastIndexOf("/") + 1)
-      //     setAvatarImage(new File([blob], filename, { type: "image/png" }))
-      //   })
-      // TODO:
-    }
-  }, [user])
 
   const handleAvatarChange = (setFieldValue) => (image: Image) => {
     // if (image) {
@@ -63,7 +53,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
     setAlertMessage(null)
     setSubmitError(false)
 
-    updateProfile(country, resetAvatar, avatar, displayName)
+    updateCurrentUser(country, avatar, displayName)
       .then(() => {
         setAlertMessage("Profile saved")
         resetForm()
@@ -90,23 +80,24 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
               <Formik
                 initialValues={{
                   displayName: user.displayName || "",
-                  country: user.country || "",
-                  avatar: null,
-                }}
+                  country: user.country,
+                  avatar: user.avatar,
+                } as FormValues}
                 enableReinitialize
                 onSubmit={handleSubmit}
               >
-                {({values, setFieldValue, handleSubmit, handleChange, isValid, isSubmitting}) => (
+                {({values, setFieldValue, handleSubmit, handleChange, isValid, isSubmitting, dirty}) => (
                   <form className="mb-3" onSubmit={handleSubmit}>
-                    {/*TODO*/}
-                    {/*<ImageInput*/}
-                    {/*  className={styles.imageInput}*/}
-                    {/*  value={user.avatar}*/}
-                    {/*  onChange={handleAvatarChange(setFieldValue)}*/}
-                    {/*  shape="circle"*/}
-                    {/*  overlayDisabled={user.avatar.url.includes("avatar-default")}*/}
-                    {/*  label="Avatar"*/}
-                    {/*/>*/}
+
+                    <div className={styles.avatar}>
+                      <div className={styles.previewContainer}>
+                        <ImagePreview src={values.avatar.url} overlayEnabled={false}/>
+                      </div>
+                    </div>
+
+                    {/* TODO: label to trigger input */}
+                    <ImageInput id="avatar" onChange={(image) => setFieldValue("avatar", image)}/>
+
                     <div className="form-group">
                       <label htmlFor="email">Email</label>
                       <input
@@ -156,7 +147,8 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
                         />
                       </div>
                     </div>
-                    <Button className={styles.saveButton} type="submit" variant="light" disabled={!isValid || isSubmitting}>
+                    <Button className={styles.saveButton} type="submit" variant="light"
+                            disabled={!isValid || isSubmitting || !dirty}>
                       Save
                     </Button>
                     {alertMessage && (
@@ -186,7 +178,7 @@ const mapStateToProps = (state: State) => ({
 })
 
 const actionCreators = {
-  updateProfile,
+  updateCurrentUser,
 }
 
 export default connect(mapStateToProps, actionCreators)(ProfilePage)
