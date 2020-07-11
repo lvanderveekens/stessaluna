@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Stessaluna\Post;
 
 use DateTime;
-use Stessaluna\Exception\NotAuthorException;
-use Stessaluna\Exception\NotFoundException;
+use Psr\Log\LoggerInterface;
 use Stessaluna\Exercise\Entity\Exercise;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
 use Stessaluna\Image\ImageService;
@@ -16,10 +15,13 @@ use Stessaluna\Post\Exception\NotPostAuthorException;
 use Stessaluna\Post\Exception\PostNotFoundException;
 use Stessaluna\Post\Repository\PostRepository;
 use Stessaluna\User\Entity\User;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class PostService
 {
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
     /**
      * @var PostRepository
      */
@@ -33,9 +35,10 @@ class PostService
      */
     private $imageRepository;
 
-    public function __construct(PostRepository $postRepository, ImageService $imageService,
+    public function __construct(LoggerInterface $logger, PostRepository $postRepository, ImageService $imageService,
                                 ImageRepository $imageRepository)
     {
+        $this->logger = $logger;
         $this->postRepository = $postRepository;
         $this->imageService = $imageService;
         $this->imageRepository = $imageRepository;
@@ -80,6 +83,14 @@ class PostService
         $post->setImage($imageId ? $this->imageRepository->getReference($imageId) : null);
 
         // TODO: if exercise differs from stored one, invalidate all answers...
+        if (($post->getExercise() == null && $exercise == null)
+            || ($post->getExercise() != null && $post->getExercise()->equals($exercise))
+        ) {
+            $this->logger->warning("######## equal");
+        } else {
+            $this->logger->warning("######## not equal");
+        }
+
         $post->setExercise($exercise);
 
         return $this->postRepository->save($post);

@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Stessaluna\Exercise\Entity\Exercise;
 use Stessaluna\Exercise\ExerciseType;
 use Stessaluna\Image\Entity\Image;
+use Symfony\Component\Intl\Exception\NotImplementedException;
 
 /**
  * @ORM\Entity
@@ -126,5 +127,10 @@ class WhatdoyouseeExercise extends Exercise
     public function getType(): string
     {
         return ExerciseType::WHAT_DO_YOU_SEE;
+    }
+
+    public function equals(Exercise $other): bool
+    {
+        throw new NotImplementedException("");
     }
 }

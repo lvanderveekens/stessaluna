@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Stessaluna\Exercise\Answer\Entity\Answer;
-use Stessaluna\Post\Entity\Post;
 
 /**
  * @ORM\Entity
@@ -79,6 +78,8 @@ abstract class Exercise
 
         return $this;
     }
+
+    abstract public function equals(Exercise $other): bool;
 
     abstract public function getType(): string;
 }

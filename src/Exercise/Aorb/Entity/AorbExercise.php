@@ -58,4 +58,12 @@ class AorbExercise extends Exercise
     {
         return ExerciseType::A_OR_B;
     }
+
+    public function equals(?Exercise $other): bool
+    {
+        if (!($other instanceof AorbExercise)) {
+            return false;
+        }
+        return $this->getSentences() == $other->getSentences();
+    }
 }
