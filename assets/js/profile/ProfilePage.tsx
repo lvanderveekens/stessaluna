@@ -1,5 +1,5 @@
 import {Formik} from "formik"
-import React, {FC, useEffect, useState} from "react"
+import React, {FC, useState} from "react"
 import {Alert, Col, Container, Row, Spinner} from "react-bootstrap"
 import ReactCountryFlag from "react-country-flag"
 import {CountryDropdown} from "react-country-region-selector"
@@ -13,7 +13,6 @@ import Button from "../button/Button"
 import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
 import Image from "../image/image.interface";
 import ImageInput from "../image/image-input/ImageInput";
-import ImagePreview from "../post/post-form/image-preview/ImagePreview";
 
 interface Props {
   loading: boolean
@@ -28,25 +27,8 @@ interface FormValues {
 }
 
 const ProfilePage: FC<Props> = ({ loading, user, updateCurrentUser }) => {
-  const [resetAvatar, setResetAvatar] = useState(false)
-  // const [avatar, setAvatar] = useState<File>(null)
   const [alertMessage, setAlertMessage] = useState(null)
   const [submitError, setSubmitError] = useState(false)
-
-  const handleAvatarChange = (setFieldValue) => (image: Image) => {
-    // if (image) {
-    //   setAvatarImage(image)
-    //   setFieldValue("avatar", image)
-    //   setResetAvatar(false)
-    // } else {
-    //   setAvatarImage(null)
-    //   setFieldValue("avatar", null)
-    //   if (!user.avatar.includes("avatar-default")) {
-    //     setResetAvatar(true)
-    //   }
-    // }
-    // TODO:
-  }
 
   const handleSubmit = (values, { resetForm }) => {
     const { displayName, country, avatar } = values
@@ -76,7 +58,6 @@ const ProfilePage: FC<Props> = ({ loading, user, updateCurrentUser }) => {
         <Row className="justify-content-center">
           <Col className={styles.centered} {...COLUMN_BREAKPOINTS}>
             {user && (
-              // TODO: move into separate form component
               <Formik
                 initialValues={{
                   displayName: user.displayName || "",
@@ -88,16 +69,14 @@ const ProfilePage: FC<Props> = ({ loading, user, updateCurrentUser }) => {
               >
                 {({values, setFieldValue, handleSubmit, handleChange, isValid, isSubmitting, dirty}) => (
                   <form className="mb-3" onSubmit={handleSubmit}>
-
                     <div className={styles.avatar}>
-                      <div className={styles.previewContainer}>
-                        <ImagePreview src={values.avatar.url} overlayEnabled={false}/>
+                      <div className={styles.imageWrapper}>
+                        <label htmlFor="avatar">
+                          <img src={values.avatar.url}/>
+                        </label>
                       </div>
                     </div>
-
-                    {/* TODO: label to trigger input */}
                     <ImageInput id="avatar" onChange={(image) => setFieldValue("avatar", image)}/>
-
                     <div className="form-group">
                       <label htmlFor="email">Email</label>
                       <input

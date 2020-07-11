@@ -11,6 +11,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    public const DEFAULT_AVATAR_ID = -1;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

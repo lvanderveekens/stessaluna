@@ -15,12 +15,12 @@ class UserDto
     /** @var string */
     public $username;
 
-    /** @var string */
+    /** @var string|null */
     public $displayName = null;
 
     /** @var string */
     public $country;
 
     /** @var ImageDto */
-    public $avatar = null;
+    public $avatar;
 }

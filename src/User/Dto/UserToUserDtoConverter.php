@@ -43,9 +43,8 @@ class UserToUserDtoConverter
         if ($user->getAvatar()) {
             $dto->avatar = $this->imageToImageDtoConverter->convert($user->getAvatar());
         } else {
-            // TODO: insert in db at some point and assign default avatar to user on account creation
             $imageDto = new ImageDto();
-            $imageDto->id = -1;
+            $imageDto->id = User::DEFAULT_AVATAR_ID;
             $imageDto->url = $this->packages->getUrl('build/images/avatar-default.svg');
             $dto->avatar = $imageDto;
         }

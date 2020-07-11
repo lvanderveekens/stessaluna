@@ -17,7 +17,7 @@
         object-fit: contain;
     }
 
-    &.overlayEnabled:hover img {
+    &:hover img {
         opacity: 0.3;
         transition: 0.3s;
     }
