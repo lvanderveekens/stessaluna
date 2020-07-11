@@ -11,7 +11,7 @@ import {
   FETCH_POSTS_ERROR,
   FETCH_POSTS_PENDING,
   FETCH_POSTS_SUCCESS,
-  SUBMIT_ANSWER_SUCCESS
+  SUBMIT_ANSWER_SUCCESS, UPDATE_POST_SUCCESS
 } from "./actionTypes"
 import Image from "../../image/image.interface";
 
@@ -64,10 +64,27 @@ export const createPost = (channel: string, text?: string, image?: Image, exerci
   }
 }
 
-export const deletePost = (id) => {
+export const updatePost = (id: number, channel: string, text?: string, image?: Image, exercise?: ExerciseInputValues) => {
+  return (dispatch) => {
+    return axios
+      .put(`/api/posts/${id}`, {channel, text, image, exercise})
+      .then((res) => {
+        dispatch(success(res.data))
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  }
+
+  function success(post) {
+    return {type: UPDATE_POST_SUCCESS, payload: {post}}
+  }
+}
+
+export const deletePost = (id: number) => {
   return (dispatch) => {
     axios
-      .delete("/api/posts/" + id)
+      .delete(`/api/posts/${id}`)
       .then((res) => {
         dispatch(success(id))
       })

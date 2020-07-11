@@ -4,26 +4,41 @@ declare(strict_types=1);
 
 namespace Stessaluna\Post;
 
+use DateTime;
 use Stessaluna\Exception\NotAuthorException;
+use Stessaluna\Exception\NotFoundException;
+use Stessaluna\Exercise\Entity\Exercise;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
 use Stessaluna\Image\ImageService;
+use Stessaluna\Image\Repository\ImageRepository;
 use Stessaluna\Post\Entity\Post;
+use Stessaluna\Post\Exception\NotPostAuthorException;
 use Stessaluna\Post\Exception\PostNotFoundException;
 use Stessaluna\Post\Repository\PostRepository;
 use Stessaluna\User\Entity\User;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class PostService
 {
-    /** @var PostRepository */
+    /**
+     * @var PostRepository
+     */
     private $postRepository;
-
-    /** @var ImageService */
+    /**
+     * @var ImageService
+     */
     private $imageService;
+    /**
+     * @var ImageRepository
+     */
+    private $imageRepository;
 
-    public function __construct(PostRepository $postRepository, ImageService $imageService)
+    public function __construct(PostRepository $postRepository, ImageService $imageService,
+                                ImageRepository $imageRepository)
     {
         $this->postRepository = $postRepository;
         $this->imageService = $imageService;
+        $this->imageRepository = $imageRepository;
     }
 
     /**
@@ -39,8 +54,34 @@ class PostService
         return $posts;
     }
 
-    public function createPost(Post $post): Post
+    public function createPost(string $channel, ?string $text, ?int $imageId, ?Exercise $exercise, User $user): Post
     {
+        $post = new Post();
+        $post->setAuthor($user);
+        $post->setCreatedAt(new DateTime('now'));
+        $post->setChannel($channel);
+        $post->setText($text);
+        $post->setImage($imageId ? $this->imageRepository->getReference($imageId) : null);
+        $post->setExercise($exercise);
+        return $this->postRepository->save($post);
+    }
+
+    public function updatePost(int $id, string $channel, ?string $text, ?int $imageId, ?Exercise $exercise, User $user): Post
+    {
+        $post = $this->postRepository->find($id);
+        if (!$post) {
+            throw new PostNotFoundException($id);
+        }
+        if ($user->getId() != $post->getAuthor()->getId()) {
+            throw new NotPostAuthorException($id);
+        }
+        $post->setChannel($channel);
+        $post->setText($text);
+        $post->setImage($imageId ? $this->imageRepository->getReference($imageId) : null);
+
+        // TODO: if exercise differs from stored one, invalidate all answers...
+        $post->setExercise($exercise);
+
         return $this->postRepository->save($post);
     }
 
@@ -50,9 +91,8 @@ class PostService
         if (!$post) {
             throw new PostNotFoundException($id);
         }
-
         if ($user->getId() != $post->getAuthor()->getId()) {
-            throw new NotAuthorException('Not the author of post: '.$id);
+            throw new NotPostAuthorException($id);
         }
 
         if ($post->getImage()) {

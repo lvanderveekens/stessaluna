@@ -35,23 +35,16 @@ const PostForm: FC<Props> = ({initialValues, onSubmit, submitLabel}) => {
   const imageInputRef = useRef<HTMLInputElement>(null)
   const [submitError, setSubmitError] = useState(false)
 
-  const actionsDisabled = (values: Values) => {
-    return values.image != null || values.exercise != null
-  }
-
-  const handleChangeImage = (setFieldValue) => (image: Image) => {
-    setFieldValue("image", image)
-  }
+  const actionsDisabled = (values: Values) => values.image != null || values.exercise != null
 
   const handleChangeText = (setFieldValue) => (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
-    setFieldValue("text", value || null)
+    setFieldValue("text", value)
   }
 
+  const handleChangeImage = (setFieldValue) => (image: Image) => setFieldValue("image", image)
 
-  const handleDeleteImage = (setFieldValue) => () => {
-    setFieldValue("image", null)
-  }
+  const handleDeleteImage = (setFieldValue) => () => setFieldValue("image", null)
 
   const handleClickImage = () => imageInputRef.current.click()
 
@@ -62,24 +55,18 @@ const PostForm: FC<Props> = ({initialValues, onSubmit, submitLabel}) => {
       .catch((e) => {
         console.log(e)
         setSubmitError(true)
+        setSubmitting(false)
       })
-    setSubmitting(false)
+
   }
 
-  const allNull = (...values) => {
-    return values.every((element) => element === null)
-  }
+  const allNull = (...values) => values.every((element) => element === null)
 
-  const createExercise = (type: string, setFieldValue) => {
-    setFieldValue("exercise", {type})
-  }
+  const createExercise = (type: string, setFieldValue) => setFieldValue("exercise", {type})
 
-  const handleChangeExercise = (setFieldValue) => (change: ExerciseInputValues) => {
-    setFieldValue("exercise", change)
-  }
-  const handleCloseExercise = (setFieldValue) => () => {
-    setFieldValue("exercise", null)
-  }
+  const handleChangeExercise = (setFieldValue) => (change: ExerciseInputValues) => setFieldValue("exercise", change)
+
+  const handleCloseExercise = (setFieldValue) => () => setFieldValue("exercise", null)
 
   return (
     <Formik

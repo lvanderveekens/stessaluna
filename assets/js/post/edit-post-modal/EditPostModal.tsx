@@ -5,22 +5,23 @@ import Modal from "../../modal/Modal"
 import ModalHeader from "../../modal/modal-header/ModalHeader";
 import ModalContent from "../../modal/modal-content/ModalContent";
 import Exercise, {ExerciseType} from "../../exercise/exercise.model";
-import {createPost} from "../../store/post/actions";
+import {updatePost} from "../../store/post/actions";
 import PostForm, {Values as PostValues} from "../post-form/PostForm";
 import {State} from "../../store";
 import Post from "../post.interface";
 import AorbExerciseInputValues from "../post-form/exercise-input/aorb-exercise-input/aorb-exercise-input.model";
 import {nextId} from "../../util/id-generator";
 import ExerciseInputValues from "../post-form/exercise-input/exercise-input.model";
+import Image from "../../image/image.interface";
 
 
 interface Props {
-  findPost: (id: number) => Post
+  findPost: (id: number) => Post | null
   onClose: () => void
-  createPost: (channel: string, text?: string, imageUrl?: string, exercise?: ExerciseInputValues) => Promise<void>
+  updatePost: (id: number, channel: string, text?: string, image?: Image, exercise?: ExerciseInputValues) => Promise<void>
 }
 
-const EditPostModal: FC<Props> = ({findPost, onClose, createPost}) => {
+const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
 
   const history = useHistory()
 
@@ -51,14 +52,8 @@ const EditPostModal: FC<Props> = ({findPost, onClose, createPost}) => {
   }
 
   const handleSubmit = ({channel, text, image, exercise}) => {
-    // return createPost(channel, text, image, exercise)
-
-    console.log(`channel ${JSON.stringify(initialValues.channel) !== JSON.stringify(channel)}`)
-    console.log(`text ${JSON.stringify(initialValues.text) !== JSON.stringify(text)}`)
-    console.log(`image ${initialValues.image !== image}`)
-    console.log(`exercise ${JSON.stringify(initialValues.exercise) !== JSON.stringify(exercise)}`)
-
-    return Promise.resolve()
+    return updatePost(id, channel, text, image, exercise)
+      .then(() => history.push("/"))
   }
 
   return (
@@ -78,7 +73,7 @@ const mapStateToProps = (state: State) => ({
 })
 
 const actionCreators = {
-  createPost,
+  updatePost,
 }
 
 export default connect(mapStateToProps, actionCreators)(EditPostModal)

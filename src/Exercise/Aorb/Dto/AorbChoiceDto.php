@@ -10,9 +10,9 @@ class AorbChoiceDto
     /** @var string */
     public $b;
 
-    /** @var string either 'a' or 'b' */
+    /** @var string|null either 'a' or 'b' */
     public $correct = null;
 
-    /** @var string either 'a' or 'b' */
+    /** @var string|null either 'a' or 'b' */
     public $answer = null;
 }

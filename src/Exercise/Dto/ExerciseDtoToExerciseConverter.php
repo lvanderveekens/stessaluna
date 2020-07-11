@@ -29,8 +29,11 @@ class ExerciseDtoToExerciseConverter
         $this->imageRepository = $imageRepository;
     }
 
-    public function convert(ExerciseDto $dto): Exercise
+    public function convert(?ExerciseDto $dto): ?Exercise
     {
+        if ($dto == null) {
+            return null;
+        }
         $exercise = null;
         if ($dto instanceof AorbExerciseDto) {
             $exercise = $this->convertToAorbExercise($dto);
