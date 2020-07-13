@@ -1,5 +1,4 @@
 export interface AorbSentenceInput {
-    id: number
     textBefore?: string
     choice?: AorbChoiceInput
     textAfter?: string

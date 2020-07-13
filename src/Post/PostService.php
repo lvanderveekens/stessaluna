@@ -82,17 +82,10 @@ class PostService
         $post->setText($text);
         $post->setImage($imageId ? $this->imageRepository->getReference($imageId) : null);
 
-        // TODO: if exercise differs from stored one, invalidate all answers...
-        if (($post->getExercise() == null && $exercise == null)
-            || ($post->getExercise() != null && $post->getExercise()->equals($exercise))
-        ) {
-            $this->logger->warning("######## equal");
-        } else {
-            $this->logger->warning("######## not equal");
+        if ($post->getExercise() == null || !$post->getExercise()->equals($exercise)) {
+            // updating an exercise invalidates all answers
+            $post->setExercise($exercise);
         }
-
-        $post->setExercise($exercise);
-
         return $this->postRepository->save($post);
     }
 

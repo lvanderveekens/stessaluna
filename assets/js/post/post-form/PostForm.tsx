@@ -17,6 +17,7 @@ import {getCountryCode} from "../../country/get-country-code"
 import Image from "../../image/image.interface";
 import ImageInput from "../../image/image-input/ImageInput";
 import {renderExerciseInput} from "./exercise-input/exercise-input.helper";
+import AorbExerciseInputValues from "./exercise-input/aorb-exercise-input/aorb-exercise-input.model";
 
 interface Props {
   initialValues: Values
@@ -62,7 +63,19 @@ const PostForm: FC<Props> = ({initialValues, onSubmit, submitLabel}) => {
 
   const allNull = (...values) => values.every((element) => element === null)
 
-  const createExercise = (type: string, setFieldValue) => setFieldValue("exercise", {type})
+  const createExercise = (type: string, setFieldValue) => {
+    let exercise;
+    switch (type) {
+      case ExerciseType.A_OR_B:
+        exercise = new AorbExerciseInputValues([{}])
+        break;
+      case ExerciseType.WHAT_DO_YOU_SEE:
+      case ExerciseType.MISSING_WORD:
+        exercise = {type}
+        break;
+    }
+    return setFieldValue("exercise", exercise);
+  }
 
   const handleChangeExercise = (setFieldValue) => (change: ExerciseInputValues) => setFieldValue("exercise", change)
 

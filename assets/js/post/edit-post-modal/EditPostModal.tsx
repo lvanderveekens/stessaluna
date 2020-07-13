@@ -4,15 +4,13 @@ import {connect} from "react-redux"
 import Modal from "../../modal/Modal"
 import ModalHeader from "../../modal/modal-header/ModalHeader";
 import ModalContent from "../../modal/modal-content/ModalContent";
-import Exercise, {ExerciseType} from "../../exercise/exercise.model";
 import {updatePost} from "../../store/post/actions";
 import PostForm, {Values as PostValues} from "../post-form/PostForm";
 import {State} from "../../store";
 import Post from "../post.interface";
-import AorbExerciseInputValues from "../post-form/exercise-input/aorb-exercise-input/aorb-exercise-input.model";
-import {nextId} from "../../util/id-generator";
 import ExerciseInputValues from "../post-form/exercise-input/exercise-input.model";
 import Image from "../../image/image.interface";
+import Exercise from "../../exercise/exercise.model";
 
 
 interface Props {
@@ -36,22 +34,30 @@ const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
         channel: post.channel,
         text: post.text,
         image: post.image,
-        exercise: post.exercise && mapToExerciseInputValue(post.exercise)
+        exercise: mapToExerciseInput(post.exercise)
       })
     }
   }, [post])
 
-  const mapToExerciseInputValue = (exercise: Exercise) => {
-    switch (exercise.type) {
-      case ExerciseType.A_OR_B:
-        return new AorbExerciseInputValues(exercise.sentences.map((s) => ({...s, id: nextId()})))
-      case ExerciseType.WHAT_DO_YOU_SEE:
-      case ExerciseType.MISSING_WORD:
-        return exercise
-    }
+
+  const mapToExerciseInput = (exercise: Exercise): ExerciseInputValues => {
+    const exerciseInput = exercise
+    delete exerciseInput.id
+    delete exerciseInput.answerCount
+    return exerciseInput;
   }
 
   const handleSubmit = ({channel, text, image, exercise}) => {
+
+    // if exercise changed: show confirmation dialog that existing answers are going to be removed
+    // todo: compare against initial values...
+    // the aorb sentence id will probably fuck this comparison up.. because of ids
+    if (JSON.stringify(initialValues.exercise) != JSON.stringify(exercise)) {
+      console.log("THEY ARE DIFFERENT")
+      console.log(JSON.stringify(initialValues.exercise))
+      console.log(JSON.stringify(exercise))
+    }
+
     return updatePost(id, channel, text, image, exercise)
       .then(() => history.push("/"))
   }

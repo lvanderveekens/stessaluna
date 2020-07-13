@@ -7,7 +7,6 @@ namespace Stessaluna\Exercise\Missingword\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Stessaluna\Exercise\Entity\Exercise;
 use Stessaluna\Exercise\ExerciseType;
-use Symfony\Component\Intl\Exception\NotImplementedException;
 
 /**
  * @ORM\Entity
@@ -145,7 +144,15 @@ class MissingwordExercise extends Exercise
 
     public function equals(Exercise $other): bool
     {
-        // TODO: Implement equals() method.
-        throw new NotImplementedException("");
+        if (!($other instanceof MissingwordExercise)) {
+            return false;
+        }
+        return $this->textBefore == $other->textBefore
+            && $this->textAfter == $other->textAfter
+            && $this->option1 == $other->option1
+            && $this->option2 == $other->option2
+            && $this->option3 == $other->option3
+            && $this->option4 == $other->option4
+            && $this->correct == $other->correct;
     }
 }

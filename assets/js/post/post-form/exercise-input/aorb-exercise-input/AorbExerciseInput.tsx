@@ -9,37 +9,42 @@ import ExerciseInputHeader from '../exercise-input-header/ExerciseInputHeader';
 import {nextId} from '../../../../util/id-generator';
 
 interface Props {
-  initialValues?: AorbExerciseInputValues
+  initialValues: AorbExerciseInputValues
   onChange: (change: AorbExerciseInputValues) => void
   onClose: () => void
 }
 
 const AorbExerciseInput: FC<Props> = ({ initialValues, onChange, onClose }) => {
 
-  const [sentences, setSentences] = useState<AorbSentenceInputValue[]>(
-    () => (initialValues && initialValues.sentences) || [{id: nextId()}]
-  );
+  const [sentencesWithId, setSentencesWithId] = useState<(AorbSentenceInputValue & { id: number })[]>(() => {
+    return initialValues.sentences.map((s) => ({...s, id: nextId()}))
+  });
 
   useEffect(() => {
+    const sentences = sentencesWithId.map((sentenceWithId) => {
+      const sentence = {...sentenceWithId}
+      delete sentence.id
+      return sentence
+    })
     onChange(new AorbExerciseInputValues(sentences));
-  }, [sentences]);
+  }, [sentencesWithId]);
 
   const addSentence = () => {
     const newInputValue = { id: nextId() };
-    const newInputValues = [...sentences, newInputValue]
-    setSentences(newInputValues);
+    const newInputValues = [...sentencesWithId, newInputValue]
+    setSentencesWithId(newInputValues);
   }
 
   const deleteInput = (index: number) => () => {
-    const newInputValues = [...sentences];
+    const newInputValues = [...sentencesWithId];
     newInputValues.splice(index, 1);
-    setSentences(newInputValues);
+    setSentencesWithId(newInputValues);
   }
 
   const handleChange = (index: number) => (change: AorbSentenceInputValue) => {
-    const newInputValues = [...sentences];
+    const newInputValues = [...sentencesWithId];
     newInputValues[index] = { ...newInputValues[index], ...change };
-    setSentences(newInputValues);
+    setSentencesWithId(newInputValues);
   }
 
   return (
@@ -47,15 +52,15 @@ const AorbExerciseInput: FC<Props> = ({ initialValues, onChange, onClose }) => {
       <div>
         <ExerciseInputHeader title="A or B" onClose={onClose} />
         <div className={styles.sentences}>
-          {sentences.map((sentence, i) => (
-            <div key={sentence.id} className={styles.inputRow}>
+          {sentencesWithId.map((sentenceWithId, i) => (
+            <div key={sentenceWithId.id} className={styles.inputRow}>
               <div className="d-flex justify-content-between">
                 <div className={styles.inputIndex}>{i + 1}.</div>
                 <div className={styles.deleteInput} onClick={deleteInput(i)}>
                   <FontAwesomeIcon icon={faTimes} />
                 </div>
               </div>
-              <AorbSentenceInput value={sentence} onChange={handleChange(i)} />
+              <AorbSentenceInput value={sentenceWithId} onChange={handleChange(i)} />
             </div>
           ))}
         </div>
