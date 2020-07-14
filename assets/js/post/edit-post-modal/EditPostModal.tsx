@@ -10,7 +10,7 @@ import {State} from "../../store";
 import Post from "../post.interface";
 import ExerciseInputValues from "../post-form/exercise-input/exercise-input.model";
 import Image from "../../image/image.interface";
-import Exercise from "../../exercise/exercise.model";
+import {mapToExerciseInput} from "../post-form/exercise-input/exercise-input.helper";
 
 
 interface Props {
@@ -39,19 +39,9 @@ const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
     }
   }, [post])
 
-
-  const mapToExerciseInput = (exercise: Exercise): ExerciseInputValues => {
-    const exerciseInput = exercise
-    delete exerciseInput.id
-    delete exerciseInput.answerCount
-    return exerciseInput;
-  }
-
   const handleSubmit = ({channel, text, image, exercise}) => {
 
     // if exercise changed: show confirmation dialog that existing answers are going to be removed
-    // todo: compare against initial values...
-    // the aorb sentence id will probably fuck this comparison up.. because of ids
     if (JSON.stringify(initialValues.exercise) != JSON.stringify(exercise)) {
       console.log("THEY ARE DIFFERENT")
       console.log(JSON.stringify(initialValues.exercise))
