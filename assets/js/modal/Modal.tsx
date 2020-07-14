@@ -1,7 +1,5 @@
 import React, {FC, useEffect, useRef} from "react"
 import styles from "./Modal.scss?module"
-import {Col, Container, Row} from "react-bootstrap";
-import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
 
 interface Props {
   className?: string
@@ -23,8 +21,8 @@ const Modal: FC<Props> = ({className, onClose, children}) => {
   }
 
   return (
-    <div className={`${styles.modalWrapper} ${className}`} onClick={onClose}>
-      <div ref={modalRef} className={`${styles.modal} animated fadeIn`} tabIndex={0} onKeyDown={onKeyDown}
+    <div className={`${styles.modalWrapper}`} onClick={onClose}>
+      <div ref={modalRef} className={`${styles.modal} ${className} animated fadeIn`} tabIndex={0} onKeyDown={onKeyDown}
            onClick={(e) => e.stopPropagation()}>
         {children}
       </div>

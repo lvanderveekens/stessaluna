@@ -11,7 +11,8 @@ import Post from "../post.interface";
 import ExerciseInputValues from "../post-form/exercise-input/exercise-input.model";
 import Image from "../../image/image.interface";
 import {mapToExerciseInput} from "../post-form/exercise-input/exercise-input.helper";
-
+import styles from './EditPostModal.scss?module'
+import Button from "../../button/Button";
 
 interface Props {
   findPost: (id: number) => Post | null
@@ -21,23 +22,25 @@ interface Props {
 
 const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
 
+  const [initialValues, setInitialValues] = useState<PostValues>(null)
+  const [showConfirmDialog, setShowConfirmDialog] = useState(true)
+
   const history = useHistory()
 
   const {id} = useParams()
   const post = findPost(parseInt(id))
 
-  const [initialValues, setInitialValues] = useState<PostValues>(null)
-
-  useEffect( () => {
+  useEffect(() => {
     if (post) {
       setInitialValues({
         channel: post.channel,
         text: post.text,
         image: post.image,
-        exercise: mapToExerciseInput(post.exercise)
+        exercise: post.exercise && mapToExerciseInput(post.exercise)
       })
     }
   }, [post])
+
 
   const handleSubmit = ({channel, text, image, exercise}) => {
 
@@ -48,19 +51,43 @@ const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
       console.log(JSON.stringify(exercise))
     }
 
-    return updatePost(id, channel, text, image, exercise)
-      .then(() => history.push("/"))
+    setShowConfirmDialog(true)
+    // return updatePost(id, channel, text, image, exercise)
+    //   .then(() => history.push("/"))
+    return Promise.resolve()
+  }
+
+  const closeConfirmDialog = () => {
+    setShowConfirmDialog(false)
+  }
+
+  if (!initialValues) {
+    return null
   }
 
   return (
-    <Modal onClose={onClose}>
-      <ModalHeader onClose={onClose}>Edit post</ModalHeader>
-      <ModalContent className="h-100">
-        {initialValues && (
+    <>
+      <Modal className={styles.editPostModal} onClose={onClose}>
+        <ModalHeader onClose={onClose}>Edit post</ModalHeader>
+        <ModalContent className="h-100">
           <PostForm initialValues={initialValues} onSubmit={handleSubmit} submitLabel="Save"/>
-        )}
-      </ModalContent>
-    </Modal>
+        </ModalContent>
+      </Modal>
+      {/* TODO: rename boolean to better reflect what we're warning the user about */}
+      {showConfirmDialog && (
+        <Modal className={styles.confirmDialog} onClose={closeConfirmDialog}>
+          <ModalHeader onClose={closeConfirmDialog}>Confirm</ModalHeader>
+          <ModalContent>
+            <p>By updating the exercise you invalidate all existing answers.</p>
+            <p>Are you sure?</p>
+            <div className={styles.confirmButtons}>
+              <Button variant="dark" onClick={() => console.log("TODO: perform submit")}>Yes</Button>
+              <Button variant="dark" onClick={closeConfirmDialog}>No</Button>
+            </div>
+          </ModalContent>
+        </Modal>
+      )}
+    </>
   )
 }
 

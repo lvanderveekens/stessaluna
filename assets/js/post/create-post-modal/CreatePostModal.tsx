@@ -8,6 +8,7 @@ import {createPost} from "../../store/post/actions";
 import PostForm, {Values as PostValues} from "../post-form/PostForm";
 import ExerciseInputValues from "../post-form/exercise-input/exercise-input.model";
 import Image from "../../image/image.interface";
+import styles from './CreatePostModal.scss?module'
 
 interface Props {
   onClose: () => void
@@ -24,7 +25,7 @@ const CreatePostModal: FC<Props> = ({onClose, createPost}) => {
   }
 
   return (
-    <Modal onClose={onClose}>
+    <Modal className={styles.createPostModal} onClose={onClose}>
       <ModalHeader onClose={onClose}>Create post</ModalHeader>
       <ModalContent className="h-100">
         <PostForm
