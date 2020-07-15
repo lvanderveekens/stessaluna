@@ -52,7 +52,8 @@ const PostForm: FC<Props> = ({initialValues, onSubmit, submitLabel}) => {
   const handleSubmit = (values: Values, {setSubmitting}) => {
     setSubmitError(false)
 
-    onSubmit(values,
+    onSubmit(
+      values,
       () => {
         setSubmitting(false)
       },
@@ -60,7 +61,8 @@ const PostForm: FC<Props> = ({initialValues, onSubmit, submitLabel}) => {
         console.log(e)
         setSubmitError(true)
         setSubmitting(false)
-      })
+      }
+    )
   }
 
   const allNull = (...values) => values.every((element) => element === null)

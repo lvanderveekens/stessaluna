@@ -1,4 +1,4 @@
-.modalWrapper {
+.modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,19 +12,29 @@
 
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 
+    // TODO: only for post modal?
+
+    // TODO: this breaks the confirm dialog...
+    //align-items: center;
+
+    //display: inline-block;
+    overflow-y: auto;
 }
 
 .modal {
+    display: block;
     position: relative;
     background-color: white;
-    display: flex;
-    flex-direction: column;
+    overflow: hidden;
 
     padding: 1rem;
     outline: none;
 
     border: 1px solid #ced4da;
     border-radius: 0.5rem;
+
+    //margin: 70px 0 80px;
 }
+

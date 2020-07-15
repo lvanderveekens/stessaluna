@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from "react"
+import React, {FC, useEffect, useRef, useState} from "react"
 import {useHistory, useParams} from "react-router-dom"
 import {connect} from "react-redux"
 import Modal from "../../modal/Modal"
@@ -12,7 +12,7 @@ import ExerciseInputValues from "../post-form/exercise-input/exercise-input.mode
 import Image from "../../image/image.interface";
 import {mapToExerciseInput} from "../post-form/exercise-input/exercise-input.helper";
 import styles from './EditPostModal.scss?module'
-import ConfirmDialog from "../../modal/confirm-dialog/ConfirmDialog";
+import ConfirmDialog from "../../dialog/ConfirmDialog";
 
 interface Props {
   findPost: (id: number) => Post | null
@@ -27,6 +27,8 @@ const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
   const [showExerciseUpdateConfirmDialog, setShowExerciseUpdateConfirmDialog] = useState(false)
   const [handleSubmitCallback, setHandleSubmitCallback] = useState<() => void>(null)
   const [cancelSubmitCallback, setCancelSubmitCallback] = useState<() => void>(null)
+
+  const modalRef = useRef(null)
 
   const history = useHistory()
 
@@ -43,6 +45,12 @@ const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
       })
     }
   }, [post])
+
+  useEffect(() => {
+    if (modalRef.current) {
+      modalRef.current.focus({preventScroll: true})
+    }
+  }, [initialValues])
 
   const handleSubmit = (values: PostValues, onCancel: () => void, onError: (e) => void) => {
     const submit = ({channel, text, image, exercise}: PostValues, onError: (e) => void) => {
@@ -68,6 +76,7 @@ const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
   const handleCloseDialog = () => {
     cancelSubmitCallback()
     setShowExerciseUpdateConfirmDialog(false)
+    modalRef.current.focus({preventScroll: true})
   }
 
   if (!initialValues) {
@@ -75,20 +84,18 @@ const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
   }
 
   return (
-    <>
-      <Modal className={styles.editPostModal} onClose={onClose}>
-        <ModalHeader onClose={onClose}>Edit post</ModalHeader>
-        <ModalContent className="h-100">
-          <PostForm initialValues={initialValues} onSubmit={handleSubmit} submitLabel="Save"/>
-        </ModalContent>
-      </Modal>
-      {showExerciseUpdateConfirmDialog && (
-        <ConfirmDialog onConfirm={handleConfirmDialog} onClose={handleCloseDialog}>
-          <p>By updating the exercise you invalidate all existing answers.</p>
-          <p>Are you sure?</p>
-        </ConfirmDialog>
-      )}
-    </>
+    <Modal ref={modalRef} className={styles.editPostModal} onClose={onClose}>
+      <ModalHeader onClose={onClose}>Edit a post</ModalHeader>
+      <ModalContent>
+        <PostForm initialValues={initialValues} onSubmit={handleSubmit} submitLabel="Save"/>
+        {showExerciseUpdateConfirmDialog && (
+          <ConfirmDialog onConfirm={handleConfirmDialog} onClose={handleCloseDialog}>
+            <p>By updating the exercise you invalidate all existing answers.</p>
+            <p>Are you sure?</p>
+          </ConfirmDialog>
+        )}
+      </ModalContent>
+    </Modal>
   )
 }
 

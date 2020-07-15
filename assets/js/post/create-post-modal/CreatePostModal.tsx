@@ -27,8 +27,8 @@ const CreatePostModal: FC<Props> = ({onClose, createPost}) => {
 
   return (
     <Modal className={styles.createPostModal} onClose={onClose}>
-      <ModalHeader onClose={onClose}>Create post</ModalHeader>
-      <ModalContent className="h-100">
+      <ModalHeader onClose={onClose}>Create a post</ModalHeader>
+      <ModalContent>
         <PostForm
           initialValues={{channel: null, text: null, image: null, exercise: null}}
           onSubmit={handleSubmit}

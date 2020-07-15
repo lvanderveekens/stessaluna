@@ -1,28 +1,28 @@
-import React, {FC, useEffect, useRef} from "react"
+import React, {FC} from "react"
 import styles from "./Modal.scss?module"
 
 interface Props {
   className?: string
+  overlayClassName?: string
   onClose: () => void
   children: any
 }
 
-const Modal: FC<Props> = ({className, onClose, children}) => {
-  const modalRef = useRef(null)
+const Modal: FC<Props> = ({className, overlayClassName, onClose, children}, ref) => {
 
-  useEffect(() => {
-    modalRef.current.focus()
-  }, [])
-
-  const onKeyDown = (e) => {
+  const handleKeyDown= (e) => {
     if (e.key === "Escape") {
+      e.stopPropagation()
       onClose()
     }
   }
 
   return (
-    <div className={`${styles.modalWrapper}`} onClick={onClose}>
-      <div ref={modalRef} className={`${styles.modal} ${className} animated fadeIn`} tabIndex={0} onKeyDown={onKeyDown}
+    <div className={`${styles.modalOverlay} ${overlayClassName}`} onClick={onClose}>
+
+      {/* TODO: this tabIndex and focus shit messes up my overlay margin */}
+
+      <div ref={ref} className={`${styles.modal} ${className}`} tabIndex={-1} onKeyDown={handleKeyDown}
            onClick={(e) => e.stopPropagation()}>
         {children}
       </div>
@@ -30,4 +30,4 @@ const Modal: FC<Props> = ({className, onClose, children}) => {
   )
 }
 
-export default Modal
+export default React.forwardRef(Modal)
