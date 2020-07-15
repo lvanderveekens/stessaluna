@@ -23,7 +23,11 @@ interface Props {
 const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
 
   const [initialValues, setInitialValues] = useState<PostValues>(null)
-  const [showConfirmDialog, setShowConfirmDialog] = useState(true)
+
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+
+  const [handleSubmitCallback, setHandleSubmitCallback] = useState<() => Promise<void>>(null)
+  const [cancelSubmitCallback, setCancelSubmitCallback] = useState<() => void>(null)
 
   const history = useHistory()
 
@@ -41,23 +45,24 @@ const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
     }
   }, [post])
 
-
-  const handleSubmit = ({channel, text, image, exercise}) => {
-
-    // if exercise changed: show confirmation dialog that existing answers are going to be removed
-    if (JSON.stringify(initialValues.exercise) != JSON.stringify(exercise)) {
-      console.log("THEY ARE DIFFERENT")
-      console.log(JSON.stringify(initialValues.exercise))
-      console.log(JSON.stringify(exercise))
+  const checkSubmit = (values: PostValues, onCancel: () => void, onError: (e) => void) => {
+    if (JSON.stringify(initialValues.exercise) != JSON.stringify(values.exercise)) {
+      setHandleSubmitCallback(() => () => handleSubmit(values, onError))
+      setCancelSubmitCallback(() => onCancel)
+      setShowConfirmDialog(true)
+    } else {
+      handleSubmit(values, onError)
     }
+  }
 
-    setShowConfirmDialog(true)
-    // return updatePost(id, channel, text, image, exercise)
-    //   .then(() => history.push("/"))
-    return Promise.resolve()
+  const handleSubmit = ({channel, text, image, exercise}: PostValues, onError: (e) => void) => {
+    return updatePost(id, channel, text, image, exercise)
+      .then(() => history.push("/"))
+      .catch(onError)
   }
 
   const closeConfirmDialog = () => {
+    cancelSubmitCallback()
     setShowConfirmDialog(false)
   }
 
@@ -70,7 +75,7 @@ const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
       <Modal className={styles.editPostModal} onClose={onClose}>
         <ModalHeader onClose={onClose}>Edit post</ModalHeader>
         <ModalContent className="h-100">
-          <PostForm initialValues={initialValues} onSubmit={handleSubmit} submitLabel="Save"/>
+          <PostForm initialValues={initialValues} onSubmit={checkSubmit} submitLabel="Save"/>
         </ModalContent>
       </Modal>
       {/* TODO: rename boolean to better reflect what we're warning the user about */}
@@ -81,8 +86,8 @@ const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
             <p>By updating the exercise you invalidate all existing answers.</p>
             <p>Are you sure?</p>
             <div className={styles.confirmButtons}>
-              <Button variant="dark" onClick={() => console.log("TODO: perform submit")}>Yes</Button>
-              <Button variant="dark" onClick={closeConfirmDialog}>No</Button>
+              <Button variant="dark" onClick={closeConfirmDialog}>Cancel</Button>
+              <Button variant="dark" onClick={() => handleSubmitCallback()}>OK</Button>
             </div>
           </ModalContent>
         </Modal>

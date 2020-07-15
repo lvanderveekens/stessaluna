@@ -21,7 +21,7 @@ import AorbExerciseInputValues from "./exercise-input/aorb-exercise-input/aorb-e
 
 interface Props {
   initialValues: Values
-  onSubmit: (values: Values) => Promise<void>
+  onSubmit: (values: Values, onCancel: () => void, onError: (e) => void) => void
   submitLabel: string
 }
 
@@ -49,16 +49,18 @@ const PostForm: FC<Props> = ({initialValues, onSubmit, submitLabel}) => {
 
   const handleClickImage = () => imageInputRef.current.click()
 
-  const handleSubmit = (values: Values, {setSubmitting, resetForm}) => {
+  const handleSubmit = (values: Values, {setSubmitting}) => {
     setSubmitError(false)
 
-    onSubmit(values)
-      .catch((e) => {
+    onSubmit(values,
+      () => {
+        setSubmitting(false)
+      },
+      (e) => {
         console.log(e)
         setSubmitError(true)
         setSubmitting(false)
       })
-
   }
 
   const allNull = (...values) => values.every((element) => element === null)
@@ -84,7 +86,7 @@ const PostForm: FC<Props> = ({initialValues, onSubmit, submitLabel}) => {
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={(values, {setSubmitting, resetForm}) => handleSubmit({...values}, {setSubmitting, resetForm})}
+      onSubmit={(values, {setSubmitting}) => handleSubmit({...values}, {setSubmitting})}
       initialValues={initialValues}
     >
       {({handleSubmit, setFieldValue, values, isValid, isSubmitting, errors, dirty}) => (

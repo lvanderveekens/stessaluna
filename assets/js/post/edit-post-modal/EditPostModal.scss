@@ -27,10 +27,10 @@
 
     .confirmButtons {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
 
         button {
-            width: 45%;
+            margin-left: 0.5rem;
         }
     }
 }

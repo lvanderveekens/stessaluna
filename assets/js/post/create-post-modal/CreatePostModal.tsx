@@ -19,9 +19,10 @@ interface Props {
 const CreatePostModal: FC<Props> = ({onClose, createPost}) => {
   const history = useHistory()
 
-  const handleSubmit = ({channel, text, image, exercise}: PostValues) => {
-    return createPost(channel, text, image, exercise)
+  const handleSubmit = ({channel, text, image, exercise}: PostValues, onCancel, onError) => {
+    createPost(channel, text, image, exercise)
       .then(() => history.push("/"))
+      .catch(onError)
   }
 
   return (
