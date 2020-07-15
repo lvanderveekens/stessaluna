@@ -22,15 +22,3 @@
     }
 }
 
-.confirmDialog {
-    max-width: 260px;
-
-    .confirmButtons {
-        display: flex;
-        justify-content: flex-end;
-
-        button {
-            margin-left: 0.5rem;
-        }
-    }
-}
