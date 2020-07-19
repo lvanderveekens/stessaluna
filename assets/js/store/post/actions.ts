@@ -1,6 +1,6 @@
 import axios from "../../http/client"
 import Exercise from "../../exercise/exercise.model"
-import ExerciseInputValues from "../../post/post-form/exercise-input/exercise-input.model"
+import ExerciseInputValues from "../../post/post-modal-form/exercise-input/exercise-input.model"
 import {Answer} from "../../exercise/answer/answer.model"
 import {
   ADD_COMMENT_SUCCESS,

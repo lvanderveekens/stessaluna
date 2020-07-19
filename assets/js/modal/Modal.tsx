@@ -19,9 +19,6 @@ const Modal: FC<Props> = ({className, overlayClassName, onClose, children}, ref)
 
   return (
     <div className={`${styles.modalOverlay} ${overlayClassName}`} onClick={onClose}>
-
-      {/* TODO: this tabIndex and focus shit messes up my overlay margin */}
-
       <div ref={ref} className={`${styles.modal} ${className}`} tabIndex={-1} onKeyDown={handleKeyDown}
            onClick={(e) => e.stopPropagation()}>
         {children}

@@ -5,8 +5,8 @@ import Modal from "../../modal/Modal"
 import ModalHeader from "../../modal/modal-header/ModalHeader";
 import ModalContent from "../../modal/modal-content/ModalContent";
 import {createPost} from "../../store/post/actions";
-import PostForm, {Values as PostValues} from "../post-form/PostForm";
-import ExerciseInputValues from "../post-form/exercise-input/exercise-input.model";
+import PostModalForm, {Values as PostValues} from "../post-modal-form/PostModalForm";
+import ExerciseInputValues from "../post-modal-form/exercise-input/exercise-input.model";
 import Image from "../../image/image.interface";
 import styles from './CreatePostModal.scss?module'
 
@@ -26,16 +26,13 @@ const CreatePostModal: FC<Props> = ({onClose, createPost}) => {
   }
 
   return (
-    <Modal className={styles.createPostModal} onClose={onClose}>
-      <ModalHeader onClose={onClose}>Create a post</ModalHeader>
-      <ModalContent>
-        <PostForm
-          initialValues={{channel: null, text: null, image: null, exercise: null}}
-          onSubmit={handleSubmit}
-          submitLabel="Create"
-        />
-      </ModalContent>
-    </Modal>
+    <PostModalForm
+      initialValues={{channel: null, text: null, image: null, exercise: null}}
+      headerText="Create new post"
+      onSubmit={handleSubmit}
+      submitText="Create"
+      onClose={onClose}
+    />
   )
 }
 

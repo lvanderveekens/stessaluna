@@ -1,6 +1,6 @@
 @import "assets/css/colors";
 
-.postForm {
+.postModalForm {
 
     .channelWrapper {
         margin-bottom: 1rem;
@@ -107,9 +107,8 @@
             }
         }
     }
+}
 
-    .submitButton {
-        margin-bottom: 1rem;
-        width: 100%;
-    }
+.submitButton {
+    width: 100%;
 }
