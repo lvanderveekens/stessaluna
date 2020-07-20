@@ -10,6 +10,7 @@ use Stessaluna\Exercise\Entity\Exercise;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
 use Stessaluna\Image\ImageService;
 use Stessaluna\Image\Repository\ImageRepository;
+use Stessaluna\Image\Storage\ImageStorage;
 use Stessaluna\Post\Entity\Post;
 use Stessaluna\Post\Exception\NotPostAuthorException;
 use Stessaluna\Post\Exception\PostNotFoundException;
@@ -27,20 +28,20 @@ class PostService
      */
     private $postRepository;
     /**
-     * @var ImageService
+     * @var ImageStorage
      */
-    private $imageService;
+    private $imageStorage;
     /**
      * @var ImageRepository
      */
     private $imageRepository;
 
-    public function __construct(LoggerInterface $logger, PostRepository $postRepository, ImageService $imageService,
+    public function __construct(LoggerInterface $logger, PostRepository $postRepository, ImageStorage $imageStorage,
                                 ImageRepository $imageRepository)
     {
         $this->logger = $logger;
         $this->postRepository = $postRepository;
-        $this->imageService = $imageService;
+        $this->imageStorage = $imageStorage;
         $this->imageRepository = $imageRepository;
     }
 
@@ -100,16 +101,18 @@ class PostService
         }
 
         if ($post->getImage()) {
-            $this->imageService->delete($post->getImage());
+            // doctrine already removes the image from database so only remove it from storage
+            $this->imageStorage->delete($post->getImage()->getFilename());
         }
 
         $exercise = $post->getExercise();
         if ($exercise) {
             if ($exercise instanceof WhatdoyouseeExercise) {
-                // delete image by hand and let doctrine automagically cascade delete the exercise
-                $this->imageService->delete($exercise->getImage());
+                // doctrine already removes the image from database so only remove it from storage
+                $this->imageStorage->delete($exercise->getImage()->getFilename());
             }
         }
         $this->postRepository->delete($post);
+
     }
 }

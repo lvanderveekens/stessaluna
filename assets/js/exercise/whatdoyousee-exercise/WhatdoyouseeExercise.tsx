@@ -2,10 +2,11 @@ import React, { FC, useState, useEffect } from "react"
 import styles from "./WhatdoyouseeExercise.scss?module"
 import classNames from "classnames/bind"
 import ExerciseOption from "../exercise-option/ExerciseOption"
+import Image from "../../image/image.interface";
 const cx = classNames.bind(styles)
 
 interface Props {
-  image: string
+  image: Image
   option1: string
   option2: string
   option3: string
@@ -36,7 +37,7 @@ const WhatdoyouseeExercise: FC<Props> = ({
       </div>
       <div className={styles.imageWrapper}>
         <div className={styles.aspectRatioBox}>
-          <img src={image}/>
+          <img src={image.url}/>
         </div>
       </div>
       <div>

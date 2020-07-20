@@ -57,7 +57,7 @@ class Post
 
     /**
      * @ORM\OneToOne(targetEntity="Stessaluna\Image\Entity\Image")
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
      *
      * @var Image
      */

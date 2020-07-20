@@ -48,9 +48,4 @@ class ImageService
 
         return $image;
     }
-
-    public function delete(Image $image) {
-        $this->imageStorage->delete($image->getFilename());
-        $this->imageRepository->delete($image);
-    }
 }
