@@ -1,4 +1,4 @@
-import {faBars, faEdit, faHome, faInfo, faTimes, faUserCircle} from "@fortawesome/free-solid-svg-icons"
+import {faBars, faHome, faInfo, faTimes, faUserCircle} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {disableBodyScroll, enableBodyScroll} from "body-scroll-lock"
 import classNames from "classnames/bind"
@@ -81,7 +81,7 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
           <div className="d-flex align-items-center">
             {loggedIn && !isExpandedNavVisible && (
               <BootstrapNav.Link className={styles.createPostLink} as={Link} to="/create-post">
-                <Button className={styles.createPostButton} variant="light">Post</Button>
+                <Button className={styles.createPostButton} variant="light">Create</Button>
               </BootstrapNav.Link>
             )}
             <BootstrapNavbar.Toggle className={styles.toggle} as={CustomToggle} aria-controls="collapsable-nav">

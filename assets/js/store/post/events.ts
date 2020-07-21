@@ -4,13 +4,17 @@ import {
   APPLY_CHANNEL_FILTER,
   CREATE_POST_SUCCESS,
   DELETE_COMMENT_SUCCESS,
-  DELETE_POST_SUCCESS, SUBMIT_ANSWER_SUCCESS
+  DELETE_POST_SUCCESS, SUBMIT_ANSWER_SUCCESS, UPDATE_POST_SUCCESS
 } from "./actionTypes";
 
 export const postEvents = {
   [CREATE_POST_SUCCESS]: trackEvent((action, prevState, nextState) => ({
     category: 'Post',
     action: "Created a post"
+  })),
+  [UPDATE_POST_SUCCESS]: trackEvent((action, prevState, nextState) => ({
+    category: 'Post',
+    action: "Updated a post"
   })),
   [DELETE_POST_SUCCESS]: trackEvent((action, prevState, nextState) => ({
     category: 'Post',

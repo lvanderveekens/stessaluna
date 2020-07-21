@@ -21,3 +21,7 @@ comment_controller:
 exercise_controller:
   resource: ../../src/Exercise/Controller/
   type: annotation
+
+image_controller:
+  resource: ../../src/Image/Controller/
+  type: annotation

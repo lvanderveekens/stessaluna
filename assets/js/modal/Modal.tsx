@@ -1,30 +1,25 @@
-import React, {FC, useEffect, useRef} from "react"
+import React, {FC} from "react"
 import styles from "./Modal.scss?module"
-import {Col, Container, Row} from "react-bootstrap";
-import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
 
 interface Props {
   className?: string
+  overlayClassName?: string
   onClose: () => void
   children: any
 }
 
-const Modal: FC<Props> = ({className, onClose, children}) => {
-  const modalRef = useRef(null)
+const Modal: FC<Props> = ({className, overlayClassName, onClose, children}, ref) => {
 
-  useEffect(() => {
-    modalRef.current.focus()
-  }, [])
-
-  const onKeyDown = (e) => {
+  const handleKeyDown= (e) => {
     if (e.key === "Escape") {
+      e.stopPropagation()
       onClose()
     }
   }
 
   return (
-    <div className={`${styles.modalWrapper} ${className}`} onClick={onClose}>
-      <div ref={modalRef} className={`${styles.modal} animated fadeIn`} tabIndex={0} onKeyDown={onKeyDown}
+    <div className={`${styles.modalOverlay} ${overlayClassName}`} onClick={onClose}>
+      <div ref={ref} className={`${styles.modal} ${className}`} tabIndex={-1} onKeyDown={handleKeyDown}
            onClick={(e) => e.stopPropagation()}>
         {children}
       </div>
@@ -32,4 +27,4 @@ const Modal: FC<Props> = ({className, onClose, children}) => {
   )
 }
 
-export default Modal
+export default React.forwardRef(Modal)

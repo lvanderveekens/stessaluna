@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Stessaluna\Post\Entity;
 
@@ -7,6 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Stessaluna\Exercise\Entity\Exercise;
+use Stessaluna\Image\Entity\Image;
+use Stessaluna\Post\Comment\Entity\Comment;
 use Stessaluna\User\Entity\User;
 
 /**
@@ -18,45 +21,62 @@ class Post
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @var int
      */
     private $id = null;
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @var DateTimeInterface
      */
     private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="Stessaluna\User\Entity\User")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @var User
      */
     private $author;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
     private $channel;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string
      */
     private $text = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity="Stessaluna\Image\Entity\Image")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
+     *
+     * @var Image
      */
-    private $imageFilename = null;
+    private $image = null;
 
     /**
      * @ORM\OneToOne(targetEntity="Stessaluna\Exercise\Entity\Exercise", orphanRemoval=true, cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+     *
+     * @var Exercise
      */
     private $exercise = null;
 
     /**
      * @ORM\OneToMany(targetEntity="Stessaluna\Post\Comment\Entity\Comment", mappedBy="post")
+     *
+     * @var Comment[]
      */
-    protected $comments;
+    private $comments;
 
     public function __construct()
     {
@@ -114,14 +134,14 @@ class Post
         return $this;
     }
 
-    public function getImageFilename(): ?string
+    public function getImage(): ?Image
     {
-        return $this->imageFilename;
+        return $this->image;
     }
 
-    public function setImageFilename(?string $imageFilename): self
+    public function setImage(?Image $image): self
     {
-        $this->imageFilename = $imageFilename;
+        $this->image = $image;
 
         return $this;
     }

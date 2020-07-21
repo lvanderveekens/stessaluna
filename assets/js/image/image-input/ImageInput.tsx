@@ -1,77 +1,40 @@
-import React, { FC, useState, ChangeEvent, useRef, useEffect } from "react"
-import styles from "./ImageInput.scss?module"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faTimes, faUpload } from "@fortawesome/free-solid-svg-icons"
-import { nextId } from "../../util/id-generator"
-import classNames from "classnames/bind"
-const cx = classNames.bind(styles)
+import React, {ChangeEvent, FC} from "react"
+import Image from "../image.interface";
+import axios from "../../http/client"
 
 interface Props {
   className?: string
-  value?: File
-  onChange: (image?: File) => void
-  shape?: "square" | "circle"
-  overlayDisabled?: boolean
-  label?: string
+  id?: string
+  onChange: (image: Image) => void
 }
 
-const ImageInput: FC<Props> = (
-  {
-    className,
-    value,
-    onChange,
-    shape = "square",
-    overlayDisabled = false,
-    label = "Upload image"
-  }
-) => {
-  const inputRef = useRef<HTMLInputElement>(null)
-  const [inputId] = useState<string>(() => `input${nextId()}`)
-  const [src, setSrc] = useState(null)
-
-  useEffect(() => {
-    const src = value ? URL.createObjectURL(value) : null
-    setSrc(src)
-  }, [value])
+const ImageInput: FC<Props> = ({className, id, onChange}, ref) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(event.currentTarget.files[0])
-  }
+    const image = event.currentTarget.files[0]
+    console.log('HANDLE CHANGE')
+    console.log(image)
+    if (image) {
+      const formData = new FormData();
+      formData.append('image', image);
 
-  const handleDelete = () => {
-    inputRef.current.value = null
-    onChange(null)
+      axios.post('/api/images', formData)
+        .then((res) => onChange(res.data))
+        .catch((e) => console.log(e))
+    }
   }
 
   return (
-    <div className={cx(styles.imageInput, className, shape)}>
-      {src ? (
-        <div className={styles.imagePreview}>
-          <img src={src} />
-          {!overlayDisabled && (
-            <div className={styles.overlay}>
-              <FontAwesomeIcon className={styles.deleteIcon} icon={faTimes} onClick={handleDelete} />
-            </div>
-          )}
-        </div>
-      ) : (
-        <label className={styles.uploadImageWrapper} htmlFor={inputId}>
-          <div className={styles.uploadImage}>
-            <FontAwesomeIcon icon={faUpload} />
-            <div>{label}</div>
-          </div>
-        </label>
-      )}
-      <input
-        ref={inputRef}
-        id={inputId}
-        name="image"
-        type="file"
-        className="form-control d-none"
-        onChange={handleChange}
-      />
-    </div>
+    <input
+      ref={ref}
+      id={id}
+      name="image"
+      type="file"
+      className={`${className} form-control d-none`}
+      onChange={handleChange}
+      accept=".jpg,.png"
+    />
   )
 }
 
-export default ImageInput
+export default React.forwardRef(ImageInput)

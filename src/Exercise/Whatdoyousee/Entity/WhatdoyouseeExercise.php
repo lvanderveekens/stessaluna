@@ -7,6 +7,7 @@ namespace Stessaluna\Exercise\Whatdoyousee\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Stessaluna\Exercise\Entity\Exercise;
 use Stessaluna\Exercise\ExerciseType;
+use Stessaluna\Image\Entity\Image;
 
 /**
  * @ORM\Entity
@@ -14,9 +15,12 @@ use Stessaluna\Exercise\ExerciseType;
 class WhatdoyouseeExercise extends Exercise
 {
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToOne(targetEntity="Stessaluna\Image\Entity\Image")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
+     *
+     * @var Image
      */
-    private $imageFilename;
+    private $image;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -48,15 +52,14 @@ class WhatdoyouseeExercise extends Exercise
         parent::__construct();
     }
 
-    public function getImageFilename(): ?string
+    public function getImage(): ?Image
     {
-        return $this->imageFilename;
+        return $this->image;
     }
 
-    public function setImageFilename(?string $imageFilename): self
+    public function setImage(?Image $image): self
     {
-        $this->imageFilename = $imageFilename;
-
+        $this->image = $image;
         return $this;
     }
 
@@ -123,5 +126,18 @@ class WhatdoyouseeExercise extends Exercise
     public function getType(): string
     {
         return ExerciseType::WHAT_DO_YOU_SEE;
+    }
+
+    public function equals(Exercise $other): bool
+    {
+        if (!($other instanceof WhatdoyouseeExercise)) {
+            return false;
+        }
+        return $this->image->getId() == $other->image->getId()
+            && $this->option1 == $other->option1
+            && $this->option2 == $other->option2
+            && $this->option3 == $other->option3
+            && $this->option4 == $other->option4
+            && $this->correct == $other->correct;
     }
 }

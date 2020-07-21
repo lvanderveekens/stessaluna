@@ -1,11 +1,13 @@
-import React, { FC, useState, useEffect } from "react"
+import React, {FC} from "react"
 import styles from "./WhatdoyouseeExercise.scss?module"
 import classNames from "classnames/bind"
 import ExerciseOption from "../exercise-option/ExerciseOption"
+import Image from "../../image/image.interface";
+
 const cx = classNames.bind(styles)
 
 interface Props {
-  image: string
+  image: Image
   option1: string
   option2: string
   option3: string
@@ -36,7 +38,7 @@ const WhatdoyouseeExercise: FC<Props> = ({
       </div>
       <div className={styles.imageWrapper}>
         <div className={styles.aspectRatioBox}>
-          <img src={image}/>
+          <img src={image.url}/>
         </div>
       </div>
       <div>
@@ -46,7 +48,7 @@ const WhatdoyouseeExercise: FC<Props> = ({
             value={option1}
             onClick={() => onSubmit(1)}
             selected={selected === 1}
-            correct={correct === 1}
+            correct={answer && correct === 1}
             answer={answer === 1}
             disabled={disabled || !!answer || !!selected}
           />
@@ -55,7 +57,7 @@ const WhatdoyouseeExercise: FC<Props> = ({
             value={option2}
             onClick={() => onSubmit(2)}
             selected={selected === 2}
-            correct={correct === 2}
+            correct={answer && correct === 2}
             answer={answer === 2}
             disabled={disabled || !!answer || !!selected}
           />
@@ -66,7 +68,7 @@ const WhatdoyouseeExercise: FC<Props> = ({
             value={option3}
             onClick={() => onSubmit(3)}
             selected={selected === 3}
-            correct={correct === 3}
+            correct={answer && correct === 3}
             answer={answer === 3}
             disabled={disabled || !!answer || !!selected}
           />
@@ -75,7 +77,7 @@ const WhatdoyouseeExercise: FC<Props> = ({
             value={option4}
             onClick={() => onSubmit(4)}
             selected={selected === 4}
-            correct={correct === 4}
+            correct={answer && correct === 4}
             answer={answer === 4}
             disabled={disabled || !!answer || !!selected}
           />

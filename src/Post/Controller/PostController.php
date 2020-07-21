@@ -6,16 +6,19 @@ namespace Stessaluna\Post\Controller;
 
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Stessaluna\Post\Dto\CreatePostToPostConverter;
+use Stessaluna\Exercise\Dto\ExerciseDtoToExerciseConverter;
+use Stessaluna\Post\Dto\CreatePostRequest;
+use Stessaluna\Post\Dto\CreatePostRequestToPostConverter;
 use Stessaluna\Post\Dto\PostToPostDtoConverter;
-use Stessaluna\Post\Dto\RequestToCreatePostConverter;
+use Stessaluna\Post\Dto\UpdatePostRequest;
 use Stessaluna\Post\Entity\Post;
-use Stessaluna\Post\Service\PostService;
+use Stessaluna\Post\PostService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/api/posts")
@@ -24,28 +27,39 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PostController extends AbstractController
 {
-    /** @var CreatePostToPostConverter */
-    private $createPostToPostConverter;
-
-    /** @var PostToPostDtoConverter */
+    /**
+     * @var PostToPostDtoConverter
+     */
     private $postToPostDtoConverter;
-
-    /** @var PostService */
+    /**
+     * @var PostService
+     */
     private $postService;
-
-    /** @var LoggerInterface */
+    /**
+     * @var ExerciseDtoToExerciseConverter
+     */
+    private $exerciseDtoToExerciseConverter;
+    /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+    /**
+     * @var LoggerInterface
+     */
     private $logger;
 
     public function __construct(
-        CreatePostToPostConverter $createPostToPostConverter,
         PostToPostDtoConverter $postToPostDtoConverter,
         PostService $postService,
+        ExerciseDtoToExerciseConverter $exerciseDtoToExerciseConverter,
+        SerializerInterface $serializer,
         LoggerInterface $logger
     )
     {
-        $this->createPostToPostConverter = $createPostToPostConverter;
         $this->postToPostDtoConverter = $postToPostDtoConverter;
         $this->postService = $postService;
+        $this->exerciseDtoToExerciseConverter = $exerciseDtoToExerciseConverter;
+        $this->serializer = $serializer;
         $this->logger = $logger;
     }
 
@@ -72,12 +86,36 @@ class PostController extends AbstractController
      */
     public function createPost(Request $request): JsonResponse
     {
-        $createPost = RequestToCreatePostConverter::convert($request);
-
-        $post = $this->createPostToPostConverter->convert($createPost, $this->getUser());
-        $createdPost = $this->postService->createPost($post);
-
+        /* @var $createPostRequest CreatePostRequest */
+        $createPostRequest = $this->serializer->deserialize($request->getContent(), CreatePostRequest::class, 'json');
+        $createdPost = $this->postService->createPost(
+            $createPostRequest->channel,
+            $createPostRequest->text,
+            $createPostRequest->image ? $createPostRequest->image->id : null,
+            $this->exerciseDtoToExerciseConverter->convert($createPostRequest->exercise),
+            $this->getUser()
+        );
         return $this->json($this->postToPostDtoConverter->convert($createdPost, $this->getUser()));
+    }
+
+    /**
+     * @Route("/{id}", methods={"PUT"})
+     *
+     * @IsGranted("ROLE_USER")
+     */
+    public function updatePost(Request $request, int $id): JsonResponse
+    {
+        /* @var $updatePostRequest UpdatePostRequest */
+        $updatePostRequest = $this->serializer->deserialize($request->getContent(), UpdatePostRequest::class, 'json');
+        $updatedPost = $this->postService->updatePost(
+            $id,
+            $updatePostRequest->channel,
+            $updatePostRequest->text,
+            $updatePostRequest->image ? $updatePostRequest->image->id : null,
+            $this->exerciseDtoToExerciseConverter->convert($updatePostRequest->exercise),
+            $this->getUser()
+        );
+        return $this->json($this->postToPostDtoConverter->convert($updatedPost, $this->getUser()));
     }
 
     /**

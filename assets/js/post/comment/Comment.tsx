@@ -1,9 +1,9 @@
-import React, { FunctionComponent, useState } from "react"
+import React, {FunctionComponent} from "react"
 import styles from "./Comment.scss?module"
 import User from "../../user/user.interface"
-import { Dropdown } from "react-bootstrap"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faEllipsisV } from "@fortawesome/free-solid-svg-icons"
+import {Dropdown} from "react-bootstrap"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faEllipsisV} from "@fortawesome/free-solid-svg-icons"
 import CustomToggle from "../../dropdown/custom-toggle/CustomToggle"
 import Avatar from "../../user/avatar/Avatar"
 
@@ -19,7 +19,7 @@ const Comment: FunctionComponent<Props> = ({ author, timestamp, text, user, onDe
   return (
     <div className={styles.comment}>
       <div style={{ marginRight: "0.7rem" }}>
-        <Avatar src={author.avatar} countryCode={author.country} size="sm" />
+        <Avatar src={author.avatar.url} countryCode={author.country} size="sm" />
       </div>
       <div className={styles.content}>
         <div className="d-flex">

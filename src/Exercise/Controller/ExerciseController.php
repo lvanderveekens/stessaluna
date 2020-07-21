@@ -47,6 +47,7 @@ class ExerciseController extends AbstractController
     public function submitAnswer(int $id, Request $request): JsonResponse
     {
         $submitAnswer = RequestToSubmitAnswerConverter::convert($request);
+        // TODO: block author from submitting an answer
 
         $exercise = $this->exerciseRepository->findById($id);
 

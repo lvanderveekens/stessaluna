@@ -7,7 +7,7 @@ import {
   FETCH_POSTS_ERROR,
   FETCH_POSTS_PENDING,
   FETCH_POSTS_SUCCESS,
-  SUBMIT_ANSWER_SUCCESS
+  SUBMIT_ANSWER_SUCCESS, UPDATE_POST_SUCCESS
 } from "./actionTypes"
 import {PostState} from "./state.interface"
 
@@ -48,6 +48,11 @@ const postReducer = (state: PostState = initialState, action) => {
       return {
         ...state,
         data: [...state.data, action.payload.post],
+      }
+    case UPDATE_POST_SUCCESS:
+      return {
+        ...state,
+        data: state.data.map((post) => post.id === action.payload.post.id ? action.payload.post : post),
       }
     case DELETE_POST_SUCCESS:
       return {

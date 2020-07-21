@@ -31,4 +31,4 @@ services:
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones
 
-  Stessaluna\Image\Storage\ImageStorage: '@Stessaluna\Image\Storage\GoogleCloud\GoogleCloudImageStorage'
+  Stessaluna\Image\Storage\ImageStorage: '@Stessaluna\Image\Storage\Cloud\CloudImageStorage'

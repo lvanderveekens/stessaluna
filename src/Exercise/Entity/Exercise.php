@@ -79,5 +79,7 @@ abstract class Exercise
         return $this;
     }
 
+    abstract public function equals(Exercise $other): bool;
+
     abstract public function getType(): string;
 }

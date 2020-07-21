@@ -1,61 +1,41 @@
-import { Formik } from "formik"
-import React, { FC, useEffect, useState } from "react"
-import {Alert, Col, Container, Form, Row, Spinner} from "react-bootstrap"
+import {Formik} from "formik"
+import React, {FC, useState} from "react"
+import {Alert, Col, Container, Row, Spinner} from "react-bootstrap"
 import ReactCountryFlag from "react-country-flag"
-import { CountryDropdown } from "react-country-region-selector"
-import { connect } from "react-redux"
-import ImageInput from "../image/image-input/ImageInput"
+import {CountryDropdown} from "react-country-region-selector"
+import {connect} from "react-redux"
 import Navbar from "../nav/Navbar"
-import { updateProfile } from "../store/auth/actions"
-import { State } from "../store"
+import {updateCurrentUser} from "../store/auth/actions"
+import {State} from "../store"
 import User from "../user/user.interface"
 import styles from "./ProfilePage.scss?module"
 import Button from "../button/Button"
 import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
+import Image from "../image/image.interface";
+import ImageInput from "../image/image-input/ImageInput";
 
 interface Props {
   loading: boolean
   user?: User
-  updateProfile: (country: string, resetAvatar: boolean, avatar?: File, displayName?: string) => Promise<void>
+  updateCurrentUser: (country: string, avatar?: Image, displayName?: string) => Promise<void>
 }
 
-const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
-  const [resetAvatar, setResetAvatar] = useState(false)
-  const [avatarImage, setAvatarImage] = useState<File>(null)
+interface FormValues {
+  displayName?: string
+  country: string
+  avatar: Image
+}
+
+const ProfilePage: FC<Props> = ({ loading, user, updateCurrentUser }) => {
   const [alertMessage, setAlertMessage] = useState(null)
   const [submitError, setSubmitError] = useState(false)
-
-  useEffect(() => {
-    if (user && !user.avatar.includes("avatar-default")) {
-      fetch(user.avatar)
-        .then((res) => res.blob())
-        .then((blob) => {
-          const filename = user.avatar.substring(user.avatar.lastIndexOf("/") + 1)
-          setAvatarImage(new File([blob], filename, { type: "image/png" }))
-        })
-    }
-  }, [user])
-
-  const handleAvatarChange = (setFieldValue) => (image: File | null) => {
-    if (image) {
-      setAvatarImage(image)
-      setFieldValue("avatar", image)
-      setResetAvatar(false)
-    } else {
-      setAvatarImage(null)
-      setFieldValue("avatar", null)
-      if (!user.avatar.includes("avatar-default")) {
-        setResetAvatar(true)
-      }
-    }
-  }
 
   const handleSubmit = (values, { resetForm }) => {
     const { displayName, country, avatar } = values
     setAlertMessage(null)
     setSubmitError(false)
 
-    updateProfile(country, resetAvatar, avatar, displayName)
+    updateCurrentUser(country, avatar, displayName)
       .then(() => {
         setAlertMessage("Profile saved")
         resetForm()
@@ -78,26 +58,25 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
         <Row className="justify-content-center">
           <Col className={styles.centered} {...COLUMN_BREAKPOINTS}>
             {user && (
-              // TODO: move into separate form component
               <Formik
                 initialValues={{
                   displayName: user.displayName || "",
-                  country: user.country || "",
-                  avatar: null,
-                }}
+                  country: user.country,
+                  avatar: user.avatar,
+                } as FormValues}
                 enableReinitialize
                 onSubmit={handleSubmit}
               >
-                {({values, setFieldValue, handleSubmit, handleChange, isValid, isSubmitting}) => (
+                {({values, setFieldValue, handleSubmit, handleChange, isValid, isSubmitting, dirty}) => (
                   <form className="mb-3" onSubmit={handleSubmit}>
-                    <ImageInput
-                      className={styles.imageInput}
-                      value={avatarImage}
-                      onChange={handleAvatarChange(setFieldValue)}
-                      shape="circle"
-                      overlayDisabled={avatarImage && avatarImage.name.includes("avatar-default")}
-                      label="Avatar"
-                    />
+                    <div className={styles.avatar}>
+                      <div className={styles.imageWrapper}>
+                        <label htmlFor="avatar">
+                          <img src={values.avatar.url}/>
+                        </label>
+                      </div>
+                    </div>
+                    <ImageInput id="avatar" onChange={(image) => setFieldValue("avatar", image)}/>
                     <div className="form-group">
                       <label htmlFor="email">Email</label>
                       <input
@@ -147,7 +126,8 @@ const ProfilePage: FC<Props> = ({ loading, user, updateProfile }) => {
                         />
                       </div>
                     </div>
-                    <Button className={styles.saveButton} type="submit" variant="light" disabled={!isValid || isSubmitting}>
+                    <Button className={styles.saveButton} type="submit" variant="light"
+                            disabled={!isValid || isSubmitting || !dirty}>
                       Save
                     </Button>
                     {alertMessage && (
@@ -177,7 +157,7 @@ const mapStateToProps = (state: State) => ({
 })
 
 const actionCreators = {
-  updateProfile,
+  updateCurrentUser,
 }
 
 export default connect(mapStateToProps, actionCreators)(ProfilePage)

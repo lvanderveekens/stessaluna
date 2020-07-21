@@ -19,6 +19,8 @@ import Text from "./text/Text"
 import {getCountryCode} from "../country/get-country-code"
 import ISO6391 from "iso-639-1"
 import Comment from "./comment/comment.interface";
+import {Link} from "react-router-dom";
+import Image from "../image/image.interface";
 
 interface Props {
   id: number
@@ -26,7 +28,7 @@ interface Props {
   timestamp: string
   channel: string
   text?: string
-  image?: string
+  image?: Image
   exercise?: Exercise
   onDelete: () => void
   comments: Comment[]
@@ -102,7 +104,7 @@ const Post: FunctionComponent<Props> = (
       <div className={styles.content}>
         <div className={styles.header}>
           <div className={styles.avatar}>
-            <Avatar src={author.avatar} countryCode={author.country}/>
+            <Avatar src={author.avatar.url} countryCode={author.country}/>
           </div>
           <div className={styles.usernameTimestampWrapper}>
             <div>{renderUserName()}</div>
@@ -123,6 +125,7 @@ const Post: FunctionComponent<Props> = (
                     </span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
+                  <Dropdown.Item as={Link} to={`/edit-post/${id}`}>Edit</Dropdown.Item>
                   <Dropdown.Item onClick={onDelete}>Delete</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -130,7 +133,13 @@ const Post: FunctionComponent<Props> = (
           )}
         </div>
         {text && <Text text={text}/>}
-        {image && <img className={styles.image} src={image}/>}
+        {image && (
+          <div className={styles.imageWrapper}>
+            <div className={styles.aspectRatioBox}>
+              <img src={image.url} alt="Post image"/>
+            </div>
+          </div>
+        )}
         {exercise && renderExercise()}
       </div>
       <div className={styles.activity}>

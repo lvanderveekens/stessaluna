@@ -1,7 +1,6 @@
 import axios from "../../http/client"
 import Exercise from "../../exercise/exercise.model"
-import ExerciseInputValue from "../../post/create-post/exercise-input/exercise-input.model"
-import {objectToFormData} from "object-to-formdata"
+import ExerciseInputValues from "../../post/post-modal-form/exercise-input/exercise-input.model"
 import {Answer} from "../../exercise/answer/answer.model"
 import {
   ADD_COMMENT_SUCCESS,
@@ -12,8 +11,9 @@ import {
   FETCH_POSTS_ERROR,
   FETCH_POSTS_PENDING,
   FETCH_POSTS_SUCCESS,
-  SUBMIT_ANSWER_SUCCESS
+  SUBMIT_ANSWER_SUCCESS, UPDATE_POST_SUCCESS
 } from "./actionTypes"
+import Image from "../../image/image.interface";
 
 const queryString = require('query-string');
 
@@ -47,11 +47,10 @@ export const fetchPosts = (channels?: string[], limit?: number, beforeId?: numbe
   }
 }
 
-export const createPost = (channel: string, text?: string, image?: File, exercise?: ExerciseInputValue) => {
+export const createPost = (channel: string, text?: string, image?: Image, exercise?: ExerciseInputValues) => {
   return (dispatch) => {
-    const formData = objectToFormData({channel, text, image, exercise}, {indices: true})
     return axios
-      .post("/api/posts", formData)
+      .post("/api/posts", {channel, text, image, exercise})
       .then((res) => {
         dispatch(success(res.data))
       })
@@ -65,10 +64,27 @@ export const createPost = (channel: string, text?: string, image?: File, exercis
   }
 }
 
-export const deletePost = (id) => {
+export const updatePost = (id: number, channel: string, text?: string, image?: Image, exercise?: ExerciseInputValues) => {
+  return (dispatch) => {
+    return axios
+      .put(`/api/posts/${id}`, {channel, text, image, exercise})
+      .then((res) => {
+        dispatch(success(res.data))
+      })
+      .catch((error) => {
+        return Promise.reject(error)
+      })
+  }
+
+  function success(post) {
+    return {type: UPDATE_POST_SUCCESS, payload: {post}}
+  }
+}
+
+export const deletePost = (id: number) => {
   return (dispatch) => {
     axios
-      .delete("/api/posts/" + id)
+      .delete(`/api/posts/${id}`)
       .then((res) => {
         dispatch(success(id))
       })

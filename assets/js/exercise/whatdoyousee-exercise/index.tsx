@@ -5,10 +5,11 @@ import { connect } from "react-redux"
 import { WhatdoyouseeAnswer } from "../answer/answer.model"
 import { State } from "../../store"
 import { setNestedObjectValues } from "formik"
+import Image from "../../image/image.interface";
 
 interface Props {
   id: number
-  image: string
+  image: Image
   option1: string
   option2: string
   option3: string

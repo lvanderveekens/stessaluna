@@ -2,21 +2,21 @@
 
 namespace Stessaluna\Image\Storage;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 interface ImageStorage {
 
     /**
-     * Get the path to the image.
-     * @return string the path
+     * Get the URL to the image.
+     * @return string the image url
      */
-    public function getPath(string $filename): string;
+    public function getUrl(string $filename): string;
 
     /**
-     * Store an uploaded image and return the filename.
-     * @return string the filename
+     * Store an uploaded image.
+     * @return string the image url
      */
-    public function store(UploadedFile $image): string;
+    public function store(File $image, string $filename): string;
 
     /**
      * Delete an image by filename.
