@@ -53,7 +53,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToOne(targetEntity="Stessaluna\Image\Entity\Image")
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="avatar_id", referencedColumnName="id")
      *
      * @var Image
      */
