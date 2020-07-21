@@ -1,9 +1,6 @@
 import React, {FC, useEffect, useRef, useState} from "react"
 import {useHistory, useParams} from "react-router-dom"
 import {connect} from "react-redux"
-import Modal from "../../modal/Modal"
-import ModalHeader from "../../modal/modal-header/ModalHeader";
-import ModalContent from "../../modal/modal-content/ModalContent";
 import {updatePost} from "../../store/post/actions";
 import PostModalForm, {Values as PostValues} from "../post-modal-form/PostModalForm";
 import {State} from "../../store";
@@ -11,11 +8,7 @@ import Post from "../post.interface";
 import ExerciseInputValues from "../post-modal-form/exercise-input/exercise-input.model";
 import Image from "../../image/image.interface";
 import {mapToExerciseInput} from "../post-modal-form/exercise-input/exercise-input.helper";
-import styles from './EditPostModal.scss?module'
 import ConfirmDialog from "../../dialog/ConfirmDialog";
-import ModalFooter from "../../modal/modal-footer/ModalFooter";
-import Button from "../../button/Button";
-import {Form} from "react-bootstrap";
 
 interface Props {
   findPost: (id: number) => Post | null
@@ -62,7 +55,8 @@ const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
         .catch(onError)
     }
 
-    if (JSON.stringify(initialValues.exercise) != JSON.stringify(values.exercise)) {
+
+    if (post.exercise && post.exercise.answerCount && JSON.stringify(initialValues.exercise) != JSON.stringify(values.exercise)) {
       setHandleSubmitCallback(() => () => submit(values, onError))
       setCancelSubmitCallback(() => () => onCancel())
       setShowExerciseUpdateConfirmDialog(true)
@@ -98,7 +92,7 @@ const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
       />
       {showExerciseUpdateConfirmDialog && (
         <ConfirmDialog onConfirm={handleConfirmDialog} onClose={handleCloseDialog}>
-          <p>By updating the exercise you invalidate all existing answers.</p>
+          <p>By changing the exercise you invalidate all existing answers.</p>
           <p>Are you sure?</p>
         </ConfirmDialog>
       )}

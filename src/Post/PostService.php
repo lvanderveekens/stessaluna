@@ -7,8 +7,8 @@ namespace Stessaluna\Post;
 use DateTime;
 use Psr\Log\LoggerInterface;
 use Stessaluna\Exercise\Entity\Exercise;
+use Stessaluna\Exercise\ExerciseService;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
-use Stessaluna\Image\ImageService;
 use Stessaluna\Image\Repository\ImageRepository;
 use Stessaluna\Image\Storage\ImageStorage;
 use Stessaluna\Post\Entity\Post;
@@ -35,14 +35,19 @@ class PostService
      * @var ImageRepository
      */
     private $imageRepository;
+    /**
+     * @var ExerciseService
+     */
+    private $exerciseService;
 
     public function __construct(LoggerInterface $logger, PostRepository $postRepository, ImageStorage $imageStorage,
-                                ImageRepository $imageRepository)
+                                ImageRepository $imageRepository, ExerciseService $exerciseService)
     {
         $this->logger = $logger;
         $this->postRepository = $postRepository;
         $this->imageStorage = $imageStorage;
         $this->imageRepository = $imageRepository;
+        $this->exerciseService = $exerciseService;
     }
 
     /**
@@ -82,11 +87,7 @@ class PostService
         $post->setChannel($channel);
         $post->setText($text);
         $post->setImage($imageId ? $this->imageRepository->getReference($imageId) : null);
-
-        if ($post->getExercise() == null || !$post->getExercise()->equals($exercise)) {
-            // updating an exercise invalidates all answers
-            $post->setExercise($exercise);
-        }
+        $post->setExercise($this->exerciseService->updateExercise($post->getExercise(), $exercise));
         return $this->postRepository->save($post);
     }
 

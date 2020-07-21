@@ -62,6 +62,8 @@ export const mapToExerciseInput = (exercise: Exercise): ExerciseInputValues => {
         exercise.option4,
         exercise.correct,
       )
+    default:
+      throw new Error(`Unsupported exercise type: ${(exercise as Exercise).type}`)
   }
 }
 

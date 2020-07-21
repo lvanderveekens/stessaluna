@@ -16,7 +16,7 @@ class WhatdoyouseeExercise extends Exercise
 {
     /**
      * @ORM\OneToOne(targetEntity="Stessaluna\Image\Entity\Image")
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *
      * @var Image
      */

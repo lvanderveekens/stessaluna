@@ -98,10 +98,10 @@ const PostModalForm: FC<Props> = ({initialValues, headerText, onSubmit, submitTe
       initialValues={initialValues}
     >
       {({handleSubmit, setFieldValue, values, isValid, isSubmitting, errors, dirty}) => (
-        <Modal ref={ref} className={styles.editPostModal} onClose={onClose}>
+        <Modal ref={ref} className={styles.postModalForm} onClose={onClose}>
           <ModalHeader onClose={onClose}>{headerText}</ModalHeader>
           <ModalContent>
-            <Form id="post-modal-form" className={styles.postModalForm} noValidate onSubmit={handleSubmit}>
+            <Form id="post-modal-form" noValidate onSubmit={handleSubmit}>
               <div className={styles.channelWrapper}>
                 <label>In</label>
                 <LanguageSelect

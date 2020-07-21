@@ -107,8 +107,13 @@
             }
         }
     }
+
+    .submitButton {
+        width: 100%;
+    }
+
+    .alert {
+        margin-top: 1rem;
+    }
 }
 
-.submitButton {
-    width: 100%;
-}
