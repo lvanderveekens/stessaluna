@@ -26,6 +26,7 @@ interface Props {
   id: number
   author: User
   timestamp: string
+  edited: boolean
   channel: string
   text?: string
   image?: Image
@@ -40,6 +41,7 @@ const Post: FunctionComponent<Props> = (
     id,
     author,
     timestamp,
+    edited,
     channel,
     text,
     image,
@@ -102,6 +104,7 @@ const Post: FunctionComponent<Props> = (
   return (
     <div className={styles.post}>
       <div className={styles.content}>
+        {/* TODO: separate post-header component */}
         <div className={styles.header}>
           <div className={styles.avatar}>
             <Avatar src={author.avatar.url} countryCode={author.country}/>
@@ -114,7 +117,7 @@ const Post: FunctionComponent<Props> = (
                 <ReactCountryFlag className={styles.countryFlag} countryCode={getCountryCode(channel)} svg/>
               )}
             </div>
-            <span className={styles.timestamp}>{timestamp}</span>
+            <span className={styles.timestamp}>{timestamp} {edited && (<span>(edited)</span>)}</span>
           </div>
           {user && user.id == author.id && (
             <div className={styles.threeDotsMenu}>

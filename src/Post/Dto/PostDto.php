@@ -18,6 +18,9 @@ class PostDto
     /** @var DateTimeInterface */
     public $createdAt;
 
+    /** @var DateTimeInterface */
+    public $modifiedAt;
+
     /** @var UserDto */
     public $author;
 

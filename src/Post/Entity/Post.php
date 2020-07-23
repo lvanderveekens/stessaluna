@@ -34,6 +34,13 @@ class Post
     private $createdAt;
 
     /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var DateTimeInterface
+     */
+    private $modifiedAt;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Stessaluna\User\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      *
@@ -96,6 +103,18 @@ class Post
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getModifiedAt(): \DateTimeInterface
+    {
+        return $this->modifiedAt;
+    }
+
+    public function setModifiedAt(\DateTimeInterface $modifiedAt): self
+    {
+        $this->modifiedAt = $modifiedAt;
 
         return $this;
     }

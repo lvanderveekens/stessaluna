@@ -67,7 +67,9 @@ class PostService
     {
         $post = new Post();
         $post->setAuthor($user);
-        $post->setCreatedAt(new DateTime('now'));
+        $now = new DateTime('now');
+        $post->setCreatedAt($now);
+        $post->setModifiedAt($now);
         $post->setChannel($channel);
         $post->setText($text);
         $post->setImage($imageId ? $this->imageRepository->getReference($imageId) : null);
@@ -88,6 +90,7 @@ class PostService
         $post->setText($text);
         $post->setImage($imageId ? $this->imageRepository->getReference($imageId) : null);
         $post->setExercise($this->exerciseService->updateExercise($post->getExercise(), $exercise));
+        $post->setModifiedAt(new DateTime('now'));
         return $this->postRepository->save($post);
     }
 

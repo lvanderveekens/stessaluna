@@ -43,6 +43,7 @@ class PostToPostDtoConverter
         $dto = new PostDto();
         $dto->id = $post->getId();
         $dto->createdAt = $post->getCreatedAt();
+        $dto->modifiedAt = $post->getModifiedAt();
         $dto->author = $this->userDtoConverter->convert($post->getAuthor());
         $dto->text = $post->getText();
         $dto->channel = $post->getChannel();

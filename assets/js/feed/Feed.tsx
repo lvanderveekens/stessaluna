@@ -39,6 +39,7 @@ const Feed: FC<Props> = ({loading, posts, hasMore, onLoadMore, onDeletePost}) =>
                 <Post
                   id={post.id}
                   timestamp={moment(post.createdAt).fromNow()}
+                  edited={post.createdAt != post.modifiedAt}
                   author={post.author}
                   channel={post.channel}
                   text={post.text}
