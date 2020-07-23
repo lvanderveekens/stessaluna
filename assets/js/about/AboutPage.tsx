@@ -14,13 +14,13 @@ const AboutPage: FC = ({}) => {
     <Container className={styles.content}>
       <Row className="justify-content-center">
         <Col {...COLUMN_BREAKPOINTS}>
-          <div className={styles.imageWrapper}>
-            <img src={meImagePath}/>
-          </div>
           <p>
             Hi <span className={styles.emoji}>👋🏻</span>, my name is Luciano and I'm the founder of Stessaluna, a
             social platform for community-driven language learning exercises.
           </p>
+          <div className={styles.imageWrapper}>
+            <img src={meImagePath}/>
+          </div>
           <p>
             Taking a couple of minutes each day to practice a language is fundamental to improve over time and with
             this platform I wanted to create such an environment where people can do just that by scrolling through a

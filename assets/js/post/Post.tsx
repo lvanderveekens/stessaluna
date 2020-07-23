@@ -143,7 +143,11 @@ const Post: FunctionComponent<Props> = (
             </div>
           </div>
         )}
-        {exercise && renderExercise()}
+        {exercise && (
+          <div className={styles.exerciseWrapper}>
+            {renderExercise()}
+          </div>
+        )}
       </div>
       <div className={styles.activity}>
         {exercise && exercise.answerCount > 0 && <div>Answers: {exercise.answerCount}</div>}
