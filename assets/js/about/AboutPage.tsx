@@ -36,7 +36,7 @@ const AboutPage: FC = ({}) => {
             me or you just want to say Hi, send me an email.
           </p>
           <div className={styles.mailLinkWrapper}>
-            <a href="mailto:info@stessaluna.com"><FontAwesomeIcon icon={faPaperPlane}/> Mail me</a>
+            <a href="mailto:luciano@stessaluna.com"><FontAwesomeIcon icon={faPaperPlane}/> Mail me</a>
           </div>
           <p>
             Or if you <span className={styles.emoji}>❤️</span> what I’m doing and want to support development and
