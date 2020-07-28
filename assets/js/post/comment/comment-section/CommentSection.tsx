@@ -64,8 +64,12 @@ const CommentSection: FunctionComponent<Props> = ({
                 onDelete={() => deleteComment(comment.id)}
               />
             ))}
+          {!loggedIn && (
+            <div className={styles.loginSignupLinkWrapper}>
+              <Link to="/login">Log in or sign up to add a comment</Link>
+            </div>
+          )}
           {user && <NewCommentForm onSubmit={addComment} avatar={user.avatar.url}/>}
-          {!loggedIn && <div><Link to="/login">Log in</Link> to add comments</div>}
         </>
       )}
     </div>

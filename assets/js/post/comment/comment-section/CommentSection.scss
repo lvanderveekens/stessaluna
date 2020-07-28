@@ -28,8 +28,34 @@
             &:hover {
                 cursor: pointer;
                 color: black;
+                text-decoration: underline;
             }
         }
 
+    }
+
+    .loginSignupLinkWrapper {
+
+        text-align: center;
+
+        a {
+            display: inline-block;
+            margin: 0 auto;
+
+            text-decoration: none;
+
+            padding: 0.3rem 0.7rem;
+
+            color: white;
+            background-color: $brand-light;
+
+            border-radius: 0.5rem;
+
+            width: 100%;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
     }
 }
