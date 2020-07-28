@@ -21,7 +21,7 @@ const ConfirmDialog: FC<Props> = ({onConfirm, onClose, children}) => {
   }, [])
 
   return (
-    <Modal ref={ref} className={styles.confirmDialog} overlayClassName="align-items-center" onClose={onClose}>
+    <Modal ref={ref} className={styles.confirmDialog} onClose={onClose}>
       <ModalHeader onClose={onClose}>Confirm</ModalHeader>
       <ModalContent>
         {children}

@@ -84,7 +84,7 @@ const Post: FunctionComponent<Props> = (
   const renderExercise = () => {
     const props = {
       ...exercise,
-      disabled: !user || user.id == author.id,
+      disabled: isAuthor(user),
     }
 
     switch (exercise.type) {

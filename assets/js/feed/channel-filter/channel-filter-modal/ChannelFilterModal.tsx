@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react'
+import React, {FC, useEffect, useRef, useState} from 'react'
 import Modal from "../../../modal/Modal";
 import ModalHeader from "../../../modal/modal-header/ModalHeader";
 import ModalContent from "../../../modal/modal-content/ModalContent";
@@ -16,6 +16,11 @@ interface Props {
 const ChannelFilterModal: FC<Props> = ({appliedChannels, onApply, onClose}) => {
 
   const [selectedChannels, setSelectedChannels] = useState(appliedChannels)
+  const modalRef = useRef(null)
+
+  useEffect(() => {
+    modalRef.current.focus({preventScroll: true})
+  }, [])
 
   const toggleCheckbox = (channel) => () => {
     if (selectedChannels.includes(channel)) {
@@ -30,7 +35,7 @@ const ChannelFilterModal: FC<Props> = ({appliedChannels, onApply, onClose}) => {
   const handleApply = () => onApply(selectedChannels);
 
   return (
-    <Modal className={styles.channelFilterModal} onClose={onClose}>
+    <Modal ref={modalRef} className={styles.channelFilterModal} onClose={onClose}>
       <ModalHeader onClose={onClose}>Channel filter</ModalHeader>
       <ModalContent className="mb-3">
         {ISO6391.getLanguages(ISO6391.getAllCodes())

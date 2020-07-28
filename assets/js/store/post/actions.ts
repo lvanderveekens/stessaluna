@@ -11,7 +11,8 @@ import {
   FETCH_POSTS_ERROR,
   FETCH_POSTS_PENDING,
   FETCH_POSTS_SUCCESS,
-  SUBMIT_ANSWER_SUCCESS, UPDATE_POST_SUCCESS
+  SUBMIT_ANSWER_SUCCESS,
+  UPDATE_POST_SUCCESS
 } from "./actionTypes"
 import Image from "../../image/image.interface";
 

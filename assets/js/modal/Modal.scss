@@ -12,14 +12,7 @@
 
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-
-    // TODO: only for post modal?
-
-    // TODO: this breaks the confirm dialog...
-    //align-items: center;
-
-    //display: inline-block;
+    align-items: center;
 }
 
 .modal {
@@ -29,7 +22,6 @@
     flex-direction: column;
 
     background-color: white;
-    //overflow: hidden;
 
     padding: 1rem;
     outline: none;

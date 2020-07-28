@@ -98,7 +98,7 @@ const PostModalForm: FC<Props> = ({initialValues, headerText, onSubmit, submitTe
       initialValues={initialValues}
     >
       {({handleSubmit, setFieldValue, values, isValid, isSubmitting, errors, dirty}) => (
-        <Modal ref={ref} className={styles.postModalForm} onClose={onClose}>
+        <Modal ref={ref} className={styles.postModalForm} overlayClassName="align-items-start" onClose={onClose}>
           <ModalHeader onClose={onClose}>{headerText}</ModalHeader>
           <ModalContent>
             <Form id="post-modal-form" noValidate onSubmit={handleSubmit}>

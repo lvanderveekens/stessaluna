@@ -28,10 +28,8 @@
             &:hover {
                 cursor: pointer;
                 color: black;
-                text-decoration: underline;
             }
         }
-
     }
 
     .loginSignupLinkWrapper {
@@ -49,7 +47,7 @@
             color: white;
             background-color: $brand-light;
 
-            border-radius: 0.5rem;
+            border-radius: 2rem;
 
             width: 100%;
 

@@ -1,10 +1,8 @@
-import React, { FC, useEffect, useState } from "react"
+import React, {FC, useEffect, useState} from "react"
 import WhatdoyouseeExercise from "./WhatdoyouseeExercise"
-import { submitAnswer } from "../../store/post/actions"
-import { connect } from "react-redux"
-import { WhatdoyouseeAnswer } from "../answer/answer.model"
-import { State } from "../../store"
-import { setNestedObjectValues } from "formik"
+import {submitAnswer} from "../../store/post/actions"
+import {connect} from "react-redux"
+import {WhatdoyouseeAnswer} from "../answer/answer.model"
 import Image from "../../image/image.interface";
 
 interface Props {

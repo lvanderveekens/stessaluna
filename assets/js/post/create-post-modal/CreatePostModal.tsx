@@ -1,14 +1,10 @@
-import React, {FC} from "react"
+import React, {FC, useEffect, useRef} from "react"
 import {useHistory} from "react-router-dom"
 import {connect} from "react-redux"
-import Modal from "../../modal/Modal"
-import ModalHeader from "../../modal/modal-header/ModalHeader";
-import ModalContent from "../../modal/modal-content/ModalContent";
 import {createPost} from "../../store/post/actions";
 import PostModalForm, {Values as PostValues} from "../post-modal-form/PostModalForm";
 import ExerciseInputValues from "../post-modal-form/exercise-input/exercise-input.model";
 import Image from "../../image/image.interface";
-import styles from './CreatePostModal.scss?module'
 
 interface Props {
   onClose: () => void
@@ -18,6 +14,11 @@ interface Props {
 
 const CreatePostModal: FC<Props> = ({onClose, createPost}) => {
   const history = useHistory()
+  const modalRef = useRef(null)
+
+  useEffect(() => {
+    modalRef.current.focus({preventScroll: true})
+  }, [])
 
   const handleSubmit = ({channel, text, image, exercise}: PostValues, onCancel, onError) => {
     createPost(channel, text, image, exercise)
@@ -27,6 +28,7 @@ const CreatePostModal: FC<Props> = ({onClose, createPost}) => {
 
   return (
     <PostModalForm
+      ref={modalRef}
       initialValues={{channel: null, text: null, image: null, exercise: null}}
       headerText="Create new post"
       onSubmit={handleSubmit}
