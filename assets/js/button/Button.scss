@@ -13,9 +13,15 @@
         outline: none;
     }
 
-    &.transparent {
+    &.transparent-light {
         background-color: inherit;
         border: 1px solid white;
+    }
+
+    &.transparent-dark {
+        background-color: inherit;
+        border: 1px solid black;
+        color: black;
     }
 
     &.dark {

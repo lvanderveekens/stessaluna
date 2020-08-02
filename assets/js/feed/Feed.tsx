@@ -56,7 +56,7 @@ const Feed: FC<Props> = ({loading, posts, hasMore, onLoadMore, onDeletePost}) =>
       {loading && (<FeedPlaceholder/>)}
       {hasMore && (
         <div className={styles.loadMoreWrapper}>
-          <Button variant="transparent" onClick={onLoadMore}>Load more</Button>
+          <Button variant="transparent-light" onClick={onLoadMore}>Load more</Button>
         </div>
       )}
     </div>

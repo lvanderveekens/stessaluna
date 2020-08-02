@@ -67,7 +67,7 @@ const LoginForm: FC<Props> = ({ onSubmit }) => {
               </Link>
             </div>
           </Form.Group>
-          <Button className={styles.submitButton} variant="transparent" type="submit" disabled={!isValid || isSubmitting}>
+          <Button className={styles.submitButton} variant="transparent-light" type="submit" disabled={!isValid || isSubmitting}>
             Log in
           </Button>
           {errorMessage && (

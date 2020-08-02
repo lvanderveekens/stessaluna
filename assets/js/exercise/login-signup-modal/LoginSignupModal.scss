@@ -1,0 +1,28 @@
+
+.loginSignupModal {
+
+    .loginButton {
+        padding: 0.5rem 0;
+        margin-bottom: 1rem;
+    }
+
+    .signupButton {
+        padding: 0.5rem 0;
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        .line {
+            border-top: 1px solid black;
+            height: 0;
+            flex-grow: 1;
+        }
+
+        .text {
+            padding: 0 1rem;
+        }
+    }
+}
