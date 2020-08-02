@@ -1,7 +1,6 @@
 import React, {FC, useEffect} from "react"
-import { useHistory } from "react-router-dom"
+import {useHistory, useLocation} from "react-router-dom"
 import {Route, Switch} from "react-router"
-import {useLocation} from "react-router-dom"
 import HomePage from "../home/HomePage"
 import LoginPage from "../login/LoginPage"
 import NotFoundPage from "../not-found/NotFoundPage"
@@ -19,20 +18,36 @@ const Routes: FC = () => {
   const location = useLocation()
   const history = useHistory()
   const previousLocation = usePrevious(location)
+  const modalPaths = ["/create-post", "/edit-post"]
 
-  const getLocation = () => {
-    if (location.pathname.startsWith("/create-post")) {
-      if (previousLocation && !previousLocation.pathname.startsWith("/create-post")) {
-        return previousLocation
-      } else {
-        return { ...location, pathname: "/" }
+  const hasModalPath = (location?) => {
+    if (!location) {
+      return false
+    }
+    for (const modalPath of modalPaths) {
+      if (location.pathname.startsWith(modalPath)) {
+        return true
       }
     }
-    if (location.pathname.startsWith("/edit-post")) {
-      if (previousLocation && !previousLocation.pathname.startsWith("/edit-post")) {
-        return previousLocation
-      } else {
-        return { ...location, pathname: "/" }
+    return false
+  }
+
+  useEffect(() => {
+    if (hasModalPath(location) || hasModalPath(previousLocation)) {
+      return
+    }
+    // scroll to top when pathname changes
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  const getLocation = () => {
+    for (const modalPath of modalPaths) {
+      if (location.pathname.startsWith(modalPath)) {
+        if (previousLocation && !previousLocation.pathname.startsWith(modalPath)) {
+          return previousLocation
+        } else {
+          return { ...location, pathname: "/" }
+        }
       }
     }
     return location
