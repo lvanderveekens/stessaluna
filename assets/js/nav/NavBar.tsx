@@ -20,7 +20,7 @@ const cx = classNames.bind(styles)
 interface Props {
   pageTitle: string
   loggedIn: boolean
-  logOut: () => void
+  logOut: () => Promise<void>
 }
 
 const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
@@ -55,8 +55,8 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, logOut}) => {
   const closeMenu = () => setExpanded(false)
 
   const handleLogOutClick = () => {
-    closeMenu()
     logOut()
+      .then(() => closeMenu())
   }
 
   return (

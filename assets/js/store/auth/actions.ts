@@ -1,5 +1,4 @@
 import axios from "../../http/client"
-import {objectToFormData} from "object-to-formdata"
 import {
   FETCH_CURRENT_USER_ERROR,
   FETCH_CURRENT_USER_PENDING,
@@ -16,8 +15,10 @@ export const logIn = (username, password) => {
     return axios
       .post("/api/token", { username, password })
       .then((res) => {
-        dispatch(success())
-        dispatch(fetchCurrentUser())
+        return Promise.all([
+          dispatch(success()),
+          dispatch(fetchCurrentUser()),
+        ])
       })
       .catch((error) => {
         console.log(error)
@@ -32,7 +33,7 @@ export const logIn = (username, password) => {
 
 export const logOut = () => {
   return (dispatch) => {
-    axios
+    return axios
       .post("/api/logout")
       .then((res) => {
         dispatch(success())
