@@ -1,6 +1,7 @@
-import React, {FC} from "react"
+import React, {FC, useState} from "react"
 import styles from "./MissingwordExercise.scss?module"
 import ExerciseOption from "../exercise-option/ExerciseOption"
+import LoginSignupModal from "../login-signup-modal/LoginSignupModal";
 
 interface Props {
   textBefore: string
@@ -14,6 +15,7 @@ interface Props {
   selected?: number
   disabled: boolean
   onSubmit: (answer: number) => void
+  loggedIn: boolean
 }
 
 const MissingwordExercise: FC<Props> = ({
@@ -28,7 +30,19 @@ const MissingwordExercise: FC<Props> = ({
   selected,
   disabled,
   onSubmit,
+  loggedIn,
 }) => {
+
+  const [showLoginSignupModal, setShowLoginSignupModal] = useState(false)
+
+  const handleOptionClick = (option: number) => () => {
+    if (!loggedIn) {
+      setShowLoginSignupModal(true)
+      return
+    }
+    onSubmit(option)
+  }
+
   return (
     <div className={styles.missingwordExercise}>
       <div className={styles.header}>
@@ -44,7 +58,7 @@ const MissingwordExercise: FC<Props> = ({
           <ExerciseOption
             className="mr-2"
             value={option1}
-            onClick={() => onSubmit(1)}
+            onClick={handleOptionClick(1)}
             selected={selected === 1}
             correct={answer && correct === 1}
             answer={answer === 1}
@@ -53,7 +67,7 @@ const MissingwordExercise: FC<Props> = ({
           <ExerciseOption
             className="ml-2"
             value={option2}
-            onClick={() => onSubmit(2)}
+            onClick={handleOptionClick(2)}
             selected={selected === 2}
             correct={answer && correct === 2}
             answer={answer === 2}
@@ -64,7 +78,7 @@ const MissingwordExercise: FC<Props> = ({
           <ExerciseOption
             className="mr-2"
             value={option3}
-            onClick={() => onSubmit(3)}
+            onClick={handleOptionClick(3)}
             selected={selected === 3}
             correct={answer && correct === 3}
             answer={answer === 3}
@@ -73,7 +87,7 @@ const MissingwordExercise: FC<Props> = ({
           <ExerciseOption
             className="ml-2"
             value={option4}
-            onClick={() => onSubmit(4)}
+            onClick={handleOptionClick(4)}
             selected={selected === 4}
             correct={answer && correct === 4}
             answer={answer === 4}
@@ -81,6 +95,7 @@ const MissingwordExercise: FC<Props> = ({
           />
         </div>
       </div>
+      {showLoginSignupModal && (<LoginSignupModal onClose={() => setShowLoginSignupModal(false)}/>)}
     </div>
   )
 }

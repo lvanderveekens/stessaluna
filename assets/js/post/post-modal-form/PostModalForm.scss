@@ -2,6 +2,16 @@
 
 .postModalForm {
 
+    @media (max-width: 767px) {
+        width: 100%;
+        height: 100%;
+        max-height: unset;
+
+        border: none;
+        border-radius: unset;
+        margin: 0;
+    }
+
     .channelWrapper {
         margin-bottom: 1rem;
 

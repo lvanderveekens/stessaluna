@@ -82,11 +82,7 @@ const Post: FunctionComponent<Props> = (
   }
 
   const renderExercise = () => {
-    const props = {
-      ...exercise,
-      disabled: isAuthor(user),
-    }
-
+    const props = {...exercise, disabled: isAuthor(user)}
     switch (exercise.type) {
       case ExerciseType.A_OR_B:
         return <AorbExercise {...props} />

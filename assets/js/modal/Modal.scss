@@ -26,19 +26,21 @@
     padding: 1rem;
     outline: none;
 
-    width: 100%;
-    height: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 0.5rem;
 
-    @media (min-width: 768px) {
-        border: 1px solid #ced4da;
-        border-radius: 0.5rem;
+    margin: 70px 0 80px 0;
+    max-height: calc(100% - 150px); // minus top and bottom margin
 
-        margin: 70px 0 80px 0;
+    //width: 100%;
+    //height: 100%;
 
-        width: 600px;
-        height: unset;
-        max-height: calc(100% - 150px); // minus top and bottom margin
-    }
+    //@media (min-width: 768px) {
+    //
+    //    width: 600px;
+    //    height: unset;
+    //    max-height: calc(100% - 150px); // minus top and bottom margin
+    //}
 }
 
 

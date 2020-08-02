@@ -4,6 +4,7 @@ import {submitAnswer} from "../../store/post/actions"
 import {connect} from "react-redux"
 import {WhatdoyouseeAnswer} from "../answer/answer.model"
 import Image from "../../image/image.interface";
+import {State} from "../../store";
 
 interface Props {
   id: number
@@ -16,6 +17,7 @@ interface Props {
   answer?: number
   disabled: boolean
   submitAnswer: (exerciseId: number, answer: WhatdoyouseeAnswer) => Promise<void>
+  loggedIn: boolean
 }
 
 const WhatdoyouseeExerciseContainer: FC<Props> = ({
@@ -29,6 +31,7 @@ const WhatdoyouseeExerciseContainer: FC<Props> = ({
   answer,
   submitAnswer,
   disabled,
+  loggedIn,
 }) => {
   const [selected, setSelected] = useState(0)
 
@@ -57,12 +60,18 @@ const WhatdoyouseeExerciseContainer: FC<Props> = ({
       selected={selected}
       disabled={disabled}
       onSubmit={handleSubmit}
+      loggedIn={loggedIn}
     />
   )
 }
+
+
+const mapStateToProps = (state: State) => ({
+  loggedIn: state.auth.loggedIn
+})
 
 const actionCreators = {
   submitAnswer,
 }
 
-export default connect(null, actionCreators)(WhatdoyouseeExerciseContainer)
+export default connect(mapStateToProps, actionCreators)(WhatdoyouseeExerciseContainer)

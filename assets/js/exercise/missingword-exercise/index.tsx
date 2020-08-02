@@ -1,8 +1,9 @@
-import React, { FC, useEffect, useState } from "react"
-import { connect } from "react-redux"
-import { submitAnswer } from "../../store/post/actions"
-import { MissingwordAnswer } from "../answer/answer.model"
+import React, {FC, useEffect, useState} from "react"
+import {connect} from "react-redux"
+import {submitAnswer} from "../../store/post/actions"
+import {MissingwordAnswer} from "../answer/answer.model"
 import MissingwordExercise from "./MissingwordExercise"
+import {State} from "../../store";
 
 interface Props {
   id: number
@@ -16,6 +17,7 @@ interface Props {
   answer?: number
   disabled: boolean
   submitAnswer: (exerciseId: number, answer: MissingwordAnswer) => Promise<void>
+  loggedIn: boolean
 }
 
 const MissingwordExerciseContainer: FC<Props> = ({
@@ -30,6 +32,7 @@ const MissingwordExerciseContainer: FC<Props> = ({
   answer,
   disabled,
   submitAnswer,
+  loggedIn,
 }) => {
   const [selected, setSelected] = useState(0)
 
@@ -59,12 +62,17 @@ const MissingwordExerciseContainer: FC<Props> = ({
       selected={selected}
       disabled={disabled}
       onSubmit={handleSubmit}
+      loggedIn={loggedIn}
     />
   )
 }
+
+const mapStateToProps = (state: State) => ({
+  loggedIn: state.auth.loggedIn
+})
 
 const actionCreators = {
   submitAnswer,
 }
 
-export default connect(null, actionCreators)(MissingwordExerciseContainer)
+export default connect(mapStateToProps, actionCreators)(MissingwordExerciseContainer)
