@@ -30,7 +30,7 @@ const CreatePostModal: FC<Props> = ({onClose, createPost}) => {
     <PostModalForm
       ref={modalRef}
       initialValues={{channel: null, text: null, image: null, exercise: null}}
-      headerText="Create new post"
+      headerText="Create post"
       onSubmit={handleSubmit}
       submitText="Create"
       onClose={onClose}

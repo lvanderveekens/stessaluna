@@ -66,7 +66,7 @@ const CommentSection: FunctionComponent<Props> = ({
             ))}
           {!loggedIn && (
             <div className={styles.loginSignupLinkWrapper}>
-              <Link to="/login">Log in or sign up to add a comment</Link>
+              <Link to="/login">Log in or sign up to add comments</Link>
             </div>
           )}
           {user && <NewCommentForm onSubmit={addComment} avatar={user.avatar.url}/>}
