@@ -71,7 +71,7 @@ const PostModalForm: FC<Props> = ({initialValues, headerText, onSubmit, submitTe
     )
   }
 
-  const allNull = (...values) => values.every((element) => element === null)
+  const allNullOrEmpty = (...values) => values.every((element) => !element || element.length === 0)
 
   const createExercise = (type: string, setFieldValue) => {
     let exercise;
@@ -167,9 +167,11 @@ const PostModalForm: FC<Props> = ({initialValues, headerText, onSubmit, submitTe
                       <Dropdown.Item onClick={() => createExercise(ExerciseType.A_OR_B, setFieldValue)}>
                         A or B
                       </Dropdown.Item>
+                      <Dropdown.Divider/>
                       <Dropdown.Item onClick={() => createExercise(ExerciseType.WHAT_DO_YOU_SEE, setFieldValue)}>
                         What do you see
                       </Dropdown.Item>
+                      <Dropdown.Divider/>
                       <Dropdown.Item onClick={() => createExercise(ExerciseType.MISSING_WORD, setFieldValue)}>
                         Missing word
                       </Dropdown.Item>
@@ -184,7 +186,7 @@ const PostModalForm: FC<Props> = ({initialValues, headerText, onSubmit, submitTe
               className={styles.submitButton}
               type="submit"
               form="post-modal-form"
-              disabled={allNull(values.text, values.image, values.exercise) || !isValid || isSubmitting || !dirty}
+              disabled={allNullOrEmpty(values.text, values.image, values.exercise) || !isValid || isSubmitting || !dirty}
             >
               {submitText}
             </Button>

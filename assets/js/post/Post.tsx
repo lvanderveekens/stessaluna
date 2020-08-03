@@ -125,6 +125,7 @@ const Post: FunctionComponent<Props> = (
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item as={Link} to={`/edit-post/${id}`}>Edit</Dropdown.Item>
+                  <Dropdown.Divider/>
                   <Dropdown.Item onClick={onDelete}>Delete</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

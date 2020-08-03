@@ -92,7 +92,7 @@ const EditPostModal: FC<Props> = ({findPost, onClose, updatePost}) => {
       />
       {showExerciseUpdateConfirmDialog && (
         <ConfirmDialog onConfirm={handleConfirmDialog} onClose={handleCloseDialog}>
-          <p>By changing the exercise you invalidate all existing answers.</p>
+          <p>Changing the exercise will delete all answers.</p>
           <p>Are you sure?</p>
         </ConfirmDialog>
       )}
