@@ -7,7 +7,7 @@ namespace Stessaluna\Exception\EventSubscriber;
 use Google\Cloud\ErrorReporting\Bootstrap;
 use Psr\Log\LoggerInterface;
 use Stessaluna\Exception\NotAuthorException;
-use Stessaluna\Exception\NotFoundException;
+use Stessaluna\Exception\ResourceNotFoundException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,7 +57,7 @@ class ExceptionSubscriber implements EventSubscriberInterface
         if ($exception instanceof HttpExceptionInterface) {
             $response->setStatusCode($exception->getStatusCode());
             $response->headers->replace($exception->getHeaders());
-        } elseif ($exception instanceof NotFoundException) {
+        } elseif ($exception instanceof ResourceNotFoundException) {
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
         } elseif ($exception instanceof NotAuthorException) {
             $response->setStatusCode(Response::HTTP_FORBIDDEN);

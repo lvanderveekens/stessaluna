@@ -3,16 +3,13 @@ declare(strict_types=1);
 
 namespace Stessaluna\User;
 
-use DateTime;
 use Psr\Log\LoggerInterface;
-use Stessaluna\Exception\NotFoundException;
 use Stessaluna\User\Entity\User;
 use Stessaluna\User\Repository\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 class PasswordResetter

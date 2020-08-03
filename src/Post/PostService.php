@@ -6,14 +6,14 @@ namespace Stessaluna\Post;
 
 use DateTime;
 use Psr\Log\LoggerInterface;
+use Stessaluna\Exception\NotAuthorException;
+use Stessaluna\Exception\ResourceNotFoundException;
 use Stessaluna\Exercise\Entity\Exercise;
 use Stessaluna\Exercise\ExerciseService;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
 use Stessaluna\Image\Repository\ImageRepository;
 use Stessaluna\Image\Storage\ImageStorage;
 use Stessaluna\Post\Entity\Post;
-use Stessaluna\Post\Exception\NotPostAuthorException;
-use Stessaluna\Post\Exception\PostNotFoundException;
 use Stessaluna\Post\Repository\PostRepository;
 use Stessaluna\User\Entity\User;
 
@@ -40,8 +40,13 @@ class PostService
      */
     private $exerciseService;
 
-    public function __construct(LoggerInterface $logger, PostRepository $postRepository, ImageStorage $imageStorage,
-                                ImageRepository $imageRepository, ExerciseService $exerciseService)
+    public function __construct(
+        LoggerInterface $logger,
+        PostRepository $postRepository,
+        ImageStorage $imageStorage,
+        ImageRepository $imageRepository,
+        ExerciseService $exerciseService
+    )
     {
         $this->logger = $logger;
         $this->postRepository = $postRepository;
@@ -63,6 +68,11 @@ class PostService
         return $posts;
     }
 
+    public function findPost(int $id): ?Post
+    {
+        return $this->postRepository->find($id);
+    }
+
     public function createPost(string $channel, ?string $text, ?int $imageId, ?Exercise $exercise, User $user): Post
     {
         $post = new Post();
@@ -81,10 +91,10 @@ class PostService
     {
         $post = $this->postRepository->find($id);
         if (!$post) {
-            throw new PostNotFoundException($id);
+            throw new ResourceNotFoundException('Post not found for id: ' . $id);
         }
         if ($user->getId() != $post->getAuthor()->getId()) {
-            throw new NotPostAuthorException($id);
+            throw new NotAuthorException('Not author of post: ' . $id);
         }
         $post->setChannel($channel);
         $post->setText($text);
@@ -98,10 +108,10 @@ class PostService
     {
         $post = $this->postRepository->find($id);
         if (!$post) {
-            throw new PostNotFoundException($id);
+            throw new ResourceNotFoundException('Post not found for id: ' . $id);
         }
         if ($user->getId() != $post->getAuthor()->getId()) {
-            throw new NotPostAuthorException($id);
+            throw new NotAuthorException('Not author of post: ' . $id);
         }
 
         if ($post->getImage()) {
@@ -117,6 +127,5 @@ class PostService
             }
         }
         $this->postRepository->delete($post);
-
     }
 }

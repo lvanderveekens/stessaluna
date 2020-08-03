@@ -100,10 +100,10 @@ export const deletePost = (id: number) => {
   }
 }
 
-export const addComment = (postId, text) => {
+export const addComment = (postId: number, text: string) => {
   return (dispatch) => {
     return axios
-      .post(`/api/posts/${postId}/comments`, {text})
+      .post(`/api/comments`, {postId, text})
       .then((res) => {
         dispatch(success(postId, res.data))
       })
@@ -118,10 +118,10 @@ export const addComment = (postId, text) => {
   }
 }
 
-export const deleteComment = (postId, commentId) => {
+export const deleteComment = (postId: number, commentId: number) => {
   return (dispatch) => {
     return axios
-      .delete(`/api/posts/${postId}/comments/${commentId}`)
+      .delete(`/api/comments/${commentId}`)
       .then((res) => {
         dispatch(success(postId, commentId))
       })

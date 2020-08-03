@@ -7,6 +7,7 @@ namespace Stessaluna\Post\Controller;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Stessaluna\Exercise\Dto\ExerciseDtoToExerciseConverter;
+use Stessaluna\Post\Comment\Dto\CommentToCommentDtoConverter;
 use Stessaluna\Post\Dto\CreatePostRequest;
 use Stessaluna\Post\Dto\CreatePostRequestToPostConverter;
 use Stessaluna\Post\Dto\PostToPostDtoConverter;
@@ -40,6 +41,10 @@ class PostController extends AbstractController
      */
     private $exerciseDtoToExerciseConverter;
     /**
+     * @var CommentToCommentDtoConverter
+     */
+    private $commentToCommentDtoConverter;
+    /**
      * @var SerializerInterface
      */
     private $serializer;
@@ -52,6 +57,7 @@ class PostController extends AbstractController
         PostToPostDtoConverter $postToPostDtoConverter,
         PostService $postService,
         ExerciseDtoToExerciseConverter $exerciseDtoToExerciseConverter,
+        CommentToCommentDtoConverter $commentToCommentDtoConverter,
         SerializerInterface $serializer,
         LoggerInterface $logger
     )
@@ -59,6 +65,7 @@ class PostController extends AbstractController
         $this->postToPostDtoConverter = $postToPostDtoConverter;
         $this->postService = $postService;
         $this->exerciseDtoToExerciseConverter = $exerciseDtoToExerciseConverter;
+        $this->commentToCommentDtoConverter = $commentToCommentDtoConverter;
         $this->serializer = $serializer;
         $this->logger = $logger;
     }

@@ -1,51 +1,45 @@
 <?php
+declare(strict_types=1);
 
 namespace Stessaluna\Post\Comment\Controller;
 
-use DateTime;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Stessaluna\Post\Comment\CommentService;
+use Stessaluna\Post\Comment\Dto\AddCommentRequest;
 use Stessaluna\Post\Comment\Dto\CommentToCommentDtoConverter;
-use Stessaluna\Post\Comment\Entity\Comment;
-use Stessaluna\Post\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Route("/api/posts/{postId}/comments")
+ * @Route("/api/comments")
  *
  * @IsGranted("IS_AUTHENTICATED_ANONYMOUSLY")
  */
 class CommentController extends AbstractController
 {
+    /** @var CommentService */
+    private $commentService;
+
     /** @var CommentToCommentDtoConverter */
     private $commentToCommentDtoConverter;
 
     /** @var LoggerInterface */
     private $logger;
 
-    public function __construct(CommentToCommentDtoConverter $commentToCommentDtoConverter, LoggerInterface $logger)
+    public function __construct(
+        CommentService $commentService,
+        CommentToCommentDtoConverter $commentToCommentDtoConverter,
+        LoggerInterface $logger
+    )
     {
+        $this->commentService = $commentService;
         $this->commentToCommentDtoConverter = $commentToCommentDtoConverter;
         $this->logger = $logger;
-    }
-
-    /**
-     * @Route(methods={"GET"})
-     */
-    public function getComments(int $postId): JsonResponse
-    {
-        $comments = $this->getDoctrine()
-            ->getRepository(Comment::class)
-            ->findBy(array('post' => $postId));
-
-        return $this->json(array_map(function (Comment $comment) {
-            return $this->commentToCommentDtoConverter->convert($comment);
-        }, $comments));
     }
 
     /**
@@ -53,22 +47,17 @@ class CommentController extends AbstractController
      *
      * @IsGranted("ROLE_USER")
      */
-    public function addComment(int $postId, Request $request): JsonResponse
+    public function addComment(Request $request, SerializerInterface $serializer): JsonResponse
     {
-        $user = $this->getUser();
-        $em = $this->getDoctrine()->getManager();
-        $post = $em->getRepository(Post::class)->find($postId);
+        /* @var $addCommentRequest AddCommentRequest */
+        $addCommentRequest = $serializer->deserialize($request->getContent(), AddCommentRequest::class, 'json');
 
-        $comment = new Comment();
-        $comment->setPost($post);
-        $comment->setUser($user);
-        $comment->setCreatedAt(new DateTime('now'));
-        $comment->setText($request->get('text'));
-
-        $em->persist($comment);
-        $em->flush();
-
-        return $this->json($this->commentToCommentDtoConverter->convert($comment));
+        $comment = $this->commentService->addComment(
+            $addCommentRequest->postId,
+            $addCommentRequest->text,
+            $this->getUser()
+        );
+        return $this->json($this->commentToCommentDtoConverter->convert($comment), 201);
     }
 
     /**
@@ -76,17 +65,9 @@ class CommentController extends AbstractController
      *
      * @IsGranted("ROLE_USER")
      */
-    public function deleteCommentById(int $id)
+    public function deleteComment(int $id): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $comment = $em->getRepository(Comment::class)->find($id);
-
-        if ($this->getUser()->getId() != $comment->getUser()->getId()) {
-            throw new AccessDeniedHttpException("Only the owner can delete this comment");
-        }
-
-        $em->remove($comment);
-        $em->flush();
-        return new Response('Deleted comment with id ' . $id);
+        $this->commentService->deleteComment($id, $this->getUser());
+        return new Response();
     }
 }

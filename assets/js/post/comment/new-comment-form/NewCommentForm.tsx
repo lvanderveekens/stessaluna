@@ -1,7 +1,6 @@
 import {faArrowCircleRight} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {useFormik} from "formik"
-import PropTypes from "prop-types"
 import React, {FC} from "react"
 import TextareaAutosize from "react-textarea-autosize"
 import * as yup from "yup"
@@ -22,10 +21,14 @@ const NewCommentForm: FC<Props> = ({onSubmit, avatar}) => {
     }
   }
 
-  const handleSubmit = (values, {resetForm}) => {
+  const handleSubmit = (values, {resetForm, setSubmitting}) => {
     onSubmit(values.text)
       .then(() => {
         resetForm()
+        setSubmitting(false)
+      })
+      .catch(() => {
+        setSubmitting(false)
       })
   }
 
@@ -63,10 +66,6 @@ const NewCommentForm: FC<Props> = ({onSubmit, avatar}) => {
       </div>
     </form>
   )
-}
-
-NewCommentForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 }
 
 export default NewCommentForm
