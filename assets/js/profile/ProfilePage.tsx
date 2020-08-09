@@ -57,6 +57,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateCurrentUser }) => {
         )}
         <Row className="justify-content-center">
           <Col className={styles.centered} {...COLUMN_BREAKPOINTS}>
+            <h4>Profile</h4>
             {user && (
               <Formik
                 initialValues={{

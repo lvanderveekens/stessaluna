@@ -14,6 +14,7 @@ const AboutPage: FC = ({}) => {
     <Container className={styles.content}>
       <Row className="justify-content-center">
         <Col {...COLUMN_BREAKPOINTS}>
+          <h4>About</h4>
           <p>
             Hi <span className={styles.emoji}>👋🏻</span>, my name is Luciano and I'm the founder of Stessaluna, a
             social platform for community-driven language learning exercises.
