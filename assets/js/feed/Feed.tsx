@@ -54,7 +54,7 @@ const Feed: FC<Props> = ({loading, posts, hasMore, onLoadMore, onDeletePost}) =>
         </TransitionGroup>
       )}
       {loading && (<FeedPlaceholder/>)}
-      {hasMore && (
+      {!loading && hasMore && (
         <div className={styles.loadMoreWrapper}>
           <Button variant="transparent-light" onClick={onLoadMore}>Load more</Button>
         </div>
