@@ -7,7 +7,8 @@ import {
   FETCH_POSTS_ERROR,
   FETCH_POSTS_PENDING,
   FETCH_POSTS_SUCCESS,
-  SUBMIT_ANSWER_SUCCESS, UPDATE_POST_SUCCESS
+  SUBMIT_ANSWER_SUCCESS,
+  UPDATE_POST_SUCCESS
 } from "./actionTypes"
 import {PostState} from "./state.interface"
 
@@ -45,10 +46,11 @@ const postReducer = (state: PostState = initialState, action) => {
         loading: false,
       }
     case CREATE_POST_SUCCESS:
-      return {
-        ...state,
-        data: [...state.data, action.payload.post],
+      const createdPost = action.payload.post
+      if (state.filters.channel.includes(createdPost.channel)) {
+        return {...state, data: [...state.data, createdPost]}
       }
+      return state
     case UPDATE_POST_SUCCESS:
       return {
         ...state,
