@@ -108,7 +108,7 @@ const Post: FunctionComponent<Props> = (
           <div className={styles.usernameTimestampWrapper}>
             <div>{renderUserName()}</div>
             <div className={styles.channelWrapper}>
-              in <span className={styles.channel}>{ISO6391.getName(channel)}</span>&nbsp;
+              posted in <span className={styles.channel}>{ISO6391.getName(channel)}</span>&nbsp;
               {getCountryCode(channel) && (
                 <ReactCountryFlag className={styles.countryFlag} countryCode={getCountryCode(channel)} svg/>
               )}
