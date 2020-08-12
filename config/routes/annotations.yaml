@@ -25,3 +25,7 @@ exercise_controller:
 image_controller:
   resource: ../../src/Image/Controller/
   type: annotation
+
+vote_controller:
+  resource: ../../src/Vote/Controller/
+  type: annotation

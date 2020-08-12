@@ -92,7 +92,7 @@ class PostController extends AbstractController
     public function createPost(Request $request): JsonResponse
     {
         /** @var $createPostRequest CreatePostRequest */
-        $createPostRequest = $this->serializer->deserialize($request->getContent(), CreatePostRequest::class, 'json');
+        $createPostRequest = $this->deserialize($request, CreatePostRequest::class);
         $createdPost = $this->postService->createPost(
             $createPostRequest->channel,
             $createPostRequest->text,

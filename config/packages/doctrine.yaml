@@ -64,3 +64,9 @@ doctrine:
         dir: "%kernel.project_dir%/src/Image/Entity"
         prefix: 'Stessaluna\Image\Entity'
         alias: Image
+      Vote:
+        is_bundle: false
+        type: annotation
+        dir: "%kernel.project_dir%/src/Vote/Entity"
+        prefix: 'Stessaluna\Vote\Entity'
+        alias: Vote

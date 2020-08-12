@@ -8,6 +8,7 @@ use Google\Cloud\ErrorReporting\Bootstrap;
 use Psr\Log\LoggerInterface;
 use Stessaluna\Exception\NotAuthorException;
 use Stessaluna\Exception\ResourceNotFoundException;
+use Stessaluna\Exception\ValidationException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,7 +62,9 @@ class ExceptionSubscriber implements EventSubscriberInterface
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
         } elseif ($exception instanceof NotAuthorException) {
             $response->setStatusCode(Response::HTTP_FORBIDDEN);
-        } elseif ($exception instanceof ResetPasswordExceptionInterface) {
+        } elseif ($exception instanceof ValidationException) {
+            $response->setStatusCode(Response::HTTP_BAD_REQUEST);
+        } elseif ($exception instanceof ResetPasswordExceptionInterface ) {
             $response->setStatusCode(Response::HTTP_BAD_REQUEST);
             $message = $exception->getReason();
         } else {
