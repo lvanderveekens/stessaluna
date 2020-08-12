@@ -5,10 +5,10 @@ namespace Stessaluna\Post\Comment\Controller;
 
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Stessaluna\AbstractController;
 use Stessaluna\Post\Comment\CommentService;
 use Stessaluna\Post\Comment\Dto\AddCommentRequest;
 use Stessaluna\Post\Comment\Dto\CommentToCommentDtoConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

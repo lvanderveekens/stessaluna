@@ -2,10 +2,10 @@
 
 namespace Stessaluna\User\Controller;
 
+use Stessaluna\AbstractController;
 use Stessaluna\User\Dto\UpdateUserRequest;
 use Stessaluna\User\Dto\UserToUserDtoConverter;
 use Stessaluna\User\UserService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

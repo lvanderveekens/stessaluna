@@ -6,15 +6,14 @@ namespace Stessaluna\Post\Controller;
 
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Stessaluna\AbstractController;
 use Stessaluna\Exercise\Dto\ExerciseDtoToExerciseConverter;
 use Stessaluna\Post\Comment\Dto\CommentToCommentDtoConverter;
 use Stessaluna\Post\Dto\CreatePostRequest;
-use Stessaluna\Post\Dto\CreatePostRequestToPostConverter;
 use Stessaluna\Post\Dto\PostToPostDtoConverter;
 use Stessaluna\Post\Dto\UpdatePostRequest;
 use Stessaluna\Post\Entity\Post;
 use Stessaluna\Post\PostService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -76,11 +75,10 @@ class PostController extends AbstractController
     public function getPosts(Request $request): JsonResponse
     {
         $posts = $this->postService->getPosts(
-            $request->query->get('channels'),
+            (array)$request->query->get('channels'),
             (int)$request->query->get('beforeId'),
             (int)$request->query->get('limit')
         );
-
         return $this->json(array_map(function (Post $post) {
             return $this->postToPostDtoConverter->convert($post, $this->getUser());
         }, $posts));
@@ -93,7 +91,7 @@ class PostController extends AbstractController
      */
     public function createPost(Request $request): JsonResponse
     {
-        /* @var $createPostRequest CreatePostRequest */
+        /** @var $createPostRequest CreatePostRequest */
         $createPostRequest = $this->serializer->deserialize($request->getContent(), CreatePostRequest::class, 'json');
         $createdPost = $this->postService->createPost(
             $createPostRequest->channel,
@@ -112,7 +110,7 @@ class PostController extends AbstractController
      */
     public function updatePost(Request $request, int $id): JsonResponse
     {
-        /* @var $updatePostRequest UpdatePostRequest */
+        /** @var $updatePostRequest UpdatePostRequest */
         $updatePostRequest = $this->serializer->deserialize($request->getContent(), UpdatePostRequest::class, 'json');
         $updatedPost = $this->postService->updatePost(
             $id,

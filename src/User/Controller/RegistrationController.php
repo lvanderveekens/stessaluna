@@ -3,17 +3,15 @@
 namespace Stessaluna\User\Controller;
 
 use JsonMapper;
+use Stessaluna\AbstractController;
 use Stessaluna\User\Dto\RegistrationRequest;
 use Stessaluna\User\Entity\User;
 use Stessaluna\User\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Validator\Constraints\Json;
-use function Functional\map;
 
 /**
  * @Route("/api/register")

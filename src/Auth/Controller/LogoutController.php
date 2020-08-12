@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Stessaluna\Auth\Controller;
 
 use Gesdinet\JWTRefreshTokenBundle\Entity\RefreshToken;
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Stessaluna\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

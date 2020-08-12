@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Stessaluna\Image\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Stessaluna\AbstractController;
 use Stessaluna\Image\Dto\ImageToImageDtoConverter;
 use Stessaluna\Image\ImageService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

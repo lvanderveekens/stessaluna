@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stessaluna\Exercise\Controller;
 
 use RuntimeException;
+use Stessaluna\AbstractController;
 use Stessaluna\Exercise\Answer\Dto\RequestToSubmitAnswerConverter;
 use Stessaluna\Exercise\Answer\Dto\SubmitAorbAnswer;
 use Stessaluna\Exercise\Answer\Dto\SubmitMissingwordAnswer;
@@ -15,7 +16,6 @@ use Stessaluna\Exercise\Answer\Entity\MissingwordAnswer;
 use Stessaluna\Exercise\Answer\Entity\WhatdoyouseeAnswer;
 use Stessaluna\Exercise\Dto\ExerciseToExerciseDtoConverter;
 use Stessaluna\Exercise\Repository\ExerciseRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
