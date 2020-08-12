@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Stessaluna\Post\Dto;
 
 use DateTimeInterface;
+use Stessaluna\Comment\Dto\CommentDto;
 use Stessaluna\Exercise\Dto\ExerciseDto;
 use Stessaluna\Image\Dto\ImageDto;
-use Stessaluna\Post\Comment\Dto\CommentDto;
 use Stessaluna\User\Dto\UserDto;
 
 class PostDto

@@ -1,6 +1,6 @@
 <?php
 
-namespace Stessaluna\Post\Comment\Dto;
+namespace Stessaluna\Comment\Dto;
 
 use Stessaluna\User\Dto\UserDto;
 

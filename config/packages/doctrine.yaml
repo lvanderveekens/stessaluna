@@ -55,8 +55,8 @@ doctrine:
       Comment:
         is_bundle: false
         type: annotation
-        dir: "%kernel.project_dir%/src/Post/Comment/Entity"
-        prefix: 'Stessaluna\Post\Comment\Entity'
+        dir: "%kernel.project_dir%/src/Comment/Entity"
+        prefix: 'Stessaluna\Comment\Entity'
         alias: Comment
       Image:
         is_bundle: false

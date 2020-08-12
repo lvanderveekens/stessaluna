@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Stessaluna\Post\Comment\Dto;
+namespace Stessaluna\Comment\Dto;
 
 
 class AddCommentRequest

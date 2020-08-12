@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Stessaluna\Post\Dto;
 
+use Stessaluna\Comment\Dto\CommentToCommentDtoConverter;
 use Stessaluna\Exercise\Dto\ExerciseToExerciseDtoConverter;
 use Stessaluna\Image\Dto\ImageToImageDtoConverter;
-use Stessaluna\Post\Comment\Dto\CommentToCommentDtoConverter;
 use Stessaluna\Post\Entity\Post;
 use Stessaluna\User\Dto\UserToUserDtoConverter;
 use Stessaluna\User\Entity\User;

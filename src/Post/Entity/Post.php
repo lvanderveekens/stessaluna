@@ -7,9 +7,9 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Stessaluna\Comment\Entity\Comment;
 use Stessaluna\Exercise\Entity\Exercise;
 use Stessaluna\Image\Entity\Image;
-use Stessaluna\Post\Comment\Entity\Comment;
 use Stessaluna\User\Entity\User;
 
 /**
@@ -79,7 +79,7 @@ class Post
     private $exercise = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="Stessaluna\Post\Comment\Entity\Comment", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="Stessaluna\Comment\Entity\Comment", mappedBy="post")
      *
      * @var Comment[]
      */

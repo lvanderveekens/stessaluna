@@ -1,9 +1,9 @@
 <?php
 
-namespace Stessaluna\Post\Comment\Dto;
+namespace Stessaluna\Comment\Dto;
 
 use Psr\Log\LoggerInterface;
-use Stessaluna\Post\Comment\Entity\Comment;
+use Stessaluna\Comment\Entity\Comment;
 use Stessaluna\User\Dto\UserToUserDtoConverter;
 
 class CommentToCommentDtoConverter

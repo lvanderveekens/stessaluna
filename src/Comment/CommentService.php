@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Stessaluna\Post\Comment;
+namespace Stessaluna\Comment;
 
 
 use DateTime;
+use Stessaluna\Comment\Entity\Comment;
+use Stessaluna\Comment\Repository\CommentRepository;
 use Stessaluna\Exception\NotAuthorException;
 use Stessaluna\Exception\ResourceNotFoundException;
-use Stessaluna\Post\Comment\Entity\Comment;
-use Stessaluna\Post\Comment\Repository\CommentRepository;
 use Stessaluna\Post\PostService;
 use Stessaluna\User\Entity\User;
 

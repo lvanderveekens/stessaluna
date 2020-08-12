@@ -1,10 +1,10 @@
 <?php
 
-namespace Stessaluna\Post\Comment\Repository;
+namespace Stessaluna\Comment\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Stessaluna\Post\Comment\Entity\Comment;
+use Stessaluna\Comment\Entity\Comment;
 
 /**
  * @method Comment|null find($id, $lockMode = null, $lockVersion = null)

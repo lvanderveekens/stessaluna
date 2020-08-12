@@ -1,6 +1,6 @@
 <?php
 
-namespace Stessaluna\Post\Comment\Entity;
+namespace Stessaluna\Comment\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Stessaluna\Post\Entity\Post;
