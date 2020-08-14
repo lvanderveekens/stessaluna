@@ -16,7 +16,6 @@ use Stessaluna\Post\Entity\Post;
 use Stessaluna\Post\PostService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -128,9 +127,9 @@ class PostController extends AbstractController
      *
      * @IsGranted("ROLE_USER")
      */
-    public function deletePostById(int $id): Response
+    public function deletePostById(int $id): JsonResponse
     {
         $this->postService->deletePostById($id, $this->getUser());
-        return new Response();
+        return new JsonResponse();
     }
 }

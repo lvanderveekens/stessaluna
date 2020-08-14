@@ -29,6 +29,16 @@ class CommentService
         $this->postService = $postService;
     }
 
+
+    public function getComment(int $id): Comment
+    {
+        $comment = $this->commentRepository->find($id);
+        if (!$comment) {
+            throw new ResourceNotFoundException('Comment not found for id: ' . $id);
+        }
+        return $comment;
+    }
+
     public function addComment(int $postId, string $text, User $user): Comment
     {
         $post = $this->postService->findPost($postId);

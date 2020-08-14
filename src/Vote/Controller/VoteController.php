@@ -41,13 +41,22 @@ class VoteController extends AbstractController
             throw new ValidationException($errors->get(0)->getMessage());
         }
 
-//        $vote = $this->voteService->addVote(
-//            $addVoteRequest->type,
-//            $addVoteRequest->postId,
-//            $addVoteRequest->commentId,
-//            $this->getUser()
-//        );
-//        return $this->json($vote);
+        $this->voteService->addVote(
+            $addVoteRequest->type,
+            $addVoteRequest->postId,
+            $addVoteRequest->commentId,
+            $this->getUser()
+        );
+
+        return new JsonResponse();
+    }
+
+    /**
+     * @Route("/{id}", methods={"DELETE"})
+     */
+    public function deleteVote(int $id): JsonResponse
+    {
+        $this->voteService->deleteVote($id);
         return new JsonResponse();
     }
 }
