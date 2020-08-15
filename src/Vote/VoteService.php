@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Stessaluna\Vote;
 
 use Stessaluna\Comment\CommentService;
+use Stessaluna\Exception\ResourceAlreadyExistsException;
 use Stessaluna\Exception\ResourceNotFoundException;
 use Stessaluna\Post\PostService;
 use Stessaluna\User\Entity\User;
@@ -51,8 +52,14 @@ class VoteService
         $vote->setUser($user);
 
         if ($postId != null) {
+            // TODO: block duplicate votes, what about going from UP to DOWN? Is that a PUT?
+            $existingVote = $this->voteRepository->findOneBy(['post_id' => $postId, 'user_id' => $user->getId()]);
+            if ($existingVote) {
+                throw new ResourceAlreadyExistsException("TODO");
+            }
             $vote->setPost($this->postService->getPost($postId));
         } else if ($commentId != null) {
+            // TODO: block duplicate votes
             $vote->setComment($this->commentService->getComment($commentId));
         }
 

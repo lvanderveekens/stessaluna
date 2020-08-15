@@ -21,6 +21,7 @@ import ISO6391 from "iso-639-1"
 import Comment from "./comment/comment.interface";
 import {Link} from "react-router-dom";
 import Image from "../image/image.interface";
+import Vote from "./vote/vote.interface";
 
 interface Props {
   id: number
@@ -33,6 +34,7 @@ interface Props {
   exercise?: Exercise
   onDelete: () => void
   comments: Comment[]
+  votes: Vote[]
   user?: User
 }
 
@@ -48,6 +50,7 @@ const Post: FunctionComponent<Props> = (
     exercise,
     comments,
     onDelete,
+    votes,
     user,
   }
 ) => {

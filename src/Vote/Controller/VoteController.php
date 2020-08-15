@@ -7,13 +7,13 @@ namespace Stessaluna\Vote\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Stessaluna\AbstractController;
 use Stessaluna\Exception\ValidationException;
+use Stessaluna\Validation\ValidatorWrapper;
 use Stessaluna\Vote\Dto\AddVoteRequest;
 use Stessaluna\Vote\Dto\VoteToVoteDtoMapper;
 use Stessaluna\Vote\VoteService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/api/votes")
@@ -41,14 +41,11 @@ class VoteController extends AbstractController
     /**
      * @Route(methods={"POST"})
      */
-    public function addVote(Request $request, ValidatorInterface $validator): JsonResponse
+    public function addVote(Request $request, ValidatorWrapper $validator): JsonResponse
     {
         /** @var $addVoteRequest AddVoteRequest */
-        $addVoteRequest = $this->deserialize($request, AddVoteRequest::class);
-        $errors = $validator->validate($addVoteRequest);
-        if (count($errors) > 0) {
-            throw new ValidationException($errors->get(0)->getMessage());
-        }
+        $addVoteRequest = $this->deserializeJson($request, AddVoteRequest::class);
+        $validator->validate($addVoteRequest);
 
         $vote = $this->voteService->addVote(
             $addVoteRequest->type,
@@ -65,6 +62,7 @@ class VoteController extends AbstractController
      */
     public function deleteVote(int $id): JsonResponse
     {
+        // TODO: make idempotent
         $this->voteService->deleteVote($id);
         return new JsonResponse();
     }

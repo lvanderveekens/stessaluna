@@ -6,16 +6,18 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faEllipsisV} from "@fortawesome/free-solid-svg-icons"
 import CustomToggle from "../../dropdown/custom-toggle/CustomToggle"
 import Avatar from "../../user/avatar/Avatar"
+import Vote from "../vote/vote.interface";
 
 interface Props {
   author: User
   timestamp: string
   text: string
   user?: User
+  votes: Vote[]
   onDelete: () => void
 }
 
-const Comment: FunctionComponent<Props> = ({ author, timestamp, text, user, onDelete }) => {
+const Comment: FunctionComponent<Props> = ({author, timestamp, text, user, votes, onDelete}) => {
   return (
     <div className={styles.comment}>
       <div style={{ marginRight: "0.7rem" }}>

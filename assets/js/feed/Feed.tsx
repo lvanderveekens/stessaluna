@@ -44,6 +44,7 @@ const Feed: FC<Props> = ({loading, posts, hasMore, onLoadMore, onDeletePost}) =>
                   channel={post.channel}
                   text={post.text}
                   image={post.image}
+                  votes={post.votes}
                   exercise={post.exercise}
                   onDelete={() => onDeletePost(post.id)}
                   comments={post.comments}

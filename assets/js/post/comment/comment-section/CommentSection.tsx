@@ -61,6 +61,7 @@ const CommentSection: FunctionComponent<Props> = ({
                 author={comment.user}
                 user={user}
                 text={comment.text}
+                votes={comment.votes}
                 onDelete={() => deleteComment(comment.id)}
               />
             ))}

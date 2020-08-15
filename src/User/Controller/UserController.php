@@ -51,7 +51,7 @@ class UserController extends AbstractController
     public function updateCurrentUser(Request $request): JsonResponse
     {
         /* @var $updateUserRequest UpdateUserRequest */
-        $updateUserRequest = $this->deserialize($request, UpdateUserRequest::class);
+        $updateUserRequest = $this->deserializeJson($request, UpdateUserRequest::class);
 
         $updatedUser = $this->userService->updateUser(
             $this->getUser(),

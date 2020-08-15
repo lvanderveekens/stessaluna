@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AbstractController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController
 {
-    protected function deserialize(Request $request, string $targetClass): object
+    protected function deserializeJson(Request $request, string $targetClass): object
     {
         return $this->get('serializer')->deserialize($request->getContent(), $targetClass, 'json');
     }

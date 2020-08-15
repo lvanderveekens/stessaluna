@@ -7,8 +7,9 @@ namespace Stessaluna\Exception\EventSubscriber;
 use Google\Cloud\ErrorReporting\Bootstrap;
 use Psr\Log\LoggerInterface;
 use Stessaluna\Exception\NotAuthorException;
+use Stessaluna\Exception\ResourceAlreadyExistsException;
 use Stessaluna\Exception\ResourceNotFoundException;
-use Stessaluna\Exception\ValidationException;
+use Stessaluna\Validation\ValidationException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,15 +59,17 @@ class ExceptionSubscriber implements EventSubscriberInterface
         if ($exception instanceof HttpExceptionInterface) {
             $response->setStatusCode($exception->getStatusCode());
             $response->headers->replace($exception->getHeaders());
-        } elseif ($exception instanceof ResourceNotFoundException) {
-            $response->setStatusCode(Response::HTTP_NOT_FOUND);
-        } elseif ($exception instanceof NotAuthorException) {
-            $response->setStatusCode(Response::HTTP_FORBIDDEN);
         } elseif ($exception instanceof ValidationException) {
             $response->setStatusCode(Response::HTTP_BAD_REQUEST);
-        } elseif ($exception instanceof ResetPasswordExceptionInterface ) {
+        } elseif ($exception instanceof ResetPasswordExceptionInterface) {
             $response->setStatusCode(Response::HTTP_BAD_REQUEST);
             $message = $exception->getReason();
+        } elseif ($exception instanceof NotAuthorException) {
+            $response->setStatusCode(Response::HTTP_FORBIDDEN);
+        } elseif ($exception instanceof ResourceNotFoundException) {
+            $response->setStatusCode(Response::HTTP_NOT_FOUND);
+        } elseif ($exception instanceof ResourceAlreadyExistsException) {
+            $response->setStatusCode(Response::HTTP_CONFLICT);
         } else {
             $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
             // don't leak internal error messages to the client
@@ -74,9 +77,9 @@ class ExceptionSubscriber implements EventSubscriberInterface
         }
 
         $response->setJson(json_encode(array(
-            'status'    => $response->getStatusCode(),
-            'message'   => $message
-        ))) ;
+            'status' => $response->getStatusCode(),
+            'message' => $message
+        )));
 
         $event->setResponse($response);
     }

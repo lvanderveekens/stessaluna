@@ -6,7 +6,7 @@ namespace Stessaluna\Exception;
 
 use Exception;
 
-class ValidationException extends Exception
+class ResourceAlreadyExistsException extends Exception
 {
     public function __construct(string $message)
     {
