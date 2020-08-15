@@ -14,7 +14,7 @@ use Stessaluna\Exercise\Answer\Entity\Answer;
 use Stessaluna\Exercise\Answer\Entity\AorbAnswer;
 use Stessaluna\Exercise\Answer\Entity\MissingwordAnswer;
 use Stessaluna\Exercise\Answer\Entity\WhatdoyouseeAnswer;
-use Stessaluna\Exercise\Dto\ExerciseToExerciseDtoConverter;
+use Stessaluna\Exercise\Dto\ExerciseToExerciseDtoMapper;
 use Stessaluna\Exercise\Repository\ExerciseRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,15 +30,15 @@ class ExerciseController extends AbstractController
     /** @var ExerciseRepository */
     private $exerciseRepository;
 
-    /** @var ExerciseToExerciseDtoConverter */
-    private $exerciseToExerciseDtoConverter;
+    /** @var ExerciseToExerciseDtoMapper */
+    private $exerciseToExerciseDtoMapper;
 
     public function __construct(
         ExerciseRepository $exerciseRepository,
-        ExerciseToExerciseDtoConverter $exerciseToExerciseDtoConverter
+        ExerciseToExerciseDtoMapper $exerciseToExerciseDtoMapper
     ) {
         $this->exerciseRepository = $exerciseRepository;
-        $this->exerciseToExerciseDtoConverter = $exerciseToExerciseDtoConverter;
+        $this->exerciseToExerciseDtoMapper = $exerciseToExerciseDtoMapper;
     }
 
     /**
@@ -82,6 +82,6 @@ class ExerciseController extends AbstractController
 
         $exercise->addAnswer($answer);
         $exercise = $this->exerciseRepository->save($exercise);
-        return $this->json($this->exerciseToExerciseDtoConverter->convert($exercise, $this->getUser()));
+        return $this->json($this->exerciseToExerciseDtoMapper->map($exercise, $this->getUser()));
     }
 }

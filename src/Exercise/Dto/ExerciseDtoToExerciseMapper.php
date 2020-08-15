@@ -17,7 +17,7 @@ use Stessaluna\Exercise\Whatdoyousee\Dto\WhatdoyouseeExerciseDto;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
 use Stessaluna\Image\Repository\ImageRepository;
 
-class ExerciseDtoToExerciseConverter
+class ExerciseDtoToExerciseMapper
 {
     /**
      * @var ImageRepository
@@ -29,7 +29,7 @@ class ExerciseDtoToExerciseConverter
         $this->imageRepository = $imageRepository;
     }
 
-    public function convert(?ExerciseDto $dto): ?Exercise
+    public function map(?ExerciseDto $dto): ?Exercise
     {
         if ($dto == null) {
             return null;

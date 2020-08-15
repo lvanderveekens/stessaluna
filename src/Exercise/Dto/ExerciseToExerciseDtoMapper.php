@@ -19,34 +19,37 @@ use Stessaluna\Exercise\Missingword\Dto\MissingwordExerciseDto;
 use Stessaluna\Exercise\Missingword\Entity\MissingwordExercise;
 use Stessaluna\Exercise\Whatdoyousee\Dto\WhatdoyouseeExerciseDto;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
-use Stessaluna\Image\Dto\ImageToImageDtoConverter;
+use Stessaluna\Image\Dto\ImageToImageDtoMapper;
 use Stessaluna\Post\Repository\PostRepository;
 use Stessaluna\User\Entity\User;
 
-class ExerciseToExerciseDtoConverter
+class ExerciseToExerciseDtoMapper
 {
     /**
      * @var PostRepository
      */
     private $postRepository;
     /**
-     * @var ImageToImageDtoConverter
+     * @var ImageToImageDtoMapper
      */
-    private $imageToImageDtoConverter;
+    private $imageToImageDtoMapper;
     /**
      * @var LoggerInterface
      */
     private $logger;
 
-    public function __construct(PostRepository $postRepository, ImageToImageDtoConverter $imageToImageDtoConverter,
-                                LoggerInterface $logger)
+    public function __construct(
+        PostRepository $postRepository,
+        ImageToImageDtoMapper $imageToImageDtoMapper,
+        LoggerInterface $logger
+    )
     {
         $this->postRepository = $postRepository;
-        $this->imageToImageDtoConverter = $imageToImageDtoConverter;
+        $this->imageToImageDtoMapper = $imageToImageDtoMapper;
         $this->logger = $logger;
     }
 
-    public function convert(Exercise $exercise, ?User $user): ExerciseDto
+    public function map(Exercise $exercise, ?User $user): ExerciseDto
     {
         $answers = $exercise->getAnswers()->toArray();
         $answer = $user ? $this->findAnswerFromUser($answers, $user) : null;
@@ -118,7 +121,7 @@ class ExerciseToExerciseDtoConverter
     {
         $dto = new WhatdoyouseeExerciseDto();
         if ($exercise->getImage()) {
-            $dto->image = $this->imageToImageDtoConverter->convert($exercise->getImage());
+            $dto->image = $this->imageToImageDtoMapper->map($exercise->getImage());
         }
         $dto->option1 = $exercise->getOption1();
         $dto->option2 = $exercise->getOption2();

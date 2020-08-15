@@ -9,33 +9,57 @@ use Stessaluna\Comment\Dto\CommentDto;
 use Stessaluna\Exercise\Dto\ExerciseDto;
 use Stessaluna\Image\Dto\ImageDto;
 use Stessaluna\User\Dto\UserDto;
+use Stessaluna\Vote\Dto\VoteDto;
 
 class PostDto
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     public $id;
 
-    /** @var DateTimeInterface */
+    /**
+     * @var DateTimeInterface
+     */
     public $createdAt;
 
-    /** @var DateTimeInterface */
+    /**
+     * @var DateTimeInterface
+     */
     public $modifiedAt;
 
-    /** @var UserDto */
+    /**
+     * @var UserDto
+     */
     public $author;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $channel;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $text = null;
 
-    /** @var ImageDto */
+    /**
+     * @var ImageDto
+     */
     public $image = null;
 
-    /** @var ExerciseDto */
+    /**
+     * @var VoteDto[]
+     */
+    public $votes;
+
+    /**
+     * @var ExerciseDto
+     */
     public $exercise = null;
 
-    /** @var CommentDto[] */
+    /**
+     * @var CommentDto[]
+     */
     public $comments;
 }

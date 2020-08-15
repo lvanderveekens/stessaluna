@@ -8,7 +8,7 @@ namespace Stessaluna\Image\Dto;
 use Stessaluna\Image\Entity\Image;
 use Stessaluna\Image\Storage\ImageStorage;
 
-class ImageToImageDtoConverter
+class ImageToImageDtoMapper
 {
     /**
      * @var ImageStorage
@@ -20,7 +20,7 @@ class ImageToImageDtoConverter
         $this->imageStorage = $imageStorage;
     }
 
-    public function convert(Image $image): ImageDto
+    public function map(Image $image): ImageDto
     {
         $dto = new ImageDto();
         $dto->id = $image->getId();

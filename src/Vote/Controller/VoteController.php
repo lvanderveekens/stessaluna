@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Stessaluna\AbstractController;
 use Stessaluna\Exception\ValidationException;
 use Stessaluna\Vote\Dto\AddVoteRequest;
+use Stessaluna\Vote\Dto\VoteToVoteDtoMapper;
 use Stessaluna\Vote\VoteService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,12 +22,20 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class VoteController extends AbstractController
 {
-    /** @var VoteService */
+    /**
+     * @var VoteService
+     */
     private $voteService;
 
-    public function __construct(VoteService $voteService)
+    /**
+     * @var VoteToVoteDtoMapper
+     */
+    private $voteToVoteDtoMapper;
+
+    public function __construct(VoteService $voteService, VoteToVoteDtoMapper $voteToVoteDtoMapper)
     {
         $this->voteService = $voteService;
+        $this->voteToVoteDtoMapper = $voteToVoteDtoMapper;
     }
 
     /**
@@ -41,14 +50,14 @@ class VoteController extends AbstractController
             throw new ValidationException($errors->get(0)->getMessage());
         }
 
-        $this->voteService->addVote(
+        $vote = $this->voteService->addVote(
             $addVoteRequest->type,
             $addVoteRequest->postId,
             $addVoteRequest->commentId,
             $this->getUser()
         );
 
-        return new JsonResponse();
+        return $this->json($this->voteToVoteDtoMapper->map($vote), 201);
     }
 
     /**

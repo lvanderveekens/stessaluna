@@ -4,34 +4,39 @@ namespace Stessaluna\User\Dto;
 
 use Psr\Log\LoggerInterface;
 use Stessaluna\Image\Dto\ImageDto;
-use Stessaluna\Image\Dto\ImageToImageDtoConverter;
+use Stessaluna\Image\Dto\ImageToImageDtoMapper;
 use Stessaluna\User\Entity\User;
 use Symfony\Component\Asset\Packages;
 
-class UserToUserDtoConverter
+class UserToUserDtoMapper
 {
     /**
      * @var LoggerInterface
      */
     private $logger;
+
     /**
      * @var Packages
      */
     private $packages;
-    /**
-     * @var ImageToImageDtoConverter
-     */
-    private $imageToImageDtoConverter;
 
-    public function __construct(LoggerInterface $logger, Packages $packages,
-                                ImageToImageDtoConverter $imageToImageDtoConverter)
+    /**
+     * @var ImageToImageDtoMapper
+     */
+    private $imageToImageDtoMapper;
+
+    public function __construct(
+        LoggerInterface $logger,
+        Packages $packages,
+        ImageToImageDtoMapper $imageToImageDtoMapper
+    )
     {
         $this->logger = $logger;
         $this->packages = $packages;
-        $this->imageToImageDtoConverter = $imageToImageDtoConverter;
+        $this->imageToImageDtoMapper = $imageToImageDtoMapper;
     }
 
-    public function convert(User $user): UserDto
+    public function map(User $user): UserDto
     {
         $dto = new UserDto();
         $dto->id = $user->getId();
@@ -41,7 +46,7 @@ class UserToUserDtoConverter
         $dto->country = $user->getCountry();
 
         if ($user->getAvatar()) {
-            $dto->avatar = $this->imageToImageDtoConverter->convert($user->getAvatar());
+            $dto->avatar = $this->imageToImageDtoMapper->map($user->getAvatar());
         } else {
             $imageDto = new ImageDto();
             $imageDto->id = User::DEFAULT_AVATAR_ID;

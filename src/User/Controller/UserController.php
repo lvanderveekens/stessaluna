@@ -4,7 +4,7 @@ namespace Stessaluna\User\Controller;
 
 use Stessaluna\AbstractController;
 use Stessaluna\User\Dto\UpdateUserRequest;
-use Stessaluna\User\Dto\UserToUserDtoConverter;
+use Stessaluna\User\Dto\UserToUserDtoMapper;
 use Stessaluna\User\UserService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,9 +17,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 class UserController extends AbstractController
 {
     /**
-     * @var UserToUserDtoConverter
+     * @var UserToUserDtoMapper
      */
-    private $userToUserDtoConverter;
+    private $userToUserDtoMapper;
     /**
      * @var SerializerInterface
      */
@@ -29,10 +29,10 @@ class UserController extends AbstractController
      */
     private $userService;
 
-    public function __construct(UserToUserDtoConverter $userToUserDtoConverter, SerializerInterface $serializer,
+    public function __construct(UserToUserDtoMapper $userToUserDtoMapper, SerializerInterface $serializer,
                                 UserService $userService)
     {
-        $this->userToUserDtoConverter = $userToUserDtoConverter;
+        $this->userToUserDtoMapper = $userToUserDtoMapper;
         $this->serializer = $serializer;
         $this->userService = $userService;
     }
@@ -42,7 +42,7 @@ class UserController extends AbstractController
      */
     public function getCurrentUser(): JsonResponse
     {
-        return $this->json($this->userToUserDtoConverter->convert($this->getUser()));
+        return $this->json($this->userToUserDtoMapper->map($this->getUser()));
     }
 
     /**
@@ -51,7 +51,7 @@ class UserController extends AbstractController
     public function updateCurrentUser(Request $request): JsonResponse
     {
         /* @var $updateUserRequest UpdateUserRequest */
-        $updateUserRequest = $this->serializer->deserialize($request->getContent(), UpdateUserRequest::class, 'json');
+        $updateUserRequest = $this->deserialize($request, UpdateUserRequest::class);
 
         $updatedUser = $this->userService->updateUser(
             $this->getUser(),
@@ -60,6 +60,6 @@ class UserController extends AbstractController
             $updateUserRequest->country
         );
 
-        return $this->json($this->userToUserDtoConverter->convert($updatedUser));
+        return $this->json($this->userToUserDtoMapper->map($updatedUser));
     }
 }
