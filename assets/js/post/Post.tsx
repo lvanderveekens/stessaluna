@@ -21,7 +21,7 @@ import ISO6391 from "iso-639-1"
 import Comment from "./comment/comment.interface";
 import {Link} from "react-router-dom";
 import Image from "../image/image.interface";
-import Vote from "./vote/vote.interface";
+import Vote, {VoteType} from "./vote/vote.interface";
 
 interface Props {
   id: number
@@ -150,7 +150,19 @@ const Post: FunctionComponent<Props> = (
         )}
       </div>
       <div className={styles.activity}>
-        {exercise && exercise.answerCount > 0 && <div>Answers: {exercise.answerCount}</div>}
+        {votes && votes.length > 0 && (
+          <>
+            <div>
+              Upvotes: {votes.filter((v: Vote) => v.type == VoteType.UP).length}
+            </div>
+            <div>
+              Downvotes: {votes.filter((v: Vote) => v.type == VoteType.DOWN).length}
+            </div>
+          </>
+          )}
+        {exercise && exercise.answerCount > 0 && (
+          <div>Answers: {exercise.answerCount}</div>
+        )}
         {comments && comments.length > 0 && (
           <div className={styles.numberOfComments} onClick={toggleCommentSection}>
             Comments: {comments.length}

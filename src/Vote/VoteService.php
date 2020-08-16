@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Stessaluna\Vote;
 
 use Stessaluna\Comment\CommentService;
+use Stessaluna\Comment\Entity\Comment;
 use Stessaluna\Exception\ResourceAlreadyExistsException;
 use Stessaluna\Exception\ResourceNotFoundException;
+use Stessaluna\Post\Entity\Post;
 use Stessaluna\Post\PostService;
 use Stessaluna\User\Entity\User;
 use Stessaluna\Vote\Entity\Vote;
@@ -52,23 +54,46 @@ class VoteService
         $vote->setUser($user);
 
         if ($postId != null) {
-            // TODO: block duplicate votes, what about going from UP to DOWN? Is that a PUT?
-            $existingVote = $this->voteRepository->findOneBy(['post_id' => $postId, 'user_id' => $user->getId()]);
-            if ($existingVote) {
-                throw new ResourceAlreadyExistsException("TODO");
-            }
-            $vote->setPost($this->postService->getPost($postId));
+            $vote->setPost($this->getPostToVoteOn($postId, $user));
         } else if ($commentId != null) {
-            // TODO: block duplicate votes
-            $vote->setComment($this->commentService->getComment($commentId));
+            $vote->setComment($this->getCommentToVoteOn($commentId, $user));
         }
 
         return $this->voteRepository->save($vote);
     }
 
-    public function deleteVote(int $voteId)
+    public function updateVote(int $id, ?string $type): Vote
     {
-        $vote = $this->getVote($voteId);
+        $vote = $this->getVote($id);
+        if ($type) {
+            $vote->setType($type);
+        }
+        return $this->voteRepository->save($vote);
+    }
+
+    public function deleteVote(int $id)
+    {
+        $vote = $this->getVote($id);
         $this->voteRepository->delete($vote);
+    }
+
+    private function getPostToVoteOn(int $postId, User $user): Post
+    {
+        $post = $this->postService->getPost($postId);
+        $existingVote = $this->voteRepository->findOneBy(['post' => $post, 'user' => $user]);
+        if ($existingVote) {
+            throw new ResourceAlreadyExistsException("You already voted on post: $postId");
+        }
+        return $post;
+    }
+
+    private function getCommentToVoteOn(int $commentId, User $user): Comment
+    {
+        $comment = $this->commentService->getComment($commentId);
+        $existingVote = $this->voteRepository->findOneBy(['comment' => $comment, 'user' => $user]);
+        if ($existingVote) {
+            throw new ResourceAlreadyExistsException("You already voted on comment: $commentId");
+        }
+        return $comment;
     }
 }

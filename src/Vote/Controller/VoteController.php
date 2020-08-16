@@ -9,6 +9,7 @@ use Stessaluna\AbstractController;
 use Stessaluna\Exception\ValidationException;
 use Stessaluna\Validation\ValidatorWrapper;
 use Stessaluna\Vote\Dto\AddVoteRequest;
+use Stessaluna\Vote\Dto\UpdateVoteRequest;
 use Stessaluna\Vote\Dto\VoteToVoteDtoMapper;
 use Stessaluna\Vote\VoteService;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -47,14 +48,28 @@ class VoteController extends AbstractController
         $addVoteRequest = $this->deserializeJson($request, AddVoteRequest::class);
         $validator->validate($addVoteRequest);
 
-        $vote = $this->voteService->addVote(
+        $createdVote = $this->voteService->addVote(
             $addVoteRequest->type,
             $addVoteRequest->postId,
             $addVoteRequest->commentId,
             $this->getUser()
         );
 
-        return $this->json($this->voteToVoteDtoMapper->map($vote), 201);
+        return $this->json($this->voteToVoteDtoMapper->map($createdVote), 201);
+    }
+
+    /**
+     * @Route("/{id}", methods={"PATCH"})
+     */
+    public function updateVote(Request $request, ValidatorWrapper $validator, int $id): JsonResponse
+    {
+        /** @var $updateVoteRequest UpdateVoteRequest */
+        $updateVoteRequest = $this->deserializeJson($request, UpdateVoteRequest::class);
+        $validator->validate($updateVoteRequest);
+
+        $updatedVote = $this->voteService->updateVote($id, $updateVoteRequest->type);
+
+        return $this->json($this->voteToVoteDtoMapper->map($updatedVote));
     }
 
     /**
@@ -62,7 +77,6 @@ class VoteController extends AbstractController
      */
     public function deleteVote(int $id): JsonResponse
     {
-        // TODO: make idempotent
         $this->voteService->deleteVote($id);
         return new JsonResponse();
     }

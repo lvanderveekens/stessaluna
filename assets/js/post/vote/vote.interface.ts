@@ -2,8 +2,13 @@ import User from "../../user/user.interface";
 
 export interface Vote {
   id: number
-  type: string
+  type: VoteType
   user: User
+}
+
+export enum VoteType {
+  UP = "UP",
+  DOWN = "DOWN",
 }
 
 export default Vote
