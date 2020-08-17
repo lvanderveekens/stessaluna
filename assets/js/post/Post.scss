@@ -58,16 +58,6 @@
                 }
             }
 
-            .threeDotsMenu {
-                margin-left: auto;
-                margin-top: 0.2rem;
-
-                .iconWrapper {
-                    cursor: pointer;
-                    padding: 0 0.2rem;
-                }
-            }
-
         }
 
         .imageWrapper {
@@ -105,45 +95,77 @@
         }
     }
 
-    .activity {
-        display: flex;
-        justify-content: flex-end;
+    .exerciseIcons {
 
-        padding: 0 1rem 0.5rem 1rem;
+        > div {
+            margin-right: 1rem;
 
-        & > div {
-            margin-left: 0.8rem;
-            // font-size: 0.7rem;
-            color: grey;
-        }
+            svg {
+                width: 22px;
+                height: unset;
+                margin-right: 0.3rem;
 
-        .numberOfComments {
-            &:hover {
-                cursor: pointer;
-                color: black;
+                &:hover {
+                    fill: red;
+                    cursor: pointer;
+
+                    path {
+                        stroke: black;
+                    }
+                }
+
+                path {
+                    stroke: grey;
+                }
             }
         }
     }
 
-    .actions {
-        border-top: 1px solid #ced4da;
+    .postIcons {
+        padding: 0 1rem 1rem 1rem;
 
         display: flex;
-        justify-content: space-evenly;
+        justify-content: flex-start;
 
-        .addComment {
-            padding: 0.3rem 0.9rem;
+        .likeIcon, .dislikeIcon, .commentIcon {
 
-            &:hover {
-                cursor: pointer;
-                background-color: $stessaluna-hover-grey;
+            margin-right: 1rem;
+
+            svg {
+                width: 22px;
+                height: unset;
+                margin-right: 0.3rem;
+
+                path {
+                    stroke: grey;
+                }
+
+                &:hover {
+                    cursor: pointer;
+
+                    path {
+                        stroke: black;
+                    }
+                }
             }
+        }
 
-            .commentIcon {
-                margin-right: 0.4rem;
+        .moreIcon {
 
-                svg {
-                    vertical-align: -0.18rem;
+            svg {
+                width: 22px;
+                height: unset;
+
+                path {
+                    fill: grey;
+                }
+
+                &:hover {
+                    cursor: pointer;
+
+                    path {
+                        fill: black;
+                    }
                 }
             }
         }

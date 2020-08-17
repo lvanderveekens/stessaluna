@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faEllipsisV} from "@fortawesome/free-solid-svg-icons"
 import CustomToggle from "../../dropdown/custom-toggle/CustomToggle"
 import Avatar from "../../user/avatar/Avatar"
-import Vote from "../vote/vote.interface";
+import Vote, {VoteType} from "../vote/vote.interface";
 
 interface Props {
   author: User
@@ -29,6 +29,16 @@ const Comment: FunctionComponent<Props> = ({author, timestamp, text, user, votes
             <span className={styles.author}>@{author.username}</span>
             <span className={styles.text}>{text}</span>
             <div className={styles.timestamp}>{timestamp}</div>
+            {votes && votes.length > 0 && (
+              <div>
+                <span>
+                  Upvotes: {votes.filter((v: Vote) => v.type == VoteType.UP).length}
+                </span>
+                <span>
+                  Downvotes: {votes.filter((v: Vote) => v.type == VoteType.DOWN).length}
+                </span>
+              </div>
+            )}
           </div>
           {user && user.id == author.id && (
             <div className={styles.threeDotsMenu}>

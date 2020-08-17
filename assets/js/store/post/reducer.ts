@@ -47,7 +47,7 @@ const postReducer = (state: PostState = initialState, action) => {
       }
     case CREATE_POST_SUCCESS:
       const createdPost = action.payload.post
-      if (state.filters.channel.includes(createdPost.channel)) {
+      if (!state.filters.channel || state.filters.channel.includes(createdPost.channel)) {
         return {...state, data: [...state.data, createdPost]}
       }
       return state
