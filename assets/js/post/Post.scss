@@ -97,22 +97,14 @@
 
     .exerciseIcons {
 
-        > div {
+        .answerIcon {
+
             margin-right: 1rem;
 
             svg {
                 width: 22px;
                 height: unset;
                 margin-right: 0.3rem;
-
-                &:hover {
-                    fill: red;
-                    cursor: pointer;
-
-                    path {
-                        stroke: black;
-                    }
-                }
 
                 path {
                     stroke: grey;
