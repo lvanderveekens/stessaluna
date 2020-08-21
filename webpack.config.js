@@ -67,11 +67,47 @@ Encore
     // uncomment if you use API Platform Admin (composer req api-admin)
     .enableReactPreset()
 
-    .copyFiles({
-        from: "./assets/images",
-        to: "images/[path][name].[hash:8].[ext]",
+    .disableImagesLoader()
+
+    .addRule({
+        test: /\.(png|jpg|jpeg|gif|ico|webp)$/,
+        use: [
+            {
+                loader: 'file-loader',
+                options: {
+                    context: './assets/images',
+                    name: 'images/[path][name].[hash:8].[ext]',
+                }
+            }
+        ]
     })
+
+    .addRule({
+        test: /\.svg$/,
+        use: [
+            {
+                loader: '@svgr/webpack'
+            },
+            {
+                loader: 'file-loader',
+                options: {
+                    context: './assets/images',
+                    name: 'images/[path][name].[hash:8].[ext]'
+                }
+            }
+        ]
+    })
+
+    .copyFiles({
+        from: "./assets/images/avatar",
+        to: "images/avatar/[path][name].[hash:8].[ext]",
+    })
+
+
+
 
 //.addEntry('admin', './assets/js/admin.js')
 
-module.exports = Encore.getWebpackConfig()
+const config = Encore.getWebpackConfig()
+
+module.exports = config

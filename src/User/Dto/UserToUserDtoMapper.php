@@ -50,7 +50,7 @@ class UserToUserDtoMapper
         } else {
             $imageDto = new ImageDto();
             $imageDto->id = User::DEFAULT_AVATAR_ID;
-            $imageDto->url = $this->packages->getUrl('build/images/avatar-default.svg');
+            $imageDto->url = $this->packages->getUrl('build/images/avatar/default.svg');
             $dto->avatar = $imageDto;
         }
         return $dto;

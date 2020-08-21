@@ -4,6 +4,7 @@ import ExerciseInputValues from "../../post/post-modal-form/exercise-input/exerc
 import {Answer} from "../../exercise/answer/answer.model"
 import {
   ADD_COMMENT_SUCCESS,
+  ADD_VOTE_SUCCESS,
   APPLY_CHANNEL_FILTER,
   CREATE_POST_SUCCESS,
   DELETE_COMMENT_SUCCESS,
@@ -12,9 +13,12 @@ import {
   FETCH_POSTS_PENDING,
   FETCH_POSTS_SUCCESS,
   SUBMIT_ANSWER_SUCCESS,
-  UPDATE_POST_SUCCESS
+  UNDO_VOTE_SUCCESS,
+  UPDATE_POST_SUCCESS,
+  UPDATE_VOTE_SUCCESS
 } from "./actionTypes"
 import Image from "../../image/image.interface";
+import Vote, {VoteType} from "../../post/vote/vote.interface";
 
 const queryString = require('query-string');
 
@@ -156,5 +160,56 @@ export const submitAnswer = (exerciseId: number, answer: Answer) => {
 export const applyChannelFilter = (channels: string[]) => {
   return (dispatch) => {
     dispatch({type: APPLY_CHANNEL_FILTER, payload: {channels}})
+  }
+}
+
+export const addVote = (type: VoteType, postId?: number, commentId?: number) => {
+  const success = (vote: Vote) => ({type: ADD_VOTE_SUCCESS, payload: {vote}})
+
+  return (dispatch) => {
+    return axios
+      .post(`/api/votes`, {type, postId, commentId})
+      .then((res) => {
+        dispatch(success(res.data))
+        return Promise.resolve(res.data)
+      })
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
+  }
+}
+
+export const updateVote = (id: number, type: VoteType) => {
+  const success = (vote: Vote) => ({type: UPDATE_VOTE_SUCCESS, payload: {vote}})
+
+  return (dispatch) => {
+    return axios
+      .patch(`/api/votes/${id}`, {type})
+      .then((res) => {
+        dispatch(success(res.data))
+        return Promise.resolve(res.data)
+      })
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
+  }
+}
+
+export const undoVote = (id: number) => {
+  const success = () => ({type: UNDO_VOTE_SUCCESS})
+
+  return (dispatch) => {
+    return axios
+      .delete(`/api/votes/${id}`)
+      .then(() => {
+        dispatch(success())
+        return Promise.resolve()
+      })
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
   }
 }

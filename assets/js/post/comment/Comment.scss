@@ -45,10 +45,12 @@
                 path {
                     stroke: grey;
                 }
+            }
 
-                &:hover {
-                    cursor: pointer;
+            &:hover {
+                cursor: pointer;
 
+                svg {
                     path {
                         stroke: black;
                     }

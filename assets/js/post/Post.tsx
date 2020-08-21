@@ -1,8 +1,7 @@
 import {faEllipsisH} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import React, {FunctionComponent, useEffect, useState} from "react"
+import React, {FC, useEffect, useState} from "react"
 import {Dropdown} from "react-bootstrap"
-import ReactCountryFlag from "react-country-flag"
 import {connect} from "react-redux"
 import CustomToggle from "../dropdown/custom-toggle/CustomToggle"
 import AorbExercise from "../exercise/aorb-exercise"
@@ -10,17 +9,21 @@ import {isAnswered} from "../exercise/exercise.helper"
 import Exercise, {ExerciseType} from "../exercise/exercise.model"
 import MissingwordExercise from "../exercise/missingword-exercise"
 import WhatdoyouseeExercise from "../exercise/whatdoyousee-exercise"
-import Avatar from "../user/avatar/Avatar"
 import User from "../user/user.interface"
 import CommentSection from "./comment/comment-section"
 import styles from "./Post.scss?module"
 import Text from "./text/Text"
-import {getCountryCode} from "../country/get-country-code"
-import ISO6391 from "iso-639-1"
 import Comment from "./comment/comment.interface";
 import {Link} from "react-router-dom";
 import Image from "../image/image.interface";
 import Vote, {VoteType} from "./vote/vote.interface";
+import PostHeader from "./post-header/PostHeader";
+import {ReactComponent as LikeIcon} from "../../images/icon/like.svg"
+import {ReactComponent as DislikeIcon} from "../../images/icon/dislike.svg"
+import {ReactComponent as CommentIcon} from "../../images/icon/comment.svg"
+import {ReactComponent as AnswerIcon} from "../../images/icon/answer.svg"
+
+// import LikeIcon from '../../images/like-icon.svg'
 
 interface Props {
   id: number
@@ -37,7 +40,7 @@ interface Props {
   user?: User
 }
 
-const Post: FunctionComponent<Props> = (
+const Post: FC<Props> = (
   {
     id,
     author,
@@ -67,22 +70,6 @@ const Post: FunctionComponent<Props> = (
     setShowCommentSection(!showCommentSection)
   }
 
-  const renderUserName = () => {
-    if (author.displayName) {
-      return (
-        <span>
-          <span className={styles.fullName}>{author.displayName}</span>
-        </span>
-      )
-    } else {
-      return (
-        <span>
-          <span style={{marginRight: "0.3rem"}}>@{author.username}</span>
-        </span>
-      )
-    }
-  }
-
   const renderExercise = () => {
     const props = {...exercise, disabled: isAuthor(user)}
     switch (exercise.type) {
@@ -99,25 +86,31 @@ const Post: FunctionComponent<Props> = (
 
   const isCommentSectionLocked = exercise && !isAnswered(exercise) && !isAuthor(user)
 
+  const handleUpvote = () => {
+    // TODO: block for anonymous users
+    console.log("UPVOTE")
+
+    const existingVote = votes.find((vote) => user && user.id == vote.user.id)
+    if (existingVote) {
+      if (existingVote.type == VoteType.UP) {
+        // TODO: undo vote
+      } else {
+        // TODO: update vote
+      }
+    } else {
+      // TODO: add vote
+    }
+  }
+
+  const handleDownvote = () => {
+    // TODO: block for anonymous users
+    console.log("DOWNVOTE")
+  }
+
   return (
     <div className={styles.post}>
       <div className={styles.content}>
-        {/* TODO: separate post-header component */}
-        <div className={styles.header}>
-          <div className={styles.avatar}>
-            <Avatar src={author.avatar.url} countryCode={author.country}/>
-          </div>
-          <div className={styles.usernameTimestampWrapper}>
-            <div>{renderUserName()}</div>
-            <div className={styles.channelWrapper}>
-              posted in <span className={styles.channel}>{ISO6391.getName(channel)}</span>&nbsp;
-              {getCountryCode(channel) && (
-                <ReactCountryFlag className={styles.countryFlag} countryCode={getCountryCode(channel)} svg/>
-              )}
-            </div>
-            <span className={styles.timestamp}>{timestamp} {edited && (<span>(edited)</span>)}</span>
-          </div>
-        </div>
+        <PostHeader author={author} channel={channel} timestamp={timestamp} edited={edited}/>
         {text && <Text text={text}/>}
         {image && (
           <div className={styles.imageWrapper}>
@@ -131,36 +124,21 @@ const Post: FunctionComponent<Props> = (
             {renderExercise()}
             <div className={styles.exerciseIcons}>
               <div className={styles.answerIcon}>
-                <svg viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3.51629 13.1267L3.67824 13.745L4.2394 13.4389L7.1275 11.8636H10C11.933 11.8636 13.5 10.2966 13.5 8.36364V4C13.5 2.067 11.933 0.5 10 0.5H4C2.067 0.5 0.5 2.067 0.5 4V8.36364C0.5 10.0067 1.63213 11.3853 3.15885 11.7619L3.51629 13.1267Z" stroke="#838383"/>
-                  <path d="M5 10L5.66667 8M9 10L8.33333 8M8.33333 8L8 7L7 4L6 7L5.66667 8M8.33333 8H5.66667" stroke="#838383"/>
-                </svg>
-                {exercise.answerCount}
+                <AnswerIcon/> {exercise.answerCount}
               </div>
             </div>
           </div>
         )}
       </div>
       <div className={styles.postIcons}>
-        <div className={styles.likeIcon}>
-          <svg viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.54618 5.65984C3.54618 5.65984 5.93762 5.65216 5.93762 1.9707C5.93762 -1.2912 10.421 1.66617 9.18322 4.42052C15.2387 4.42052 11.7368 11.9234 8.64228 11.9234H3.54618M3.54618 5.65984V11.9234M3.54618 5.65984V4.99187H0.5V8.76531V12.5388L3.54618 12.5387V11.9234" stroke="#838383"/>
-          </svg>
-          {votes.filter((v: Vote) => v.type == VoteType.UP).length}
+        <div className={styles.likeIcon} onClick={handleUpvote}>
+          <LikeIcon/> {votes.filter((v: Vote) => v.type == VoteType.UP).length}
         </div>
-        <div className={styles.dislikeIcon}>
-          <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9.95382 7.87891C9.95382 7.87891 7.56238 7.88659 7.56238 11.5681C7.56238 14.83 3.07896 11.8726 4.31678 9.11823C-1.73867 9.11823 1.76315 1.61531 4.85772 1.61531L9.95382 1.61531M9.95382 7.87891L9.95382 1.61531M9.95382 7.87891V8.54688H13L13 4.77344V1.00001L9.95382 1.00003V1.61531" stroke="#838383"/>
-          </svg>
-          {votes.filter((v: Vote) => v.type == VoteType.DOWN).length}
+        <div className={styles.dislikeIcon} onClick={handleDownvote}>
+          <DislikeIcon/> {votes.filter((v: Vote) => v.type == VoteType.DOWN).length}
         </div>
         <div className={styles.commentIcon} onClick={toggleCommentSection}>
-          <svg viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M3.51631 13.1267L3.67826 13.745L4.23943 13.4389L7.1275 11.8636H10C11.933 11.8636 13.5 10.2966 13.5 8.36364V4C13.5 2.067 11.933 0.5 10 0.5H4C2.067 0.5 0.5 2.067 0.5 4V8.36364C0.5 10.0067 1.63214 11.3853 3.15887 11.7619L3.51631 13.1267Z"
-              stroke="#838383"/>
-          </svg>
-          {comments.length}
+          <CommentIcon/> {comments.length}
         </div>
         {user && user.id == author.id && (
           <div className={styles.moreIcon}>

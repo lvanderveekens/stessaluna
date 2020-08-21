@@ -1,0 +1,46 @@
+.postHeader {
+
+    display: flex;
+    vertical-align: middle;
+    margin-bottom: 1rem;
+
+    .avatar {
+        margin-top: 0.2rem;
+        margin-right: 1rem;
+    }
+
+    .usernameTimestampWrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .timestamp {
+            font-size: 0.7rem;
+            color: grey;
+        }
+
+        .channelWrapper {
+            color: grey;
+            font-size: 0.9rem;
+
+            .channel {
+                color: black;
+            }
+
+            .countryFlag {
+                box-shadow: 0 0 1px grey;
+                width: 18px !important;
+                height: auto !important;
+            }
+        }
+
+        .fullName {
+            margin-right: 0.3rem;
+        }
+
+        .usernameAfterFullName {
+            color: grey;
+            font-size: 0.9rem;
+        }
+    }
+}

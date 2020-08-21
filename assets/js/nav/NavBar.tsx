@@ -7,7 +7,7 @@ import {Container, Nav as BootstrapNav, Navbar as BootstrapNavbar} from "react-b
 import {useMediaQuery} from "react-responsive"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
-import logoPath from "../../images/logo.svg"
+import {ReactComponent as Logo} from "../../images/logo.svg"
 import CustomToggle from "../dropdown/custom-toggle/CustomToggle"
 import {State} from "../store"
 import {logOut} from "../store/auth/actions"
@@ -72,7 +72,7 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, user, logOut}) => {
           <div className="d-flex align-items-center" ref={navbarRef}>
             <BootstrapNavbar.Brand className={styles.brand}>
               <Link to="/">
-                <img className={styles.logo} src={logoPath} alt="Logo"/>
+                <Logo className={styles.logo}/>
                 <span className={styles.brandText}>Stessaluna</span>
               </Link>
             </BootstrapNavbar.Brand>
@@ -141,7 +141,7 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, user, logOut}) => {
           <div className="d-flex align-items-center" ref={navbarRef}>
             <BootstrapNavbar.Brand className={styles.brand}>
               <Link to="/">
-                <img className={styles.logo} src={logoPath} alt="Logo"/>
+                <Logo/>
               </Link>
             </BootstrapNavbar.Brand>
             <span className={styles.pageTitle}>{pageTitle}</span>

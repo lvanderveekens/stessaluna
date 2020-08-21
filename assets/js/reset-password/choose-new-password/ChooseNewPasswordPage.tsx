@@ -1,10 +1,11 @@
 import React, {FC} from "react"
-import logoPath from "../../../images/logo.svg";
+// import logoPath from "../../../images/logo.svg";
 import {Col, Container, Row} from "react-bootstrap";
 import {RouteComponentProps} from 'react-router-dom';
 import styles from './ChooseNewPasswordPage.scss?module';
 import {COLUMN_BREAKPOINTS} from "../../config/column-breakpoints";
 import ChooseNewPasswordForm from "./choose-new-password-form/ChooseNewPasswordForm";
+import {ReactComponent as Logo} from "../../../images/logo.svg"
 
 interface Props extends RouteComponentProps {
 }
@@ -14,7 +15,7 @@ const ChooseNewPasswordPage: FC<Props> = ({history}) => {
   return (
     <div className={styles.chooseNewPasswordPage}>
       <div className={styles.logoWrapper}>
-        <img src={logoPath} alt="Logo" onClick={() => history.push("/")}/>
+        <Logo className={styles.logo} onClick={() => history.push("/")}/>
       </div>
       <Container>
         <Row className="justify-content-center">

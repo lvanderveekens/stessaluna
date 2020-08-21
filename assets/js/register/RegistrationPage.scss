@@ -8,14 +8,13 @@
     }
 
     .logoWrapper {
-
         text-align: center;
         margin-bottom: 1rem;
 
-        img {
-            margin: 5px 0;
+        .logo {
             width: 40px;
             height: 40px;
+            margin: 5px 0;
 
             &:hover {
                 cursor: pointer;

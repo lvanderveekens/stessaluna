@@ -75,7 +75,7 @@ class VoteController extends AbstractController
     /**
      * @Route("/{id}", methods={"DELETE"})
      */
-    public function deleteVote(int $id): JsonResponse
+    public function undoVote(int $id): JsonResponse
     {
         $this->voteService->deleteVote($id);
         return new JsonResponse();

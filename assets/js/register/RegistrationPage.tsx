@@ -1,12 +1,12 @@
 import React, {FC} from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
+import {Col, Container, Row} from 'react-bootstrap';
 import RegistrationForm from './registration-form/RegistrationForm';
-import { connect } from 'react-redux';
-import { register } from '../store/auth/actions';
+import {connect} from 'react-redux';
+import {register} from '../store/auth/actions';
 import styles from './RegistrationPage.scss?module';
-import logoPath from "../../images/logo.svg"
-import { History } from 'history';
+import {History} from 'history';
 import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
+import {ReactComponent as Logo} from "../../images/logo.svg";
 
 interface Props {
   register: (email: string, username: string, password: string, country: string) => Promise<void>
@@ -22,7 +22,7 @@ const RegistrationPage: FC<Props> = ({register, history}) => {
   return (
     <div className={styles.registrationPage}>
       <div className={styles.logoWrapper}>
-        <img src={logoPath} alt="Logo" onClick={() => history.push("/")}/>
+        <Logo className={styles.logo} onClick={() => history.push("/")}/>
       </div>
       <Container>
         <Row className="justify-content-center">
