@@ -4,7 +4,6 @@ import ExerciseInputValues from "../../post/post-modal-form/exercise-input/exerc
 import {Answer} from "../../exercise/answer/answer.model"
 import {
   ADD_COMMENT_SUCCESS,
-  ADD_VOTE_SUCCESS,
   APPLY_CHANNEL_FILTER,
   CREATE_POST_SUCCESS,
   DELETE_COMMENT_SUCCESS,
@@ -13,9 +12,13 @@ import {
   FETCH_POSTS_PENDING,
   FETCH_POSTS_SUCCESS,
   SUBMIT_ANSWER_SUCCESS,
-  UNDO_VOTE_SUCCESS,
+  UNDO_VOTE_ON_COMMENT_SUCCESS,
+  UNDO_VOTE_ON_POST_SUCCESS,
   UPDATE_POST_SUCCESS,
-  UPDATE_VOTE_SUCCESS
+  UPDATE_VOTE_ON_COMMENT_SUCCESS,
+  UPDATE_VOTE_ON_POST_SUCCESS,
+  VOTE_ON_COMMENT_SUCCESS,
+  VOTE_ON_POST_SUCCESS,
 } from "./actionTypes"
 import Image from "../../image/image.interface";
 import Vote, {VoteType} from "../../post/vote/vote.interface";
@@ -163,12 +166,12 @@ export const applyChannelFilter = (channels: string[]) => {
   }
 }
 
-export const addVote = (type: VoteType, postId?: number, commentId?: number) => {
-  const success = (vote: Vote) => ({type: ADD_VOTE_SUCCESS, payload: {vote}})
+export const voteOnPost = (postId: number, type: VoteType) => {
+  const success = (vote: Vote) => ({type: VOTE_ON_POST_SUCCESS, payload: {postId, vote}})
 
   return (dispatch) => {
     return axios
-      .post(`/api/votes`, {type, postId, commentId})
+      .post(`/api/votes`, {type, postId})
       .then((res) => {
         dispatch(success(res.data))
         return Promise.resolve(res.data)
@@ -180,12 +183,12 @@ export const addVote = (type: VoteType, postId?: number, commentId?: number) => 
   }
 }
 
-export const updateVote = (id: number, type: VoteType) => {
-  const success = (vote: Vote) => ({type: UPDATE_VOTE_SUCCESS, payload: {vote}})
+export const updateVoteOnPost = (postId: number, voteId: number, type: VoteType) => {
+  const success = (vote: Vote) => ({type: UPDATE_VOTE_ON_POST_SUCCESS, payload: {postId, vote}})
 
   return (dispatch) => {
     return axios
-      .patch(`/api/votes/${id}`, {type})
+      .patch(`/api/votes/${voteId}`, {type})
       .then((res) => {
         dispatch(success(res.data))
         return Promise.resolve(res.data)
@@ -197,12 +200,63 @@ export const updateVote = (id: number, type: VoteType) => {
   }
 }
 
-export const undoVote = (id: number) => {
-  const success = () => ({type: UNDO_VOTE_SUCCESS})
+export const undoVoteOnPost = (postId: number, voteId: number) => {
+  const success = () => ({type: UNDO_VOTE_ON_POST_SUCCESS, payload: {postId, voteId}})
 
   return (dispatch) => {
     return axios
-      .delete(`/api/votes/${id}`)
+      .delete(`/api/votes/${voteId}`)
+      .then(() => {
+        dispatch(success())
+        return Promise.resolve()
+      })
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
+  }
+}
+
+export const voteOnComment = (commentId: number, type: VoteType) => {
+  const success = (vote: Vote) => ({type: VOTE_ON_COMMENT_SUCCESS, payload: {commentId, vote}})
+
+  return (dispatch) => {
+    return axios
+      .post(`/api/votes`, {type, commentId})
+      .then((res) => {
+        dispatch(success(res.data))
+        return Promise.resolve(res.data)
+      })
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
+  }
+}
+
+export const updateVoteOnComment = (commentId: number, voteId: number, type: VoteType) => {
+  const success = (vote: Vote) => ({type: UPDATE_VOTE_ON_COMMENT_SUCCESS, payload: {commentId, vote}})
+
+  return (dispatch) => {
+    return axios
+      .patch(`/api/votes/${voteId}`, {type})
+      .then((res) => {
+        dispatch(success(res.data))
+        return Promise.resolve(res.data)
+      })
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
+  }
+}
+
+export const undoVoteOnComment = (commentId: number, voteId: number) => {
+  const success = () => ({type: UNDO_VOTE_ON_COMMENT_SUCCESS, payload: {commentId, voteId}})
+
+  return (dispatch) => {
+    return axios
+      .delete(`/api/votes/${voteId}`)
       .then(() => {
         dispatch(success())
         return Promise.resolve()

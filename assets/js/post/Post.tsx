@@ -22,8 +22,10 @@ import {ReactComponent as LikeIcon} from "../../images/icon/like.svg"
 import {ReactComponent as DislikeIcon} from "../../images/icon/dislike.svg"
 import {ReactComponent as CommentIcon} from "../../images/icon/comment.svg"
 import {ReactComponent as AnswerIcon} from "../../images/icon/answer.svg"
+import {undoVoteOnPost, updateVoteOnPost, voteOnPost} from "../store/post/actions";
+import classNames from "classnames/bind"
 
-// import LikeIcon from '../../images/like-icon.svg'
+const cx = classNames.bind(styles)
 
 interface Props {
   id: number
@@ -37,7 +39,11 @@ interface Props {
   onDelete: () => void
   comments: Comment[]
   votes: Vote[]
-  user?: User
+  user?: User,
+  // TODO: refactor..
+  voteOnPost: (postId: number, type: VoteType) => Promise<void>
+  updateVoteOnPost: (postId: number, voteId: number, type: VoteType) => Promise<void>
+  undoVoteOnPost: (postId: number, voteId: number) => Promise<void>
 }
 
 const Post: FC<Props> = (
@@ -54,11 +60,16 @@ const Post: FC<Props> = (
     onDelete,
     votes,
     user,
+    voteOnPost,
+    updateVoteOnPost,
+    undoVoteOnPost
   }
 ) => {
   const [showCommentSection, setShowCommentSection] = useState(false)
   const [showAllComments, setShowAllComments] = useState(false)
   const [numberOfPreviewComments, setNumberOfPreviewComments] = useState(1)
+
+  const existingVote = votes.find((vote) => user && user.id == vote.user.id)
 
   useEffect(() => {
     if (comments.length > 0) {
@@ -86,25 +97,19 @@ const Post: FC<Props> = (
 
   const isCommentSectionLocked = exercise && !isAnswered(exercise) && !isAuthor(user)
 
-  const handleUpvote = () => {
+  const vote = (type: VoteType) => {
     // TODO: block for anonymous users
-    console.log("UPVOTE")
+    // TODO: block votes for your own post
 
-    const existingVote = votes.find((vote) => user && user.id == vote.user.id)
     if (existingVote) {
-      if (existingVote.type == VoteType.UP) {
-        // TODO: undo vote
+      if (existingVote.type == type) {
+        undoVoteOnPost(id, existingVote.id)
       } else {
-        // TODO: update vote
+        updateVoteOnPost(id, existingVote.id, type)
       }
     } else {
-      // TODO: add vote
+      voteOnPost(id, type)
     }
-  }
-
-  const handleDownvote = () => {
-    // TODO: block for anonymous users
-    console.log("DOWNVOTE")
   }
 
   return (
@@ -131,11 +136,13 @@ const Post: FC<Props> = (
         )}
       </div>
       <div className={styles.postIcons}>
-        <div className={styles.likeIcon} onClick={handleUpvote}>
-          <LikeIcon/> {votes.filter((v: Vote) => v.type == VoteType.UP).length}
+        <div className={styles.likeIcon} onClick={() => vote(VoteType.UP)}>
+          <LikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.UP})}/>
+          {votes.filter((v: Vote) => v.type == VoteType.UP).length}
         </div>
-        <div className={styles.dislikeIcon} onClick={handleDownvote}>
-          <DislikeIcon/> {votes.filter((v: Vote) => v.type == VoteType.DOWN).length}
+        <div className={styles.dislikeIcon} onClick={() => vote(VoteType.DOWN)}>
+          <DislikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.DOWN})}/>
+          {votes.filter((v: Vote) => v.type == VoteType.DOWN).length}
         </div>
         <div className={styles.commentIcon} onClick={toggleCommentSection}>
           <CommentIcon/> {comments.length}
@@ -174,4 +181,10 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 })
 
-export default connect(mapStateToProps, null)(Post)
+const actionCreators = {
+  voteOnPost,
+  updateVoteOnPost,
+  undoVoteOnPost
+}
+
+export default connect(mapStateToProps, actionCreators)(Post)

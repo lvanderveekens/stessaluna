@@ -71,6 +71,14 @@
         display: flex;
         justify-content: flex-start;
 
+        .likeIcon, .dislikeIcon {
+            .voted {
+                path {
+                    stroke: $brand-light;
+                }
+            }
+        }
+
         .likeIcon, .dislikeIcon, .commentIcon {
 
             margin-right: 1rem;
@@ -85,12 +93,14 @@
                 }
             }
 
-            &:hover {
-                cursor: pointer;
+            @media (hover: hover) {
+                &:hover {
+                    cursor: pointer;
 
-                svg {
-                    path {
-                        stroke: black;
+                    svg {
+                        path {
+                            stroke: black;
+                        }
                     }
                 }
             }
@@ -106,11 +116,13 @@
                     fill: grey;
                 }
 
-                &:hover {
-                    cursor: pointer;
+                @media (hover: hover) {
+                    &:hover {
+                        cursor: pointer;
 
-                    path {
-                        fill: black;
+                        path {
+                            fill: black;
+                        }
                     }
                 }
             }

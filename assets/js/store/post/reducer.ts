@@ -8,7 +8,13 @@ import {
   FETCH_POSTS_PENDING,
   FETCH_POSTS_SUCCESS,
   SUBMIT_ANSWER_SUCCESS,
-  UPDATE_POST_SUCCESS
+  UNDO_VOTE_ON_COMMENT_SUCCESS,
+  UNDO_VOTE_ON_POST_SUCCESS,
+  UPDATE_POST_SUCCESS,
+  UPDATE_VOTE_ON_COMMENT_SUCCESS,
+  UPDATE_VOTE_ON_POST_SUCCESS,
+  VOTE_ON_COMMENT_SUCCESS,
+  VOTE_ON_POST_SUCCESS
 } from "./actionTypes"
 import {PostState} from "./state.interface"
 
@@ -85,7 +91,7 @@ const postReducer = (state: PostState = initialState, action) => {
         ...state,
         data: state.data.map((post) =>
           post.id === exercisePost.id
-            ? { ...post, exercise: { ...action.payload.exercise } }
+            ? {...post, exercise: {...action.payload.exercise}}
             : post
         ),
       }
@@ -101,13 +107,98 @@ const postReducer = (state: PostState = initialState, action) => {
         }
       }
     }
+    case VOTE_ON_POST_SUCCESS: {
+      return {
+        ...state,
+        data: state.data.map((post) =>
+          post.id === action.payload.postId
+            ? {...post, votes: [...post.votes, action.payload.vote]}
+            : post
+        ),
+      }
+    }
+    case UPDATE_VOTE_ON_POST_SUCCESS: {
+      return {
+        ...state,
+        data: state.data.map((post) =>
+          post.id === action.payload.postId
+            ? {
+              ...post,
+              votes: post.votes.map((vote) =>
+                vote.id === action.payload.vote.id
+                  ? action.payload.vote
+                  : vote
+              )
+            }
+            : post
+        ),
+      }
+    }
+    case UNDO_VOTE_ON_POST_SUCCESS: {
+      return {
+        ...state,
+        data: state.data.map((post) =>
+          post.id === action.payload.postId
+            ? {...post, votes: post.votes.filter((vote) => vote.id !== action.payload.voteId)}
+            : post
+        ),
+      }
+    }
+    case VOTE_ON_COMMENT_SUCCESS: {
+      return {
+        ...state,
+        data: state.data.map((post) => ({
+          ...post,
+          comments: post.comments.map((comment) =>
+            comment.id === action.payload.commentId
+              ? {...comment, votes: [...comment.votes, action.payload.vote]}
+              : comment
+          )
+        }))
+      }
+    }
+    case UPDATE_VOTE_ON_COMMENT_SUCCESS: {
+      return {
+        ...state,
+        data: state.data.map((post) => ({
+          ...post,
+          comments: post.comments.map((comment) =>
+            comment.id === action.payload.commentId
+              ? {
+                ...comment,
+                votes: comment.votes.map((vote) =>
+                  vote.id === action.payload.vote.id
+                    ? action.payload.vote
+                    : vote
+                )
+              }
+              : comment
+          )
+        }))
+      }
+    }
+    case UNDO_VOTE_ON_COMMENT_SUCCESS: {
+      return {
+        ...state,
+        data: state.data.map((post) => ({
+          ...post,
+          comments: post.comments.map((comment) =>
+            comment.id === action.payload.commentId
+              ? {...comment, votes: comment.votes.filter((vote) => vote.id !== action.payload.voteId)}
+              : comment
+          )
+        }))
+      }
+    }
     default:
       return state
   }
 }
 
 const findPostByExerciseId = (exerciseId: number, state: PostState) => {
-  return state.data.filter((p) => p.exercise).find((p) => p.exercise.id === exerciseId)
+  return state.data
+    .filter((p) => p.exercise)
+    .find((p) => p.exercise.id === exerciseId)
 }
 
 export default postReducer

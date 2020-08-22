@@ -141,7 +141,7 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, user, logOut}) => {
           <div className="d-flex align-items-center" ref={navbarRef}>
             <BootstrapNavbar.Brand className={styles.brand}>
               <Link to="/">
-                <Logo/>
+                <Logo className={styles.logo}/>
               </Link>
             </BootstrapNavbar.Brand>
             <span className={styles.pageTitle}>{pageTitle}</span>
