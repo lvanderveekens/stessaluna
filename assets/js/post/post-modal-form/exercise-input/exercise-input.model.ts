@@ -1,4 +1,4 @@
-import {ExerciseType} from "../../../exercise/exercise.model";
+import {ExerciseType} from "../../../exercise/exercise.interface";
 
 export abstract class ExerciseInputValues {
     type: ExerciseType

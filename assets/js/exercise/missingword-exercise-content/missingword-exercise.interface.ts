@@ -1,4 +1,4 @@
-import {AbstractExercise, ExerciseType} from "../exercise.model"
+import {AbstractExercise, ExerciseType} from "../exercise.interface"
 
 export interface MissingwordExercise extends AbstractExercise {
   type: ExerciseType.MISSING_WORD

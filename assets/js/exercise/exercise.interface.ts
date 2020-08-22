@@ -1,6 +1,6 @@
-import AorbExercise from "./aorb-exercise/aorb-exercise.model"
-import WhatdoyouseeExercise from "./whatdoyousee-exercise/whatdoyousee-exercise.model"
-import MissingwordExercise from "./missingword-exercise/missingword-exercise.model"
+import AorbExercise from "./aorb-exercise-content/aorb-exercise.interface"
+import WhatdoyouseeExercise from "./whatdoyousee-exercise-content/whatdoyousee-exercise.interface"
+import MissingwordExercise from "./missingword-exercise-content/missingword-exercise.interface"
 
 type Exercise = AorbExercise | WhatdoyouseeExercise | MissingwordExercise
 

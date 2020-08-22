@@ -1,31 +1,17 @@
-import {faEllipsisH} from "@fortawesome/free-solid-svg-icons"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import React, {FC, useEffect, useState} from "react"
-import {Dropdown} from "react-bootstrap"
 import {connect} from "react-redux"
-import CustomToggle from "../dropdown/custom-toggle/CustomToggle"
-import AorbExercise from "../exercise/aorb-exercise"
 import {isAnswered} from "../exercise/exercise.helper"
-import Exercise, {ExerciseType} from "../exercise/exercise.model"
-import MissingwordExercise from "../exercise/missingword-exercise"
-import WhatdoyouseeExercise from "../exercise/whatdoyousee-exercise"
+import ExerciseInterface from "../exercise/exercise.interface"
 import User from "../user/user.interface"
 import CommentSection from "./comment/comment-section"
 import styles from "./Post.scss?module"
 import Text from "./text/Text"
 import Comment from "./comment/comment.interface";
-import {Link} from "react-router-dom";
 import Image from "../image/image.interface";
-import Vote, {VoteType} from "./vote/vote.interface";
+import Vote from "./vote/vote.interface";
 import PostHeader from "./post-header/PostHeader";
-import {ReactComponent as LikeIcon} from "../../images/icon/like.svg"
-import {ReactComponent as DislikeIcon} from "../../images/icon/dislike.svg"
-import {ReactComponent as CommentIcon} from "../../images/icon/comment.svg"
-import {ReactComponent as AnswerIcon} from "../../images/icon/answer.svg"
-import {undoVoteOnPost, updateVoteOnPost, voteOnPost} from "../store/post/actions";
-import classNames from "classnames/bind"
-
-const cx = classNames.bind(styles)
+import PostActions from "./post-actions/PostActions";
+import Exercise from "../exercise/Exercise";
 
 interface Props {
   id: number
@@ -35,15 +21,10 @@ interface Props {
   channel: string
   text?: string
   image?: Image
-  exercise?: Exercise
-  onDelete: () => void
+  exercise?: ExerciseInterface
   comments: Comment[]
   votes: Vote[]
   user?: User,
-  // TODO: refactor..
-  voteOnPost: (postId: number, type: VoteType) => Promise<void>
-  updateVoteOnPost: (postId: number, voteId: number, type: VoteType) => Promise<void>
-  undoVoteOnPost: (postId: number, voteId: number) => Promise<void>
 }
 
 const Post: FC<Props> = (
@@ -57,59 +38,24 @@ const Post: FC<Props> = (
     image,
     exercise,
     comments,
-    onDelete,
     votes,
     user,
-    voteOnPost,
-    updateVoteOnPost,
-    undoVoteOnPost
-  }
-) => {
-  const [showCommentSection, setShowCommentSection] = useState(false)
+  }) => {
+  const [showComments, setShowComments] = useState(false)
   const [showAllComments, setShowAllComments] = useState(false)
   const [numberOfPreviewComments, setNumberOfPreviewComments] = useState(1)
 
-  const existingVote = votes.find((vote) => user && user.id == vote.user.id)
+  const isAuthor = (user?: User) => user && user.id == author.id
+  const isCommentSectionLocked = exercise && !isAnswered(exercise) && !isAuthor(user)
 
   useEffect(() => {
     if (comments.length > 0) {
-      toggleCommentSection()
+      toggleComments()
     }
   }, [])
 
-  const toggleCommentSection = () => {
-    setShowCommentSection(!showCommentSection)
-  }
-
-  const renderExercise = () => {
-    const props = {...exercise, disabled: isAuthor(user)}
-    switch (exercise.type) {
-      case ExerciseType.A_OR_B:
-        return <AorbExercise {...props} />
-      case ExerciseType.WHAT_DO_YOU_SEE:
-        return <WhatdoyouseeExercise {...props} />
-      case ExerciseType.MISSING_WORD:
-        return <MissingwordExercise {...props} />
-    }
-  }
-
-  const isAuthor = (user?: User) => user && user.id == author.id
-
-  const isCommentSectionLocked = exercise && !isAnswered(exercise) && !isAuthor(user)
-
-  const vote = (type: VoteType) => {
-    // TODO: block for anonymous users
-    // TODO: block votes for your own post
-
-    if (existingVote) {
-      if (existingVote.type == type) {
-        undoVoteOnPost(id, existingVote.id)
-      } else {
-        updateVoteOnPost(id, existingVote.id, type)
-      }
-    } else {
-      voteOnPost(id, type)
-    }
+  const toggleComments = () => {
+    setShowComments(!showComments)
   }
 
   return (
@@ -125,44 +71,17 @@ const Post: FC<Props> = (
           </div>
         )}
         {exercise && (
-          <div className={styles.exerciseWrapper}>
-            {renderExercise()}
-            <div className={styles.exerciseIcons}>
-              <div className={styles.answerIcon}>
-                <AnswerIcon/> {exercise.answerCount}
-              </div>
-            </div>
-          </div>
+          <Exercise {...exercise} disabled={isAuthor(user)}/>
         )}
       </div>
-      <div className={styles.postIcons}>
-        <div className={styles.likeIcon} onClick={() => vote(VoteType.UP)}>
-          <LikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.UP})}/>
-          {votes.filter((v: Vote) => v.type == VoteType.UP).length}
-        </div>
-        <div className={styles.dislikeIcon} onClick={() => vote(VoteType.DOWN)}>
-          <DislikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.DOWN})}/>
-          {votes.filter((v: Vote) => v.type == VoteType.DOWN).length}
-        </div>
-        <div className={styles.commentIcon} onClick={toggleCommentSection}>
-          <CommentIcon/> {comments.length}
-        </div>
-        {user && user.id == author.id && (
-          <div className={styles.moreIcon}>
-            <Dropdown>
-              <Dropdown.Toggle as={CustomToggle} id="something">
-                <FontAwesomeIcon icon={faEllipsisH}/>
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item as={Link} to={`/edit-post/${id}`}>Edit</Dropdown.Item>
-                <Dropdown.Divider/>
-                <Dropdown.Item onClick={onDelete}>Delete</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-        )}
-      </div>
-      {showCommentSection && (
+      <PostActions
+        postId={id}
+        author={author}
+        votes={votes}
+        commentCount={comments.length}
+        toggleComments={toggleComments}
+      />
+      {showComments && (
         <CommentSection
           postId={id}
           comments={comments}
@@ -181,10 +100,4 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 })
 
-const actionCreators = {
-  voteOnPost,
-  updateVoteOnPost,
-  undoVoteOnPost
-}
-
-export default connect(mapStateToProps, actionCreators)(Post)
+export default connect(mapStateToProps, null)(Post)

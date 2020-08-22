@@ -1,4 +1,4 @@
-import {AbstractExercise, ExerciseType} from "../exercise.model"
+import {AbstractExercise, ExerciseType} from "../exercise.interface"
 import Image from "../../image/image.interface";
 
 export interface WhatdoyouseeExercise extends AbstractExercise {

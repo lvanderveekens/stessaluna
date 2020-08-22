@@ -1,14 +1,14 @@
 import React, {FC, useEffect, useState} from "react"
-import {connect} from "react-redux"
+import WhatdoyouseeExerciseContent from "./WhatdoyouseeExerciseContent"
 import {submitAnswer} from "../../store/post/actions"
-import {MissingwordAnswer} from "../answer/answer.model"
-import MissingwordExercise from "./MissingwordExercise"
+import {connect} from "react-redux"
+import {WhatdoyouseeAnswer} from "../answer/answer.model"
+import Image from "../../image/image.interface";
 import {State} from "../../store";
 
 interface Props {
   id: number
-  textBefore?: string
-  textAfter?: string
+  image: Image
   option1: string
   option2: string
   option3: string
@@ -16,23 +16,24 @@ interface Props {
   correct: number
   answer?: number
   disabled: boolean
-  submitAnswer: (exerciseId: number, answer: MissingwordAnswer) => Promise<void>
+  submitAnswer: (exerciseId: number, answer: WhatdoyouseeAnswer) => Promise<void>
   loggedIn: boolean
+  showLoginSignupModal: () => void
 }
 
-const MissingwordExerciseContainer: FC<Props> = ({
+const WhatdoyouseeExerciseContentContainer: FC<Props> = ({
   id,
-  textBefore,
-  textAfter,
+  image,
   option1,
   option2,
   option3,
   option4,
   correct,
   answer,
-  disabled,
   submitAnswer,
+  disabled,
   loggedIn,
+  showLoginSignupModal,
 }) => {
   const [selected, setSelected] = useState(0)
 
@@ -44,15 +45,14 @@ const MissingwordExerciseContainer: FC<Props> = ({
 
   const handleSubmit = (option: number) => {
     setSelected(option)
-    submitAnswer(id, new MissingwordAnswer(option))
+    submitAnswer(id, new WhatdoyouseeAnswer(option))
       .then(() => setSelected(0))
       .catch(() => setSelected(0))
   }
 
   return (
-    <MissingwordExercise
-      textBefore={textBefore}
-      textAfter={textAfter}
+    <WhatdoyouseeExerciseContent
+      image={image}
       option1={option1}
       option2={option2}
       option3={option3}
@@ -63,9 +63,11 @@ const MissingwordExerciseContainer: FC<Props> = ({
       disabled={disabled}
       onSubmit={handleSubmit}
       loggedIn={loggedIn}
+      showLoginSignupModal={showLoginSignupModal}
     />
   )
 }
+
 
 const mapStateToProps = (state: State) => ({
   loggedIn: state.auth.loggedIn
@@ -75,4 +77,4 @@ const actionCreators = {
   submitAnswer,
 }
 
-export default connect(mapStateToProps, actionCreators)(MissingwordExerciseContainer)
+export default connect(mapStateToProps, actionCreators)(WhatdoyouseeExerciseContentContainer)

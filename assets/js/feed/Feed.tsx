@@ -14,10 +14,9 @@ interface Props {
   posts: PostInterface[]
   hasMore: boolean
   onLoadMore: () => void
-  onDeletePost: (id: number) => void
 }
 
-const Feed: FC<Props> = ({loading, posts, hasMore, onLoadMore, onDeletePost}) => {
+const Feed: FC<Props> = ({loading, posts, hasMore, onLoadMore}) => {
 
   return (
     <div className={styles.feed}>
@@ -46,7 +45,6 @@ const Feed: FC<Props> = ({loading, posts, hasMore, onLoadMore, onDeletePost}) =>
                   image={post.image}
                   votes={post.votes}
                   exercise={post.exercise}
-                  onDelete={() => onDeletePost(post.id)}
                   comments={post.comments}
                 />
               </CSSTransition>

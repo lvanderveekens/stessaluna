@@ -1,11 +1,13 @@
-import React, {FC, useState} from "react"
-import styles from "./MissingwordExercise.scss?module"
+import React, {FC} from "react"
+import styles from "./WhatdoyouseeExerciseContent.scss?module"
+import classNames from "classnames/bind"
 import ExerciseOption from "../exercise-option/ExerciseOption"
-import LoginSignupModal from "../login-signup-modal/LoginSignupModal";
+import Image from "../../image/image.interface";
+
+const cx = classNames.bind(styles)
 
 interface Props {
-  textBefore: string
-  textAfter: string
+  image: Image
   option1: string
   option2: string
   option3: string
@@ -16,11 +18,11 @@ interface Props {
   disabled: boolean
   onSubmit: (answer: number) => void
   loggedIn: boolean
+  showLoginSignupModal: () => void
 }
 
-const MissingwordExercise: FC<Props> = ({
-  textBefore,
-  textAfter,
+const WhatdoyouseeExerciseContent: FC<Props> = ({
+  image,
   option1,
   option2,
   option3,
@@ -28,30 +30,26 @@ const MissingwordExercise: FC<Props> = ({
   correct,
   answer,
   selected,
-  disabled,
   onSubmit,
+  disabled,
   loggedIn,
+  showLoginSignupModal,
 }) => {
-
-  const [showLoginSignupModal, setShowLoginSignupModal] = useState(false)
 
   const handleOptionClick = (option: number) => () => {
     if (!loggedIn) {
-      setShowLoginSignupModal(true)
+      showLoginSignupModal()
       return
     }
     onSubmit(option)
   }
 
   return (
-    <div className={styles.missingwordExercise}>
-      <div className={styles.header}>
-        <span>Missing word</span>
-      </div>
-      <div className={styles.sentence}>
-        {textBefore && <div>{textBefore}</div>}
-        <div className={styles.missingWord}>[ ... ]</div>
-        {textAfter && <div>{textAfter}</div>}
+    <div className={styles.whatdoyouseeExerciseContent}>
+      <div className={styles.imageWrapper}>
+        <div className={styles.aspectRatioBox}>
+          <img src={image.url}/>
+        </div>
       </div>
       <div>
         <div className="d-flex mb-3">
@@ -74,7 +72,7 @@ const MissingwordExercise: FC<Props> = ({
             disabled={disabled || !!answer || !!selected}
           />
         </div>
-        <div className="d-flex">
+        <div className="d-flex mb-3">
           <ExerciseOption
             className="mr-2"
             value={option3}
@@ -95,9 +93,8 @@ const MissingwordExercise: FC<Props> = ({
           />
         </div>
       </div>
-      {showLoginSignupModal && (<LoginSignupModal onClose={() => setShowLoginSignupModal(false)}/>)}
     </div>
   )
 }
 
-export default MissingwordExercise
+export default WhatdoyouseeExerciseContent

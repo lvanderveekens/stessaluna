@@ -8,10 +8,11 @@ import styles from "./LoginSignupModal.scss?module";
 
 
 interface Props {
+  text: string
   onClose: () => void
 }
 
-const LoginSignupModal: FC<Props> = ({onClose}) => {
+const LoginSignupModal: FC<Props> = ({text, onClose}) => {
 
   const history = useHistory()
 
@@ -25,7 +26,7 @@ const LoginSignupModal: FC<Props> = ({onClose}) => {
     <Modal className={styles.loginSignupModal} ref={ref} onClose={onClose}>
       <ModalHeader onClose={onClose}>Not logged in</ModalHeader>
       <ModalContent>
-        <div className="mb-3">Log in or sign up to answer exercises.</div>
+        <div className="mb-3">{text}</div>
         <div className="d-flex flex-column">
           <Button className={styles.loginButton} variant="transparent-dark" onClick={() => history.push("/login")}>
             Log in

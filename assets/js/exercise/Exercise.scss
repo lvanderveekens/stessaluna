@@ -1,0 +1,31 @@
+.exercise {
+
+    border: 1px solid #ced4da;
+    border-radius: 0.5rem;
+    padding: 1rem;
+
+    .header {
+        text-align: center;
+        margin-bottom: 1rem;
+        font-weight: bold;
+        font-size: larger;
+    }
+
+    .actions {
+
+        .answerIcon {
+
+            margin-right: 1rem;
+
+            svg {
+                width: 22px;
+                height: 22px;
+                margin-right: 0.3rem;
+
+                path {
+                    stroke: grey;
+                }
+            }
+        }
+    }
+}

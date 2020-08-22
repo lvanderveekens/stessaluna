@@ -1,6 +1,6 @@
 import React, {FC, useState} from "react"
-import {AorbSentence as AorbSentenceInterface} from "./aorb-exercise.model"
-import AorbExercise from "./AorbExercise"
+import {AorbSentence as AorbSentenceInterface} from "./aorb-exercise.interface"
+import AorbExerciseContent from "./AorbExerciseContent"
 import {connect} from "react-redux"
 import {submitAnswer} from "../../store/post/actions"
 import {AorbAnswer} from "../answer/answer.model"
@@ -12,9 +12,10 @@ interface Props {
   disabled: boolean
   submitAnswer: (exerciseId: number, answer: AorbAnswer) => Promise<void>
   loggedIn: boolean
+  showLoginSignupModal: () => void
 }
 
-const AorbExerciseContainer: FC<Props> = ({id, sentences, disabled, submitAnswer, loggedIn}) => {
+const AorbExerciseContentContainer: FC<Props> = ({id, sentences, disabled, submitAnswer, loggedIn, showLoginSignupModal}) => {
   const [submitting, setSubmitting] = useState(false)
 
   const handleSubmit = (choices: ("a" | "b")[]) => {
@@ -25,12 +26,13 @@ const AorbExerciseContainer: FC<Props> = ({id, sentences, disabled, submitAnswer
   }
 
   return (
-    <AorbExercise
+    <AorbExerciseContent
       sentences={sentences}
       onSubmit={handleSubmit}
       submitting={submitting}
       disabled={disabled}
       loggedIn={loggedIn}
+      showLoginSignupModal={showLoginSignupModal}
     />
   )
 }
@@ -43,4 +45,4 @@ const actionCreators = {
   submitAnswer,
 }
 
-export default connect(mapStateToProps, actionCreators)(AorbExerciseContainer)
+export default connect(mapStateToProps, actionCreators)(AorbExerciseContentContainer)

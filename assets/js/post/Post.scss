@@ -35,97 +35,10 @@
             }
         }
 
-        .exerciseWrapper {
-            border: 1px solid #ced4da;
-            border-radius: 0.5rem;
-            padding: 1rem;
-        }
-
         .deleteButton:hover {
             cursor: pointer;
             opacity: 0.6;
         }
     }
 
-    .exerciseIcons {
-
-        .answerIcon {
-
-            margin-right: 1rem;
-
-            svg {
-                width: 22px;
-                height: 22px;
-                margin-right: 0.3rem;
-
-                path {
-                    stroke: grey;
-                }
-            }
-        }
-    }
-
-    .postIcons {
-        padding: 0 1rem 1rem 1rem;
-
-        display: flex;
-        justify-content: flex-start;
-
-        .likeIcon, .dislikeIcon {
-            .voted {
-                path {
-                    stroke: $brand-light;
-                }
-            }
-        }
-
-        .likeIcon, .dislikeIcon, .commentIcon {
-
-            margin-right: 1rem;
-
-            svg {
-                width: 22px;
-                height: 22px;
-                margin-right: 0.3rem;
-
-                path {
-                    stroke: grey;
-                }
-            }
-
-            @media (hover: hover) {
-                &:hover {
-                    cursor: pointer;
-
-                    svg {
-                        path {
-                            stroke: black;
-                        }
-                    }
-                }
-            }
-        }
-
-        .moreIcon {
-
-            svg {
-                width: 22px;
-                height: 22px;
-
-                path {
-                    fill: grey;
-                }
-
-                @media (hover: hover) {
-                    &:hover {
-                        cursor: pointer;
-
-                        path {
-                            fill: black;
-                        }
-                    }
-                }
-            }
-        }
-    }
 }

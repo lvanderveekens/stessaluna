@@ -1,5 +1,5 @@
 import * as yup from "yup"
-import {ExerciseType} from "../../exercise/exercise.model"
+import {ExerciseType} from "../../exercise/exercise.interface"
 
 export const schema = yup.object().shape({
   channel: yup.string(),

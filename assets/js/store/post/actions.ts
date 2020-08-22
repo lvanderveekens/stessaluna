@@ -1,5 +1,5 @@
 import axios from "../../http/client"
-import Exercise from "../../exercise/exercise.model"
+import Exercise from "../../exercise/exercise.interface"
 import ExerciseInputValues from "../../post/post-modal-form/exercise-input/exercise-input.model"
 import {Answer} from "../../exercise/answer/answer.model"
 import {

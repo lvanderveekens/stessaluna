@@ -1,0 +1,16 @@
+.aorbExerciseContent {
+
+    margin-bottom: 0.5rem;
+
+    .sentenceWrapper {
+
+        display: flex;
+        padding-bottom: 0.5rem;
+
+        .index {
+            margin-right: 0.3rem;
+            line-height: 1.8rem;
+            flex-shrink: 0;
+        }
+    }
+}

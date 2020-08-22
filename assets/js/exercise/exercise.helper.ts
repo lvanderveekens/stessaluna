@@ -1,4 +1,4 @@
-import Exercise, { ExerciseType } from "./exercise.model"
+import Exercise, {ExerciseType} from "./exercise.interface"
 
 export const isAnswered = (exercise: Exercise): boolean => {
   switch (exercise.type) {

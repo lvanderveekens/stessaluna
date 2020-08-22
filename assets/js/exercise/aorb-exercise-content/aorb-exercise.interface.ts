@@ -1,4 +1,4 @@
-import { AbstractExercise, ExerciseType } from "../exercise.model"
+import {AbstractExercise, ExerciseType} from "../exercise.interface"
 
 export interface AorbExercise extends AbstractExercise {
   type: ExerciseType.A_OR_B

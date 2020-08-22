@@ -1,4 +1,4 @@
-import { ExerciseType } from "../exercise.model"
+import {ExerciseType} from "../exercise.interface"
 
 export interface Answer {
   type: ExerciseType
