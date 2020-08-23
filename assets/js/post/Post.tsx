@@ -10,7 +10,7 @@ import Comment from "./comment/comment.interface";
 import Image from "../image/image.interface";
 import Vote from "./vote/vote.interface";
 import PostHeader from "./post-header/PostHeader";
-import PostActions from "./post-actions/PostActions";
+import PostToolbar from "./post-toolbar/PostToolbar";
 import Exercise from "../exercise/Exercise";
 
 interface Props {
@@ -54,9 +54,7 @@ const Post: FC<Props> = (
     }
   }, [])
 
-  const toggleComments = () => {
-    setShowComments(!showComments)
-  }
+  const toggleComments = () => setShowComments(!showComments)
 
   return (
     <div className={styles.post}>
@@ -74,7 +72,7 @@ const Post: FC<Props> = (
           <Exercise {...exercise} disabled={isAuthor(user)}/>
         )}
       </div>
-      <PostActions
+      <PostToolbar
         postId={id}
         author={author}
         votes={votes}

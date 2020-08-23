@@ -1,7 +1,7 @@
 import React, {FC, useState} from "react";
 import Vote, {VoteType} from "../vote/vote.interface";
 import {deletePost, undoVoteOnPost, updateVoteOnPost, voteOnPost} from "../../store/post/actions";
-import styles from "./PostActions.scss?module";
+import styles from "./PostToolbar.scss?module";
 import {ReactComponent as LikeIcon} from "../../../images/icon/like.svg";
 import {ReactComponent as DislikeIcon} from "../../../images/icon/dislike.svg";
 import {ReactComponent as CommentIcon} from "../../../images/icon/comment.svg";
@@ -31,7 +31,7 @@ interface Props {
   deletePost: (id: number) => Promise<void>
 }
 
-const PostActions: FC<Props> = ({postId, author, votes, commentCount, toggleComments, loggedIn, user, voteOnPost, updateVoteOnPost, undoVoteOnPost, deletePost}) => {
+const PostToolbar: FC<Props> = ({postId, author, votes, commentCount, toggleComments, loggedIn, user, voteOnPost, updateVoteOnPost, undoVoteOnPost, deletePost}) => {
 
   const [showLoginSignupModal, setShowLoginSignupModal] = useState(false)
   const [loginSignupModalText, setLoginSignupModalText] = useState(null)
@@ -57,7 +57,7 @@ const PostActions: FC<Props> = ({postId, author, votes, commentCount, toggleComm
   }
 
   return (
-    <div className={styles.postActions}>
+    <div className={styles.postToolbar}>
       <div className={styles.likeIcon} onClick={() => vote(VoteType.UP)}>
         <LikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.UP})}/>
         {votes.filter((v: Vote) => v.type == VoteType.UP).length}
@@ -102,4 +102,4 @@ const actionCreators = {
   deletePost,
 }
 
-export default connect(mapStateToProps, actionCreators)(PostActions)
+export default connect(mapStateToProps, actionCreators)(PostToolbar)

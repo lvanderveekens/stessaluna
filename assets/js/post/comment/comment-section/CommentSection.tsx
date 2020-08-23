@@ -57,9 +57,9 @@ const CommentSection: FunctionComponent<Props> = ({
             .map((comment) => (
               <Comment
                 key={comment.id}
+                id={comment.id}
                 timestamp={moment(comment.createdAt).fromNow()}
                 author={comment.user}
-                user={user}
                 text={comment.text}
                 votes={comment.votes}
                 onDelete={() => deleteComment(comment.id)}
