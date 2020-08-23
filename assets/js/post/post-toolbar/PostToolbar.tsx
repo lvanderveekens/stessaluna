@@ -60,14 +60,15 @@ const PostToolbar: FC<Props> = ({postId, author, votes, commentCount, toggleComm
     <div className={styles.postToolbar}>
       <div className={styles.likeIcon} onClick={() => vote(VoteType.UP)}>
         <LikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.UP})}/>
-        {votes.filter((v: Vote) => v.type == VoteType.UP).length}
+        <span>{votes.filter((v) => v.type == VoteType.UP).length}</span>
       </div>
       <div className={styles.dislikeIcon} onClick={() => vote(VoteType.DOWN)}>
         <DislikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.DOWN})}/>
-        {votes.filter((v: Vote) => v.type == VoteType.DOWN).length}
+        <span>{votes.filter((v) => v.type == VoteType.DOWN).length}</span>
       </div>
       <div className={styles.commentIcon} onClick={toggleComments}>
-        <CommentIcon/> {commentCount}
+        <CommentIcon/>
+        <span>{commentCount}</span>
       </div>
       {user && user.id == author.id && (
         <div className={styles.moreIcon}>

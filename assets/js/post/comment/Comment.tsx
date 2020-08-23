@@ -4,11 +4,12 @@ import User from "../../user/user.interface"
 import Avatar from "../../user/avatar/Avatar"
 import Vote from "../vote/vote.interface";
 import CommentToolbar from "./comment-toolbar/CommentToolbar";
+import moment from "moment";
 
 interface Props {
   id: number
   author: User
-  timestamp: string
+  createdAt: string
   text: string
   votes: Vote[]
   onDelete: () => void
@@ -18,7 +19,7 @@ const Comment: FC<Props> = (
   {
     id,
     author,
-    timestamp,
+    createdAt,
     text,
     votes,
     onDelete,
@@ -35,7 +36,7 @@ const Comment: FC<Props> = (
           <span className={styles.userName}>
             {author.displayName ? author.displayName : <>@{author.username}</>}
           </span>
-          <span className={styles.timestamp}>{timestamp}</span>
+          <span className={styles.timestamp}>{moment(createdAt).fromNow()}</span>
         </div>
         <div className={styles.text}>
           {text}

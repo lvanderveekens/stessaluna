@@ -73,7 +73,7 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, user, logOut}) => {
             <BootstrapNavbar.Brand className={styles.brand}>
               <Link to="/">
                 <Logo className={styles.logo}/>
-                <span className={styles.brandText}>Stessaluna</span>
+                <span className={styles.brandText}>stessaluna</span>
               </Link>
             </BootstrapNavbar.Brand>
             {isMobile && (<span className={styles.pageTitle}>{pageTitle}</span>)}

@@ -16,7 +16,7 @@ import Exercise from "../exercise/Exercise";
 interface Props {
   id: number
   author: User
-  timestamp: string
+  createdAt: string
   edited: boolean
   channel: string
   text?: string
@@ -31,7 +31,7 @@ const Post: FC<Props> = (
   {
     id,
     author,
-    timestamp,
+    createdAt,
     edited,
     channel,
     text,
@@ -59,7 +59,7 @@ const Post: FC<Props> = (
   return (
     <div className={styles.post}>
       <div className={styles.content}>
-        <PostHeader author={author} channel={channel} timestamp={timestamp} edited={edited}/>
+        <PostHeader author={author} channel={channel} createdAt={createdAt} edited={edited}/>
         {text && <Text text={text}/>}
         {image && (
           <div className={styles.imageWrapper}>
@@ -68,9 +68,7 @@ const Post: FC<Props> = (
             </div>
           </div>
         )}
-        {exercise && (
-          <Exercise {...exercise} disabled={isAuthor(user)}/>
-        )}
+        {exercise && (<Exercise {...exercise} disabled={isAuthor(user)}/>)}
       </div>
       <PostToolbar
         postId={id}

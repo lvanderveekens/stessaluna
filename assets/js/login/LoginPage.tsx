@@ -32,7 +32,7 @@ const LoginPage: FC<Props> = ({logIn, history}) => {
       <Container>
         <Row className="justify-content-center">
           <Col {...COLUMN_BREAKPOINTS}>
-            <h4>Log in to Stessaluna</h4>
+            <h4>Log in to <span className={styles.brandText}>stessaluna</span></h4>
             <LoginForm onSubmit={handleSubmit}/>
             <div className={styles.divider}>
               <span className={styles.line}/>

@@ -1,4 +1,3 @@
-import moment from "moment"
 import React, {FunctionComponent} from "react"
 import User from "../../../user/user.interface"
 import Comment from "../Comment"
@@ -58,7 +57,7 @@ const CommentSection: FunctionComponent<Props> = ({
               <Comment
                 key={comment.id}
                 id={comment.id}
-                timestamp={moment(comment.createdAt).fromNow()}
+                createdAt={comment.createdAt}
                 author={comment.user}
                 text={comment.text}
                 votes={comment.votes}

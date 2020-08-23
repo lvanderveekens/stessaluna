@@ -23,7 +23,6 @@
     .brand {
 
         margin: 0 1rem;
-        font-weight: bold;
 
         a {
             color: $brand-primary;
@@ -42,6 +41,8 @@
 
         .brandText {
             margin-left: 0.3rem;
+            font-family: "Bad Script", sans-serif;
+            font-size: 1.7rem;
         }
     }
 
@@ -90,7 +91,7 @@
                 content: '';
                 width: 100%;
                 position: absolute;
-                height: 4px;
+                height: 3px;
                 background: $brand-light;
                 left: 0;
                 bottom: 4px;

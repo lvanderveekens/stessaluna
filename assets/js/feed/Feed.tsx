@@ -3,7 +3,6 @@ import PostInterface from "../post/post.interface"
 import styles from './Feed.scss?module'
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import FeedPlaceholder from "./placeholder/FeedPlaceholder";
-import moment from "moment";
 import Post from "../post/Post";
 import ChannelFilter from "./channel-filter/ChannelFilter";
 import Button from "../button/Button";
@@ -37,7 +36,7 @@ const Feed: FC<Props> = ({loading, posts, hasMore, onLoadMore}) => {
               <CSSTransition key={post.id} in={true} exit={true} appear={true} timeout={200} classNames="fade">
                 <Post
                   id={post.id}
-                  timestamp={moment(post.createdAt).fromNow()}
+                  createdAt={post.createdAt}
                   edited={post.createdAt != post.modifiedAt}
                   author={post.author}
                   channel={post.channel}
