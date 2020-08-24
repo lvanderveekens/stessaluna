@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 81 84" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMaxYMax slice">
+    <!-- Generator: Sketch 62 (91390) - https://sketch.com -->
+    <title>Avatar placeholder</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="81" height="84"></rect>
+    </defs>
+    <g id="Avatar-placeholder" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="avatar">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#D8D8D8" xlink:href="#path-1"></use>
+            <path d="M12.5556531,104.5 C14.2664745,88.5192456 17.4101431,76.3918735 21.9095119,68.1249123 C26.4219902,59.8338643 32.297146,55.4507535 39.4791558,55.0600564 C40.1861987,55.0337679 40.3593302,55.0313854 40.5343558,55.031277 C47.7110018,55.4420512 53.5820985,59.8330556 58.0919276,68.1241139 C62.5905792,76.394623 65.7337295,88.5210859 67.4443471,104.5 L12.5556531,104.5 Z" id="Path" stroke="#979797" fill="#FEFEFE" mask="url(#mask-2)"></path>
+            <path d="M39.4005699,54.6980376 C47.6322344,54.6980376 55.1533911,50.4014693 57.8806972,36.5842135 C60.6080033,22.7669576 52.3341685,11.5658585 39.4005699,11.5658585 C26.4669713,11.5658585 18.1931364,22.7669576 20.9204425,36.5842135 C23.6477486,50.4014693 31.1689053,54.6980376 39.4005699,54.6980376 Z" id="Oval" stroke="#979797" fill="#FEFEFE" mask="url(#mask-2)"></path>
+            <path d="M40.6556267,31 C41.5628256,35.4663559 40.6776167,37.4391699 38,36.9184421" id="Path-12-Copy" stroke="#979797" mask="url(#mask-2)"></path>
+            <path d="" id="Path-12" stroke="#979797" mask="url(#mask-2)"></path>
+            <path d="M31.1547142,24 L31.4251609,25.4771288 C31.7011442,26.9844974 31.608356,28.5362596 31.1547142,30 L31.1547142,30 L31.1547142,30" id="Path-13" stroke="#979797" mask="url(#mask-2)"></path>
+            <path d="M48.1547142,24 L48.4251609,25.4771288 C48.7011442,26.9844974 48.608356,28.5362596 48.1547142,30 L48.1547142,30 L48.1547142,30" id="Path-13-Copy" stroke="#979797" mask="url(#mask-2)"></path>
+            <path d="M32,42 C33.8994533,44 36.56612,45 40,45 C43.43388,45 46.1005467,44 48,42" id="Path-14" stroke="#979797" mask="url(#mask-2)"></path>
+        </g>
+    </g>
+</svg>

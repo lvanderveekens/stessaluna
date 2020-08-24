@@ -1,5 +1,5 @@
 import axios from "../../http/client"
-import Exercise from "../../exercise/exercise.model"
+import Exercise from "../../exercise/exercise.interface"
 import ExerciseInputValues from "../../post/post-modal-form/exercise-input/exercise-input.model"
 import {Answer} from "../../exercise/answer/answer.model"
 import {
@@ -12,9 +12,16 @@ import {
   FETCH_POSTS_PENDING,
   FETCH_POSTS_SUCCESS,
   SUBMIT_ANSWER_SUCCESS,
-  UPDATE_POST_SUCCESS
+  UNDO_VOTE_ON_COMMENT_SUCCESS,
+  UNDO_VOTE_ON_POST_SUCCESS,
+  UPDATE_POST_SUCCESS,
+  UPDATE_VOTE_ON_COMMENT_SUCCESS,
+  UPDATE_VOTE_ON_POST_SUCCESS,
+  VOTE_ON_COMMENT_SUCCESS,
+  VOTE_ON_POST_SUCCESS,
 } from "./actionTypes"
 import Image from "../../image/image.interface";
+import Vote, {VoteType} from "../../post/vote/vote.interface";
 
 const queryString = require('query-string');
 
@@ -156,5 +163,107 @@ export const submitAnswer = (exerciseId: number, answer: Answer) => {
 export const applyChannelFilter = (channels: string[]) => {
   return (dispatch) => {
     dispatch({type: APPLY_CHANNEL_FILTER, payload: {channels}})
+  }
+}
+
+export const voteOnPost = (postId: number, type: VoteType) => {
+  const success = (vote: Vote) => ({type: VOTE_ON_POST_SUCCESS, payload: {postId, vote}})
+
+  return (dispatch) => {
+    return axios
+      .post(`/api/votes`, {type, postId})
+      .then((res) => {
+        dispatch(success(res.data))
+        return Promise.resolve(res.data)
+      })
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
+  }
+}
+
+export const updateVoteOnPost = (postId: number, voteId: number, type: VoteType) => {
+  const success = (vote: Vote) => ({type: UPDATE_VOTE_ON_POST_SUCCESS, payload: {postId, vote}})
+
+  return (dispatch) => {
+    return axios
+      .patch(`/api/votes/${voteId}`, {type})
+      .then((res) => {
+        dispatch(success(res.data))
+        return Promise.resolve(res.data)
+      })
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
+  }
+}
+
+export const undoVoteOnPost = (postId: number, voteId: number) => {
+  const success = () => ({type: UNDO_VOTE_ON_POST_SUCCESS, payload: {postId, voteId}})
+
+  return (dispatch) => {
+    return axios
+      .delete(`/api/votes/${voteId}`)
+      .then(() => {
+        dispatch(success())
+        return Promise.resolve()
+      })
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
+  }
+}
+
+export const voteOnComment = (commentId: number, type: VoteType) => {
+  const success = (vote: Vote) => ({type: VOTE_ON_COMMENT_SUCCESS, payload: {commentId, vote}})
+
+  return (dispatch) => {
+    return axios
+      .post(`/api/votes`, {type, commentId})
+      .then((res) => {
+        dispatch(success(res.data))
+        return Promise.resolve(res.data)
+      })
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
+  }
+}
+
+export const updateVoteOnComment = (commentId: number, voteId: number, type: VoteType) => {
+  const success = (vote: Vote) => ({type: UPDATE_VOTE_ON_COMMENT_SUCCESS, payload: {commentId, vote}})
+
+  return (dispatch) => {
+    return axios
+      .patch(`/api/votes/${voteId}`, {type})
+      .then((res) => {
+        dispatch(success(res.data))
+        return Promise.resolve(res.data)
+      })
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
+  }
+}
+
+export const undoVoteOnComment = (commentId: number, voteId: number) => {
+  const success = () => ({type: UNDO_VOTE_ON_COMMENT_SUCCESS, payload: {commentId, voteId}})
+
+  return (dispatch) => {
+    return axios
+      .delete(`/api/votes/${voteId}`)
+      .then(() => {
+        dispatch(success())
+        return Promise.resolve()
+      })
+      .catch((e) => {
+        console.log(e)
+        return Promise.reject(e)
+      })
   }
 }

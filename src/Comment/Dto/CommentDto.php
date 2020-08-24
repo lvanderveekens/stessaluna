@@ -1,60 +1,35 @@
 <?php
+declare(strict_types=1);
 
 namespace Stessaluna\Comment\Dto;
 
 use Stessaluna\User\Dto\UserDto;
+use Stessaluna\Vote\Dto\VoteDto;
 
 class CommentDto
 {
-    private $id;
+    /**
+     * @var int
+     */
+    public $id;
 
-    private $text;
+    /**
+     * @var string
+     */
+    public $text;
 
-    private $createdAt;
+    /**
+     * @var \DateTimeInterface
+     */
+    public $createdAt;
 
-    private $user;
+    /**
+     * @var UserDto
+     */
+    public $user;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    public function getText(): ?string
-    {
-        return $this->text;
-    }
-
-    public function setText(string $text): self
-    {
-        $this->text = $text;
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-        return $this;
-    }
-
-    public function getUser(): ?UserDto
-    {
-        return $this->user;
-    }
-
-    public function setUser(UserDto $user): self
-    {
-        $this->user = $user;
-        return $this;
-    }
+    /**
+     * @var VoteDto[]
+     */
+    public $votes;
 }

@@ -1,10 +1,12 @@
 {
     "devDependencies": {
         "@babel/preset-react": "^7.7.4",
+        "@svgr/webpack": "^5.4.0",
         "@symfony/webpack-encore": "^0.28.2",
         "@types/jest": "^25.2.1",
         "@typescript-eslint/eslint-plugin": "^2.29.0",
         "@typescript-eslint/parser": "^2.29.0",
+        "babel-loader": "^8.1.0",
         "core-js": "^3.0.0",
         "eslint": "^6.8.0",
         "eslint-config-prettier": "^6.10.1",
@@ -85,6 +87,7 @@
         "slate-history": "^0.57.1",
         "slate-react": "^0.57.1",
         "typescript": "^3.8.3",
+        "url-loader": "^4.1.0",
         "yup": "^0.28.0"
     },
     "jest": {

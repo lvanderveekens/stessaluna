@@ -3,7 +3,6 @@ import PostInterface from "../post/post.interface"
 import styles from './Feed.scss?module'
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import FeedPlaceholder from "./placeholder/FeedPlaceholder";
-import moment from "moment";
 import Post from "../post/Post";
 import ChannelFilter from "./channel-filter/ChannelFilter";
 import Button from "../button/Button";
@@ -14,10 +13,9 @@ interface Props {
   posts: PostInterface[]
   hasMore: boolean
   onLoadMore: () => void
-  onDeletePost: (id: number) => void
 }
 
-const Feed: FC<Props> = ({loading, posts, hasMore, onLoadMore, onDeletePost}) => {
+const Feed: FC<Props> = ({loading, posts, hasMore, onLoadMore}) => {
 
   return (
     <div className={styles.feed}>
@@ -38,14 +36,14 @@ const Feed: FC<Props> = ({loading, posts, hasMore, onLoadMore, onDeletePost}) =>
               <CSSTransition key={post.id} in={true} exit={true} appear={true} timeout={200} classNames="fade">
                 <Post
                   id={post.id}
-                  timestamp={moment(post.createdAt).fromNow()}
+                  createdAt={post.createdAt}
                   edited={post.createdAt != post.modifiedAt}
                   author={post.author}
                   channel={post.channel}
                   text={post.text}
                   image={post.image}
+                  votes={post.votes}
                   exercise={post.exercise}
-                  onDelete={() => onDeletePost(post.id)}
                   comments={post.comments}
                 />
               </CSSTransition>

@@ -1,5 +1,5 @@
 import ExerciseInputValues from "./exercise-input.model";
-import Exercise, {ExerciseType} from "../../../exercise/exercise.model";
+import Exercise, {ExerciseType} from "../../../exercise/exercise.interface";
 import AorbExerciseInputValues from "./aorb-exercise-input/aorb-exercise-input.model";
 import AorbExerciseInput from "./aorb-exercise-input/AorbExerciseInput";
 import WhatdoyouseeExerciseInputValues from "./whatdoyousee-exercise-input/whatdoyousee-exercise-input.model";

@@ -11,6 +11,7 @@ use Stessaluna\Comment\Entity\Comment;
 use Stessaluna\Exercise\Entity\Exercise;
 use Stessaluna\Image\Entity\Image;
 use Stessaluna\User\Entity\User;
+use Stessaluna\Vote\Entity\Vote;
 
 /**
  * @ORM\Entity
@@ -71,6 +72,13 @@ class Post
     private $image = null;
 
     /**
+     * @ORM\OneToMany(targetEntity="Stessaluna\Vote\Entity\Vote", mappedBy="post")
+     *
+     * @var Vote[]
+     */
+    private $votes;
+
+    /**
      * @ORM\OneToOne(targetEntity="Stessaluna\Exercise\Entity\Exercise", orphanRemoval=true, cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      *
@@ -88,6 +96,7 @@ class Post
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->votes = new ArrayCollection();
     }
 
     public function getId(): int
@@ -163,6 +172,14 @@ class Post
         $this->image = $image;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Vote[]
+     */
+    public function getVotes(): Collection
+    {
+        return $this->votes;
     }
 
     public function getExercise(): ?Exercise

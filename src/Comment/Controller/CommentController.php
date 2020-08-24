@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Stessaluna\AbstractController;
 use Stessaluna\Comment\CommentService;
 use Stessaluna\Comment\Dto\AddCommentRequest;
-use Stessaluna\Comment\Dto\CommentToCommentDtoConverter;
+use Stessaluna\Comment\Dto\CommentToCommentDtoMapper;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,20 +25,20 @@ class CommentController extends AbstractController
     /** @var CommentService */
     private $commentService;
 
-    /** @var CommentToCommentDtoConverter */
-    private $commentToCommentDtoConverter;
+    /** @var CommentToCommentDtoMapper */
+    private $commentToCommentDtoMapper;
 
     /** @var LoggerInterface */
     private $logger;
 
     public function __construct(
         CommentService $commentService,
-        CommentToCommentDtoConverter $commentToCommentDtoConverter,
+        CommentToCommentDtoMapper $commentToCommentDtoMapper,
         LoggerInterface $logger
     )
     {
         $this->commentService = $commentService;
-        $this->commentToCommentDtoConverter = $commentToCommentDtoConverter;
+        $this->commentToCommentDtoMapper = $commentToCommentDtoMapper;
         $this->logger = $logger;
     }
 
@@ -57,7 +57,7 @@ class CommentController extends AbstractController
             $addCommentRequest->text,
             $this->getUser()
         );
-        return $this->json($this->commentToCommentDtoConverter->convert($comment), 201);
+        return $this->json($this->commentToCommentDtoMapper->map($comment), 201);
     }
 
     /**

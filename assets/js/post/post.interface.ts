@@ -1,7 +1,8 @@
 import User from "../user/user.interface"
 import Comment from "./comment/comment.interface"
-import Exercise from "../exercise/exercise.model"
+import Exercise from "../exercise/exercise.interface"
 import Image from "../image/image.interface";
+import Vote from "./vote/vote.interface";
 
 export interface Post {
   id: number
@@ -12,6 +13,7 @@ export interface Post {
   channel: string
   text?: string
   image?: Image
+  votes: Vote[]
   exercise?: Exercise
   comments: Comment[]
 }

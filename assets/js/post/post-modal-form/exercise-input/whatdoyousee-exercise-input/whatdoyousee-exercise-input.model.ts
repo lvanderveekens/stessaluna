@@ -1,5 +1,5 @@
 import ExerciseInputValues from "../exercise-input.model"
-import {ExerciseType} from "../../../../exercise/exercise.model"
+import {ExerciseType} from "../../../../exercise/exercise.interface"
 import Image from "../../../../image/image.interface";
 
 export class WhatdoyouseeExerciseInputValues extends ExerciseInputValues {

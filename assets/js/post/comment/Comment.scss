@@ -1,6 +1,5 @@
 .comment {
 
-
     font-size: 0.9rem;
     display: flex;
     margin-bottom: 0.5rem;
@@ -9,42 +8,24 @@
         margin-bottom: 0;
     }
 
-    .authorTextTimestamp {
-        margin-right: 1rem;
-        flex-grow: 1;
+    .avatarWrapper {
+        margin-top: 4px;
+        margin-right: 0.7rem;
     }
 
-    .threeDotsMenu {
-        margin: 0 0.4rem;
-
-        .iconWrapper {
-            cursor: pointer;
-            padding: 0 0.2rem;
-        }
-    }
-
-    .content {
-
-        // Needed to align with the new comment form
-        margin-left: 0.2rem;
-        padding-left: 1px;
-
-        flex-grow: 1;
-
-        .author {
-            color: black;
-            margin-right: 0.4rem;
-        }
-
-        .text {
-            color: grey;
-            word-break: break-word;
+    .header {
+        .userName {
+            margin-right: 0.3rem;
+            font-weight: bold;
         }
 
         .timestamp {
-            font-size: 0.7rem;
             color: grey;
         }
     }
 
+
+    .text {
+        //color: grey;
+    }
 }

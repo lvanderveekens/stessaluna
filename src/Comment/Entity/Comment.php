@@ -2,9 +2,12 @@
 
 namespace Stessaluna\Comment\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Stessaluna\Post\Entity\Post;
 use Stessaluna\User\Entity\User;
+use Stessaluna\Vote\Entity\Vote;
 
 /**
  * @ORM\Entity
@@ -39,6 +42,18 @@ class Comment
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Stessaluna\Vote\Entity\Vote", mappedBy="comment")
+     *
+     * @var Vote[]
+     */
+    private $votes;
+
+    public function __construct()
+    {
+        $this->votes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -91,5 +106,13 @@ class Comment
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Vote[]
+     */
+    public function getVotes(): Collection
+    {
+        return $this->votes;
     }
 }

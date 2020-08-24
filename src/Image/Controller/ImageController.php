@@ -5,7 +5,7 @@ namespace Stessaluna\Image\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Stessaluna\AbstractController;
-use Stessaluna\Image\Dto\ImageToImageDtoConverter;
+use Stessaluna\Image\Dto\ImageToImageDtoMapper;
 use Stessaluna\Image\ImageService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,14 +23,14 @@ class ImageController extends AbstractController
      */
     private $imageService;
     /**
-     * @var ImageToImageDtoConverter
+     * @var ImageToImageDtoMapper
      */
-    private $imageToImageDtoConverter;
+    private $imageToImageDtoMapper;
 
-    public function __construct(ImageService $imageService, ImageToImageDtoConverter $imageToImageDtoConverter)
+    public function __construct(ImageService $imageService, ImageToImageDtoMapper $imageToImageDtoMapper)
     {
         $this->imageService = $imageService;
-        $this->imageToImageDtoConverter = $imageToImageDtoConverter;
+        $this->imageToImageDtoMapper = $imageToImageDtoMapper;
     }
 
     /**
@@ -40,7 +40,7 @@ class ImageController extends AbstractController
     {
         $uploadedImage = $request->files->get('image');
         $image = $this->imageService->store($uploadedImage);
-        return $this->json($this->imageToImageDtoConverter->convert($image));
+        return $this->json($this->imageToImageDtoMapper->map($image));
     }
 }
 

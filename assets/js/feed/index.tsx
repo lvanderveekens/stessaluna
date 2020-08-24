@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useState} from "react";
 import Feed from "./Feed";
-import {deletePost, fetchPosts} from "../store/post/actions";
+import {fetchPosts} from "../store/post/actions";
 import {State} from "../store";
 import {connect} from 'react-redux'
 import Post from "../post/post.interface";
@@ -13,14 +13,13 @@ interface Props {
   hasMore: boolean
   filters: Filters
   fetchPosts: (channels?: string[], limit?: number, beforeId?: number, append?: boolean) => void
-  deletePost: (id: number) => Promise<void>
   loggedIn: boolean
   user?: User
 }
 
 const FETCH_SIZE = 10;
 
-const FeedContainer: FC<Props> = ({loading, posts, hasMore, filters, fetchPosts, deletePost, user, loggedIn}) => {
+const FeedContainer: FC<Props> = ({loading, posts, hasMore, filters, fetchPosts, user, loggedIn}) => {
 
   const [waitingForInitialFetch, setWaitingForInitialFetch] = useState(true)
 
@@ -42,7 +41,6 @@ const FeedContainer: FC<Props> = ({loading, posts, hasMore, filters, fetchPosts,
       posts={posts}
       hasMore={hasMore}
       onLoadMore={handleLoadMore}
-      onDeletePost={deletePost}
     />
   )
 }
@@ -58,7 +56,6 @@ const mapStateToProps = (state: State) => ({
 
 const actionCreators = {
   fetchPosts,
-  deletePost,
 }
 
 export default connect(mapStateToProps, actionCreators)(FeedContainer)

@@ -5,10 +5,10 @@ import {Link} from "react-router-dom"
 import {logIn} from "../store/auth/actions"
 import LoginForm from "./login-form/LoginForm"
 import styles from "./LoginPage.scss?module"
-import logoPath from "../../images/logo.svg"
 import {History} from 'history';
 import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
 import Button from "../button/Button";
+import {ReactComponent as Logo} from "../../images/logo.svg";
 
 interface Props {
   logIn: (username: string, password: string) => Promise<void>
@@ -27,12 +27,12 @@ const LoginPage: FC<Props> = ({logIn, history}) => {
   return (
     <div className={styles.loginPage}>
       <div className={styles.logoWrapper}>
-        <img src={logoPath} alt="Logo" onClick={() => history.push("/")}/>
+        <Logo className={styles.logo} onClick={() => history.push("/")}/>
       </div>
       <Container>
         <Row className="justify-content-center">
           <Col {...COLUMN_BREAKPOINTS}>
-            <h4>Log in to Stessaluna</h4>
+            <h4>Log in to <span className={styles.brandText}>stessaluna</span></h4>
             <LoginForm onSubmit={handleSubmit}/>
             <div className={styles.divider}>
               <span className={styles.line}/>

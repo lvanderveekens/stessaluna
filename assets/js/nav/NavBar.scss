@@ -1,7 +1,7 @@
 @import "assets/css/colors";
 
 .nav {
-    color: white;
+    //color: grey;
     border-bottom: 1px solid white;
     background-color: $brand-secondary;
     padding: 0;
@@ -15,6 +15,7 @@
     }
 
     .pageTitle {
+        color: white;
         padding-left: 0.5rem;
         border-left: 1px solid white;
         font-weight: bold;
@@ -23,7 +24,6 @@
     .brand {
 
         margin: 0 1rem;
-        font-weight: bold;
 
         a {
             color: $brand-primary;
@@ -42,6 +42,8 @@
 
         .brandText {
             margin-left: 0.3rem;
+            font-family: "Bad Script", sans-serif;
+            font-size: 1.7rem;
         }
     }
 
@@ -83,30 +85,35 @@
 
             position: relative;
 
-            color: white !important;
             text-decoration: none;
 
-            &.currentPageLink::after {
-                content: '';
-                width: 100%;
-                position: absolute;
-                height: 4px;
-                background: $brand-light;
-                left: 0;
-                bottom: 4px;
-            }
+            color: rgba(255, 255, 255, 0.7) !important;
 
             &:hover {
-                opacity: 0.7;
-                //color: rgba(255, 255, 255, 0.5) !important;
+                color: white !important;
             }
 
+            &.currentPageLink {
+
+                color: white !important;
+
+                &::after {
+                    content: '';
+                    width: 100%;
+                    position: absolute;
+                    height: 3px;
+                    background: $brand-light;
+                    left: 0;
+                    bottom: 3px;
+                }
+            }
         }
 
         .utilities {
 
             margin-left: auto;
             display: flex;
+            align-items: center;
 
             .loginSignupWrapper {
                 display: flex;
@@ -173,8 +180,8 @@
 
         .icon {
             display: inline-block;
-            width: 18px;
-            height: 18px;
+            width: 24px;
+            height: 24px;
             margin: 3px 0; // to get to a default height of 24px
             margin-right: 0.5rem;
             color: $brand-light;

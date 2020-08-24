@@ -1,48 +1,47 @@
-import React, {FunctionComponent} from "react"
+import React, {FC} from "react"
 import styles from "./Comment.scss?module"
 import User from "../../user/user.interface"
-import {Dropdown} from "react-bootstrap"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faEllipsisV} from "@fortawesome/free-solid-svg-icons"
-import CustomToggle from "../../dropdown/custom-toggle/CustomToggle"
 import Avatar from "../../user/avatar/Avatar"
+import Vote from "../vote/vote.interface";
+import CommentToolbar from "./comment-toolbar/CommentToolbar";
+import moment from "moment";
 
 interface Props {
+  id: number
   author: User
-  timestamp: string
+  createdAt: string
   text: string
-  user?: User
+  votes: Vote[]
   onDelete: () => void
 }
 
-const Comment: FunctionComponent<Props> = ({ author, timestamp, text, user, onDelete }) => {
+const Comment: FC<Props> = (
+  {
+    id,
+    author,
+    createdAt,
+    text,
+    votes,
+    onDelete,
+  }
+) => {
+
   return (
     <div className={styles.comment}>
-      <div style={{ marginRight: "0.7rem" }}>
-        <Avatar src={author.avatar.url} countryCode={author.country} size="sm" />
+      <div className={styles.avatarWrapper}>
+        <Avatar src={author.avatar.url} countryCode={author.country} size="sm"/>
       </div>
-      <div className={styles.content}>
-        <div className="d-flex">
-          <div className={styles.authorTextTimestamp}>
-            <span className={styles.author}>@{author.username}</span>
-            <span className={styles.text}>{text}</span>
-            <div className={styles.timestamp}>{timestamp}</div>
-          </div>
-          {user && user.id == author.id && (
-            <div className={styles.threeDotsMenu}>
-              <Dropdown alignRight={true}>
-                <Dropdown.Toggle as={CustomToggle} id="something">
-                  <span className={styles.iconWrapper}>
-                    <FontAwesomeIcon className={styles.icon} icon={faEllipsisV} />
-                  </span>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={onDelete}>Delete</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          )}
+      <div>
+        <div className={styles.header}>
+          <span className={styles.userName}>
+            {author.displayName ? author.displayName : <>@{author.username}</>}
+          </span>
+          <span className={styles.timestamp}>{moment(createdAt).fromNow()}</span>
         </div>
+        <div className={styles.text}>
+          {text}
+        </div>
+        <CommentToolbar id={id} author={author} votes={votes} onDelete={onDelete}/>
       </div>
     </div>
   )

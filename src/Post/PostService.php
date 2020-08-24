@@ -73,6 +73,15 @@ class PostService
         return $this->postRepository->find($id);
     }
 
+    public function getPost(int $id): Post
+    {
+        $post = $this->postRepository->find($id);
+        if (!$post) {
+            throw new ResourceNotFoundException('Post not found for id: ' . $id);
+        }
+        return $post;
+    }
+
     public function createPost(string $channel, ?string $text, ?int $imageId, ?Exercise $exercise, User $user): Post
     {
         $post = new Post();
@@ -89,10 +98,7 @@ class PostService
 
     public function updatePost(int $id, string $channel, ?string $text, ?int $imageId, ?Exercise $exercise, User $user): Post
     {
-        $post = $this->postRepository->find($id);
-        if (!$post) {
-            throw new ResourceNotFoundException('Post not found for id: ' . $id);
-        }
+        $post = $this->getPost($id);
         if ($user->getId() != $post->getAuthor()->getId()) {
             throw new NotAuthorException('Not author of post: ' . $id);
         }
@@ -106,10 +112,7 @@ class PostService
 
     public function deletePostById(int $id, User $user)
     {
-        $post = $this->postRepository->find($id);
-        if (!$post) {
-            throw new ResourceNotFoundException('Post not found for id: ' . $id);
-        }
+        $post = $this->getPost($id);
         if ($user->getId() != $post->getAuthor()->getId()) {
             throw new NotAuthorException('Not author of post: ' . $id);
         }

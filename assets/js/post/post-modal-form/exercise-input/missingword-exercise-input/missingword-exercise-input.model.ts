@@ -1,5 +1,5 @@
 import ExerciseInputValues from "../exercise-input.model"
-import {ExerciseType} from "../../../../exercise/exercise.model"
+import {ExerciseType} from "../../../../exercise/exercise.interface"
 
 export class MissingwordExerciseInputValues extends ExerciseInputValues {
   textBefore?: string

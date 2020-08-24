@@ -1,4 +1,3 @@
-import moment from "moment"
 import React, {FunctionComponent} from "react"
 import User from "../../../user/user.interface"
 import Comment from "../Comment"
@@ -57,10 +56,11 @@ const CommentSection: FunctionComponent<Props> = ({
             .map((comment) => (
               <Comment
                 key={comment.id}
-                timestamp={moment(comment.createdAt).fromNow()}
+                id={comment.id}
+                createdAt={comment.createdAt}
                 author={comment.user}
-                user={user}
                 text={comment.text}
+                votes={comment.votes}
                 onDelete={() => deleteComment(comment.id)}
               />
             ))}

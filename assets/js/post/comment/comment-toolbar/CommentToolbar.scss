@@ -1,0 +1,62 @@
+@import "assets/css/colors";
+
+.commentToolbar {
+
+    display: flex;
+    justify-content: flex-start;
+
+    .likeIcon, .dislikeIcon {
+
+        margin-right: 0.5rem;
+
+        .voted {
+            path {
+                stroke: $brand-light;
+            }
+        }
+
+        svg {
+            width: 16px;
+            height: unset;
+            margin-right: 0.3rem;
+
+            path {
+                stroke: grey;
+            }
+        }
+
+        @media (hover: hover) {
+            &:hover {
+                cursor: pointer;
+
+                svg {
+                    path {
+                        stroke: $brand-light;
+                    }
+                }
+            }
+        }
+    }
+
+    .moreIcon {
+
+        svg {
+            width: 16px;
+            height: unset;
+
+            path {
+                fill: grey;
+            }
+
+            @media (hover: hover) {
+                &:hover {
+                    cursor: pointer;
+
+                    path {
+                        fill: $brand-light;
+                    }
+                }
+            }
+        }
+    }
+}

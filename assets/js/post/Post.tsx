@@ -1,137 +1,65 @@
-import {faCommentAlt} from "@fortawesome/free-regular-svg-icons"
-import {faEllipsisV} from "@fortawesome/free-solid-svg-icons"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import React, {FunctionComponent, useEffect, useState} from "react"
-import {Dropdown} from "react-bootstrap"
-import ReactCountryFlag from "react-country-flag"
+import React, {FC, useEffect, useState} from "react"
 import {connect} from "react-redux"
-import CustomToggle from "../dropdown/custom-toggle/CustomToggle"
-import AorbExercise from "../exercise/aorb-exercise"
 import {isAnswered} from "../exercise/exercise.helper"
-import Exercise, {ExerciseType} from "../exercise/exercise.model"
-import MissingwordExercise from "../exercise/missingword-exercise"
-import WhatdoyouseeExercise from "../exercise/whatdoyousee-exercise"
-import Avatar from "../user/avatar/Avatar"
+import ExerciseInterface from "../exercise/exercise.interface"
 import User from "../user/user.interface"
 import CommentSection from "./comment/comment-section"
 import styles from "./Post.scss?module"
 import Text from "./text/Text"
-import {getCountryCode} from "../country/get-country-code"
-import ISO6391 from "iso-639-1"
 import Comment from "./comment/comment.interface";
-import {Link} from "react-router-dom";
 import Image from "../image/image.interface";
+import Vote from "./vote/vote.interface";
+import PostHeader from "./post-header/PostHeader";
+import PostToolbar from "./post-toolbar/PostToolbar";
+import Exercise from "../exercise/Exercise";
 
 interface Props {
   id: number
   author: User
-  timestamp: string
+  createdAt: string
   edited: boolean
   channel: string
   text?: string
   image?: Image
-  exercise?: Exercise
-  onDelete: () => void
+  exercise?: ExerciseInterface
   comments: Comment[]
-  user?: User
+  votes: Vote[]
+  user?: User,
 }
 
-const Post: FunctionComponent<Props> = (
+const Post: FC<Props> = (
   {
     id,
     author,
-    timestamp,
+    createdAt,
     edited,
     channel,
     text,
     image,
     exercise,
     comments,
-    onDelete,
+    votes,
     user,
-  }
-) => {
-  const [showCommentSection, setShowCommentSection] = useState(false)
+  }) => {
+  const [showComments, setShowComments] = useState(false)
   const [showAllComments, setShowAllComments] = useState(false)
   const [numberOfPreviewComments, setNumberOfPreviewComments] = useState(1)
 
+  const isAuthor = (user?: User) => user && user.id == author.id
+  const isCommentSectionLocked = exercise && !isAnswered(exercise) && !isAuthor(user)
+
   useEffect(() => {
     if (comments.length > 0) {
-      toggleCommentSection()
+      toggleComments()
     }
   }, [])
 
-  const toggleCommentSection = () => {
-    setShowCommentSection(!showCommentSection)
-  }
-
-  const renderUserName = () => {
-    if (author.displayName) {
-      return (
-        <span>
-          <span className={styles.fullName}>{author.displayName}</span>
-          <span className={styles.usernameAfterFullName}>@{author.username}</span>
-        </span>
-      )
-    }
-    return (
-      <span>
-        <span style={{marginRight: "0.3rem"}}>@{author.username}</span>
-      </span>
-    )
-  }
-
-  const renderExercise = () => {
-    const props = {...exercise, disabled: isAuthor(user)}
-    switch (exercise.type) {
-      case ExerciseType.A_OR_B:
-        return <AorbExercise {...props} />
-      case ExerciseType.WHAT_DO_YOU_SEE:
-        return <WhatdoyouseeExercise {...props} />
-      case ExerciseType.MISSING_WORD:
-        return <MissingwordExercise {...props} />
-    }
-  }
-
-  const isAuthor = (user?: User) => user && user.id == author.id
-
-  const isCommentSectionLocked = exercise && !isAnswered(exercise) && !isAuthor(user)
+  const toggleComments = () => setShowComments(!showComments)
 
   return (
     <div className={styles.post}>
       <div className={styles.content}>
-        {/* TODO: separate post-header component */}
-        <div className={styles.header}>
-          <div className={styles.avatar}>
-            <Avatar src={author.avatar.url} countryCode={author.country}/>
-          </div>
-          <div className={styles.usernameTimestampWrapper}>
-            <div>{renderUserName()}</div>
-            <div className={styles.channelWrapper}>
-              posted in <span className={styles.channel}>{ISO6391.getName(channel)}</span>&nbsp;
-              {getCountryCode(channel) && (
-                <ReactCountryFlag className={styles.countryFlag} countryCode={getCountryCode(channel)} svg/>
-              )}
-            </div>
-            <span className={styles.timestamp}>{timestamp} {edited && (<span>(edited)</span>)}</span>
-          </div>
-          {user && user.id == author.id && (
-            <div className={styles.threeDotsMenu}>
-              <Dropdown alignRight={true}>
-                <Dropdown.Toggle as={CustomToggle} id="something">
-                    <span className={styles.iconWrapper}>
-                      <FontAwesomeIcon className={styles.icon} icon={faEllipsisV}/>
-                    </span>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item as={Link} to={`/edit-post/${id}`}>Edit</Dropdown.Item>
-                  <Dropdown.Divider/>
-                  <Dropdown.Item onClick={onDelete}>Delete</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          )}
-        </div>
+        <PostHeader author={author} channel={channel} createdAt={createdAt} edited={edited}/>
         {text && <Text text={text}/>}
         {image && (
           <div className={styles.imageWrapper}>
@@ -140,29 +68,16 @@ const Post: FunctionComponent<Props> = (
             </div>
           </div>
         )}
-        {exercise && (
-          <div className={styles.exerciseWrapper}>
-            {renderExercise()}
-          </div>
-        )}
+        {exercise && (<Exercise {...exercise} disabled={isAuthor(user)}/>)}
       </div>
-      <div className={styles.activity}>
-        {exercise && exercise.answerCount > 0 && <div>Answers: {exercise.answerCount}</div>}
-        {comments && comments.length > 0 && (
-          <div className={styles.numberOfComments} onClick={toggleCommentSection}>
-            Comments: {comments.length}
-          </div>
-        )}
-      </div>
-      <div className={styles.actions}>
-        <div className={styles.addComment} onClick={() => setShowCommentSection(true)}>
-          <span className={styles.commentIcon}>
-            <FontAwesomeIcon icon={faCommentAlt}/>
-          </span>
-          Add comment
-        </div>
-      </div>
-      {showCommentSection && (
+      <PostToolbar
+        postId={id}
+        author={author}
+        votes={votes}
+        commentCount={comments.length}
+        toggleComments={toggleComments}
+      />
+      {showComments && (
         <CommentSection
           postId={id}
           comments={comments}

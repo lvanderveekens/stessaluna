@@ -11,64 +11,6 @@
         padding: 1rem;
         word-break: break-word;
 
-        .header {
-            display: flex;
-            //justify-content: space-between;
-            vertical-align: middle;
-            margin-bottom: 1rem;
-            //align-items: center;
-
-            .avatar {
-                margin-top: 0.2rem;
-                margin-right: 1rem;
-            }
-
-            .usernameTimestampWrapper {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-
-                .timestamp {
-                    font-size: 0.7rem;
-                    color: grey;
-                }
-
-                .channelWrapper {
-                    color: grey;
-                    font-size: 0.9rem;
-
-                    .channel {
-                        color: black;
-                    }
-
-                    .countryFlag {
-                        box-shadow: 0 0 1px grey;
-                        width: 18px !important;
-                        height: auto !important;
-                    }
-                }
-
-                .fullName {
-                    margin-right: 0.3rem;
-                }
-
-                .usernameAfterFullName {
-                    color: grey;
-                    font-size: 0.9rem;
-                }
-            }
-
-            .threeDotsMenu {
-                margin-left: auto;
-                margin-top: 0.2rem;
-
-                .iconWrapper {
-                    cursor: pointer;
-                    padding: 0 0.2rem;
-                }
-            }
-
-        }
 
         .imageWrapper {
 
@@ -93,59 +35,10 @@
             }
         }
 
-        .exerciseWrapper {
-            border: 1px solid #ced4da;
-            border-radius: 0.5rem;
-            padding: 1rem;
-        }
-
         .deleteButton:hover {
             cursor: pointer;
             opacity: 0.6;
         }
     }
 
-    .activity {
-        display: flex;
-        justify-content: flex-end;
-
-        padding: 0 1rem 0.5rem 1rem;
-
-        & > div {
-            margin-left: 0.8rem;
-            // font-size: 0.7rem;
-            color: grey;
-        }
-
-        .numberOfComments {
-            &:hover {
-                cursor: pointer;
-                color: black;
-            }
-        }
-    }
-
-    .actions {
-        border-top: 1px solid #ced4da;
-
-        display: flex;
-        justify-content: space-evenly;
-
-        .addComment {
-            padding: 0.3rem 0.9rem;
-
-            &:hover {
-                cursor: pointer;
-                background-color: $stessaluna-hover-grey;
-            }
-
-            .commentIcon {
-                margin-right: 0.4rem;
-
-                svg {
-                    vertical-align: -0.18rem;
-                }
-            }
-        }
-    }
 }
