@@ -1,9 +1,7 @@
-import User from "../../user/user.interface";
-
 export interface Vote {
   id: number
   type: VoteType
-  user: User
+  userId: number
 }
 
 export enum VoteType {

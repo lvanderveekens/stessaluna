@@ -1,30 +1,27 @@
 import React, {FC} from "react"
 import styles from "./Comment.scss?module"
-import User from "../../user/user.interface"
 import Avatar from "../../user/avatar/Avatar"
-import Vote from "../vote/vote.interface";
 import CommentToolbar from "./comment-toolbar/CommentToolbar";
 import moment from "moment";
+import Comment from "./comment.interface";
+import {State} from "../../store";
+import {connect, useSelector} from "react-redux";
 
-interface Props {
+interface OwnProps {
   id: number
-  author: User
-  createdAt: string
-  text: string
-  votes: Vote[]
   onDelete: () => void
 }
 
-const Comment: FC<Props> = (
-  {
-    id,
-    author,
-    createdAt,
-    text,
-    votes,
-    onDelete,
-  }
-) => {
+interface StateProps {
+  comment: Comment
+}
+
+type Props = OwnProps & StateProps
+
+const Comment: FC<Props> = ({comment, onDelete}) => {
+
+  const {id, userId, createdAt, text, voteIds} = comment
+  const author = useSelector((state: State) => state.entities.usersById[userId])
 
   return (
     <div className={styles.comment}>
@@ -41,10 +38,14 @@ const Comment: FC<Props> = (
         <div className={styles.text}>
           {text}
         </div>
-        <CommentToolbar id={id} author={author} votes={votes} onDelete={onDelete}/>
+        <CommentToolbar id={id} author={author} voteIds={voteIds} onDelete={onDelete}/>
       </div>
     </div>
   )
 }
 
-export default Comment
+const mapStateToProps = (state: State, ownProps: OwnProps): StateProps => ({
+  comment: state.entities.commentsById[ownProps.id]
+})
+
+export default connect<StateProps, {}, OwnProps>(mapStateToProps, null)(Comment)

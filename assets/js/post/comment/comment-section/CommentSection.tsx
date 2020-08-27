@@ -1,7 +1,6 @@
 import React, {FunctionComponent} from "react"
 import User from "../../../user/user.interface"
 import Comment from "../Comment"
-import CommentInterface from "../comment.interface"
 import NewCommentForm from "../new-comment-form/NewCommentForm"
 import styles from "./CommentSection.scss?module"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
@@ -9,7 +8,7 @@ import {faLock} from "@fortawesome/free-solid-svg-icons"
 import {Link} from "react-router-dom"
 
 interface Props {
-  comments: CommentInterface[]
+  commentIds: number[]
   numberOfPreviewComments: number
   showAll: boolean
   setShowAll: (showAll: boolean) => void
@@ -20,17 +19,19 @@ interface Props {
   loggedIn: boolean,
 }
 
-const CommentSection: FunctionComponent<Props> = ({
-  comments,
-  numberOfPreviewComments,
-  showAll,
-  setShowAll,
-  user,
-  addComment,
-  deleteComment,
-  locked,
-  loggedIn,
-}) => {
+const CommentSection: FunctionComponent<Props> = (
+  {
+    commentIds,
+    numberOfPreviewComments,
+    showAll,
+    setShowAll,
+    user,
+    addComment,
+    deleteComment,
+    locked,
+    loggedIn,
+  }
+) => {
   return (
     <div className={styles.commentSection}>
       {locked && (
@@ -50,19 +51,11 @@ const CommentSection: FunctionComponent<Props> = ({
               </div>
             </div>
           )}
-          {comments
-            .sort((comment, other) => new Date(comment.createdAt).getTime() - new Date(other.createdAt).getTime())
-            .slice(showAll ? 0 : comments.length - numberOfPreviewComments)
-            .map((comment) => (
-              <Comment
-                key={comment.id}
-                id={comment.id}
-                createdAt={comment.createdAt}
-                author={comment.user}
-                text={comment.text}
-                votes={comment.votes}
-                onDelete={() => deleteComment(comment.id)}
-              />
+          {commentIds
+            .sort((id, other) => id - other)
+            .slice(showAll ? 0 : commentIds.length - numberOfPreviewComments)
+            .map((id) => (
+              <Comment key={id} id={id} onDelete={() => deleteComment(id)}/>
             ))}
           {!loggedIn && (
             <div className={styles.loginSignupLinkWrapper}>

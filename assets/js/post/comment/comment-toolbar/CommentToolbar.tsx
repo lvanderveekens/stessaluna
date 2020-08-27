@@ -5,21 +5,21 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faEllipsisH} from "@fortawesome/free-solid-svg-icons"
 import {ReactComponent as LikeIcon} from "../../../../images/icon/like.svg";
 import {ReactComponent as DislikeIcon} from "../../../../images/icon/dislike.svg";
-import {connect} from "react-redux"
-import {undoVoteOnComment, updateVoteOnComment, voteOnComment} from "../../../store/post/actions";
+import {connect, useSelector} from "react-redux"
 import Vote, {VoteType} from "../../vote/vote.interface";
 import User from "../../../user/user.interface";
 import LoginSignupModal from "../../../exercise/login-signup-modal/LoginSignupModal";
 import {State} from "../../../store";
 import CustomToggle from "../../../dropdown/custom-toggle/CustomToggle";
 import classNames from "classnames/bind"
+import {undoVoteOnComment, updateVoteOnComment, voteOnComment} from "../../vote/state/vote.actions";
 
 const cx = classNames.bind(styles)
 
 interface Props {
   id: number
   author: User
-  votes: Vote[]
+  voteIds: number[]
   onDelete: () => void
   loggedIn: boolean
   user?: User
@@ -32,7 +32,7 @@ const CommentToolbar: FC<Props> = (
   {
     id,
     author,
-    votes,
+    voteIds,
     onDelete,
     loggedIn,
     user,
@@ -45,7 +45,8 @@ const CommentToolbar: FC<Props> = (
   const [showLoginSignupModal, setShowLoginSignupModal] = useState(false)
   const [loginSignupModalText, setLoginSignupModalText] = useState(null)
 
-  const existingVote = votes.find((vote) => user && user.id == vote.user.id)
+  const votes: Vote[] = useSelector((state: State) => voteIds.map(id => state.entities.votesById[id]))
+  const existingVote = votes.find((vote) => user && user.id == vote.userId)
 
   const vote = (type: VoteType) => {
     if (!loggedIn) {
@@ -77,8 +78,8 @@ const CommentToolbar: FC<Props> = (
       </div>
       {user && user.id == author.id && (
         <div className={styles.moreIcon}>
-          <Dropdown>
-            <Dropdown.Toggle as={CustomToggle} id="something">
+          <Dropdown className="h-100">
+            <Dropdown.Toggle className="h-100 d-flex align-items-center" as={CustomToggle} id="something">
               <FontAwesomeIcon icon={faEllipsisH}/>
             </Dropdown.Toggle>
             <Dropdown.Menu>
@@ -101,7 +102,7 @@ const actionCreators = {
 }
 
 const mapStateToProps = (state: State) => ({
-  user: state.auth.user,
+  user: state.auth.userId && state.entities.usersById[state.auth.userId],
   loggedIn: state.auth.loggedIn,
 })
 

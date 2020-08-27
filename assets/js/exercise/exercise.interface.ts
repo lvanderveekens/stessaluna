@@ -5,7 +5,7 @@ import MissingwordExercise from "./missingword-exercise-content/missingword-exer
 type Exercise = AorbExercise | WhatdoyouseeExercise | MissingwordExercise
 
 export interface AbstractExercise {
-  id?: number
+  id: number
   type: ExerciseType
   answerCount: number
 }

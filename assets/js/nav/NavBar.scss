@@ -24,6 +24,7 @@
     .brand {
 
         margin: 0 1rem;
+        height: 50px;
 
         a {
             color: $brand-primary;
@@ -76,7 +77,7 @@
     :global(.navbar-nav) {
 
         width: 100%;
-        //align-items: center;
+        min-height: 50px;
 
         :global(.nav-link) {
             display: flex;
@@ -101,10 +102,10 @@
                     content: '';
                     width: 100%;
                     position: absolute;
-                    height: 3px;
+                    height: 5px;
                     background: $brand-light;
                     left: 0;
-                    bottom: 3px;
+                    bottom: 0;
                 }
             }
         }

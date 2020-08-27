@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, {ForwardRefRenderFunction} from "react"
 import styles from "./CustomToggle.scss?module"
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
   onClick?: Function
 }
 
-const CustomToggle: FC<Props> = ({ className, children, onClick }, ref: React.Ref<HTMLSpanElement>) => {
+const CustomToggle: ForwardRefRenderFunction<HTMLSpanElement, Props> = ({ className, children, onClick }, ref: React.Ref<HTMLSpanElement>) => {
   return (
     <span
       ref={ref}

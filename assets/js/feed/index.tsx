@@ -1,44 +1,42 @@
 import React, {FC, useEffect, useState} from "react";
 import Feed from "./Feed";
-import {fetchPosts} from "../store/post/actions";
+import {fetchPosts} from "../post/state/post.actions";
 import {State} from "../store";
 import {connect} from 'react-redux'
-import Post from "../post/post.interface";
-import {Filters} from "../store/post/state.interface";
-import User from "../user/user.interface";
+import {Filters} from "./state/feed.reducer";
 
 interface Props {
   loading: boolean
-  posts: Post[]
+  postIds: number[]
   hasMore: boolean
   filters: Filters
   fetchPosts: (channels?: string[], limit?: number, beforeId?: number, append?: boolean) => void
   loggedIn: boolean
-  user?: User
+  userId: number
 }
 
 const FETCH_SIZE = 10;
 
-const FeedContainer: FC<Props> = ({loading, posts, hasMore, filters, fetchPosts, user, loggedIn}) => {
+const FeedContainer: FC<Props> = ({loading, postIds, hasMore, filters, fetchPosts, userId, loggedIn}) => {
 
   const [waitingForInitialFetch, setWaitingForInitialFetch] = useState(true)
 
   useEffect(() => {
-    if (!loggedIn || user) {
+    if (!loggedIn || userId) {
       fetchPosts(filters.channel, FETCH_SIZE)
       setWaitingForInitialFetch(false)
     }
-  }, [filters, loggedIn, user])
+  }, [filters, loggedIn, userId])
 
   const handleLoadMore = () => {
-    const oldestPostIdInFeed = Math.min(...posts.map((post) => post.id))
-    fetchPosts(filters.channel, FETCH_SIZE, oldestPostIdInFeed, true)
+    const oldestPostInFeed = Math.min(...postIds)
+    fetchPosts(filters.channel, FETCH_SIZE, oldestPostInFeed, true)
   }
 
   return (
     <Feed
       loading={waitingForInitialFetch || loading}
-      posts={posts}
+      postIds={postIds}
       hasMore={hasMore}
       onLoadMore={handleLoadMore}
     />
@@ -46,12 +44,12 @@ const FeedContainer: FC<Props> = ({loading, posts, hasMore, filters, fetchPosts,
 }
 
 const mapStateToProps = (state: State) => ({
-  loading: state.post.loading,
-  posts: state.post.data,
-  hasMore: state.post.hasNextPage,
-  filters: state.post.filters,
+  loading: state.feed.loading,
+  postIds: state.feed.postIds,
+  hasMore: state.feed.hasNextPage,
+  filters: state.feed.filters,
   loggedIn: state.auth.loggedIn,
-  user: state.auth.user,
+  userId: state.auth.userId,
 })
 
 const actionCreators = {

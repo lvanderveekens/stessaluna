@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useRef} from "react"
 import {useHistory} from "react-router-dom"
 import {connect} from "react-redux"
-import {createPost} from "../../store/post/actions";
+import {createPost} from "../state/post.actions";
 import PostModalForm, {Values as PostValues} from "../post-modal-form/PostModalForm";
 import ExerciseInputValues from "../post-modal-form/exercise-input/exercise-input.model";
 import Image from "../../image/image.interface";

@@ -4,18 +4,21 @@ import Avatar from "../../user/avatar/Avatar";
 import ISO6391 from "iso-639-1";
 import {getCountryCode} from "../../country/get-country-code";
 import ReactCountryFlag from "react-country-flag"
-import User from "../../user/user.interface";
 import moment from "moment";
+import {State} from "../../store";
+import {useSelector} from "react-redux";
 
 
 interface Props {
-  author: User
+  authorId: number
   channel: string
-  createdAt: string
+  createdAt: Date
   edited: boolean
 }
 
-const PostHeader: FC<Props> = ({author, channel, createdAt, edited}) => {
+const PostHeader: FC<Props> = ({authorId, channel, createdAt, edited}) => {
+
+  const author = useSelector((state: State) => state.entities.usersById[authorId])
 
   const renderUserName = () => {
     if (author.displayName) {

@@ -1,6 +1,6 @@
 import React, {FC, useState} from "react";
 import Vote, {VoteType} from "../vote/vote.interface";
-import {deletePost, undoVoteOnPost, updateVoteOnPost, voteOnPost} from "../../store/post/actions";
+import {deletePost} from "../state/post.actions";
 import styles from "./PostToolbar.scss?module";
 import {ReactComponent as LikeIcon} from "../../../images/icon/like.svg";
 import {ReactComponent as DislikeIcon} from "../../../images/icon/dislike.svg";
@@ -10,33 +10,58 @@ import CustomToggle from "../../dropdown/custom-toggle/CustomToggle";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisH} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
-import {connect} from "react-redux"
+import {connect, useSelector} from "react-redux"
 import User from "../../user/user.interface";
 import classNames from "classnames/bind"
 import LoginSignupModal from "../../exercise/login-signup-modal/LoginSignupModal";
+import {undoVoteOnPost, updateVoteOnPost, voteOnPost} from "../vote/state/vote.actions";
+import {State} from "../../store";
 
 const cx = classNames.bind(styles)
 
-interface Props {
+interface OwnProps {
   postId: number
-  author: User
-  votes: Vote[]
+  authorId: number
+  voteIds: number[]
   commentCount: number
   toggleComments: () => void
+}
+
+interface StateProps {
   loggedIn: boolean
   user?: User
+}
+
+interface DispatchProps {
   voteOnPost: (postId: number, type: VoteType) => Promise<void>
   updateVoteOnPost: (postId: number, voteId: number, type: VoteType) => Promise<void>
   undoVoteOnPost: (postId: number, voteId: number) => Promise<void>
   deletePost: (id: number) => Promise<void>
 }
 
-const PostToolbar: FC<Props> = ({postId, author, votes, commentCount, toggleComments, loggedIn, user, voteOnPost, updateVoteOnPost, undoVoteOnPost, deletePost}) => {
+type Props  = OwnProps & StateProps & DispatchProps
+
+const PostToolbar: FC<Props> = (
+  {
+    postId,
+    authorId,
+    voteIds,
+    commentCount,
+    toggleComments,
+    loggedIn,
+    user,
+    voteOnPost,
+    updateVoteOnPost,
+    undoVoteOnPost,
+    deletePost
+  }
+) => {
 
   const [showLoginSignupModal, setShowLoginSignupModal] = useState(false)
   const [loginSignupModalText, setLoginSignupModalText] = useState(null)
 
-  const existingVote = votes.find((vote) => user && user.id == vote.user.id)
+  const votes: Vote[] = useSelector((state: State) => voteIds.map(id => state.entities.votesById[id]))
+  const existingVote = votes.find((vote) => user && user.id == vote.userId)
 
   const vote = (type: VoteType) => {
     if (!loggedIn) {
@@ -58,22 +83,22 @@ const PostToolbar: FC<Props> = ({postId, author, votes, commentCount, toggleComm
 
   return (
     <div className={styles.postToolbar}>
-      <div className={styles.likeIcon} onClick={() => vote(VoteType.UP)}>
+      <button className={styles.likeIcon} disabled={false} onClick={() => vote(VoteType.UP)}>
         <LikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.UP})}/>
         <span>{votes.filter((v) => v.type == VoteType.UP).length}</span>
-      </div>
-      <div className={styles.dislikeIcon} onClick={() => vote(VoteType.DOWN)}>
+      </button>
+      <button className={styles.dislikeIcon} disabled={false} onClick={() => vote(VoteType.DOWN)}>
         <DislikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.DOWN})}/>
         <span>{votes.filter((v) => v.type == VoteType.DOWN).length}</span>
-      </div>
-      <div className={styles.commentIcon} onClick={toggleComments}>
+      </button>
+      <button className={styles.commentIcon} onClick={toggleComments}>
         <CommentIcon/>
         <span>{commentCount}</span>
-      </div>
-      {user && user.id == author.id && (
+      </button>
+      {user && user.id == authorId && (
         <div className={styles.moreIcon}>
-          <Dropdown>
-            <Dropdown.Toggle as={CustomToggle} id="something">
+          <Dropdown className="h-100">
+            <Dropdown.Toggle className="h-100 d-flex align-items-center" as={CustomToggle} id="something">
               <FontAwesomeIcon icon={faEllipsisH}/>
             </Dropdown.Toggle>
             <Dropdown.Menu>
@@ -91,16 +116,16 @@ const PostToolbar: FC<Props> = ({postId, author, votes, commentCount, toggleComm
   )
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: State): StateProps => ({
   loggedIn: state.auth.loggedIn,
-  user: state.auth.user,
+  user: state.auth.userId && state.entities.usersById[state.auth.userId],
 })
 
-const actionCreators = {
+const mapDispatchToProps: any = ({
   voteOnPost,
   updateVoteOnPost,
   undoVoteOnPost,
   deletePost,
-}
+})
 
-export default connect(mapStateToProps, actionCreators)(PostToolbar)
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(PostToolbar)

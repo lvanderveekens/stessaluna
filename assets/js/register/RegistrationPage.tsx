@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {Col, Container, Row} from 'react-bootstrap';
 import RegistrationForm from './registration-form/RegistrationForm';
 import {connect} from 'react-redux';
-import {register} from '../store/auth/actions';
+import {register} from '../user/state/user.actions';
 import styles from './RegistrationPage.scss?module';
 import {History} from 'history';
 import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";

@@ -3,11 +3,11 @@ import styles from "./ChannelFilter.scss?module"
 import classNames from "classnames/bind"
 import ISO6391 from "iso-639-1";
 import ChannelFilterModal from "./channel-filter-modal/ChannelFilterModal";
-import { connect } from "react-redux"
-import {applyChannelFilter} from "../../store/post/actions";
+import {connect} from "react-redux"
 import {State} from "../../store";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLanguage} from "@fortawesome/free-solid-svg-icons";
+import {applyChannelFilter} from "../state/feed.actions";
 
 const cx = classNames.bind(styles)
 
@@ -46,7 +46,7 @@ const ChannelFilter: FC<Props> = ({appliedChannels, applyChannelFilter}) => {
 }
 
 const mapStateToProps = (state: State) => ({
-  appliedChannels: state.post.filters.channel || []
+  appliedChannels: state.feed.filters.channel || []
 })
 
 const actionCreators = {

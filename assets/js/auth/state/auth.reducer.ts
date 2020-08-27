@@ -1,22 +1,25 @@
+import {LOG_IN_SUCCESS, LOG_OUT_SUCCESS,} from './auth.constants';
 import {
   FETCH_CURRENT_USER_ERROR,
   FETCH_CURRENT_USER_PENDING,
-  FETCH_CURRENT_USER_SUCCESS,
-  LOG_IN_SUCCESS,
-  LOG_OUT_SUCCESS,
-  UPDATE_PROFILE_SUCCESS
-} from './actionTypes';
-import {AuthState} from './state.interface';
+  FETCH_CURRENT_USER_SUCCESS
+} from "../../user/state/user.constants";
+
+export interface AuthState {
+  loggedIn: boolean;
+  userId?: number;
+  loading: boolean;
+}
 
 const loggedIn = localStorage.getItem('stessaluna:logged-in') == 'true';
 
 const initialState = {
   loggedIn: loggedIn,
-  user: null,
+  userId: null,
   loading: false,
 };
 
-const authReducer = (state: AuthState = initialState, action) => {
+export const authReducer = (state: AuthState = initialState, action) => {
   switch (action.type) {
     case LOG_IN_SUCCESS:
       return {
@@ -35,7 +38,7 @@ const authReducer = (state: AuthState = initialState, action) => {
     case FETCH_CURRENT_USER_SUCCESS:
       return {
         ...state,
-        user: action.payload.user,
+        userId: action.payload.result,
         loading: false
       };
     case FETCH_CURRENT_USER_ERROR:
@@ -43,14 +46,8 @@ const authReducer = (state: AuthState = initialState, action) => {
         ...state,
         loading: false
       };
-    case UPDATE_PROFILE_SUCCESS:
-      return {
-        ...state,
-        user: action.payload.user,
-      };
     default:
       return state;
   }
 };
 
-export default authReducer;

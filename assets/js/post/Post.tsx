@@ -1,55 +1,46 @@
 import React, {FC, useEffect, useState} from "react"
-import {connect} from "react-redux"
+import {connect, useSelector} from "react-redux"
 import {isAnswered} from "../exercise/exercise.helper"
-import ExerciseInterface from "../exercise/exercise.interface"
 import User from "../user/user.interface"
 import CommentSection from "./comment/comment-section"
 import styles from "./Post.scss?module"
 import Text from "./text/Text"
-import Comment from "./comment/comment.interface";
-import Image from "../image/image.interface";
-import Vote from "./vote/vote.interface";
 import PostHeader from "./post-header/PostHeader";
 import PostToolbar from "./post-toolbar/PostToolbar";
 import Exercise from "../exercise/Exercise";
+import {State} from "../store";
+import Post from "./post.interface";
 
-interface Props {
+interface OwnProps {
   id: number
-  author: User
-  createdAt: string
-  edited: boolean
-  channel: string
-  text?: string
-  image?: Image
-  exercise?: ExerciseInterface
-  comments: Comment[]
-  votes: Vote[]
+}
+
+interface StateProps {
+  post: Post
   user?: User,
 }
 
-const Post: FC<Props> = (
-  {
-    id,
-    author,
-    createdAt,
-    edited,
-    channel,
-    text,
-    image,
-    exercise,
-    comments,
-    votes,
-    user,
-  }) => {
+type Props = OwnProps & StateProps
+
+const Post: FC<Props> = ({post, user}) => {
+
+  const {id, authorId, createdAt, modifiedAt, channel, exerciseId, text, image, commentIds, voteIds} = post
+
   const [showComments, setShowComments] = useState(false)
   const [showAllComments, setShowAllComments] = useState(false)
   const [numberOfPreviewComments, setNumberOfPreviewComments] = useState(1)
 
-  const isAuthor = (user?: User) => user && user.id == author.id
-  const isCommentSectionLocked = exercise && !isAnswered(exercise) && !isAuthor(user)
+  const isEdited = createdAt !== modifiedAt
+  const isAuthor = (user?: User) => user && user.id == authorId
+
+  const isCommentSectionLocked =
+    exerciseId
+    && !isAnswered(useSelector((state: State) => state.entities.exercisesById[exerciseId]))
+    && !isAuthor(user)
+
 
   useEffect(() => {
-    if (comments.length > 0) {
+    if (commentIds.length > 0) {
       toggleComments()
     }
   }, [])
@@ -59,7 +50,7 @@ const Post: FC<Props> = (
   return (
     <div className={styles.post}>
       <div className={styles.content}>
-        <PostHeader author={author} channel={channel} createdAt={createdAt} edited={edited}/>
+        <PostHeader authorId={authorId} channel={channel} createdAt={createdAt} edited={isEdited}/>
         {text && <Text text={text}/>}
         {image && (
           <div className={styles.imageWrapper}>
@@ -68,19 +59,19 @@ const Post: FC<Props> = (
             </div>
           </div>
         )}
-        {exercise && (<Exercise {...exercise} disabled={isAuthor(user)}/>)}
+        {exerciseId && (<Exercise id={exerciseId} disabled={isAuthor(user)}/>)}
       </div>
       <PostToolbar
         postId={id}
-        author={author}
-        votes={votes}
-        commentCount={comments.length}
+        authorId={authorId}
+        voteIds={voteIds}
+        commentCount={commentIds.length}
         toggleComments={toggleComments}
       />
       {showComments && (
         <CommentSection
           postId={id}
-          comments={comments}
+          commentIds={commentIds}
           showAll={showAllComments}
           setShowAll={setShowAllComments}
           numberOfPreviewComments={numberOfPreviewComments}
@@ -92,8 +83,9 @@ const Post: FC<Props> = (
   )
 }
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
+const mapStateToProps = (state: State, ownProps: Props) => ({
+  post: state.entities.postsById[ownProps.id],
+  user: state.auth.userId && state.entities.usersById[state.auth.userId],
 })
 
-export default connect(mapStateToProps, null)(Post)
+export default connect<StateProps, {}, OwnProps>(mapStateToProps, null)(Post)

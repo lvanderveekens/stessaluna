@@ -2,7 +2,7 @@ import React, {FC} from "react"
 import {Col, Container, Row} from "react-bootstrap"
 import {connect} from "react-redux"
 import {Link} from "react-router-dom"
-import {logIn} from "../store/auth/actions"
+import {logIn} from "../auth/state/auth.actions"
 import LoginForm from "./login-form/LoginForm"
 import styles from "./LoginPage.scss?module"
 import {History} from 'history';
@@ -10,10 +10,15 @@ import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
 import Button from "../button/Button";
 import {ReactComponent as Logo} from "../../images/logo.svg";
 
-interface Props {
-  logIn: (username: string, password: string) => Promise<void>
+interface OwnProps {
   history: History
 }
+
+interface DispatchProps {
+  logIn: (username: string, password: string) => Promise<void>
+}
+
+type Props = OwnProps & DispatchProps
 
 const LoginPage: FC<Props> = ({logIn, history}) => {
 
@@ -51,8 +56,8 @@ const LoginPage: FC<Props> = ({logIn, history}) => {
   )
 }
 
-const actionCreators = {
+const actionCreators: any = {
   logIn,
 }
 
-export default connect(null, actionCreators)(LoginPage)
+export default connect<{}, DispatchProps, OwnProps>(null, actionCreators)(LoginPage)

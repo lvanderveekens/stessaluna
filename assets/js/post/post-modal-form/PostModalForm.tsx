@@ -1,7 +1,7 @@
 import {faGraduationCap, faImage} from "@fortawesome/free-solid-svg-icons"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {Formik} from "formik"
-import React, {ChangeEvent, FC, useRef, useState} from "react"
+import React, {ChangeEvent, ForwardRefRenderFunction, useRef, useState} from "react"
 import {Alert, Dropdown, Form} from "react-bootstrap"
 import ReactCountryFlag from "react-country-flag"
 import TextareaAutosize from "react-textarea-autosize"
@@ -38,7 +38,7 @@ export interface Values {
   exercise?: ExerciseInputValues
 }
 
-const PostModalForm: FC<Props> = ({initialValues, headerText, onSubmit, submitText, onClose}, ref) => {
+const PostModalForm: ForwardRefRenderFunction<HTMLDivElement, Props> = ({initialValues, headerText, onSubmit, submitText, onClose}, ref) => {
   const imageInputRef = useRef<HTMLInputElement>(null)
   const [submitError, setSubmitError] = useState(false)
 

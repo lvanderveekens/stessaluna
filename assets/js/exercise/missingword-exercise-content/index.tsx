@@ -1,11 +1,11 @@
 import React, {FC, useEffect, useState} from "react"
 import {connect} from "react-redux"
-import {submitAnswer} from "../../store/post/actions"
+import {submitAnswer} from "../state/exercise.actions"
 import {MissingwordAnswer} from "../answer/answer.model"
 import MissingwordExerciseContent from "./MissingwordExerciseContent"
 import {State} from "../../store";
 
-interface Props {
+interface OwnProps {
   id: number
   textBefore?: string
   textAfter?: string
@@ -16,10 +16,18 @@ interface Props {
   correct: number
   answer?: number
   disabled: boolean
-  submitAnswer: (exerciseId: number, answer: MissingwordAnswer) => Promise<void>
-  loggedIn: boolean
   showLoginSignupModal: () => void
 }
+
+interface StateProps {
+  loggedIn: boolean
+}
+
+interface DispatchProps {
+  submitAnswer: (exerciseId: number, answer: MissingwordAnswer) => Promise<void>
+}
+
+type Props = OwnProps & StateProps & DispatchProps
 
 const MissingwordExerciseContentContainer: FC<Props> = ({
   id,
@@ -70,12 +78,12 @@ const MissingwordExerciseContentContainer: FC<Props> = ({
   )
 }
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: State): StateProps => ({
   loggedIn: state.auth.loggedIn
 })
 
-const actionCreators = {
+const actionCreators: any = {
   submitAnswer,
 }
 
-export default connect(mapStateToProps, actionCreators)(MissingwordExerciseContentContainer)
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, actionCreators)(MissingwordExerciseContentContainer)

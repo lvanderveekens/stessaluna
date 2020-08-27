@@ -1,4 +1,4 @@
-import React, {FC} from "react"
+import React, {ForwardRefRenderFunction} from "react"
 import styles from "./Modal.scss?module"
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
   children: any
 }
 
-const Modal: FC<Props> = ({className, overlayClassName, onClose, children}, ref) => {
+const Modal: ForwardRefRenderFunction<HTMLDivElement, Props> = ({className, overlayClassName, onClose, children}, ref: React.Ref<HTMLDivElement>) => {
 
   const handleKeyDown= (e) => {
     if (e.key === "Escape") {

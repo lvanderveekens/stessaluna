@@ -1,12 +1,12 @@
 import React, {FC, useEffect, useState} from "react"
 import WhatdoyouseeExerciseContent from "./WhatdoyouseeExerciseContent"
-import {submitAnswer} from "../../store/post/actions"
+import {submitAnswer} from "../../exercise/state/exercise.actions"
 import {connect} from "react-redux"
 import {WhatdoyouseeAnswer} from "../answer/answer.model"
 import Image from "../../image/image.interface";
 import {State} from "../../store";
 
-interface Props {
+interface OwnProps {
   id: number
   image: Image
   option1: string
@@ -16,10 +16,18 @@ interface Props {
   correct: number
   answer?: number
   disabled: boolean
-  submitAnswer: (exerciseId: number, answer: WhatdoyouseeAnswer) => Promise<void>
-  loggedIn: boolean
   showLoginSignupModal: () => void
 }
+
+interface StateProps {
+  loggedIn: boolean
+}
+
+interface DispatchProps {
+  submitAnswer: (exerciseId: number, answer: WhatdoyouseeAnswer) => Promise<void>
+}
+
+type Props = OwnProps & StateProps & DispatchProps
 
 const WhatdoyouseeExerciseContentContainer: FC<Props> = ({
   id,
@@ -69,12 +77,12 @@ const WhatdoyouseeExerciseContentContainer: FC<Props> = ({
 }
 
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: State): StateProps => ({
   loggedIn: state.auth.loggedIn
 })
 
-const actionCreators = {
+const actionCreators: any = {
   submitAnswer,
 }
 
-export default connect(mapStateToProps, actionCreators)(WhatdoyouseeExerciseContentContainer)
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, actionCreators)(WhatdoyouseeExerciseContentContainer)

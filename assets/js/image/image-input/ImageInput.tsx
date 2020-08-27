@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC} from "react"
+import React, {ChangeEvent, ForwardRefRenderFunction} from "react"
 import Image from "../image.interface";
 import axios from "../../http/client"
 
@@ -8,7 +8,7 @@ interface Props {
   onChange: (image: Image) => void
 }
 
-const ImageInput: FC<Props> = ({className, id, onChange}, ref) => {
+const ImageInput: ForwardRefRenderFunction<HTMLInputElement, Props> = ({className, id, onChange}, ref: React.Ref<HTMLInputElement>) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const image = event.currentTarget.files[0]

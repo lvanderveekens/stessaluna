@@ -7,7 +7,7 @@ import {Router} from "react-router"
 import history from "./history/history"
 import Routes from "./routes"
 import {State} from "./store"
-import {fetchCurrentUser} from "./store/auth/actions"
+import {fetchCurrentUser} from "./user/state/user.actions"
 import styles from "./App.scss?module"
 
 interface Props {

@@ -1,14 +1,14 @@
 import React, {FC} from "react"
-import { connect } from "react-redux"
-import { Redirect, Route } from "react-router-dom"
+import {connect} from "react-redux"
+import {Redirect, Route, RouteProps} from "react-router-dom"
 
-interface Props {
+interface OwnProps {
   component?: any
   render?: (props) => any
   loggedIn: boolean
 }
 
-const PrivateRoute: FC<Props> = ({component: Component, render, loggedIn, ...rest}) => {
+const PrivateRoute: FC<OwnProps & RouteProps> = ({component: Component, render, loggedIn, ...rest}) => {
   return (
     <Route {...rest} render={props => (
       loggedIn

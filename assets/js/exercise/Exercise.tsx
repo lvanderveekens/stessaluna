@@ -1,21 +1,28 @@
 import React, {FC, useState} from "react";
 import styles from "./Exercise.scss?module";
-import {ExerciseType} from "./exercise.interface";
+import Exercise, {ExerciseType} from "./exercise.interface";
 import AorbExerciseContent from "./aorb-exercise-content";
 import WhatdoyouseeExerciseContent from "./whatdoyousee-exercise-content";
 import MissingwordExerciseContent from "./missingword-exercise-content";
 import {ReactComponent as AnswerIcon} from "../../images/icon/answer.svg"
 import LoginSignupModal from "./login-signup-modal/LoginSignupModal";
+import {State} from "../store";
+import {connect} from "react-redux"
 
-
-interface Props {
-  type: ExerciseType
-  answerCount: number
+interface OwnProps {
+  id: number
   disabled: boolean
 }
 
-const Exercise: FC<Props> = ({type, answerCount, ...props}) => {
+interface StateProps {
+  exercise: Exercise
+}
 
+type Props = OwnProps & StateProps
+
+const Exercise: FC<Props> = ({exercise, disabled}) => {
+
+  const {type, answerCount} = exercise
   const [showLoginSignupModal, setShowLoginSignupModal] = useState(false)
 
   const getHeaderText = () => {
@@ -30,14 +37,14 @@ const Exercise: FC<Props> = ({type, answerCount, ...props}) => {
   }
 
   const renderContent = () => {
-    const contentProps = {...props, showLoginSignupModal: () => setShowLoginSignupModal(true)}
-    switch (type) {
+    const defaultProps = {disabled, showLoginSignupModal: () => setShowLoginSignupModal(true)}
+    switch (exercise.type) {
       case ExerciseType.A_OR_B:
-        return <AorbExerciseContent {...contentProps} />
+        return <AorbExerciseContent {...({...defaultProps, ...exercise})}/>
       case ExerciseType.WHAT_DO_YOU_SEE:
-        return <WhatdoyouseeExerciseContent {...contentProps} />
+        return <WhatdoyouseeExerciseContent {...({...defaultProps, ...exercise})} />
       case ExerciseType.MISSING_WORD:
-        return <MissingwordExerciseContent {...contentProps} />
+        return <MissingwordExerciseContent {...({...defaultProps, ...exercise})} />
     }
   }
 
@@ -63,4 +70,8 @@ const Exercise: FC<Props> = ({type, answerCount, ...props}) => {
   )
 }
 
-export default Exercise;
+const mapStateToProps = (state: State, ownProps: OwnProps) => ({
+  exercise: state.entities.exercisesById[ownProps.id],
+})
+
+export default connect<StateProps, {}, OwnProps>(mapStateToProps, null)(Exercise);

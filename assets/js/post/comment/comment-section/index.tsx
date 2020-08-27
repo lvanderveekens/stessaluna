@@ -1,14 +1,13 @@
 import React, {FC, useEffect} from "react"
 import {connect} from "react-redux"
 import {State} from "../../../store"
-import {addComment, deleteComment} from "../../../store/post/actions"
 import User from "../../../user/user.interface"
-import Comment from "../comment.interface"
 import CommentSection from "./CommentSection"
+import {addComment, deleteComment} from "../state/comment.actions";
 
 interface Props {
   postId: number
-  comments: Comment[]
+  commentIds: number[]
   showAll: boolean
   setShowAll: (showAll: boolean) => void
   numberOfPreviewComments: number
@@ -22,7 +21,7 @@ interface Props {
 
 const CommentSectionContainer: FC<Props> = ({
   postId,
-  comments,
+  commentIds,
   showAll,
   setShowAll,
   numberOfPreviewComments,
@@ -34,10 +33,10 @@ const CommentSectionContainer: FC<Props> = ({
   loggedIn
 }) => {
   useEffect(() => {
-    if (comments.length <= numberOfPreviewComments) {
+    if (commentIds.length <= numberOfPreviewComments) {
       setShowAll(true)
     }
-  }, [comments])
+  }, [commentIds])
 
   const handleAddComment = (text: string) => {
     return addComment(postId, text)
@@ -56,7 +55,7 @@ const CommentSectionContainer: FC<Props> = ({
 
   return (
     <CommentSection
-      comments={comments}
+      commentIds={commentIds}
       numberOfPreviewComments={numberOfPreviewComments}
       showAll={showAll}
       setShowAll={setShowAll}
@@ -69,14 +68,14 @@ const CommentSectionContainer: FC<Props> = ({
   )
 }
 
+const mapStateToProps = (state: State) => ({
+  user: state.auth.userId && state.entities.usersById[state.auth.userId],
+  loggedIn: state.auth.loggedIn,
+})
+
 const actionCreators = {
   addComment,
   deleteComment,
 }
-
-const mapStateToProps = (state: State) => ({
-  user: state.auth.user,
-  loggedIn: state.auth.loggedIn,
-})
 
 export default connect(mapStateToProps, actionCreators)(CommentSectionContainer)

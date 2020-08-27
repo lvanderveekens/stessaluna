@@ -10,7 +10,7 @@ import {Link} from "react-router-dom"
 import {ReactComponent as Logo} from "../../images/logo.svg"
 import CustomToggle from "../dropdown/custom-toggle/CustomToggle"
 import {State} from "../store"
-import {logOut} from "../store/auth/actions"
+import {logOut} from "../auth/state/auth.actions"
 import styles from "./Navbar.scss?module"
 import {useWindowSize} from "../hooks/use-window-size";
 import Button from "../button/Button";
@@ -106,7 +106,7 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, user, logOut}) => {
               {user && (
                 <>
                   <BootstrapNav.Link
-                    className={cx({[styles.currentPageLink]: pageTitle == 'Profile'})}
+                    className={cx('h-100', {[styles.currentPageLink]: pageTitle == 'Profile'})}
                     as={Link}
                     to="/profile"
                     onClick={closeMenu}
@@ -211,7 +211,7 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, user, logOut}) => {
 
 const mapStateToProps = (state: State) => ({
   loggedIn: state.auth.loggedIn,
-  user: state.auth.user,
+  user: state.auth.userId && state.entities.usersById[state.auth.userId],
 })
 
 const actionCreators = {

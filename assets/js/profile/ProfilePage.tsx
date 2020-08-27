@@ -5,7 +5,6 @@ import ReactCountryFlag from "react-country-flag"
 import {CountryDropdown} from "react-country-region-selector"
 import {connect} from "react-redux"
 import Navbar from "../nav/Navbar"
-import {updateCurrentUser} from "../store/auth/actions"
 import {State} from "../store"
 import User from "../user/user.interface"
 import styles from "./ProfilePage.scss?module"
@@ -13,6 +12,7 @@ import Button from "../button/Button"
 import {COLUMN_BREAKPOINTS} from "../config/column-breakpoints";
 import Image from "../image/image.interface";
 import ImageInput from "../image/image-input/ImageInput";
+import {updateCurrentUser} from "../user/state/user.actions";
 
 interface Props {
   loading: boolean
@@ -154,7 +154,7 @@ const ProfilePage: FC<Props> = ({ loading, user, updateCurrentUser }) => {
 
 const mapStateToProps = (state: State) => ({
   loading: state.auth.loading,
-  user: state.auth.user,
+  user: state.auth.userId && state.entities.usersById[state.auth.userId],
 })
 
 const actionCreators = {
