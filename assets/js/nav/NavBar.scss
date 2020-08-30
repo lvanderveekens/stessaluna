@@ -114,7 +114,11 @@
 
             margin-left: auto;
             display: flex;
-            align-items: center;
+
+            .logoutWrapper {
+                display: flex;
+                align-items: center;
+            }
 
             .loginSignupWrapper {
                 display: flex;

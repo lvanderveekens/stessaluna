@@ -106,7 +106,7 @@ const Navbar: FC<Props> = ({pageTitle, loggedIn, user, logOut}) => {
               {user && (
                 <>
                   <BootstrapNav.Link
-                    className={cx('h-100', {[styles.currentPageLink]: pageTitle == 'Profile'})}
+                    className={cx({[styles.currentPageLink]: pageTitle == 'Profile'})}
                     as={Link}
                     to="/profile"
                     onClick={closeMenu}
