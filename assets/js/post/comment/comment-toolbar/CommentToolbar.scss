@@ -5,15 +5,20 @@
     display: flex;
     justify-content: flex-start;
 
+    button {
+        background: none;
+        border: none;
+        padding: 0;
+        outline: none;
+
+        &:disabled {
+            color: unset;
+        }
+    }
+
     .likeIcon, .dislikeIcon {
 
         margin-right: 0.5rem;
-
-        .voted {
-            path {
-                stroke: $brand-light;
-            }
-        }
 
         svg {
             width: 16px;
@@ -25,13 +30,19 @@
             }
         }
 
+        .voted {
+            path {
+                stroke: $stessaluna-exercise-default;
+                fill: $stessaluna-exercise-default-bg;
+            }
+        }
+
         @media (hover: hover) {
             &:hover {
-                cursor: pointer;
-
                 svg {
                     path {
-                        stroke: $brand-light;
+                        stroke: $stessaluna-exercise-default;
+                        fill: $stessaluna-exercise-default-bg;
                     }
                 }
             }
@@ -53,7 +64,7 @@
                     cursor: pointer;
 
                     path {
-                        fill: $brand-light;
+                        fill: $stessaluna-exercise-default;
                     }
                 }
             }

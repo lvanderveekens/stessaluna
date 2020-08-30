@@ -48,34 +48,42 @@ const CommentToolbar: FC<Props> = (
   const votes: Vote[] = useSelector((state: State) => voteIds.map(id => state.entities.votesById[id]))
   const existingVote = votes.find((vote) => user && user.id == vote.userId)
 
-  const vote = (type: VoteType) => {
+  const [submittingVote, setSubmittingVote] = useState(false)
+
+  const handleVoteClick = (type: VoteType) => () => {
     if (!loggedIn) {
       setLoginSignupModalText("Log in or sign up to vote on comments")
       setShowLoginSignupModal(true)
       return
     }
 
+    setSubmittingVote(true)
+    vote(type)
+      .then(() => setSubmittingVote(false))
+  }
+
+  const vote = (type: VoteType): Promise<void> => {
     if (existingVote) {
       if (existingVote.type == type) {
-        undoVoteOnComment(id, existingVote.id)
+        return undoVoteOnComment(id, existingVote.id)
       } else {
-        updateVoteOnComment(id, existingVote.id, type)
+        return updateVoteOnComment(id, existingVote.id, type)
       }
     } else {
-      voteOnComment(id, type)
+      return voteOnComment(id, type)
     }
   }
 
   return (
     <div className={styles.commentToolbar}>
-      <div className={styles.likeIcon} onClick={() => vote(VoteType.UP)}>
+      <button className={styles.likeIcon} disabled={submittingVote} onClick={handleVoteClick(VoteType.UP)}>
         <LikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.UP})}/>
         {votes.filter((v: Vote) => v.type == VoteType.UP).length}
-      </div>
-      <div className={styles.dislikeIcon} onClick={() => vote(VoteType.DOWN)}>
+      </button>
+      <button className={styles.dislikeIcon} disabled={submittingVote} onClick={handleVoteClick(VoteType.DOWN)}>
         <DislikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.DOWN})}/>
         {votes.filter((v: Vote) => v.type == VoteType.DOWN).length}
-      </div>
+      </button>
       {user && user.id == author.id && (
         <div className={styles.moreIcon}>
           <Dropdown className="h-100">

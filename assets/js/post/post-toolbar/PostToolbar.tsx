@@ -63,31 +63,39 @@ const PostToolbar: FC<Props> = (
   const votes: Vote[] = useSelector((state: State) => voteIds.map(id => state.entities.votesById[id]))
   const existingVote = votes.find((vote) => user && user.id == vote.userId)
 
-  const vote = (type: VoteType) => {
+  const [submittingVote, setSubmittingVote] = useState(false)
+
+  const handleVoteClick = (type: VoteType) => () => {
     if (!loggedIn) {
       setLoginSignupModalText("Log in or sign up to vote on posts")
       setShowLoginSignupModal(true)
       return
     }
 
+    setSubmittingVote(true)
+    vote(type)
+      .then(() => setSubmittingVote(false))
+  }
+
+  const vote = (type: VoteType): Promise<void> => {
     if (existingVote) {
       if (existingVote.type == type) {
-        undoVoteOnPost(postId, existingVote.id)
+        return undoVoteOnPost(postId, existingVote.id)
       } else {
-        updateVoteOnPost(postId, existingVote.id, type)
+        return updateVoteOnPost(postId, existingVote.id, type)
       }
     } else {
-      voteOnPost(postId, type)
+      return voteOnPost(postId, type)
     }
   }
 
   return (
     <div className={styles.postToolbar}>
-      <button className={styles.likeIcon} disabled={false} onClick={() => vote(VoteType.UP)}>
+      <button className={styles.likeIcon} disabled={submittingVote} onClick={handleVoteClick(VoteType.UP)}>
         <LikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.UP})}/>
         <span>{votes.filter((v) => v.type == VoteType.UP).length}</span>
       </button>
-      <button className={styles.dislikeIcon} disabled={false} onClick={() => vote(VoteType.DOWN)}>
+      <button className={styles.dislikeIcon} disabled={submittingVote} onClick={handleVoteClick(VoteType.DOWN)}>
         <DislikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.DOWN})}/>
         <span>{votes.filter((v) => v.type == VoteType.DOWN).length}</span>
       </button>

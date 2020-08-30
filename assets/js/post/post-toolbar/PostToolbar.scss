@@ -14,16 +14,6 @@
 
         &:disabled {
             color: unset;
-            opacity: 0.5;
-        }
-    }
-
-    .likeIcon, .dislikeIcon {
-
-        .voted {
-            path {
-                stroke: $brand-light;
-            }
         }
     }
 
@@ -41,18 +31,23 @@
             }
         }
 
-        &:not(:disabled) {
+        .voted {
+            path {
+                stroke: $stessaluna-exercise-default;
+                fill: $stessaluna-exercise-default-bg;
+            }
+        }
+
+        @media (hover: hover) {
             &:hover {
                 svg {
                     path {
-                        stroke: $brand-light;
+                        stroke: $stessaluna-exercise-default;
+                        fill: $stessaluna-exercise-default-bg;
                     }
                 }
             }
         }
-
-        //@media (hover: hover) {
-        //}
     }
 
     .moreIcon {
@@ -70,7 +65,7 @@
                     cursor: pointer;
 
                     path {
-                        fill: $brand-light;
+                        fill: $stessaluna-exercise-default;
                     }
                 }
             }
