@@ -21,6 +21,7 @@ import {commentEvents} from "./post/comment/state/comment.events";
 import {exerciseEvents} from "./exercise/state/exercise.events";
 import {feedEvents} from "./feed/state/feed.events"
 import {usersById} from "./user/state/user.reducer";
+import {voteEvents} from "./post/vote/state/vote.events";
 
 export interface State {
   auth: AuthState
@@ -52,7 +53,8 @@ const analyticsMiddleware = createMiddleware({
   ...commentEvents,
   ...exerciseEvents,
   ...authEvents,
-  ...userEvents
+  ...userEvents,
+  ...voteEvents,
 }, GoogleAnalytics());
 
 const store = createStore(rootReducer, composeWithDevTools(
