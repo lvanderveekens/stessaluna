@@ -76,12 +76,20 @@ const CommentToolbar: FC<Props> = (
 
   return (
     <div className={styles.commentToolbar}>
-      <button className={styles.likeIcon} disabled={submittingVote} onClick={handleVoteClick(VoteType.UP)}>
-        <LikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.UP})}/>
+      <button
+        className={cx(styles.likeIcon, {voted: existingVote && existingVote.type === VoteType.UP})}
+        disabled={submittingVote}
+        onClick={handleVoteClick(VoteType.UP)}
+      >
+        <LikeIcon/>
         {votes.filter((v: Vote) => v.type == VoteType.UP).length}
       </button>
-      <button className={styles.dislikeIcon} disabled={submittingVote} onClick={handleVoteClick(VoteType.DOWN)}>
-        <DislikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.DOWN})}/>
+      <button
+        className={cx(styles.dislikeIcon, {voted: existingVote && existingVote.type === VoteType.DOWN})}
+        disabled={submittingVote}
+        onClick={handleVoteClick(VoteType.DOWN)}
+      >
+        <DislikeIcon/>
         {votes.filter((v: Vote) => v.type == VoteType.DOWN).length}
       </button>
       {user && user.id == author.id && (

@@ -30,18 +30,24 @@
             }
         }
 
-        .voted {
-            path {
-                stroke: $stessaluna-exercise-default;
-                fill: $stessaluna-exercise-default-bg;
+        &.voted {
+            color: $brand-light;
+
+            svg {
+                path {
+                    stroke: $brand-light;
+                    fill: $stessaluna-exercise-default-bg;
+                }
             }
         }
 
         @media (hover: hover) {
             &:hover {
+                color: $brand-light;
+
                 svg {
                     path {
-                        stroke: $stessaluna-exercise-default;
+                        stroke: $brand-light;
                         fill: $stessaluna-exercise-default-bg;
                     }
                 }
@@ -64,7 +70,7 @@
                     cursor: pointer;
 
                     path {
-                        fill: $stessaluna-exercise-default;
+                        fill: $brand-light;
                     }
                 }
             }

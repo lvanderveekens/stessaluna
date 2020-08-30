@@ -91,12 +91,20 @@ const PostToolbar: FC<Props> = (
 
   return (
     <div className={styles.postToolbar}>
-      <button className={styles.likeIcon} disabled={submittingVote} onClick={handleVoteClick(VoteType.UP)}>
-        <LikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.UP})}/>
+      <button
+        className={cx(styles.likeIcon, {voted: existingVote && existingVote.type === VoteType.UP})}
+        disabled={submittingVote}
+        onClick={handleVoteClick(VoteType.UP)}
+      >
+        <LikeIcon/>
         <span>{votes.filter((v) => v.type == VoteType.UP).length}</span>
       </button>
-      <button className={styles.dislikeIcon} disabled={submittingVote} onClick={handleVoteClick(VoteType.DOWN)}>
-        <DislikeIcon className={cx({voted: existingVote && existingVote.type === VoteType.DOWN})}/>
+      <button
+        className={cx(styles.dislikeIcon, {voted: existingVote && existingVote.type === VoteType.DOWN})}
+        disabled={submittingVote}
+        onClick={handleVoteClick(VoteType.DOWN)}
+      >
+        <DislikeIcon/>
         <span>{votes.filter((v) => v.type == VoteType.DOWN).length}</span>
       </button>
       <button className={styles.commentIcon} onClick={toggleComments}>
