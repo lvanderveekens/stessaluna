@@ -8,22 +8,25 @@ namespace Stessaluna\Exercise;
 use RuntimeException;
 use Stessaluna\Exercise\Aorb\Entity\AorbExercise;
 use Stessaluna\Exercise\Entity\Exercise;
-use Stessaluna\Exercise\Exception\ExerciseNotFoundException;
 use Stessaluna\Exercise\Missingword\Entity\MissingwordExercise;
 use Stessaluna\Exercise\Repository\ExerciseRepository;
 use Stessaluna\Exercise\Whatdoyousee\Entity\WhatdoyouseeExercise;
+use Stessaluna\Post\Repository\PostRepository;
+use Stessaluna\User\Entity\User;
 
 class ExerciseService
 {
 
-    /**
-     * @var ExerciseRepository
-     */
+    /** @var ExerciseRepository */
     private $exerciseRepository;
 
-    public function __construct(ExerciseRepository $exerciseRepository)
+    /** @var PostRepository */
+    private $postRepository;
+
+    public function __construct(ExerciseRepository $exerciseRepository, PostRepository $postRepository)
     {
         $this->exerciseRepository = $exerciseRepository;
+        $this->postRepository = $postRepository;
     }
 
     public function updateExercise(?Exercise $exercise, ?Exercise $update): ?Exercise
@@ -84,5 +87,14 @@ class ExerciseService
         $exercise->setOption4($update->getOption4());
         $exercise->setCorrect($update->getCorrect());
         return $exercise;
+    }
+
+    public function isAuthor(Exercise $exercise, ?User $user): bool
+    {
+        if (empty($user)) {
+            return false;
+        }
+        $post = $this->postRepository->findOneBy(array('exercise' => $exercise));
+        return $user->getId() == $post->getAuthor()->getId();
     }
 }

@@ -5,6 +5,7 @@ import AorbExerciseContent from "./aorb-exercise-content";
 import WhatdoyouseeExerciseContent from "./whatdoyousee-exercise-content";
 import MissingwordExerciseContent from "./missingword-exercise-content";
 import {ReactComponent as AnswerIcon} from "../../images/icon/answer.svg"
+import {ReactComponent as CorrectIcon} from "../../images/icon/correct.svg"
 import LoginSignupModal from "./login-signup-modal/LoginSignupModal";
 import {State} from "../store";
 import {connect} from "react-redux"
@@ -22,7 +23,7 @@ type Props = OwnProps & StateProps
 
 const Exercise: FC<Props> = ({exercise, disabled}) => {
 
-  const {type, answerCount} = exercise
+  const {type, answerCount, correctAnswersPercentage} = exercise
   const [showLoginSignupModal, setShowLoginSignupModal] = useState(false)
 
   const getHeaderText = () => {
@@ -58,6 +59,9 @@ const Exercise: FC<Props> = ({exercise, disabled}) => {
       <div className={styles.actions}>
         <div className={styles.answerIcon}>
           <AnswerIcon/> {answerCount}
+        </div>
+        <div className={styles.correctIcon}>
+          <CorrectIcon/> {Math.round(correctAnswersPercentage * 100)}%
         </div>
       </div>
       {showLoginSignupModal && (

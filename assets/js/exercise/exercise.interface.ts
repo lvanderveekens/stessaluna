@@ -8,6 +8,7 @@ export interface AbstractExercise {
   id: number
   type: ExerciseType
   answerCount: number
+  correctAnswersPercentage: number
 }
 
 export enum ExerciseType {

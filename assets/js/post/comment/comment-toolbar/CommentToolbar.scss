@@ -16,6 +16,11 @@
         }
     }
 
+    .likeIcon, .dislikeIcon, .moreIcon {
+        display: flex;
+        align-items: center;
+    }
+
     .likeIcon, .dislikeIcon {
 
         margin-right: 0.5rem;
@@ -41,14 +46,16 @@
             }
         }
 
-        @media (hover: hover) {
-            &:hover {
-                color: $brand-light;
+        &:not(:disabled) {
+            @media (hover: hover) {
+                &:hover {
+                    color: $brand-light;
 
-                svg {
-                    path {
-                        stroke: $brand-light;
-                        fill: $stessaluna-exercise-default-bg;
+                    svg {
+                        path {
+                            stroke: $brand-light;
+                            fill: $stessaluna-exercise-default-bg;
+                        }
                     }
                 }
             }

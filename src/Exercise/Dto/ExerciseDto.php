@@ -24,6 +24,9 @@ abstract class ExerciseDto
     /** @var int */
     public $answerCount;
 
+    /** @var float */
+    public $correctAnswersPercentage;
+
     protected function __construct(string $type)
     {
         $this->type = $type;

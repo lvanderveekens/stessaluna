@@ -15,8 +15,14 @@
 
         margin-top: 1rem;
 
-        .answerIcon {
+        display: flex;
+        justify-content: flex-start;
 
+        .correctIcon, .answerIcon {
+
+            display: flex;
+            align-items: center;
+            
             margin-right: 1rem;
 
             svg {

@@ -14,7 +14,7 @@ use Stessaluna\Exercise\Answer\Entity\Answer;
 use Stessaluna\Exercise\Answer\Entity\AorbAnswer;
 use Stessaluna\Exercise\Answer\Entity\MissingwordAnswer;
 use Stessaluna\Exercise\Answer\Entity\WhatdoyouseeAnswer;
-use Stessaluna\Exercise\Dto\ExerciseToExerciseDtoMapper;
+use Stessaluna\Exercise\ExerciseConverter;
 use Stessaluna\Exercise\Repository\ExerciseRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,15 +30,15 @@ class ExerciseController extends AbstractController
     /** @var ExerciseRepository */
     private $exerciseRepository;
 
-    /** @var ExerciseToExerciseDtoMapper */
-    private $exerciseToExerciseDtoMapper;
+    /** @var ExerciseConverter */
+    private $exerciseConverter;
 
     public function __construct(
         ExerciseRepository $exerciseRepository,
-        ExerciseToExerciseDtoMapper $exerciseToExerciseDtoMapper
+        ExerciseConverter $exerciseConverter
     ) {
         $this->exerciseRepository = $exerciseRepository;
-        $this->exerciseToExerciseDtoMapper = $exerciseToExerciseDtoMapper;
+        $this->exerciseConverter = $exerciseConverter;
     }
 
     /**
@@ -52,7 +52,9 @@ class ExerciseController extends AbstractController
         $exercise = $this->exerciseRepository->findById($id);
 
         $answers = $exercise->getAnswers()->toArray();
-        $alreadyAnswered = some($answers, function (Answer $answer) { return $answer->getUser() == $this->getUser(); });
+        $alreadyAnswered = some($answers, function (Answer $answer) {
+            return $answer->getUser()->getId() == $this->getUser()->getId();
+        });
         if ($alreadyAnswered) {
             throw new BadRequestHttpException('User already submitted an answer for this exercise');
         }
@@ -82,6 +84,6 @@ class ExerciseController extends AbstractController
 
         $exercise->addAnswer($answer);
         $exercise = $this->exerciseRepository->save($exercise);
-        return $this->json($this->exerciseToExerciseDtoMapper->map($exercise, $this->getUser()));
+        return $this->json($this->exerciseConverter->toDto($exercise, $this->getUser()));
     }
 }

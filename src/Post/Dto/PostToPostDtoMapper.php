@@ -6,7 +6,7 @@ namespace Stessaluna\Post\Dto;
 
 use Stessaluna\Comment\Dto\CommentToCommentDtoMapper;
 use Stessaluna\Comment\Entity\Comment;
-use Stessaluna\Exercise\Dto\ExerciseToExerciseDtoMapper;
+use Stessaluna\Exercise\ExerciseConverter;
 use Stessaluna\Image\Dto\ImageToImageDtoMapper;
 use Stessaluna\Post\Entity\Post;
 use Stessaluna\User\Dto\UserToUserDtoMapper;
@@ -27,9 +27,9 @@ class PostToPostDtoMapper
     private $commentToCommentDtoMapper;
 
     /**
-     * @var ExerciseToExerciseDtoMapper
+     * @var ExerciseConverter
      */
-    private $exerciseToExerciseDtoMapper;
+    private $exerciseConverter;
 
     /**
      * @var ImageToImageDtoMapper
@@ -44,14 +44,14 @@ class PostToPostDtoMapper
     public function __construct(
         UserToUserDtoMapper $userToUserDtoMapper,
         CommentToCommentDtoMapper $commentToCommentDtoMapper,
-        ExerciseToExerciseDtoMapper $exerciseToExerciseDtoMapper,
+        ExerciseConverter $exerciseConverter,
         ImageToImageDtoMapper $imageToImageDtoMapper,
         VoteToVoteDtoMapper $voteToVoteDtoMapper
     )
     {
         $this->userToUserDtoMapper = $userToUserDtoMapper;
         $this->commentToCommentDtoMapper = $commentToCommentDtoMapper;
-        $this->exerciseToExerciseDtoMapper = $exerciseToExerciseDtoMapper;
+        $this->exerciseConverter = $exerciseConverter;
         $this->imageToImageDtoMapper = $imageToImageDtoMapper;
         $this->voteToVoteDtoMapper = $voteToVoteDtoMapper;
     }
@@ -75,7 +75,7 @@ class PostToPostDtoMapper
         }, $post->getVotes()->toArray());
 
         if ($post->getExercise()) {
-            $dto->exercise = $this->exerciseToExerciseDtoMapper->map($post->getExercise(), $user);
+            $dto->exercise = $this->exerciseConverter->toDto($post->getExercise(), $user);
         }
 
         $dto->comments = array_map(function (Comment $comment) {

@@ -2,7 +2,7 @@
 
 .nav {
     //color: grey;
-    border-bottom: 1px solid white;
+    border-bottom: 3px solid white;
     background-color: $brand-secondary;
     padding: 0;
 
@@ -88,26 +88,33 @@
 
             text-decoration: none;
 
-            color: white !important;
-            opacity: 0.7;
+            //opacity: 0.7;
+            //
+            //&:hover {
+            //    opacity: 1;
+            //}
+            //
+
+            color: rgba(255, 255, 255, 0.7) !important;
+            font-weight: bold;
 
             &:hover {
-                opacity: 1;
+                color: white !important;
             }
 
             &.currentPageLink {
 
-                opacity: 1;
+                color: white !important;
 
-                &::after {
-                    content: '';
-                    width: 100%;
-                    position: absolute;
-                    height: 5px;
-                    background: $brand-light;
-                    left: 0;
-                    bottom: 0;
-                }
+                //&::after {
+                //    content: '';
+                //    width: 100%;
+                //    position: absolute;
+                //    height: 5px;
+                //    background: $brand-light;
+                //    left: 0;
+                //    bottom: 0;
+                //}
             }
         }
 
