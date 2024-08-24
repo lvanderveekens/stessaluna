@@ -7,9 +7,22 @@ A social platform for community-driven language learning exercises. 🇳🇱🇮
 
 ## Installation
 
+PHP 7.3
+Composer 1.10.10
+
 The following dependencies are needed otherwise uploaded images won't be optimized.
 
     $ brew install jpegoptim optipng pngquant
+
+Database setup:
+
+    $ php bin/console doctrine:database:create
+    $ php bin/console doctrine:migrations:migrate
+
+
+JWT key generation:
+
+https://github.com/lexik/LexikJWTAuthenticationBundle/blob/1.x/Resources/doc/index.md
 
 ## Development
 

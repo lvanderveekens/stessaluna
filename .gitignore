@@ -38,3 +38,7 @@ yarn-error.log
 # don't commit the app.yaml files containing production secrets
 app.yaml
 app-secrets.env
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###

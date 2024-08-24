@@ -15,6 +15,7 @@
         "jest": "^25.3.0",
         "prettier": "2.0.4",
         "regenerator-runtime": "^0.13.2",
+        "sass": "^1.77.8",
         "ts-jest": "^25.3.1",
         "ts-loader": "^5.3.0",
         "webpack-notifier": "^1.6.0"
@@ -23,7 +24,7 @@
     "private": true,
     "scripts": {
         "dev-server-ip": "encore dev-server --host 192.168.2.8 --https --key ./certs/lucianos-mac.local+3-key.pem --cert ./certs/lucianos-mac.local+3.pem",
-        "dev-server": "encore dev-server --host 0.0.0.0 --public lucianos-mac.local:8080 --https --key ./certs/lucianos-mac.local+3-key.pem --cert ./certs/lucianos-mac.local+3.pem",
+        "dev-server": "encore dev-server --host 0.0.0.0",
         "dev-server-test": "encore dev-server --host 0.0.0.0 --https --key ./certs/lucianos-mac.local+3-key.pem --cert ./certs/lucianos-mac.local+3.pem",
         "dev": "encore dev",
         "watch": "encore dev --watch",
@@ -55,7 +56,6 @@
         "loaders.css": "^0.1.2",
         "lodash": "^4.17.20",
         "moment": "^2.24.0",
-        "node-sass": "^4.13.0",
         "normalizr": "^3.6.0",
         "object-to-formdata": "^3.0.6",
         "prop-types": "^15.7.2",
