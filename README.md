@@ -2,10 +2,11 @@
 
 A social platform for community-driven language learning exercises. 🇳🇱🇮🇹🇺🇸
 
-<img width="1840" alt="Screenshot 2024-08-24 at 09 21 24" src="https://github.com/user-attachments/assets/99776a82-ba00-4141-afe7-fde82abe65b3">
-<img width="1840" alt="Screenshot 2024-08-24 at 09 31 12" src="https://github.com/user-attachments/assets/a10367b4-24c6-4672-aa25-e06144d767bc">
-<img width="1840" alt="Screenshot 2024-08-24 at 09 31 32" src="https://github.com/user-attachments/assets/32259ef7-05f0-4c98-a5fb-2a89279df0c8">
-<img width="1840" alt="Screenshot 2024-08-24 at 09 31 59" src="https://github.com/user-attachments/assets/84e5e0ba-bf42-4cf4-b035-e01844e2f8e1">
+<img width="1313" alt="Screenshot 2024-08-24 at 09 40 32" src="https://github.com/user-attachments/assets/586d84ab-725a-4282-8f77-067985aed2d7">
+<img width="1313" alt="Screenshot 2024-08-24 at 09 41 53" src="https://github.com/user-attachments/assets/b734cd05-95d7-4c70-8b15-6c1807f035db">
+<img width="1313" alt="Screenshot 2024-08-24 at 09 40 28" src="https://github.com/user-attachments/assets/66267464-22b7-4140-a4c3-eeea8c2fde3d">
+<img width="1313" alt="Screenshot 2024-08-24 at 09 41 29" src="https://github.com/user-attachments/assets/055e83b9-13d8-4166-ad65-7dc48519f995">
+
 
 ## Installation
 
